@@ -1,0 +1,88 @@
+<div class="bg-img">
+  <form
+    class="container">
+    <div class="row">
+      <div class="col-lg-10 offset-lg-2"
+        style="margin-top: 5px">
+        <img src="../../assets/1622452.png"
+          height="43"
+          width="170"
+          style="padding:inherit" />
+      </div>
+    </div>
+    <br />
+    <div style="margin-left: 12%;">
+      Already have an account?
+      <a style="color: steelblue;"
+        (click)="routeToLogin()">Login now.</a>
+    </div>
+    <br />
+
+     <label for="name"><b>Name</b></label>
+     <input type="text"
+       #name
+       placeholder="Enter Your Full Name"
+       [(ngModel)]="registerObj.name"
+       name="name"
+       required />
+
+    <label for="email"><b>Email</b></label>
+    <input type="text"
+      placeholder="Enter Email"
+      name="email"
+      [(ngModel)]="registerObj.email"
+      required
+      email
+      #email="ngModel"
+      [ngClass]="{ 'is-invalid':email.invalid }" />
+    <div *ngIf="email.invalid"
+      class="invalid-feedback">
+
+      <div *ngIf="email.errors.email">Email must be a valid email address</div>
+    </div>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password"
+      #password
+      placeholder="Enter Password"
+      [(ngModel)]="registerObj.password"
+      name="psw"
+      required />
+    <!-- <label for="psw"><b>Repeat Password</b></label>
+    <input type="password"
+      #password
+      placeholder="Repeat Password"
+      [(ngModel)]="repeatPassword"
+      name="psw"
+      required /> -->
+    <label for="userType"><b>User Type</b></label>
+    <br />
+    <nz-select nzShowSearch
+      nzAllowClear
+      nzPlaceHolder="Select User type"
+      [(ngModel)]="registerObj.userType"
+      name="userType">
+      <nz-option nzLabel="Candidate"
+        nzValue="candidate"></nz-option>
+      <nz-option nzLabel="Employee"
+        nzValue="employee"></nz-option>
+      <nz-option nzLabel="Recruiter"
+        nzValue="recuiter"></nz-option>
+    </nz-select>
+    <br>
+    <br>
+    <button type="submit"
+      mat-stroked-button
+      style="color: whitesmoke; background-color: black;font-weight: lighter;width:100%"
+      (click)="registerUser()">
+      Register
+    </button>
+    <div *ngIf="showLoading"
+      style="margin-left: 50%;margin-top: 5%;">
+      <div class="spinner-grow text-dark"
+        role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </form>
+</div>

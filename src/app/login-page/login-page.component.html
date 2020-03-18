@@ -1,0 +1,60 @@
+<router-outlet></router-outlet>
+<div class="bg-img">
+
+  <form action="/action_page.php"
+    class="container">
+     <div class="row">
+       <div class="col-lg-10 offset-lg-2"
+         style="margin-top: 5px">
+         <img src="../../assets/1622452.png"
+           height="43"
+           width="170"
+           style="padding:inherit" />
+       </div>
+     </div>
+    <br>
+    <div style="margin-left: 12%;">
+      Register yoursefl <a style="color: steelblue;"
+        (click)="routeToRegister()">Register now.</a>
+    </div>
+    <br>
+
+    <label for="email"><b>Email</b></label>
+    <input type="text"
+      #email
+      placeholder="Enter Email"
+      name="email"
+      required>
+
+    <label for="psw"><b>Password</b></label>
+    <input type="password"
+      #password
+      placeholder="Enter Password"
+      name="psw"
+      required>
+    <br>
+    <br>
+    <!-- <button type="submit" class="btn">Login</button> -->
+    <button type="submit"
+      mat-stroked-button
+      style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 5%;"
+      (click)="check(email.value, password.value)">
+
+      Login
+    </button>
+    <button type="submit"
+      mat-stroked-button
+      style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 2%;"
+      (click)="routeToRegister()">
+
+      Register
+    </button>
+    <div *ngIf="showLoading"
+      style="margin-left: 50%;margin-top: 5%;">
+      <div class="spinner-grow text-dark"
+        role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </form>
+</div>
