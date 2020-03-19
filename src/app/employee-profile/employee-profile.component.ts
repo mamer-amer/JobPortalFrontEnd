@@ -3,6 +3,10 @@ import { environment } from 'src/environments/environment';
 import * as Mapboxgl from 'mapbox-gl';
 import { Job } from '../Job'
 import { JobService } from '../Services/job.service'
+
+import { ApplicantServiceService } from '../Services/applicant-service.service';
+
+
 @Component({
   selector: 'app-employee-profile',
   templateUrl: './employee-profile.component.html',
@@ -12,6 +16,9 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   jobObj: Job;
+  selectedField;  
+  map: Mapboxgl.Map;
+  marker: Mapboxgl.Marker;
 
   fields: any[] = [
     { value: 'businessFinance', viewValue: 'Business & Finance' },
@@ -34,12 +41,9 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
+  constructor(private jobService: JobService, private service: ApplicantServiceService) { }
 
-  selectedField;
-  constructor(private jobService: JobService) { }
 
-  map: Mapboxgl.Map;
-  marker: Mapboxgl.Marker;
 
   ngOnInit(): void {
 
@@ -106,8 +110,6 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   submitJob(myForm): void {
-
-    
     this.jobObj.description = myForm.description;
     this.jobObj.field = myForm.field;
     this.jobObj.salary = myForm.salary;
@@ -117,6 +119,7 @@ export class EmployeeProfileComponent implements OnInit {
       console.log(res)
     }, err => {
       console.log(err)
+
     })
   }
 
