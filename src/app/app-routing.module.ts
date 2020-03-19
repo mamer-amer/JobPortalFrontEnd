@@ -5,26 +5,22 @@ import { RegisterComponent } from './register/register.component';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { AllJobsComponent } from './all-jobs/all-jobs.component';
+import {EmployeeMyjobsComponent} from './employee-myjobs/employee-myjobs.component'
+import {EmployeeAlljobsComponent} from './employee-alljobs/employee-alljobs.component'
 
 
 const routes: Routes = [
-  {
-    path:'',component: LoginPageComponent
-  },{
-    path:"register",component:RegisterComponent
-  },
-  {
-    path:"candidateProfile",component:CandidateProfileComponent
-  },{
-    path:"employeeProfile",component:EmployeeProfileComponent
-  },
-   {
-    path: "allJobs", component: AllJobsComponent
-  }
+  { path: '', component: LoginPageComponent },
+  { path: "register", component: RegisterComponent },
+  { path: "candidateProfile", component: CandidateProfileComponent },
+  { path: "employee/postjob", component: EmployeeProfileComponent },
+  { path: "employee/alljobs", component: EmployeeAlljobsComponent },
+  { path: "employee/myjobs", component: EmployeeMyjobsComponent },
+  { path: "allJobs", component: AllJobsComponent }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{useHash: true})],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
