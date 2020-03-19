@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+import { environment } from 'src/environments/environment';
+import * as Mapboxgl from 'mapbox-gl';
 @Component({
   selector: 'app-employee-profile',
   templateUrl: './employee-profile.component.html',
@@ -35,11 +36,67 @@ export class EmployeeProfileComponent implements OnInit {
   selectedField;
   constructor() { }
 
+  map: Mapboxgl.Map;
+
   ngOnInit(): void {
+
+    this.getPosition().then(pos => {
+     
+      Mapboxgl.accessToken = environment.mapboxKey;
+      this.map = new Mapboxgl.Map({
+        container: 'myMap', // container id
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [pos.lng, pos.lat], // starting position
+        zoom: 12// starting zoom
+      });
+      const marker = new Mapboxgl.Marker({
+        draggable: true,
+        })
+        .setLngLat([pos.lng, pos.lat])
+        .addTo(this.map);
+  
+        marker.on('drag',()=>{
+          console.log(marker.getLngLat())
+        })
+    });
+
+    
+
   }
+
+
+  createMarker(long,lat){
+    
+    const marker = new Mapboxgl.Marker({
+      draggable: true,
+      })
+      .setLngLat([long, lat])
+      .addTo(this.map);
+
+      marker.on('drag',()=>{
+        console.log(marker.getLngLat())
+      })
+
+      
+  }
+
 
   submitJob(myForm): void {
     console.log(myForm)
   }
 
+
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+        resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+      },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
 }
