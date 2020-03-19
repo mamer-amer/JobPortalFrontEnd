@@ -5,4 +5,6 @@ export class Candidate{
     presentationLetter:String;
     cv:any;
     dp:any
+    resumeContentType:any;
+    imageContentType:any;
 }

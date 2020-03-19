@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ApplicantServiceService } from '../Services/applicant-service.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -33,13 +34,16 @@ export class EmployeeProfileComponent implements OnInit {
   longitude = -77.0364;
 
   selectedField;
-  constructor() { }
+  constructor(private service:ApplicantServiceService) { }
 
   ngOnInit(): void {
   }
 
   submitJob(myForm): void {
     console.log(myForm)
+    this.service.postAJob(myForm).subscribe(res=>{
+      console.log(res);
+    })
   }
 
 }
