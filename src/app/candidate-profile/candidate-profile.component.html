@@ -20,6 +20,7 @@
         Back
       </button>
     </div>
+
     <div class="col-lg-1">
       <button [routerLink]="['/candidateProfile']"
         mat-stroked-button>
@@ -29,7 +30,8 @@
     </div>
     <div class="col-lg-1">
       <div *ngIf="allJobsbtn">
-        <button mat-stroked-button>All Jobs</button>
+        <button mat-stroked-button
+          [routerLink]="['/allJobs']">All Jobs</button>
       </div>
     </div>
 
@@ -39,7 +41,7 @@
         src="assets/icons8-logout-rounded-left-24.png"
         alt="">
     </div>
-    <div class="col-lg-2 offset-lg-1">
+    <div class="col-lg-1 offset-lg-1">
 
       <img src="../../assets/1622452.png"
         height="33"
@@ -156,6 +158,16 @@
                   (change)="onFileChange($event)" />
               </label>
 
+
+            </div>
+            <div class="col-4">
+
+              <div *ngIf="candidateObj.cv">
+                <a style="cursor: pointer;color: crimson;"
+                  (click)="downloadFile()">
+                  Download resume
+                </a>
+              </div>
 
             </div>
           </div>

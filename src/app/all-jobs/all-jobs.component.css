@@ -51,3 +51,32 @@ label {
         0px 1px 3px 0px rgba(0, 0, 0, 0.12);
         
 }
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 35%;
+}
+
+
+th {
+  width: 20%;
+  font-size: 17px;
+}
+
+td{
+  width: 25%;
+  font-size: 14px;
+}
+
+mat-card{
+  cursor: pointer;
+}
+
+ mat-raised-button{
+   width: 97%;
+   margin-left:3%
+ }

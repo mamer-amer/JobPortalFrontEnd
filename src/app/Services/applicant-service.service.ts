@@ -51,6 +51,22 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "token/user/"+userId);
    
   }
+  getAllJobs():Observable<any>{
+    return this.http.get(this.url + "api/job/all");
+   
+  }
+
+
+  postAJob(jobObj: any): Observable<any> {
+    return this.http.post(this.url + "api/job/", jobObj);
+  }
+
+
+  searchJobWithRespectToField(field:any):Observable<any>{
+    return this.http.get(this.url + "api/job/"+ field);
+
+
+  }
 
 
 }

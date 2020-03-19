@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isNumber } from 'util';
+import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -16,8 +17,13 @@ export class CandidateProfileComponent implements OnInit {
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
   color:any=false;
+  exportAsConfig: ExportAsConfig = {
+    type: 'pdf', // the type you want to download
+    elementId: 'myTableElementId', // the id of html/table element
+  }
 
   fields: any[] = [
+    {value:"all",viewValue:"Show All Jobs"},
     { value: 'businessFinance', viewValue: 'Business & Finance' },
     { value: 'computersTechnology', viewValue: 'Computers & Technology' },
     { value: 'contructionTrades', viewValue: 'Contruction Trades' },
@@ -39,7 +45,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) { }
+  constructor(private exportAsService: ExportAsService,private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.checkUserStauts();
@@ -97,6 +103,7 @@ export class CandidateProfileComponent implements OnInit {
       if (event.target.files && event.target.files.length > 0) {
         let file = event.target.files[0];
         reader.onload = this._handleReaderLoaded.bind(this);
+        this.candidateObj.resumeContentType = file.type;
         reader.readAsBinaryString(file);
 
 
@@ -112,7 +119,7 @@ export class CandidateProfileComponent implements OnInit {
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
       reader.onload = this._handleReaderImageLoaded.bind(this);
-      // this.candidateObj.dp = file.type
+      this.candidateObj.imageContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
       console.log(this.candidateObj.dp)
@@ -154,6 +161,9 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.candidateProfile.presentationLetter;
             this.candidateObj.cv = res.candidateProfile.cv;
             this.candidateObj.dp = res.candidateProfile.dp;
+            debugger;
+            this.candidateObj.imageContentType = res.candidateProfile.imageContentType;
+            this.candidateObj.resumeContentType = res.candidateProfile.resumeContentType;
           }
 
 
@@ -182,8 +192,43 @@ export class CandidateProfileComponent implements OnInit {
 
 
 
+
   logout() {
     sessionStorage.clear();
     this.router.navigateByUrl('');
+  }
+
+
+  getMIMEtype(extn) {
+    let ext = extn.toLowerCase();
+    let MIMETypes = {
+      'text/plain': 'txt',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+      'application/msword': 'doc',
+      'application/pdf': 'pdf',
+      'image/jpeg': 'jpg',
+      'image/bmp': 'bmp',
+      'image/png': 'png',
+      'application/vnd.ms-excel': 'xls',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+      'application/rtf': 'rtf',
+      'application/vnd.ms-powerpoint': 'ppt',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx'
+    }
+    return MIMETypes[ext];
+  }
+
+  downloadFile() {
+
+    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
+    const downloadLink = document.createElement("a");
+    const fileName = "download." + extension;
+
+    downloadLink.href = source;
+    downloadLink.download = fileName;
+    downloadLink.click();
+    //const url= window.URL.createObjectURL(blob);
+    //window.open(url);
   }
 }
