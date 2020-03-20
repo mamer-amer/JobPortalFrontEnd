@@ -23,7 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 
 import {MatDividerModule} from '@angular/material/divider';
-
+import { StarRatingModule } from 'angular-star-rating';
 import { DropdownModule } from 'primeng/dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -46,8 +46,10 @@ import { CandidateProfileComponent } from './candidate-profile/candidate-profile
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { AllJobsComponent } from './all-jobs/all-jobs.component';
+import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component';
+import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component';
 
-import {AgmCoreModule} from '@agm/core'
+// import {AgmCoreModule} from '@agm/core'
 
 
 // import {MatPaginator} from '@angular/material/paginator';
@@ -60,7 +62,9 @@ import {AgmCoreModule} from '@agm/core'
     RegisterComponent,
     CandidateProfileComponent,
     EmployeeProfileComponent,
-    AllJobsComponent
+    AllJobsComponent,
+    EmployeeMyjobsComponent,
+    EmployeeAlljobsComponent
     
   ],
   imports: [
@@ -100,9 +104,7 @@ import {AgmCoreModule} from '@agm/core'
     NzAvatarModule,
     NzBadgeModule ,
     NgxMaterialTimepickerModule,
-    AgmCoreModule.forRoot({
-      apiKey:'AIzaSyBPJOSxF4-RHuVLgtb-OaqMMsSySnZNMcs'
-    })
+    StarRatingModule.forRoot()
     
     // MatGridListModule
   ],

@@ -16,6 +16,10 @@ mat-label {
   font-size: 1.1em;
 }
 
+label[_ngcontent-xet-c379] {
+  background: white !important;
+}
+
 .avatar {
   vertical-align: middle;
   width: 100px;
@@ -50,6 +54,10 @@ label {
         0px 1px 1px 0px rgba(0, 0, 0, 0.14),
         0px 1px 3px 0px rgba(0, 0, 0, 0.12);
         
+}
+
+.capatalize{
+ text-transform: capitalize;
 }
 
 table {

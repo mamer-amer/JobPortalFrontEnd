@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
+import * as Mapboxgl from 'mapbox-gl';
+import { Job } from '../Job'
+import { JobService } from '../Services/job.service'
+
 import { ApplicantServiceService } from '../Services/applicant-service.service';
+
 
 @Component({
   selector: 'app-employee-profile',
@@ -9,6 +15,10 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 export class EmployeeProfileComponent implements OnInit {
 
 
+  jobObj: Job;
+  selectedField;  
+  map: Mapboxgl.Map;
+  marker: Mapboxgl.Marker;
 
   fields: any[] = [
     { value: 'businessFinance', viewValue: 'Business & Finance' },
@@ -30,20 +40,101 @@ export class EmployeeProfileComponent implements OnInit {
 
   ];
 
-  latitude = 38.8951;
-  longitude = -77.0364;
 
-  selectedField;
-  constructor(private service:ApplicantServiceService) { }
+  constructor(private jobService: JobService, private service: ApplicantServiceService) { }
+
+
 
   ngOnInit(): void {
+
+    this.jobObj = new Job();
+
+    this.getPosition().then(pos => {
+
+      Mapboxgl.accessToken = environment.mapboxKey;
+      this.map = new Mapboxgl.Map({
+        container: 'myMap', // container id
+        style: 'mapbox://styles/mapbox/streets-v11',
+        center: [pos.lng, pos.lat], // starting position
+        zoom: 12// starting zoom
+      });
+      this.jobObj.latitude = pos.lat;
+      this.jobObj.longitude = pos.lng;
+
+      this.marker = new Mapboxgl.Marker({
+        draggable: true
+      })
+        .setLngLat([pos.lng, pos.lat])
+        .addTo(this.map);
+
+
+
+      this.marker.on("drag", (e) => {
+        let { lng, lat } = e.target.getLngLat();
+        this.jobObj.latitude = lat;
+        this.jobObj.longitude = lng;
+
+      })
+      // var popup = new Mapboxgl.Popup({ offset: 25 }).setText(
+      //   'Construction on the Washington Monument began in 1848.'
+      //   );
+      // this.marker = new Mapboxgl.Marker({
+      //  clickable:true
+      // })
+      //   .setLngLat([pos.lng, pos.lat])
+      //   .setPopup(popup)
+      //   .addTo(this.map);
+
+      //   this.marker.getElement().addEventListener('dblclick', function (e) { console.log([pos.lng,pos.lat]); });
+    });
+
+
+
   }
 
+
+  createMarker(long, lat) {
+
+    const marker = new Mapboxgl.Marker({
+      draggable: true,
+    })
+      .setLngLat([long, lat])
+      .addTo(this.map);
+
+    marker.on('drag', () => {
+      console.log(marker.getLngLat())
+    })
+
+
+  }
+
+
   submitJob(myForm): void {
-    console.log(myForm)
-    this.service.postAJob(myForm).subscribe(res=>{
-      console.log(res);
+    this.jobObj.description = myForm.description;
+    this.jobObj.field = myForm.field;
+    this.jobObj.salary = myForm.salary;
+    this.jobObj.title = myForm.title;
+
+    this.jobService.postJob(this.jobObj).subscribe((res) => {
+      console.log(res)
+    }, err => {
+      console.log(err)
+
     })
   }
 
+
+  getPosition(): Promise<any> {
+    return new Promise((resolve, reject) => {
+
+      navigator.geolocation.getCurrentPosition(resp => {
+
+        resolve({ lng: resp.coords.longitude, lat: resp.coords.latitude });
+      },
+        err => {
+          reject(err);
+        });
+    });
+
+  }
 }
