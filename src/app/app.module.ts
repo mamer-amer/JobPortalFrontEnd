@@ -23,7 +23,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatIconModule} from '@angular/material/icon';
 
 import {MatDividerModule} from '@angular/material/divider';
-
+import { StarRatingModule } from 'angular-star-rating';
 import { DropdownModule } from 'primeng/dropdown';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {MatPaginatorModule} from '@angular/material/paginator';
@@ -104,7 +104,7 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
     NzAvatarModule,
     NzBadgeModule ,
     NgxMaterialTimepickerModule,
-   
+    StarRatingModule.forRoot()
     
     // MatGridListModule
   ],

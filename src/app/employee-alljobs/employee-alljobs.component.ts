@@ -10,7 +10,8 @@ export class EmployeeAlljobsComponent implements OnInit {
 
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
-
+  tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+  value = 3;
   constructor() { }
 
   ngOnInit(): void {
