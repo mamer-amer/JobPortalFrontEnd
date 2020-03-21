@@ -7,18 +7,23 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
   templateUrl: './company-profile.component.html',
   styleUrls: ['./company-profile.component.css']
 })
-export class CompanyProfileComponent implements OnInit{
+export class CompanyProfileComponent implements OnInit {
 
 
-  companyProfileObj:CompanyProfile = new CompanyProfile();
-  constructor(private service:ApplicantServiceService) { }
+  companyProfileObj: CompanyProfile = new CompanyProfile();
+  constructor(private service: ApplicantServiceService) { }
 
   ngOnInit(): void {
+
+    this.service.getUserByEmail("user").subscribe((res) => {
+      console.log(res)
+    })
   }
 
-  submitCompanyProfile(){
+  submitCompanyProfile() {
     console.log(this.companyProfileObj);
-    this.service.postCompanyProfile(this.companyProfileObj).subscribe(res=>{
+
+    this.service.postCompanyProfile(this.companyProfileObj).subscribe(res => {
       console.log(res);
     })
 
@@ -28,7 +33,7 @@ export class CompanyProfileComponent implements OnInit{
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
-    this.companyProfileObj.profileLogo = base64textString;
+    this.companyProfileObj.logo = base64textString;
 
   }
 
@@ -37,7 +42,7 @@ export class CompanyProfileComponent implements OnInit{
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
       reader.onload = this._handleReaderImageLoaded.bind(this);
-      this.companyProfileObj.imageContentType = file.type
+      this.companyProfileObj.logoContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
 

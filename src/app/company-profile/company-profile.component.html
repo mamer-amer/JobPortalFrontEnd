@@ -87,7 +87,7 @@
           <div class="row">
             <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
               <img class="companyLogo"
-                [src]="companyProfileObj.profileLogo!=null?'data:image/jpeg;base64,'+companyProfileObj.profileLogo:'../../assets/user.png'"
+                [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
                 alt="Avatar"
                 class="avatar" />
                    <label
@@ -109,9 +109,9 @@
                 <!-- <mat-label>Legal Company Name</mat-label> -->
                 <input style="width: 100%;"
                   matInput
-                  [(ngModel)]="companyProfileObj.companyProfileName"
+                  [(ngModel)]="companyProfileObj.name"
                   placeholder="Legal Company Name"
-                  name="companyProfileName"
+                  name="name"
                   required />
               </mat-form-field>
             </div>
