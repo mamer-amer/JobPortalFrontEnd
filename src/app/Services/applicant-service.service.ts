@@ -64,8 +64,11 @@ export class ApplicantServiceService {
 
   searchJobWithRespectToField(field:any):Observable<any>{
     return this.http.get(this.url + "api/job/"+ field);
+  }
 
 
+  postCompanyProfile(companyProfile:any):Observable<any>{
+    return this.http.post(this.url+"api/company/",companyProfile)
   }
 
 

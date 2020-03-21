@@ -58,7 +58,7 @@ export class LoginPageComponent implements OnInit {
           }
           else if(res.result.userType == "employee"){
             setTimeout(() => {
-              this.router.navigate(["/employee/postjob"]);
+              this.router.navigate(["/companyProfile"]);
             }, 1000);
           }
         }

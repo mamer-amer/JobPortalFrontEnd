@@ -48,6 +48,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { AllJobsComponent } from './all-jobs/all-jobs.component';
 import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component';
 import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 // import {AgmCoreModule} from '@agm/core'
 
@@ -64,7 +65,8 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
     EmployeeProfileComponent,
     AllJobsComponent,
     EmployeeMyjobsComponent,
-    EmployeeAlljobsComponent
+    EmployeeAlljobsComponent,
+    CompanyProfileComponent
     
   ],
   imports: [
