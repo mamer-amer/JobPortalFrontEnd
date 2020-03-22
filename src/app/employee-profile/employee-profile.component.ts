@@ -19,6 +19,7 @@ export class EmployeeProfileComponent implements OnInit {
   selectedField;  
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
+  convertedDate:any;
 
   fields: any[] = [
     { value: 'businessFinance', viewValue: 'Business & Finance' },
@@ -41,7 +42,7 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, private service: ApplicantServiceService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService) { }
 
 
 
@@ -110,10 +111,13 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   submitJob(myForm): void {
-    this.jobObj.description = myForm.description;
-    this.jobObj.field = myForm.field;
-    this.jobObj.salary = myForm.salary;
-    this.jobObj.title = myForm.title;
+  
+    this.jobObj = myForm;
+    // this.jobObj.publishFrom = new Date(this.convertDate(myForm.publishFrom));
+    // this.jobObj.publishTo = new Date(this.convertDate(myForm.publishFrom));
+
+
+    console.log(this.jobObj)
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
       console.log(res)
@@ -137,4 +141,20 @@ export class EmployeeProfileComponent implements OnInit {
     });
 
   }
+
+  convertDate(date: Date) {
+    return (this.convertedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
+  }
+
+  checkUserId(){
+    const id = sessionStorage.getItem('userId');
+    if(id!=null){
+      return id;
+    }
+   
+  }
+
+ 
+
+  
 }

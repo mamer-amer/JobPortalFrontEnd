@@ -11,7 +11,9 @@
         </div>
 
         <div class="col-lg-4">
-            <button class="btnNav" mat-stroked-button>
+            <button (click)="service.goBack()"
+              class="btnNav"
+              mat-stroked-button>
                 Back
             </button>
 
@@ -33,7 +35,9 @@
 
         </div>
         <div class="col-lg-1">
-            <img src="assets/icons8-logout-rounded-left-24.png" alt="">
+            <img (click)="service.logout()"
+              src="assets/icons8-logout-rounded-left-24.png"
+              alt="">
         </div>
         <!-- <div class="col-lg-2 offset-lg-1">
 

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
+import { ApplicantServiceService } from '../Services/applicant-service.service';
 @Component({
   selector: 'app-employee-alljobs',
   templateUrl: './employee-alljobs.component.html',
@@ -12,7 +13,7 @@ export class EmployeeAlljobsComponent implements OnInit {
   marker: Mapboxgl.Marker;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   value = 3;
-  constructor() { }
+  constructor(public service:ApplicantServiceService) { }
 
   ngOnInit(): void {
     this.loadMap();

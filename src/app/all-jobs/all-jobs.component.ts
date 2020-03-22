@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
-import csc from 'country-state-city'
+
 
 @Component({
   selector: 'app-all-jobs',

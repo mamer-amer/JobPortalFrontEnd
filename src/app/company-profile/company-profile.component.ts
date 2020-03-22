@@ -10,20 +10,18 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 export class CompanyProfileComponent implements OnInit {
 
 
-  companyProfileObj: CompanyProfile = new CompanyProfile();
-  constructor(private service: ApplicantServiceService) { }
+  companyProfileObj:CompanyProfile = new CompanyProfile();
+  userId:any;
+  constructor(public service:ApplicantServiceService) { }
 
-  ngOnInit(): void {
-
-    this.service.getUserByEmail("user").subscribe((res) => {
-      console.log(res)
-    })
+  ngOnInit() {
+    this.checkUserId();
+    this.getEmployeeProfile();
+    // this.getJobsPostedByEmployeeId();
   }
 
-  submitCompanyProfile() {
-    console.log(this.companyProfileObj);
-
-    this.service.postCompanyProfile(this.companyProfileObj).subscribe(res => {
+  submitCompanyProfile(){
+    this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       console.log(res);
     })
 
@@ -67,5 +65,29 @@ export class CompanyProfileComponent implements OnInit {
     }
     return MIMETypes[ext];
   }
+
+  checkUserId() {
+    const id = sessionStorage.getItem('userId');
+    if (id != null) {
+      this.userId = id;
+    }
+
+  }
+
+  getJobsPostedByEmployeeId() {
+    this.checkUserId();
+    this.service.getJobsByEmployeeId(this.userId).subscribe(res => {
+      console.table(res);
+    })
+  }
+
+  getEmployeeProfile(){
+    this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
+      this.companyProfileObj = res.companyProfile ? res.companyProfile :new CompanyProfile();
+      // console.log("yeh company profile dega" + res ? res.companyProfile:null)
+    })
+  }
+
+  
 
 }
