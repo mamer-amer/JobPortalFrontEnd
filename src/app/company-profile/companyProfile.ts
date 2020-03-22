@@ -1,10 +1,10 @@
 export class CompanyProfile{
-    companyProfileName?:String;
-    corporateAddress?:String;
-    billingAddress?:String;
-    contactName?:String;
-    contactTitle?:String;
-    profileLogo:String;
-    imageContentType:String;
+    name:String;
+    corporateAddress:String;
+    billingAddress:String;
+    contactName:String;
+    contactTitle:String;
+    logo:String;
+    logoContentType:String;
 
 }

@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { id_ID } from 'ng-zorro-antd';
+import { Location } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Injectable({
@@ -11,18 +13,12 @@ import { id_ID } from 'ng-zorro-antd';
 export class ApplicantServiceService {
 
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private _location: Location,private router:Router) { }
    url:any = environment.baseUrl;
 
-   logout(router){
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('username');
-    sessionStorage.removeItem('userType');
-    sessionStorage.removeItem('userId');
-    sessionStorage.removeItem('organizationName');
-    sessionStorage.removeItem('userImage');
-     router.navigate(['']);
+   logout(){
+    sessionStorage.clear();
+     this.router.navigate(['']);
   }
 
   saveUserForm(adduserObj:any):Observable<any>{
@@ -36,6 +32,9 @@ export class ApplicantServiceService {
   getUserByEmail(email):Observable<any>{
     return this.http.get(this.url+"token/user/"+email);
   }
+  getUserById(id:any):Observable<any>{
+    return this.http.get(this.url+"token/user/"+id);
+  }
 
   postCandidateProfile(id,obj:any):Observable<any>{
     return this.http.post(this.url+"api/cp/"+id,obj);
@@ -48,7 +47,7 @@ export class ApplicantServiceService {
 
 
   getCurrentProfileUserStauts(userId:any):Observable<any>{
-    return this.http.get(this.url + "token/user/"+userId);
+    return this.http.get(this.url +"token/user/"+userId);
    
   }
   getAllJobs():Observable<any>{
@@ -67,8 +66,17 @@ export class ApplicantServiceService {
   }
 
 
-  postCompanyProfile(companyProfile:any):Observable<any>{
-    return this.http.post(this.url+"api/company/",companyProfile)
+  postCompanyProfile(userId:any,companyProfile:any):Observable<any>{
+    return this.http.post(this.url +"api/companyprofile/"+userId,companyProfile)
+  }
+
+  getJobsByEmployeeId(id:any):Observable<any>{
+    return this.http.get(this.url + "api/job/myJobs/"+id);
+
+  }
+
+  goBack() {
+    this._location.back();
   }
 
 

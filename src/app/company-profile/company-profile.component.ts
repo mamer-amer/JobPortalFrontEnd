@@ -11,14 +11,17 @@ export class CompanyProfileComponent implements OnInit{
 
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
+  userId:any;
   constructor(private service:ApplicantServiceService) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.checkUserId();
+    this.getEmployeeProfile();
+    // this.getJobsPostedByEmployeeId();
   }
 
   submitCompanyProfile(){
-    console.log(this.companyProfileObj);
-    this.service.postCompanyProfile(this.companyProfileObj).subscribe(res=>{
+    this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       console.log(res);
     })
 
@@ -28,7 +31,7 @@ export class CompanyProfileComponent implements OnInit{
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
-    this.companyProfileObj.profileLogo = base64textString;
+    this.companyProfileObj.logo = base64textString;
 
   }
 
@@ -37,7 +40,7 @@ export class CompanyProfileComponent implements OnInit{
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
       reader.onload = this._handleReaderImageLoaded.bind(this);
-      this.companyProfileObj.imageContentType = file.type
+      this.companyProfileObj.logoContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
 
@@ -62,5 +65,29 @@ export class CompanyProfileComponent implements OnInit{
     }
     return MIMETypes[ext];
   }
+
+  checkUserId() {
+    const id = sessionStorage.getItem('userId');
+    if (id != null) {
+      this.userId = id;
+    }
+
+  }
+
+  getJobsPostedByEmployeeId() {
+    this.checkUserId();
+    this.service.getJobsByEmployeeId(this.userId).subscribe(res => {
+      console.table(res);
+    })
+  }
+
+  getEmployeeProfile(){
+    this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
+      this.companyProfileObj = res.companyProfile ? res.companyProfile :new CompanyProfile();
+      // console.log("yeh company profile dega" + res ? res.companyProfile:null)
+    })
+  }
+
+  
 
 }
