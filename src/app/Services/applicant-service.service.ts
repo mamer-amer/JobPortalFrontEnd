@@ -30,11 +30,14 @@ export class ApplicantServiceService {
  
 
   getUserByEmail(email):Observable<any>{
-    return this.http.get(this.url+"token/user/"+email);
+    let userId=sessionStorage.getItem("userId");
+    return this.http.get(this.url+"token/user/"+userId);
   }
   getUserById(id:any):Observable<any>{
     return this.http.get(this.url+"token/user/"+id);
   }
+
+
 
   postCandidateProfile(id,obj:any):Observable<any>{
     return this.http.post(this.url+"api/cp/"+id,obj);
@@ -66,6 +69,7 @@ export class ApplicantServiceService {
   }
 
 
+
   postCompanyProfile(userId:any,companyProfile:any):Observable<any>{
     return this.http.post(this.url +"api/companyprofile/"+userId,companyProfile)
   }
@@ -77,7 +81,7 @@ export class ApplicantServiceService {
 
   goBack() {
     this._location.back();
-  }
 
+  }
 
 }

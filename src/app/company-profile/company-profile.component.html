@@ -1,58 +1,59 @@
 <nav class="navbar navbar-light bg-light"
-style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
+  style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
 
 
-<div class="row"
-style="width:100%">
+  <div class="row"
+    style="width:100%">
 
-<div class="col-lg-2 offset-lg-1">
-<a class="navbar-brand mb-0 h3"
-  href="#"
-  style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
-  Job Portal</a>
-</div>
+    <div class="col-lg-2 offset-lg-1">
+      <a class="navbar-brand mb-0 h3"
+        href="#"
+        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
+        Job Portal</a>
+    </div>
 
-<div class="col-lg-4">
-<button (click)="service.goBack()"
-  class="btnNav"
-  mat-stroked-button>
-  Back
-</button>
+    <div class="col-lg-4">
+      <button (click)="service.goBack()"
+        class="btnNav"
+        mat-stroked-button>
+        Back
+      </button>
 
-<button *ngIf="companyProfileObj"
-  class="btnNav"
-  [routerLink]="['/employee/myjobs']"
-  mat-stroked-button>
-  My Jobs
+      <button *ngIf="companyProfileObj"
+        class="btnNav"
+        [routerLink]="['/employee/myjobs']"
+        mat-stroked-button>
+        My Jobs
 
-</button>
-<button  *ngIf="companyProfileObj"  class="btnNav"
-  [routerLink]="['/employee/postjob']"
-  mat-stroked-button>
-  Post Job
-</button>
+      </button>
+      <button *ngIf="companyProfileObj"
+        class="btnNav"
+        [routerLink]="['/employee/postjob']"
+        mat-stroked-button>
+        Post Job
+      </button>
 
 
-<button *ngIf="companyProfileObj"
-  class="btnNav"
-  [routerLink]="['/employee/alljobs']"
-  mat-stroked-button>All Jobs</button>
+      <button *ngIf="companyProfileObj"
+        class="btnNav"
+        [routerLink]="['/employee/alljobs']"
+        mat-stroked-button>All Jobs</button>
 
-</div>
+    </div>
 
-<div class="col-lg-4">
+    <div class="col-lg-4">
 
-</div>
-<div class="col-lg-1">
-<img (click)="service.logout()"
-  src="assets/icons8-logout-rounded-left-24.png"
-  alt="">
-</div>
-<!-- <div class="col-lg-2 offset-lg-1">
+    </div>
+    <div class="col-lg-1">
+      <img (click)="service.logout()"
+        src="assets/icons8-logout-rounded-left-24.png"
+        alt="">
+    </div>
+    <!-- <div class="col-lg-2 offset-lg-1">
 
   <img src="../../assets/1622452.png" height="33" width="57">
 </div> -->
-</div>
+  </div>
 </nav>
 <br>
 
@@ -61,126 +62,130 @@ style="width:100%">
 
 <div class="container">
 
-<div class="breakLines">
-<br>
-<br>
+  <div class="breakLines">
+    <br>
+    <br>
 
 
-</div>
+  </div>
 
 
-<!-- card -->
+  <!-- card -->
 
-<form #myForm="ngForm">
-<div class="row ">
-<div class="col-lg-6 offset-lg-3 col-md-7 offset-md-3 col-sm-12">
-  <mat-card class="example-card">
+  <form #myForm="ngForm">
+    <div class="row ">
+      <div class="col-lg-6 offset-lg-3 col-md-7 offset-md-3 col-sm-12">
+        <mat-card class="example-card">
 
 
-    <mat-card-header>
-      <div mat-card-avatar
-        class="example-header-image"></div>
-      <mat-card-title>Company Profile</mat-card-title>
-    </mat-card-header>
+          <mat-card-header>
+            <div mat-card-avatar
+              class="example-header-image"></div>
+            <mat-card-title>Company Profile</mat-card-title>
+          </mat-card-header>
 
-    <!-- image row -->
-    <div class="row">
-      <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
-  <img class="companyLogo"
-          [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
-          alt="Avatar"
-          class="avatar" />
-              <label
-              style="cursor:pointer">
-                <input *ngIf="!companyProfileObj.logo" type="file"
+          <!-- image row -->
+          <div class="row">
+            <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
+              <img class="companyLogo"
+                [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
+                alt="Avatar"
+                class="avatar" />
+              <label style="cursor:pointer">
+                <input *ngIf="!companyProfileObj.logo"
+                  type="file"
                   id="imgFile"
-                  (change)="onImageChange($event)"
-                  />
+                  (change)="onImageChange($event)" />
               </label>
-      </div>
-    </div>
+            </div>
+          </div>
 
-    <!-- fields down -->
+        
+            <!--
+            fields
+            down
+            -->
 
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <mat-form-field class="example-full-width">
-          <!-- <mat-label>Legal Company Name</mat-label> -->
-          <input style="width: 100%;"
-            matInput
-            [(ngModel)]="companyProfileObj.name"
-            placeholder="Legal Company Name"
-            name="name"
-            required />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <mat-form-field class="example-full-width">
-          <!-- <mat-label>Corporate Address</mat-label> -->
-          <input style="width: 100%;"
-            matInput
-            placeholder="Corporate Address"
-            [(ngModel)]="companyProfileObj.corporateAddress"
-            name="corporateAddress"
-            required />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <mat-form-field class="example-full-width">
-          <!-- <mat-label>Billing Address</mat-label> -->
-          <input style="width: 100%;"
-            matInput
-            placeholder="Billing Address"
-            [(ngModel)]="companyProfileObj.billingAddress"
-            name="billingAddress"
-            required />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <mat-form-field class="example-full-width">
-          <!-- <mat-label>Contact Name</mat-label> -->
-          <input style="width: 100%;"
-            matInput
-            placeholder="Contact Name"
-            [(ngModel)]="companyProfileObj.contactName"
-            name="contactName"
-            required />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <mat-form-field class="example-full-width">
-          <!-- <mat-label>Contact Title</mat-label> -->
-          <input style="width: 100%;"
-            matInput
-            placeholder="Contact Title"
-            [(ngModel)]="companyProfileObj.contactTitle"
-            name="contactTitle"
-            required />
-        </mat-form-field>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 col-lg-12 col-sm-12">
-        <button mat-raised-button
-          [disabled]="myForm.invalid"
-          style="background-color:black;color:white"
-          color="primary"
-          (click)="submitCompanyProfile()">Submit</button>
-      </div>
-    </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <!-- <mat-label>Legal Company Name</mat-label> -->
+                  <input style="width: 100%;"
+                    matInput
+                    [(ngModel)]="companyProfileObj.name"
+                    placeholder="Legal Company Name"
+                    name="name"
+                    required />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <!-- <mat-label>Corporate Address</mat-label> -->
+                  <input style="width: 100%;"
+                    matInput
+                    placeholder="Corporate Address"
+                    [(ngModel)]="companyProfileObj.corporateAddress"
+                    name="corporateAddress"
+                    required />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <!-- <mat-label>Billing Address</mat-label> -->
+                  <input style="width: 100%;"
+                    matInput
+                    placeholder="Billing Address"
+                    [(ngModel)]="companyProfileObj.billingAddress"
+                    name="billingAddress"
+                    required />
+                </mat-form-field>
 
-  </mat-card>
-</div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <!-- <mat-label>Contact Name</mat-label> -->
+                  <input style="width: 100%;"
+                    matInput
+                    placeholder="Contact Name"
+                    [(ngModel)]="companyProfileObj.contactName"
+                    name="contactName"
+                    required />?
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <mat-form-field class="example-full-width">
+                  <!-- <mat-label>Contact Title</mat-label> -->
+                  <input style="width: 100%;"
+                    matInput
+                    placeholder="Contact Title"
+                    [(ngModel)]="companyProfileObj.contactTitle"
+                    name="contactTitle"
+                    required />
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <button mat-raised-button
+                  [disabled]="myForm.invalid"
+                  style="background-color:black;color:white"
+                  color="primary"
+                  (click)="submitCompanyProfile()">Submit</button>
+              </div>
+            </div>
 
-</div>
-</form>
+        </mat-card>
+      </div>
+
+    </div>
+  </form>
 
 </div>

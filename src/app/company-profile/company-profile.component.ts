@@ -7,12 +7,12 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
   templateUrl: './company-profile.component.html',
   styleUrls: ['./company-profile.component.css']
 })
-export class CompanyProfileComponent implements OnInit{
+export class CompanyProfileComponent implements OnInit {
 
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
-  constructor(private service:ApplicantServiceService) { }
+  constructor(public service:ApplicantServiceService) { }
 
   ngOnInit() {
     this.checkUserId();

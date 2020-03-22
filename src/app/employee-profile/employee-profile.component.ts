@@ -42,7 +42,7 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, private service: ApplicantServiceService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService) { }
 
 
 

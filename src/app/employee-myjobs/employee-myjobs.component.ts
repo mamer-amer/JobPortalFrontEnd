@@ -8,7 +8,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 })
 export class EmployeeMyjobsComponent implements OnInit {
   userId: any;
-  constructor(private service:ApplicantServiceService) { }
+  constructor(public service:ApplicantServiceService) { }
 
   ngOnInit(){
     this.getPostedJobsByCompany();

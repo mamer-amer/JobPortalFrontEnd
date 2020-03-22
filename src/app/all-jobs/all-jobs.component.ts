@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
 
+
 @Component({
   selector: 'app-all-jobs',
   templateUrl: './all-jobs.component.html',
@@ -23,7 +24,7 @@ export class AllJobsComponent implements OnInit {
 
   constructor(private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
-
+  
 
   }
 
