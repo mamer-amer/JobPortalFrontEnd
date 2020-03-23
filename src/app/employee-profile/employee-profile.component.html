@@ -4,40 +4,30 @@
   style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
 
 
-  <div class="row"
-    style="width:100%">
+  <div class="row" style="width:100%">
 
     <div class="col-lg-2 offset-lg-1">
-      <a class="navbar-brand mb-0 h3"
-        href="#"
+      <a class="navbar-brand mb-0 h3" href="#"
         style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
         Job Portal</a>
     </div>
 
     <div class="col-lg-4">
-      <button (click)="service.goBack()"
-        class="btnNav"
-        mat-stroked-button>
-        Back 
+      <button (click)="service.goBack()" class="btnNav" mat-stroked-button>
+        Back
       </button>
 
-      <button  class="btnNav"
-        [routerLink]="['/employee/myjobs']"
-        mat-stroked-button>
+      <button class="btnNav" [routerLink]="['/employee/myjobs']" mat-stroked-button>
         My Jobs
 
       </button>
-      <button class="btnNav"
-        [routerLink]="['/employee/postjob']"
-        mat-stroked-button>
+      <button class="btnNav" [routerLink]="['/employee/postjob']" mat-stroked-button>
         Post Job
 
       </button>
 
 
-      <button class="btnNav"
-        [routerLink]="['/employee/alljobs']"
-        mat-stroked-button>All Jobs</button>
+      <button class="btnNav" [routerLink]="['/employee/alljobs']" mat-stroked-button>All Jobs</button>
 
     </div>
 
@@ -45,14 +35,9 @@
 
     </div>
     <div class="col-lg-1">
-      <img (click)="service.logout()"
-        src="assets/icons8-logout-rounded-left-24.png"
-        alt="">
+      <img (click)="service.logout()" src="assets/icons8-logout-rounded-left-24.png" alt="">
     </div>
-    <!-- <div class="col-lg-2 offset-lg-1">
 
-<img src="../../assets/1622452.png" height="33" width="57">
-</div> -->
   </div>
 </nav>
 <br>
@@ -60,150 +45,107 @@
 
 
 <!-- carrd -->
-<div class="container"
-  style="margin-top: 5px;">
+<div class="container" style="margin-top: 5px;">
   <div class="row">
     <div class="col-lg-12">
       <mat-card [class.mat-elevation-z8]="true">
         <div class="row">
-          <div class="col-lg-12"
-            style="text-align: center;margin-top:5px;">
+          <div class="col-lg-12" style="text-align: center;margin-top:5px;">
             <h1 style="font-size:38px;font-weight: bold;font-family:monospace;">POST A JOB</h1>
           </div>
-          <div class="col-lg-12"
-            style="margin-top: 10px;">
-            <form #myform="ngForm"
-              (ngSubmit)="submitJob(myform.value)"
-              class="row">
+          <div class="col-lg-12" style="margin-top: 10px;">
+            <form #myform="ngForm" (ngSubmit)="submitJob(myform.value)" class="row">
               <div class="col-lg-10 offset-lg-1">
-                <mat-form-field style="width: 100%;"
-                  appearance="legacy">
+                <mat-form-field style="width: 100%;" appearance="legacy">
                   <mat-label>Job Title</mat-label>
-                  <input required
-                    name="title"
-                    ngModel
-                    matInput
-                    placeholder="Enter the job title">
+                  <input required name="title" ngModel matInput placeholder="Enter the job title">
 
                 </mat-form-field>
               </div>
               <div class="col-lg-5 offset-lg-1">
                 <mat-form-field class="example-full-width">
                   <mat-label>Publish From</mat-label>
-                  <input matInput
-                    [matDatepicker]="picker"
-                    name="publishFrom"
-                    ngModel>
-                  <mat-datepicker-toggle matSuffix
-                    [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi
-                    #picker></mat-datepicker>
+                  <input matInput [matDatepicker]="picker" name="publishFrom" ngModel>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker></mat-datepicker>
                 </mat-form-field>
               </div>
               <div class="col-lg-5">
                 <mat-form-field class="example-full-width">
                   <mat-label>Publish To</mat-label>
-                  <input matInput
-                    [matDatepicker]="picker1"
-                    name="publishTo"
-                    ngModel>
-                  <mat-datepicker-toggle matSuffix
-                    [for]="picker1"></mat-datepicker-toggle>
-                  <mat-datepicker touchUi
-                    #picker1></mat-datepicker>
+                  <input matInput [matDatepicker]="picker1" name="publishTo" ngModel>
+                  <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                  <mat-datepicker touchUi #picker1></mat-datepicker>
                 </mat-form-field>
               </div>
 
 
               <div class="col-lg-5 offset-lg-1">
-                <mat-form-field style="width: 100%;"
-                  appearance="legacy">
-                  <mat-label>Country</mat-label>
-                  <input required
-                    name="country"
-                    ngModel
-                    matInput
-                    placeholder="Country name">
-
-                </mat-form-field>
+               
+                  <mat-form-field style="width:100%">
+                    <mat-label>Choose a Country</mat-label>
+                    <mat-select (selectionChange)="countryChange($event)" required ngModel name="country">
+                      <mat-option *ngFor="let c of countries" [value]="c">
+                        {{c.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+             
               </div>
               <div class="col-lg-5">
-                <mat-form-field style="width: 100%;"
-                  appearance="legacy">
-                  <mat-label>Province/State</mat-label>
-                  <input required
-                    name="province"
-                    ngModel
-                    matInput
-                    placeholder="Enter province name">
-
+                <mat-form-field style="width:100%">
+                  <mat-label>Choose a Province/State</mat-label>
+                  <mat-select (selectionChange)="provinceChange($event)" required ngModel name="province">
+                    <mat-option *ngFor="let p of provinces" [value]="p">
+                      {{p.name}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-lg-5 offset-lg-1">
-                <mat-form-field style="width: 100%;"
-                  appearance="legacy">
-                  <mat-label>City</mat-label>
-                  <input required
-                    name="city"
-                    ngModel
-                    matInput
-                    placeholder="Enter City name">
-
+                <mat-form-field style="width:100%">
+                  <mat-label>Choose a City</mat-label>
+                  <mat-select required ngModel name="city">
+                    <mat-option *ngFor="let c of cities" [value]="c">
+                      {{c.name}}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
               <div class="col-lg-5">
-                <mat-form-field style="width: 100%;"
-                  appearance="legacy">
+                <mat-form-field style="width: 100%;" appearance="legacy">
                   <mat-label>Type</mat-label>
-                  <input required
-                    name="type"
-                    ngModel
-                    matInput
-                    placeholder="Enter Type name">
+                  <input required name="type" ngModel matInput placeholder="Enter Type name">
 
                 </mat-form-field>
               </div>
 
 
               <div class="col-lg-10 offset-lg-1">
-                <div class="row"
-                  style="margin-top:15px;">
+                <div class="row" style="margin-top:15px;">
                   <div class="col-lg-8">
                     <mat-form-field style="width:100%">
                       <mat-label>Choose Category</mat-label>
-                      <mat-select required
-                        ngModel
-                        name="category">
-                        <mat-option *ngFor="let f of fields"
-                          [value]="f.value">
+                      <mat-select required ngModel name="category">
+                        <mat-option *ngFor="let f of fields" [value]="f.value">
                           {{f.viewValue}}
                         </mat-option>
                       </mat-select>
                     </mat-form-field>
                   </div>
                   <div class="col-lg-4">
-                    <mat-form-field style="width: 100%;"
-                      appearance="legacy">
+                    <mat-form-field style="width: 100%;" appearance="legacy">
                       <mat-label>Salary</mat-label>
-                      <input required
-                        name="salary"
-                        ngModel
-                        matInput
-                        placeholder="Enter job salary">
+                      <input required name="salary" ngModel matInput placeholder="Enter job salary">
 
                     </mat-form-field>
                   </div>
                 </div>
               </div>
               <div class="col-lg-10 offset-lg-1">
-                <mat-form-field style="width: 100%;margin-top: 15px;"
-                  appearance="legacy">
+                <mat-form-field style="width: 100%;margin-top: 15px;" appearance="legacy">
                   <mat-label>Description</mat-label>
-                  <textarea required
-                    name="description"
-                    ngModel
-                    matInput
-                    style="height:65px"
+                  <textarea required name="description" ngModel matInput style="height:65px"
                     placeholder="Enter job Description">
                     </textarea>
 
@@ -221,12 +163,8 @@
 
                 </mat-card>
               </div>
-              <div class="col-lg-10 offset-lg-1"
-                style="margin-top:10px;">
-                <button [disabled]="myform.invalid"
-                  type="submit"
-                  style="width: 100%;"
-                  mat-raised-button
+              <div class="col-lg-10 offset-lg-1" style="margin-top:10px;">
+                <button [disabled]="myform.invalid" type="submit" style="width: 100%;" mat-raised-button
                   color="primary">Post Job</button>
               </div>
             </form>

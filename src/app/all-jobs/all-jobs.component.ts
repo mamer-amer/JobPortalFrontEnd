@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -7,6 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
+
 
 
 @Component({
@@ -18,20 +19,19 @@ export class AllJobsComponent implements OnInit {
 
   /** Constants used to fill up our data base. */
 
+  // pageChange=new EventEmitter();
 
-
+  allJobs: Array<any> = []
 
 
   constructor(private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
-  
+
 
   }
-
-
-
-
-
+  page: number = 1;
+  total: number;
+  itemsPerPage: number;
 
 
   logout() {
@@ -44,69 +44,6 @@ export class AllJobsComponent implements OnInit {
   }
 
 
-  // showAllJobs() {
-  //   this.service.getAllJobs().subscribe(res => {
-  //     console.log(res);
-
-  //     res.map(d=>{
-  //       this.tableData.push({
-  //         title: d.title,
-  //         field: d.field,
-  //         description: d.description,
-  //         salary: d.salary,
-  //         datePosted: d.datePosted
-  //       })
-  //     })
-
-  //     console.log(this.tableData)
-  //     this.dataSource = new MatTableDataSource(this.tableData);
-  //     this.dataSource.paginator = this.paginator;
-  //   })
-  // }
-
-
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSource.filter = filterValue.trim().toLowerCase();
-
-  //   if (this.dataSource.paginator) {
-  //     this.dataSource.paginator.firstPage();
-  //   }
-  // }
-
-  // searchWithField(){
-  //   if (this.selectedfield!=null){
-  //     this.service.searchJobWithRespectToField(this.selectedfield).subscribe(res=>{
-
-  //         if(res){
-  //           this.message = false;
-  //           this.tableData = [];
-  //           this.dataSource = null;
-  //           res.map(d => {
-  //             this.tableData.push({
-  //               title: d.title,
-  //               field: d.field,
-  //               description: d.description,
-  //               salary: d.salary,
-  //               datePosted: d.datePosted
-  //             })
-  //           });
-  //           this.dataSource = new MatTableDataSource(this.tableData);
-  //           this.dataSource.paginator = this.paginator;
-
-  //         }
-  //         else{
-
-  //             this.message = true;
-
-  //         }
-
-
-  //       })
-  //   }
-  // }
-
-
 
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
@@ -115,40 +52,72 @@ export class AllJobsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.getPaginatedJobs(0);
     this.loadMap();
     this.showMarkersOnMap();
+
+
+
   }
 
+  pageChange(p): void {
+
+    this.getPaginatedJobs(p - 1);
+  }
+
+
+
+
+
+  getPaginatedJobs(p): void {
+    this.service.getPaginatedJobs(p).subscribe((response) => {
+      console.log(response)
+      this.total = response.totalPages;
+      this.page = p + 1;
+      this.itemsPerPage = response.size;
+      this.allJobs = response.content
+    })
+  }
+
+  getJobsByCategory(cat): void {
+    console.log(cat)
+   this.service.getPaginatedJobsByCategory(cat,0).subscribe((res)=>{
+     console.log(res)
+   })
+  }
 
   showMarkersOnMap(): void {
     this.service.getAllJobs().subscribe(res => {
-      console.log(res)
 
-      res.forEach(element => this.createMarker(element.longitude, element.latitude,element.title));
+      res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title));
     })
+
 
   }
 
 
-  createMarker(long, lat,title) {
+  createMarker(long, lat, title) {
 
-   var popup = new Mapboxgl.Popup({ offset: 20 })
-   .setHTML('<div ><p class="capatalize" style="margin:5px;color:#464646;font-style:italic">' + title + '</p><div>')
+    var popup = new Mapboxgl.Popup({ offset: 20 })
+      .setHTML('<div ><p class="capatalize" style="margin:5px;color:#464646;font-style:italic">' + title + '</p><div>')
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
       .setPopup(popup)
       .addTo(this.map);
-    
+
 
     marker.getElement().addEventListener('dblclick', () => {
-      console.log(marker.getLngLat())
+      // console.log(marker.getLngLat())
     })
 
 
   }
 
+
+
   loadMap() {
     this.getCurrentPosition().then(pos => {
+      console.log(pos)
       Mapboxgl.accessToken = environment.mapboxKey;
       this.map = new Mapboxgl.Map({
         container: 'myMap', // container id

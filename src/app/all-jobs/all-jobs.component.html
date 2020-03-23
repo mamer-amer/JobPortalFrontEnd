@@ -40,7 +40,8 @@
 
 
     <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: white;margin: 0px;" for="exampleFormControlInput1">You are searching</label>
+      <label style="color: #0069D9;background: white;margin: 0px;" for="exampleFormControlInput1">You are
+        searching</label>
       <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="Search here">
     </div>
 
@@ -62,89 +63,42 @@
 
     <!--JOB FIELDS -->
     <div class="col-lg-3">
-      <mat-card style="height:600px;border-radius: 0px;margin-bottom:10px;">
+      <mat-card style="height:630px;border-radius: 0px;margin-bottom:10px;">
         <h2>Categories</h2>
         <hr />
-        <p>Business & Finance</p>
-        <p>Computers & Technology</p>
-        <p>Contruction Trades</p>
-        <p>Education, Teaching & Training</p>
-        <p>Engineering & Engineering Technicians</p>
-        <p>Fishing, Farming & Forestry</p>
-        <p>Legal, Criminal Justice & Law Enforcement</p>
+        <p class="hoverable" (click)="getPaginatedJobs(0)">All</p>
+        <p class="hoverable" (click)="getJobsByCategory('Business & Finance')">Business & Finance</p>
+        <p class="hoverable" (click)="getJobsByCategory('Computers & Technology')">Computers & Technology</p>
+        <p class="hoverable" (click)="getJobsByCategory('Contruction Trades')" >Contruction Trades</p>
+        <p class="hoverable" (click)="getJobsByCategory('Education, Teaching & Training')">Education, Teaching & Training</p>
+        <p class="hoverable" (click)="getJobsByCategory('Engineering & Engineering Technicians')">Engineering & Engineering Technicians</p>
+        <p class="hoverable" (click)="getJobsByCategory('Fishing, Farming & Forestry')">Fishing, Farming & Forestry</p>
+        <p class="hoverable" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement')">Legal, Criminal Justice & Law Enforcement</p>
 
-        <p>Management</p>
-        <p>Media Communications & Broadcasting</p>
-        <p>Military & Armed Forces</p>
-        <p>Office Administration & Management</p>
-        <p>Production & Manufacturing</p>
-        <p>Installation, Repair & Maintenance</p>
-        <p>Sales & Marketing</p>
-        <p>Social & Life Sciences</p>
-        <p>Transportation & Moving</p>
+        <p class="hoverable" (click)="getJobsByCategory('Management')">Management</p>
+        <p class="hoverable" (click)="getJobsByCategory('Media Communications & Broadcasting')">Media Communications & Broadcasting</p>
+        <p class="hoverable" (click)="getJobsByCategory('Military & Armed Forces')">Military & Armed Forces</p>
+        <p class="hoverable" (click)="getJobsByCategory('Office Administration & Management')">Office Administration & Management</p>
+        <p class="hoverable" (click)="getJobsByCategory('Production & Manufacturing')">Production & Manufacturing</p>
+        <p class="hoverable" (click)="getJobsByCategory('Installation, Repair & Maintenance')">Installation, Repair & Maintenance</p>
+        <p class="hoverable" (click)="getJobsByCategory('Sales & Marketing')">Sales & Marketing</p>
+        <p class="hoverable" (click)="getJobsByCategory('Social & Life Sciences')">Social & Life Sciences</p>
+        <p class="hoverable" (click)="getJobsByCategory('Transportation & Moving')">Transportation & Moving</p>
       </mat-card>
     </div>
     <div class="col-lg-9">
       <div class="row">
-        <!-- <div class="col-lg-12" style="margin-bottom:10px;">
-                    <mat-card style="height: 120px;background-color:#F2F2F2;border-radius: 0px;">
 
-                    </mat-card>
-                </div> -->
-        <div class="col-lg-12" style="margin-bottom:10px;">
+        <div *ngFor="let job of allJobs | paginate: { id: 'foo',
+        itemsPerPage: itemsPerPage,
+        currentPage: page,totalItems: total }" class="col-lg-12" style="margin-bottom:10px;">
           <mat-card
             style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
             <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-            </div>
-
-            <!-- ICON -->
-            <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-              <nz-avatar [nzSize]="64" nzIcon="user" style="background-color:#62a9ec;display:block;margin-bottom:10px;">
-              </nz-avatar>
-              <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
-
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-lg-12" style="margin-bottom:10px;">
-          <mat-card
-            style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-            <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-            </div>
-
-            <!-- ICON -->
-            <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-              <nz-avatar [nzSize]="64" nzIcon="user" style="background-color:#62a9ec;display:block;margin-bottom:10px;">
-              </nz-avatar>
-              <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
-
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-lg-12" style="margin-bottom:10px;">
-          <mat-card
-            style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-            <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
+              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h2>
+              <h3 style="font-weight:500;margin: 0px;">{{job.category}} - <span
+                  style="color:rgb(129, 126, 126);">{{job.city}}</span></h3>
+              <p style="margin-bottom:5px;">{{job.description}}.</p>
               <p style="color: rgb(146, 144, 144);;">2 days ago</p>
             </div>
 
@@ -158,83 +112,13 @@
           </mat-card>
         </div>
 
-        <div class="col-lg-12" style="margin-bottom:10px;">
-          <mat-card
-            style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-            <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-            </div>
-
-            <!-- ICON -->
-            <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-              <nz-avatar [nzSize]="64" nzIcon="user" style="background-color:#62a9ec;display:block;margin-bottom:10px;">
-              </nz-avatar>
-              <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
-
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-lg-12" style="margin-bottom:10px;">
-          <mat-card
-            style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-            <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-            </div>
-
-            <!-- ICON -->
-            <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-              <nz-avatar [nzSize]="64" nzIcon="user" style="background-color:#62a9ec;display:block;margin-bottom:10px;">
-              </nz-avatar>
-              <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
-
-            </div>
-          </mat-card>
-        </div>
-        <div class="col-lg-12" style="margin-bottom:10px;">
-          <mat-card
-            style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-            <div style="flex:4;">
-              <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-              <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                  style="color:rgb(129, 126, 126);">United States</span></h3>
-              <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                more-or-less normal distribution of letters, as opposed to using Content here.</p>
-              <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-            </div>
-
-            <!-- ICON -->
-            <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-              <nz-avatar [nzSize]="64" nzIcon="user" style="background-color:#62a9ec;display:block;margin-bottom:10px;">
-              </nz-avatar>
-              <nz-rate [(ngModel)]="value" [nzTooltips]="tooltips"></nz-rate>
-
-            </div>
-          </mat-card>
-        </div>
 
 
         <!-- //PAGINATION -->
         <div class="col-lg-12" style="margin:10px 0px 30px 0px;">
-          <nz-pagination [nzPageIndex]="1" [nzTotal]="500" [nzItemRender]="renderItemTemplate">
-          </nz-pagination>
-          <ng-template #renderItemTemplate let-type let-page="page">
-            <a *ngIf="type === 'pre'">Previous</a>
-            <a *ngIf="type === 'next'">Next</a>
-            <a *ngIf="type === 'page'">{{ page }}</a>
-          </ng-template>
+          <div class="has-text-centered">
+            <pagination-controls id="foo" (pageChange)="pageChange($event)"></pagination-controls>
+          </div>
         </div>
       </div>
 

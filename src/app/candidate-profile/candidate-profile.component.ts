@@ -24,22 +24,22 @@ export class CandidateProfileComponent implements OnInit {
 
   fields: any[] = [
     {value:"all",viewValue:"Show All Jobs"},
-    { value: 'businessFinance', viewValue: 'Business & Finance' },
-    { value: 'computersTechnology', viewValue: 'Computers & Technology' },
-    { value: 'contructionTrades', viewValue: 'Contruction Trades' },
-    { value: 'educationTeachingTraining', viewValue: 'Education, Teaching & Training' },
-    { value: 'engineeringEngineeringTechnicians', viewValue: 'Engineering & Engineering Technicians' },
-    { value: 'fishingFarmingForestry', viewValue: 'Fishing, Farming & Forestry' },
-    { value: 'legalCriminalJusticeLawEnforcement', viewValue: 'Legal, Criminal Justice & Law Enforcement' },
-    { value: 'management', viewValue: 'Management' },
-    { value: 'mediaCommunicationsBroadcasting', viewValue: 'Media Communications & Broadcasting' },
-    { value: 'militaryArmedForces', viewValue: 'Military & Armed Forces' },
-    { value: 'officeAdministrationManagement', viewValue: 'Office Administration & Management' },
-    { value: 'productionManufacturing', viewValue: 'Production & Manufacturing' },
-    { value: 'installationRepairMaintenance', viewValue: 'Installation, Repair & Maintenance' },
-    { value: 'salesMarketing', viewValue: 'Sales & Marketing' },
-    { value: 'socialLifeSciences', viewValue: 'Social & Life Sciences' },
-    { value: 'transportationMoving', viewValue: 'Transportation & Moving' },
+    { value: 'Business and Finance', viewValue: 'Business and Finance' },
+    { value: 'Computers and Technology', viewValue: 'Computers and Technology' },
+    { value: 'Contruction Trades', viewValue: 'Contruction Trades' },
+    { value: 'Education, Teaching and Training', viewValue: 'Education, Teaching and Training' },
+    { value: 'Engineering and Engineering Technicians', viewValue: 'Engineering and Engineering Technicians' },
+    { value: 'Fishing, Farming and Forestry', viewValue: 'Fishing, Farming and Forestry' },
+    { value: 'Legal, Criminal Justice and Law Enforcement', viewValue: 'Legal, Criminal Justice and Law Enforcement' },
+    { value: 'Management', viewValue: 'Management' },
+    { value: 'Media Communications and Broadcasting', viewValue: 'Media Communications and Broadcasting' },
+    { value: 'Military and Armed Forces', viewValue: 'Military and Armed Forces' },
+    { value: 'Office Administration and Management', viewValue: 'Office Administration and Management' },
+    { value: 'Production and Manufacturing', viewValue: 'Production and Manufacturing' },
+    { value: 'Installation, Repair and Maintenance', viewValue: 'Installation, Repair and Maintenance' },
+    { value: 'Sales and Marketing', viewValue: 'Sales and Marketing' },
+    { value: 'Social and Life Sciences', viewValue: 'Social and Life Sciences' },
+    { value: 'Transportation and Moving', viewValue: 'Transportation and Moving' },
 
   ];
 
@@ -161,7 +161,7 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.candidateProfile.presentationLetter;
             this.candidateObj.cv = res.candidateProfile.cv;
             this.candidateObj.dp = res.candidateProfile.dp;
-            debugger;
+       
             this.candidateObj.imageContentType = res.candidateProfile.imageContentType;
             this.candidateObj.resumeContentType = res.candidateProfile.resumeContentType;
           }

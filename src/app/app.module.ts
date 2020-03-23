@@ -49,6 +49,7 @@ import { AllJobsComponent } from './all-jobs/all-jobs.component';
 import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component';
 import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import {NgxPaginationModule} from 'ngx-pagination'; 
 
 // import {AgmCoreModule} from '@agm/core'
 
@@ -89,7 +90,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
     MatRadioModule,
     DropdownModule,
     MatDialogModule,  
-
+    NgxPaginationModule,
     MatDividerModule,
     NgbModule,
     MatIconModule,
