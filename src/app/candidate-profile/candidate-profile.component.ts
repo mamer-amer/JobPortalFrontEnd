@@ -5,6 +5,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -45,7 +46,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService,private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) { }
+  constructor(private exportAsService: ExportAsService,private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private message:NzMessageService) { }
 
   ngOnInit(): void {
     this.checkUserStauts();
@@ -132,10 +133,22 @@ export class CandidateProfileComponent implements OnInit {
 
     console.log(this.candidateObj);
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
+      
+      if(res.status==200){
+        this.message.success(res.message,{
+          nzDuration: 3000
+        });
       this.allJobsbtn = true;
       this.labelText = "Change your resume"
       console.log(res);
-    })
+      }
+      else{
+        this.message.error(res.message, {
+          nzDuration: 3000
+        });
+      }
+     
+    });
   }
 
 

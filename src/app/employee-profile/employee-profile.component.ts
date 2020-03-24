@@ -6,6 +6,8 @@ import { JobService } from '../Services/job.service'
 
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import csc from 'country-state-city'
+import { MessageService } from 'primeng/api/public_api';
+import { NzMessageService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-employee-profile',
@@ -45,7 +47,7 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService,private message:NzMessageService) { }
 
 
 
@@ -114,6 +116,18 @@ export class EmployeeProfileComponent implements OnInit {
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
       console.log(res)
+      if(res.status==200){
+        this.message.success(res.message, {
+          nzDuration: 3000
+        });
+        // this.jobObj = null;
+      }
+      else{
+  this.message.error(res.message, {
+          nzDuration: 3000
+        });
+      }
+     
     }, err => {
       console.log(err)
 
