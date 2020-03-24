@@ -8,12 +8,14 @@ import { JobDetails } from '../job-details/JobDetails'
   templateUrl: './job-details.component.html',
   styleUrls: ['./job-details.component.css']
 })
+
 export class JobDetailsComponent implements OnInit {
 
   jobObj: JobDetails;
   otherJobsArray:Array<any>=[];
+  
 
-  constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute) {
+  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute) {
     this.jobObj = new JobDetails();
 
    

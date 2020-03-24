@@ -1,6 +1,5 @@
 
 export  class JobDetails {
-
     title: String;
     description: String;
     salary: number;
@@ -8,8 +7,8 @@ export  class JobDetails {
     city: String;
     category: String;
     type: String;
-    companyProfile: Object = {
-        name: "",
+    companyProfile = {
+        name : "",
         corporateAddress: "",
         logo: "",
         logoContentType: ""

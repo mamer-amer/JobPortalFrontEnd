@@ -20,18 +20,20 @@ export class AllJobsComponent implements OnInit {
   /** Constants used to fill up our data base. */
 
   // pageChange=new EventEmitter();
-
+  selectedCategory :any;
   allJobs: Array<any> = []
+  empty = false;
+  cityName:any;
 
 
-  constructor(private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
 
 
   }
-  page: number = 1;
-  total: number;
-  itemsPerPage: number;
+  page = 1;
+   public total:any;
+  itemsPerPage: any;
 
 
   logout() {
@@ -49,7 +51,7 @@ export class AllJobsComponent implements OnInit {
   marker: Mapboxgl.Marker;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   value = 3;
-
+// -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
 
   ngOnInit(): void {
     this.getPaginatedJobs(0);
@@ -62,7 +64,14 @@ export class AllJobsComponent implements OnInit {
 
   pageChange(p): void {
 
-    this.getPaginatedJobs(p - 1);
+    console.log(p);
+    if(this.selectedCategory!=null){
+      this.getJobsByCategory(this.selectedCategory,p-1);
+    } 
+    else{
+      this.getPaginatedJobs(p - 1);
+    }
+   
   }
 
 
@@ -71,18 +80,44 @@ export class AllJobsComponent implements OnInit {
 
   getPaginatedJobs(p): void {
     this.service.getPaginatedJobs(p).subscribe((response) => {
-      console.log(response)
-      this.total = response.totalPages;
-      this.page = p + 1;
-      this.itemsPerPage = response.size;
-      this.allJobs = response.content
+     
+      if(response.totalElements>0){
+        console.log(response)
+        this.total = response.totalElements;
+        this.page = p + 1;
+        this.itemsPerPage = response.size;
+        this.allJobs = response.content
+        this.empty = false;
+      }
+      else{
+        this.empty  = true;
+      }
     })
   }
 
-  getJobsByCategory(cat): void {
+  getJobsByCategory(cat,p): void {
+
     console.log(cat)
-   this.service.getPaginatedJobsByCategory(cat,0).subscribe((res)=>{
-     console.log(res)
+    this.allJobs = []
+    this.selectedCategory = cat;
+    this.total = 0;
+    this.itemsPerPage = 0;
+    this.page = 0;
+   this.service.getPaginatedJobsByCategory(cat,p).subscribe((res)=>{
+       
+      if(res.totalElements>0){
+        this.allJobs = res.content;
+        this.total = res.totalElements;
+        this.page = p + 1;
+        this.itemsPerPage = res.size;
+        this.empty = false;
+       
+      }
+      else{
+        this.empty = true;
+      }
+     console.log(this.empty)
+   
    })
   }
 

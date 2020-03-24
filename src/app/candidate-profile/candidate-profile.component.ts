@@ -45,7 +45,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService,private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) { }
+  constructor(private exportAsService: ExportAsService,private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.checkUserStauts();

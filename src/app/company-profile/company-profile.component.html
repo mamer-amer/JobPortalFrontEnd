@@ -1,106 +1,96 @@
-<nav class="navbar navbar-light bg-light"
-  style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
+<div class="bs-example">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <a href="#"
+      class="navbar-brand">Job Portal</a>
+    <button type="button"
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse"
+      id="navbarCollapse">
+      <div class="navbar-nav">
+        <!-- <a href="#"
+          class="nav-item nav-link active"
+          (click)="service.goBack()">Back</a> -->
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/companyProfile']">MyProfile</a>
 
 
-  <div class="row"
-    style="width:100%">
+        <a href="#"
+          *ngIf="companyProfileObj"
+          class="nav-item nav-link active"
+          [routerLink]="['/allJobs']">MyJobs</a>
+        <a href="#"
+          *ngIf="companyProfileObj"
+          class="nav-item nav-link active"
+          [routerLink]="['/employee/postjob']">Post a Job</a>
 
-    <div class="col-lg-2 offset-lg-1">
-      <a class="navbar-brand mb-0 h3"
-        href="#"
-        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
-        Job Portal</a>
+      </div>
+      <div class="navbar-nav ml-auto">
+        <a href="#"
+          class="nav-item nav-link"
+          data-toggle="dropdown"><img style="color:white"
+            (click)="service.logout()"
+            src="assets/icons8-logout-rounded-left-24.png"
+            alt=""></a>
+      </div>
+    </div>
+  </nav>
+
+
+  <br>
+  <br>
+
+  <br>
+
+
+  <!-- Compnay profile begins -->
+
+  <div class="container">
+
+    <div class="breakLines">
+      <br>
+      <br>
+
+
     </div>
 
-    <div class="col-lg-4">
-      <button (click)="service.goBack()"
-        class="btnNav"
-        mat-stroked-button>
-        Back
-      </button>
 
-      <button *ngIf="companyProfileObj"
-        class="btnNav"
-        [routerLink]="['/employee/myjobs']"
-        mat-stroked-button>
-        My Jobs
+    <!-- card -->
 
-      </button>
-      <button *ngIf="companyProfileObj"
-        class="btnNav"
-        [routerLink]="['/employee/postjob']"
-        mat-stroked-button>
-        Post Job
-      </button>
+    <form #myForm="ngForm">
+      <div class="row ">
+        <div class="col-lg-6 offset-lg-3 col-md-7 offset-md-3 col-sm-12">
+          <mat-card class="example-card">
 
 
-      <button *ngIf="companyProfileObj"
-        class="btnNav"
-        [routerLink]="['/employee/alljobs']"
-        mat-stroked-button>All Jobs</button>
+            <mat-card-header>
+              <div mat-card-avatar
+                class="example-header-image"></div>
+              <mat-card-title>Company Profile</mat-card-title>
+            </mat-card-header>
 
-    </div>
-
-    <div class="col-lg-4">
-
-    </div>
-    <div class="col-lg-1">
-      <img (click)="service.logout()"
-        src="assets/icons8-logout-rounded-left-24.png"
-        alt="">
-    </div>
-    <!-- <div class="col-lg-2 offset-lg-1">
-
-  <img src="../../assets/1622452.png" height="33" width="57">
-</div> -->
-  </div>
-</nav>
-<br>
-
-
-<!-- Compnay profile begins -->
-
-<div class="container">
-
-  <div class="breakLines">
-    <br>
-    <br>
-
-
-  </div>
-
-
-  <!-- card -->
-
-  <form #myForm="ngForm">
-    <div class="row ">
-      <div class="col-lg-6 offset-lg-3 col-md-7 offset-md-3 col-sm-12">
-        <mat-card class="example-card">
-
-
-          <mat-card-header>
-            <div mat-card-avatar
-              class="example-header-image"></div>
-            <mat-card-title>Company Profile</mat-card-title>
-          </mat-card-header>
-
-          <!-- image row -->
-          <div class="row">
-            <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
-              <img class="companyLogo"
-                [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
-                alt="Avatar"
-                class="avatar" />
-              <label style="cursor:pointer">
-                <input *ngIf="!companyProfileObj.logo"
-                  type="file"
-                  id="imgFile"
-                  (change)="onImageChange($event)" />
-              </label>
+            <!-- image row -->
+            <div class="row">
+              <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
+                <img class="companyLogo"
+                  [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
+                  alt="Avatar"
+                  class="avatar" />
+                <label style="cursor:pointer">
+                  <input *ngIf="!companyProfileObj.logo"
+                    type="file"
+                    id="imgFile"
+                    (change)="onImageChange($event)" />
+                </label>
+              </div>
             </div>
-          </div>
 
-        
+
             <!--
             fields
             down
@@ -182,10 +172,10 @@
               </div>
             </div>
 
-        </mat-card>
+          </mat-card>
+        </div>
+
       </div>
+    </form>
 
-    </div>
-  </form>
-
-</div>
+  </div>

@@ -63,6 +63,7 @@ export class ApplicantServiceService {
   }
 
   getPaginatedJobsByCategory(category,page):Observable<any>{
+    category = category.replace(/&/g,'_and_');
     return this.http.get(this.url+"api/job/jobsbycategory?category="+category+"&page="+page);
   }
 
@@ -95,7 +96,14 @@ export class ApplicantServiceService {
   }
 
   goBack() {
-    this._location.back();
+
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      window.location.replace(window.location.hash);
+    }
+    else {
+      this._location.back();
+    }
 
   }
 

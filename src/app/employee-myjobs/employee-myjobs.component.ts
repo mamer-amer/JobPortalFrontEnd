@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-employee-myjobs',
@@ -8,7 +9,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 })
 export class EmployeeMyjobsComponent implements OnInit {
   userId: any;
-  constructor(public service:ApplicantServiceService) { }
+  constructor(public service:ApplicantServiceService,private _location:Location) { }
 
   ngOnInit(){
     this.getPostedJobsByCompany();
@@ -29,5 +30,13 @@ export class EmployeeMyjobsComponent implements OnInit {
   
 
   }
+
+
+    back(){
+      history.go(-1);
+    }
+    
+  
+
 
 }
