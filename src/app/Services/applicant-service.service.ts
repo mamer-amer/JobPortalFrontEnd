@@ -27,7 +27,7 @@ export class ApplicantServiceService {
 
  
 
- 
+  
 
   getUserByEmail(email):Observable<any>{
     let userId=sessionStorage.getItem("userId");
@@ -58,9 +58,25 @@ export class ApplicantServiceService {
    
   }
 
+  getPaginatedJobs(page):Observable<any>{
+    return this.http.get(this.url+"api/job/paginatedjobs?page="+page);
+  }
+
+  getPaginatedJobsByCategory(category,page):Observable<any>{
+    category = category.replace(/&/g,'_and_');
+    return this.http.get(this.url+"api/job/jobsbycategory?category="+category+"&page="+page);
+  }
 
   postAJob(jobObj: any): Observable<any> {
     return this.http.post(this.url + "api/job/", jobObj);
+  }
+
+  getJobById(id):Observable<any>{
+    return this.http.get(this.url+"api/job/?id="+id);
+  }
+
+  getJobCompany(id):Observable<any>{
+    return this.http.get(this.url+"api/job/company?id="+id);
   }
 
 

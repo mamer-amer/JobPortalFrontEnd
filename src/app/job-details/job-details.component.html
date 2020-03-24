@@ -1,0 +1,170 @@
+<!-- <nav class="navbar navbar-light bg-light"
+style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
+<a class="navbar-brand mb-0 h3" href="#"
+style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
+Job Portal</a>
+<div style="margin-right: 30%;">
+
+<button mat-stroked-button>All Jobs</button>
+&nbsp;
+
+<button [routerLink]="['/candidateProfile']" mat-stroked-button>
+Profile
+</button>
+&nbsp;
+<button mat-stroked-button>
+Back
+</button>
+</div>
+<div style="margin-right: 1%;" style="cursor: pointer;">
+<img src="assets/icons8-logout-rounded-left-24.png" alt="">
+</div>
+<div class="row" style="float: right; margin-right: 1%;">
+<img src="../../assets/1622452.png" height="33" width="57">
+</div>
+</nav> -->
+<div class="bs-example">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <a href="#"
+      class="navbar-brand">Job Portal</a>
+    <button type="button"
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse"
+      id="navbarCollapse">
+      <div class="navbar-nav">
+        <!-- <a href="#"
+          class="nav-item nav-link active"
+          (click)="service.goBack()">Back</a> -->
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/candidateProfile']">MyProfile</a>
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/allJobs']">All Jobs</a>
+
+      </div>
+      <div class="navbar-nav ml-auto">
+        <a href="#"
+          class="nav-item nav-link"
+          data-toggle="dropdown"><img style="color:white"
+            (click)="service.logout()"
+            src="assets/icons8-logout-rounded-left-24.png"
+            alt=""></a>
+      </div>
+    </div>
+  </nav>
+
+
+  <br>
+  <br>
+
+  <!-- Navbar code ends -->
+
+  <div>
+    <div class="container"
+      style="margin-top:30px;">
+      <h3 style="font-weight: bold;">{{otherJobsArray.length-1}} other jobs</h3>
+      <div class="row">
+
+        <div class="col-lg-5"
+          style="height: 510px; overflow-y: scroll;">
+
+          <!-- //COMPANIES OTHER JOBS -->
+          <div class="row">
+
+            <div *ngFor="let job of otherJobsArray"
+              class="col-lg-12"
+              style="margin-bottom:5px;">
+
+              <mat-card (click)="getJobById(job.id)"
+                style="cursor: pointer;border-radius: 0px;height:120px;">
+                <h2 style="margin-bottom: 0px;font-weight:500;">
+                  {{job.companyProfile.name}} - {{job.title}}
+                </h2>
+                <p>{{job.city}}-{{job.country}}</p>
+                <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
+              </mat-card>
+              <div *ngIf="job.id==jobObj['id']">
+
+                <mat-card
+                  style="border-left:5px solid #0069D9;border-radius: 0px;height:120px;background-color: rgb(231, 228, 228);">
+                  <div>
+                    <h2 style="margin-bottom: 0px;font-weight:500;">
+                      {{job.companyProfile.name}} - {{job.title}}
+                    </h2>
+                    <p>{{job.city}}-{{job.country}}</p>
+                    <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
+                  </div>
+                </mat-card>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="col-lg-7">
+          <!-- JOB SPECIFICATION -->
+          <mat-card style="border-radius: 0px;padding: 0px;">
+            <div style="background-color:#0069D9;height:5px;"></div>
+            <div style="display:flex;padding:20px 20px 0px 20px;">
+              <img style="width: 17%;
+                border-radius: 48px;"
+               
+                [src]="jobObj.companyProfile.logo!=null?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
+                alt="Avatar"
+                class="avatar" />
+              <!-- <nz-avatar [nzSize]="64" nzIcon="user"
+                style="background-color:#62a9ec;display:block;margin-bottom:10px;">
+            </nz-avatar> -->
+              <div>
+                <h2 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h2>
+                <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.city}}</p>
+
+              </div>
+
+            </div>
+            <div style="display: flex; justify-content: flex-end;">
+              <button type="button"
+                style="border-radius:30px;margin:0px 10px 5px 0px;"
+                class="btn btn-primary">Apply to job</button>
+            </div>
+
+            <hr style="margin-top:5px;" />
+
+          </mat-card>
+
+          <mat-card
+            style="background-color: rgb(250, 249, 249); border-radius: 0px;margin-bottom:10px;height:365px;overflow-y: scroll;">
+            <h2 style="font-weight:500;">Job details</h2>
+            <p style="font-weight: 600;margin-bottom:3px;">Salary</p>
+            <p style="color:rgb(129, 126, 126);">Rs {{jobObj.salary}}</p>
+            <p style="font-weight: 600;margin-bottom:3px;">Job Type</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj.type}}</p>
+            <hr />
+            <h2 style="font-weight:500;">Full Job Description</h2>
+            <p style="font-weight: 600;margin-bottom:3px;">Company Name</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
+            <p style="font-weight: 600;margin-bottom:3px;">City</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj.city}}</p>
+            <hr style="margin-top:5px;" />
+            <p style="font-weight: 600;margin:5px 0px 2px 0px;">Description</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj.description}}.</p>
+            <hr style="margin-top:5px;" />
+
+            <p style="font-weight:600;margin-bottom:3px;">Address - <span
+                style="color:rgb(107, 105, 105);font-size: 12px;font-weight:normal;">
+                {{jobObj.companyProfile.corporateAddress}} , {{jobObj.city}}</span> </p>
+            <p style="font-weight: 600;margin-bottom:3px;">Posted - <span
+                style="color:rgb(99, 98, 98);font-size: 12px;font-weight:normal;"> 3 hours ago</span> </p>
+
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+  </div>

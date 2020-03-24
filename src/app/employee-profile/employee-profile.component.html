@@ -1,61 +1,3 @@
-<!--Navbar Code  -->
-
-<!-- <nav class="navbar navbar-light bg-light"
-  style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
-
-
-  <div class="row"
-    style="width:100%">
-
-    <div class="col-lg-2 offset-lg-1">
-      <a class="navbar-brand mb-0 h3"
-        href="#"
-        style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
-        Job Portal</a>
-    </div>
-
-    <div class="col-lg-4">
-      <button (click)="service.goBack()"
-        class="btnNav"
-        mat-stroked-button>
-        Back 
-      </button>
-
-      <button  class="btnNav"
-        [routerLink]="['/employee/myjobs']"
-        mat-stroked-button>
-        My Jobs
-
-      </button>
-      <button class="btnNav"
-        [routerLink]="['/employee/postjob']"
-        mat-stroked-button>
-        Post Job
-
-      </button>
-
-
-      <button class="btnNav"
-        [routerLink]="['/employee/alljobs']"
-        mat-stroked-button>All Jobs</button>
-
-    </div>
-
-    <div class="col-lg-4">
-
-    </div>
-    <div class="col-lg-1">
-      <img (click)="service.logout()"
-        src="assets/icons8-logout-rounded-left-24.png"
-        alt="">
-    </div>
-     <div class="col-lg-2 offset-lg-1">
-
-<img src="../../assets/1622452.png" height="33" width="57">
-</div> 
-  </div>
-</nav>
-<br> -->
 <div class="bs-example">
   <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
     <a href="#"
@@ -95,7 +37,7 @@
 
   <br>
   <br>
-  <!-- carrd -->
+  
   <div class="container"
     style="margin-top: 5px;">
     <div class="row">
@@ -152,39 +94,46 @@
 
 
                 <div class="col-lg-5 offset-lg-1">
-                  <mat-form-field style="width: 100%;"
-                    appearance="legacy">
-                    <mat-label>Country</mat-label>
-                    <input required
-                      name="country"
-                      ngModel
-                      matInput
-                      placeholder="Country name">
 
+                  <mat-form-field style="width:100%">
+                    <mat-label>Choose a Country</mat-label>
+                    <mat-select (selectionChange)="countryChange($event)"
+                      required
+                      ngModel
+                      name="country">
+                      <mat-option *ngFor="let c of countries"
+                        [value]="c">
+                        {{c.name}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
+
                 </div>
                 <div class="col-lg-5">
-                  <mat-form-field style="width: 100%;"
-                    appearance="legacy">
-                    <mat-label>Province/State</mat-label>
-                    <input required
-                      name="province"
+                  <mat-form-field style="width:100%">
+                    <mat-label>Choose a Province/State</mat-label>
+                    <mat-select (selectionChange)="provinceChange($event)"
+                      required
                       ngModel
-                      matInput
-                      placeholder="Enter province name">
-
+                      name="province">
+                      <mat-option *ngFor="let p of provinces"
+                        [value]="p">
+                        {{p.name}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="col-lg-5 offset-lg-1">
-                  <mat-form-field style="width: 100%;"
-                    appearance="legacy">
-                    <mat-label>City</mat-label>
-                    <input required
-                      name="city"
+                  <mat-form-field style="width:100%">
+                    <mat-label>Choose a City</mat-label>
+                    <mat-select required
                       ngModel
-                      matInput
-                      placeholder="Enter City name">
-
+                      name="city">
+                      <mat-option *ngFor="let c of cities"
+                        [value]="c">
+                        {{c.name}}
+                      </mat-option>
+                    </mat-select>
                   </mat-form-field>
                 </div>
                 <div class="col-lg-5">
@@ -250,9 +199,7 @@
                   <p>Job Location:</p>
 
                   <mat-card [class.mat-elevation-z4]="true">
-                    <!-- <agm-map [longitude]="longitude" [latitude]="latitude">
-                    
-                </agm-map> -->
+
                     <div id="myMap"></div>
 
                   </mat-card>

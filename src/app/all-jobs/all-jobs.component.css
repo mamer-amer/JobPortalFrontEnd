@@ -88,3 +88,10 @@ mat-card{
    width: 97%;
    margin-left:3%
  }
+
+
+ .hoverable:hover{
+
+  text-decoration: underline;
+  color: blue;
+ }

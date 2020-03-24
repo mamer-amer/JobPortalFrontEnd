@@ -21,6 +21,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   submitCompanyProfile(){
+   console.log(this.companyProfileObj)
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       console.log(res);
     })

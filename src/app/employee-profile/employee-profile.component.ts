@@ -5,7 +5,7 @@ import { Job } from '../Job'
 import { JobService } from '../Services/job.service'
 
 import { ApplicantServiceService } from '../Services/applicant-service.service';
-
+import csc from 'country-state-city'
 
 @Component({
   selector: 'app-employee-profile',
@@ -16,28 +16,31 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   jobObj: Job;
-  selectedField;  
+  selectedField;
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
-  convertedDate:any;
+  convertedDate: any;
+  countries: Array<any> = [];
+  cities: Array<any> = [];
+  provinces: Array<any> = [];
 
   fields: any[] = [
-    { value: 'businessFinance', viewValue: 'Business & Finance' },
-    { value: 'computersTechnology', viewValue: 'Computers & Technology' },
-    { value: 'contructionTrades', viewValue: 'Contruction Trades' },
-    { value: 'educationTeachingTraining', viewValue: 'Education, Teaching & Training' },
-    { value: 'engineeringEngineeringTechnicians', viewValue: 'Engineering & Engineering Technicians' },
-    { value: 'fishingFarmingForestry', viewValue: 'Fishing, Farming & Forestry' },
-    { value: 'legalCriminalJusticeLawEnforcement', viewValue: 'Legal, Criminal Justice & Law Enforcement' },
-    { value: 'management', viewValue: 'Management' },
-    { value: 'mediaCommunicationsBroadcasting', viewValue: 'Media Communications & Broadcasting' },
-    { value: 'militaryArmedForces', viewValue: 'Military & Armed Forces' },
-    { value: 'officeAdministrationManagement', viewValue: 'Office Administration & Management' },
-    { value: 'productionManufacturing', viewValue: 'Production & Manufacturing' },
-    { value: 'installationRepairMaintenance', viewValue: 'Installation, Repair & Maintenance' },
-    { value: 'salesMarketing', viewValue: 'Sales & Marketing' },
-    { value: 'socialLifeSciences', viewValue: 'Social & Life Sciences' },
-    { value: 'transportationMoving', viewValue: 'Transportation & Moving' },
+    { value: 'Business & Finance', viewValue: 'Business & Finance' },
+    { value: 'Computers & Technology', viewValue: 'Computers & Technology' },
+    { value: 'Contruction Trades', viewValue: 'Contruction Trades' },
+    { value: 'Education, Teaching & Training', viewValue: 'Education, Teaching & Training' },
+    { value: 'Engineering & Engineering Technicians', viewValue: 'Engineering & Engineering Technicians' },
+    { value: 'Fishing, Farming & Forestry', viewValue: 'Fishing, Farming & Forestry' },
+    { value: 'Legal, Criminal Justice & Law Enforcement', viewValue: 'Legal, Criminal Justice & Law Enforcement' },
+    { value: 'Management', viewValue: 'Management' },
+    { value: 'Media Communications & Broadcasting', viewValue: 'Media Communications & Broadcasting' },
+    { value: 'Military & Armed Forces', viewValue: 'Military & Armed Forces' },
+    { value: 'Office Administration & Management', viewValue: 'Office Administration & Management' },
+    { value: 'Production & Manufacturing', viewValue: 'Production & Manufacturing' },
+    { value: 'Installation, Repair & Maintenance', viewValue: 'Installation, Repair & Maintenance' },
+    { value: 'Sales & Marketing', viewValue: 'Sales & Marketing' },
+    { value: 'Social & Life Sciences', viewValue: 'Social & Life Sciences' },
+    { value: 'Transportation & Moving', viewValue: 'Transportation & Moving' },
 
   ];
 
@@ -49,6 +52,7 @@ export class EmployeeProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.jobObj = new Job();
+    this.getCountries();
 
     this.getPosition().then(pos => {
 
@@ -76,19 +80,8 @@ export class EmployeeProfileComponent implements OnInit {
         this.jobObj.longitude = lng;
 
       })
-      // var popup = new Mapboxgl.Popup({ offset: 25 }).setText(
-      //   'Construction on the Washington Monument began in 1848.'
-      //   );
-      // this.marker = new Mapboxgl.Marker({
-      //  clickable:true
-      // })
-      //   .setLngLat([pos.lng, pos.lat])
-      //   .setPopup(popup)
-      //   .addTo(this.map);
 
-      //   this.marker.getElement().addEventListener('dblclick', function (e) { console.log([pos.lng,pos.lat]); });
     });
-
 
 
   }
@@ -111,10 +104,10 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   submitJob(myForm): void {
-  
+    myForm.city=myForm.city.name;
+    myForm.country=myForm.country.name;
+    myForm.province=myForm.province.name
     this.jobObj = myForm;
-    // this.jobObj.publishFrom = new Date(this.convertDate(myForm.publishFrom));
-    // this.jobObj.publishTo = new Date(this.convertDate(myForm.publishFrom));
 
 
     console.log(this.jobObj)
@@ -140,21 +133,43 @@ export class EmployeeProfileComponent implements OnInit {
         });
     });
 
+
+  }
+
+  getCountries(): void {
+
+    this.countries = csc.getAllCountries();
+  }
+  countryChange(countryObj): void {
+    if (countryObj.value) {
+      this.provinces = csc.getStatesOfCountry(countryObj.value.id)
+    }
+    else {
+      this.provinces = null;
+    }
+  }
+  provinceChange(provinceObj): void {
+    if (provinceObj.value) {
+      this.cities = csc.getCitiesOfState(provinceObj.value.id);
+    }
+    else {
+      this.cities = null;
+    }
   }
 
   convertDate(date: Date) {
     return (this.convertedDate = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate());
   }
 
-  checkUserId(){
+  checkUserId() {
     const id = sessionStorage.getItem('userId');
-    if(id!=null){
+    if (id != null) {
       return id;
     }
-   
+
   }
 
- 
 
-  
+
+
 }
