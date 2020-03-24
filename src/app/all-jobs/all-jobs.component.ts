@@ -96,6 +96,10 @@ export class AllJobsComponent implements OnInit {
   }
 
 
+  routeToJobDetailsComponent(id):void{
+    this.router.navigate(['/job/'+id])
+  }
+
   createMarker(long, lat, title) {
 
     var popup = new Mapboxgl.Popup({ offset: 20 })

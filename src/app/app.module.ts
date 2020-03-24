@@ -49,7 +49,8 @@ import { AllJobsComponent } from './all-jobs/all-jobs.component';
 import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component';
 import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import {NgxPaginationModule} from 'ngx-pagination';
+import { JobDetailsComponent } from './job-details/job-details.component'; 
 
 // import {AgmCoreModule} from '@agm/core'
 
@@ -67,7 +68,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
     AllJobsComponent,
     EmployeeMyjobsComponent,
     EmployeeAlljobsComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    JobDetailsComponent
     
   ],
   imports: [

@@ -69,18 +69,24 @@
         <p class="hoverable" (click)="getPaginatedJobs(0)">All</p>
         <p class="hoverable" (click)="getJobsByCategory('Business & Finance')">Business & Finance</p>
         <p class="hoverable" (click)="getJobsByCategory('Computers & Technology')">Computers & Technology</p>
-        <p class="hoverable" (click)="getJobsByCategory('Contruction Trades')" >Contruction Trades</p>
-        <p class="hoverable" (click)="getJobsByCategory('Education, Teaching & Training')">Education, Teaching & Training</p>
-        <p class="hoverable" (click)="getJobsByCategory('Engineering & Engineering Technicians')">Engineering & Engineering Technicians</p>
+        <p class="hoverable" (click)="getJobsByCategory('Contruction Trades')">Contruction Trades</p>
+        <p class="hoverable" (click)="getJobsByCategory('Education, Teaching & Training')">Education, Teaching &
+          Training</p>
+        <p class="hoverable" (click)="getJobsByCategory('Engineering & Engineering Technicians')">Engineering &
+          Engineering Technicians</p>
         <p class="hoverable" (click)="getJobsByCategory('Fishing, Farming & Forestry')">Fishing, Farming & Forestry</p>
-        <p class="hoverable" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement')">Legal, Criminal Justice & Law Enforcement</p>
+        <p class="hoverable" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement')">Legal, Criminal
+          Justice & Law Enforcement</p>
 
         <p class="hoverable" (click)="getJobsByCategory('Management')">Management</p>
-        <p class="hoverable" (click)="getJobsByCategory('Media Communications & Broadcasting')">Media Communications & Broadcasting</p>
+        <p class="hoverable" (click)="getJobsByCategory('Media Communications & Broadcasting')">Media Communications &
+          Broadcasting</p>
         <p class="hoverable" (click)="getJobsByCategory('Military & Armed Forces')">Military & Armed Forces</p>
-        <p class="hoverable" (click)="getJobsByCategory('Office Administration & Management')">Office Administration & Management</p>
+        <p class="hoverable" (click)="getJobsByCategory('Office Administration & Management')">Office Administration &
+          Management</p>
         <p class="hoverable" (click)="getJobsByCategory('Production & Manufacturing')">Production & Manufacturing</p>
-        <p class="hoverable" (click)="getJobsByCategory('Installation, Repair & Maintenance')">Installation, Repair & Maintenance</p>
+        <p class="hoverable" (click)="getJobsByCategory('Installation, Repair & Maintenance')">Installation, Repair &
+          Maintenance</p>
         <p class="hoverable" (click)="getJobsByCategory('Sales & Marketing')">Sales & Marketing</p>
         <p class="hoverable" (click)="getJobsByCategory('Social & Life Sciences')">Social & Life Sciences</p>
         <p class="hoverable" (click)="getJobsByCategory('Transportation & Moving')">Transportation & Moving</p>
@@ -91,7 +97,8 @@
 
         <div *ngFor="let job of allJobs | paginate: { id: 'foo',
         itemsPerPage: itemsPerPage,
-        currentPage: page,totalItems: total }" class="col-lg-12" style="margin-bottom:10px;">
+        currentPage: page,totalItems: total }" (click)="routeToJobDetailsComponent(job.id)" class="col-lg-12"
+          style="margin-bottom:10px;">
           <mat-card
             style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
             <div style="flex:4;">

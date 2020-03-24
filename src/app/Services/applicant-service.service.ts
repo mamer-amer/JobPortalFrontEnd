@@ -70,6 +70,14 @@ export class ApplicantServiceService {
     return this.http.post(this.url + "api/job/", jobObj);
   }
 
+  getJobById(id):Observable<any>{
+    return this.http.get(this.url+"api/job/?id="+id);
+  }
+
+  getJobCompany(id):Observable<any>{
+    return this.http.get(this.url+"api/job/company?id="+id);
+  }
+
 
   searchJobWithRespectToField(field:any):Observable<any>{
     return this.http.get(this.url + "api/job/"+ field);
