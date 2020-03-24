@@ -8,7 +8,7 @@ import { AllJobsComponent } from './all-jobs/all-jobs.component';
 import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component'
 import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component'
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
-
+import { JobDetailsComponent } from './job-details/job-details.component'
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
@@ -19,6 +19,7 @@ const routes: Routes = [
   { path: "employee/myjobs", component: EmployeeMyjobsComponent },
   { path: "allJobs", component: AllJobsComponent },
   { path: "companyProfile", component: CompanyProfileComponent },
+  { path: "job/:id", component: JobDetailsComponent }
 ];
 
 @NgModule({
