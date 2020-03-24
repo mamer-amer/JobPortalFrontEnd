@@ -80,7 +80,14 @@ export class ApplicantServiceService {
   }
 
   goBack() {
-    this._location.back();
+
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      window.location.replace(window.location.hash);
+    }
+    else {
+      this._location.back();
+    }
 
   }
 

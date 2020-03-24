@@ -22,7 +22,7 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  constructor(private _location: Location, private service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
   
 

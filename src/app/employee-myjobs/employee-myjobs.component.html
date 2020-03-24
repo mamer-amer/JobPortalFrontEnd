@@ -1,6 +1,47 @@
-<!--Navbar Code  -->
+<div class="bs-example">
+  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+    <a href="#"
+      class="navbar-brand">Job Portal</a>
+    <button type="button"
+      class="navbar-toggler"
+      data-toggle="collapse"
+      data-target="#navbarCollapse">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<nav class="navbar navbar-light bg-light"
+    <div class="collapse navbar-collapse"
+      id="navbarCollapse">
+      <div class="navbar-nav">
+        <!-- <a href="#"
+          class="nav-item nav-link active"
+          (click)="service.goBack()">Back</a> -->
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/companyProfile']">MyProfile</a>
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/employee/myjobs']">MyJobs</a>
+
+      </div>
+      <div class="navbar-nav ml-auto">
+        <a href="#"
+          class="nav-item nav-link"
+          data-toggle="dropdown"><img style="color:white"
+            (click)="service.logout()"
+            src="assets/icons8-logout-rounded-left-24.png"
+            alt=""></a>
+      </div>
+    </div>
+  </nav>
+
+
+  <br>
+  <br>
+
+
+  <!--Navbar Code  -->
+
+  <!-- <nav class="navbar navbar-light bg-light"
     style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
 
 
@@ -41,16 +82,16 @@
               src="assets/icons8-logout-rounded-left-24.png"
               alt="">
         </div>
-        <!-- <div class="col-lg-2 offset-lg-1">
+         <div class="col-lg-2 offset-lg-1">
 
             <img src="../../assets/1622452.png" height="33" width="57">
         </div> -->
-    </div>
+  <!-- </div>
 </nav>
-<br>
-<!-- Navbar code ends -->
+<br> -->
+  <!-- Navbar code ends -->
 
-<div class="container">
+  <div class="container">
     <div id="myMap"></div>
 
-</div>
+  </div>
