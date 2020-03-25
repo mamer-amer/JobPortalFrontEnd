@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { NzMessageService } from 'ng-zorro-antd';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -46,7 +47,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService,private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private message:NzMessageService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.checkUserStauts();
@@ -135,17 +136,13 @@ export class CandidateProfileComponent implements OnInit {
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
       
       if(res.status==200){
-        this.message.success(res.message,{
-          nzDuration: 3000
-        });
+       this.toastService.success('Sucessfull','Candidate Profile Posted')
       this.allJobsbtn = true;
       this.labelText = "Change your resume"
       console.log(res);
       }
       else{
-        this.message.error(res.message, {
-          nzDuration: 3000
-        });
+       this.toastService.error('Unsuccessfull','Candidate Profile failed');
       }
      
     });

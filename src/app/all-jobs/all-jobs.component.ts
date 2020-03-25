@@ -24,6 +24,7 @@ export class AllJobsComponent implements OnInit {
   allJobs: Array<any> = []
   empty = false;
   cityName:any;
+  userType:any;
 
 
   constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
@@ -54,6 +55,7 @@ export class AllJobsComponent implements OnInit {
 // -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
 
   ngOnInit(): void {
+    this.userType =sessionStorage.getItem('userType');
     this.getPaginatedJobs(0);
     this.loadMap();
     this.showMarkersOnMap();
@@ -162,7 +164,7 @@ export class AllJobsComponent implements OnInit {
         container: 'myMap', // container id
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [pos.lng, pos.lat], // starting position
-        zoom: 8// starting zoom
+        zoom: 15// starting zoom
       });
     })
   }

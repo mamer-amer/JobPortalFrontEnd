@@ -12,15 +12,18 @@
     <div class="collapse navbar-collapse"
       id="navbarCollapse">
       <div class="navbar-nav">
-        <!-- <a href="#"
+        <a href="#"
           class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
+          (click)="service.goBack()">Back</a>
         <a href="#"
           class="nav-item nav-link active"
           [routerLink]="['/companyProfile']">MyProfile</a>
         <a href="#"
+          class="nav-item nav-link active active-link-page"
+          [routerLink]="['/employee/postjob']">Post a Job</a>
+        <a href="#"
           class="nav-item nav-link active"
-          [routerLink]="['/employee/myjobs']">MyJobs</a>
+          [routerLink]="['/allJobs']">MyJobs</a>
 
       </div>
       <div class="navbar-nav ml-auto">
@@ -37,7 +40,7 @@
 
   <br>
   <br>
-  
+
   <div class="container"
     style="margin-top: 5px;">
     <div class="row">
@@ -51,7 +54,7 @@
             <div class="col-lg-12"
               style="margin-top: 10px;">
               <form #myform="ngForm"
-                (ngSubmit)="submitJob(myform.value)"
+                (ngSubmit)="submitJob(myform.value);myform.reset()"
                 class="row">
                 <div class="col-lg-10 offset-lg-1">
                   <mat-form-field style="width: 100%;"
@@ -60,6 +63,8 @@
                     <input required
                       name="title"
                       ngModel
+                      maxlength="20"
+                      size="20"
                       matInput
                       placeholder="Enter the job title">
 

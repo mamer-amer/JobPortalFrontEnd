@@ -13,6 +13,7 @@ export class JobDetailsComponent implements OnInit {
 
   jobObj: JobDetails;
   otherJobsArray:Array<any>=[];
+  userType:any;
   
 
   constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute) {
@@ -22,6 +23,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = sessionStorage.getItem('userType');
     console.log(this.activatedRoute)
     let { id } = this.activatedRoute.snapshot.params;
     this.getJobById(id);

@@ -3,7 +3,7 @@ import { environment } from 'src/environments/environment';
 import * as Mapboxgl from 'mapbox-gl';
 import { Job } from '../Job'
 import { JobService } from '../Services/job.service'
-
+import { ToastrService } from 'ngx-toastr';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import csc from 'country-state-city'
 import { MessageService } from 'primeng/api/public_api';
@@ -47,11 +47,12 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService,private message:NzMessageService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService) { }
 
 
 
   ngOnInit(): void {
+   
 
     this.jobObj = new Job();
     this.getCountries();
@@ -106,26 +107,24 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   submitJob(myForm): void {
+
+
     myForm.city=myForm.city.name;
     myForm.country=myForm.country.name;
     myForm.province=myForm.province.name
     this.jobObj = myForm;
-
-
+  
     console.log(this.jobObj)
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
       console.log(res)
       if(res.status==200){
-        this.message.success(res.message, {
-          nzDuration: 3000
-        });
-        // this.jobObj = null;
+        
+          this.toastService.success('Successfull','Job Posted Successfully');
       }
       else{
-  this.message.error(res.message, {
-          nzDuration: 3000
-        });
+        this.toastService.error('Unsucessfull', 'Job can not be posted');
+
       }
      
     }, err => {
@@ -182,6 +181,9 @@ export class EmployeeProfileComponent implements OnInit {
     }
 
   }
+
+  
+  
 
 
 

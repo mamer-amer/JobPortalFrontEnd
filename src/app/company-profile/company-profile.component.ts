@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CompanyProfile } from './companyProfile';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-company-profile',
@@ -12,7 +13,7 @@ export class CompanyProfileComponent implements OnInit {
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
-  constructor(public service:ApplicantServiceService) { }
+  constructor(public service:ApplicantServiceService,private toastService:ToastrService) { }
 
   ngOnInit() {
     this.checkUserId();
@@ -23,6 +24,13 @@ export class CompanyProfileComponent implements OnInit {
   submitCompanyProfile(){
    console.log(this.companyProfileObj)
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
+      if(res){
+        this.toastService.success('Successfull','Company Profile Posted')
+      }
+      else{
+        this.toastService.success('Unsuccessfull', 'Company Profile Failed')
+
+      }
       console.log(res);
     })
 

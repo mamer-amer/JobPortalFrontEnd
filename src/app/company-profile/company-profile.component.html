@@ -12,11 +12,14 @@
     <div class="collapse navbar-collapse"
       id="navbarCollapse">
       <div class="navbar-nav">
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
+
         <a href="#"
           class="nav-item nav-link active"
+          (click)="service.goBack()">Back</a>
+
+        <a href="#"
+         
+          class="nav-item nav-link active active-link-page"
           [routerLink]="['/companyProfile']">MyProfile</a>
 
 
@@ -24,6 +27,7 @@
           *ngIf="companyProfileObj"
           class="nav-item nav-link active"
           [routerLink]="['/allJobs']">MyJobs</a>
+
         <a href="#"
           *ngIf="companyProfileObj"
           class="nav-item nav-link active"
@@ -43,9 +47,7 @@
 
 
   <br>
-  <br>
 
-  <br>
 
 
   <!-- Compnay profile begins -->
@@ -54,9 +56,7 @@
 
     <div class="breakLines">
       <br>
-      <br>
-
-
+      
     </div>
 
 

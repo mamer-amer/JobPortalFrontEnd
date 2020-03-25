@@ -12,15 +12,24 @@
     <div class="collapse navbar-collapse"
       id="navbarCollapse">
       <div class="navbar-nav">
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
         <a href="#"
           class="nav-item nav-link active"
-          [routerLink]="['/candidateProfile']">MyProfile</a>
-        <!-- <a href="#"
+          (click)="service.goBack()">Back</a>
+        <a href="#"
+          *ngIf="userType=='candidate'"
           class="nav-item nav-link active"
-          [routerLink]="['/employee/myjobs']">MyJobs</a> -->
+          [routerLink]="['/candidateProfile']">MyProfile</a>
+        <a href="#"
+          *ngIf="userType=='employee'"
+          class="nav-item nav-link active"
+          [routerLink]="['/companyProfile']">MyProfile</a>
+        <a href="#"
+          class="nav-item nav-link active active-link-page"
+          [routerLink]="['/allJobs']">MyJobs</a>
+
+        <a href="#"
+          class="nav-item nav-link active"
+          [routerLink]="['/employee/postjob']">Post a Job</a>
 
       </div>
       <div class="navbar-nav ml-auto">

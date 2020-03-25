@@ -51,7 +51,7 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
-
+import { ToastrModule } from 'ngx-toastr';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -73,6 +73,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     
   ],
   imports: [
+    ToastrModule,
     NzUploadModule, 
     CommonModule,
     BrowserModule,
@@ -109,7 +110,15 @@ import { JobDetailsComponent } from './job-details/job-details.component';
     NzAvatarModule,
     NzBadgeModule ,
     NgxMaterialTimepickerModule,
-    StarRatingModule.forRoot()
+    StarRatingModule.forRoot(),
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      positionClass: 'toast-top-left',
+      preventDuplicates: true,
+      progressBar:true,
+      progressAnimation:'decreasing',
+      closeButton:true
+    }),
     
     // MatGridListModule
   ],

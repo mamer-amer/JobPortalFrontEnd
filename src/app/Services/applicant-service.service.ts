@@ -5,6 +5,7 @@ import { environment } from '../../environments/environment';
 import { id_ID } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ApplicantServiceService {
 
   
-  constructor(private http: HttpClient, private _location: Location,private router:Router) { }
+  constructor(private http: HttpClient, private _location: Location,private router:Router,private toastService:ToastrService) { }
    url:any = environment.baseUrl;
 
    logout(){
@@ -105,6 +106,19 @@ export class ApplicantServiceService {
       this._location.back();
     }
 
+  }
+
+  toastSuccess(message, title) {
+    this.toastService.success(message, title);
+  }
+  toastError(message, title) {
+    this.toastService.error(message, title);
+  }
+  toastInfo(message, title) {
+    this.toastService.info(message, title);
+  }
+  toastWarning(message, title) {
+    this.toastService.warning(message, title);
   }
 
 }
