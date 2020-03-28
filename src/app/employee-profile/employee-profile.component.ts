@@ -8,6 +8,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import csc from 'country-state-city'
 import { MessageService } from 'primeng/api/public_api';
 import { NzMessageService } from 'ng-zorro-antd';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-employee-profile',
@@ -47,7 +48,7 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService,private router:Router) { }
 
 
 
@@ -109,18 +110,24 @@ export class EmployeeProfileComponent implements OnInit {
   submitJob(myForm): void {
 
 
-    myForm.city=myForm.city.name;
-    myForm.country=myForm.country.name;
-    myForm.province=myForm.province.name
-    this.jobObj = myForm;
-  
+    this.jobObj.city=myForm.city.name;
+    this.jobObj.country=myForm.country.name;
+    this.jobObj.province=myForm.province.name
+    this.jobObj.title = myForm.title;
+    this.jobObj.description = myForm.description;
+    this.jobObj.salary = myForm.salary;
+    this.jobObj.publishFrom = myForm.publishFrom;
+    this.jobObj.publishTo = myForm.publishTo
+    this.jobObj.category = myForm.category;
+    this.jobObj.type = myForm.title;
+
     console.log(this.jobObj)
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
       console.log(res)
       if(res.status==200){
         
-          this.toastService.success('Successfull','Job Posted Successfully');
+          this.toastService.info('Successfull','Job Posted Successfully');
       }
       else{
         this.toastService.error('Unsucessfull', 'Job can not be posted');
@@ -128,6 +135,8 @@ export class EmployeeProfileComponent implements OnInit {
       }
      
     }, err => {
+        this.toastService.error('Unsucessfull', 'Job can not be posted');
+
       console.log(err)
 
     })
@@ -180,6 +189,10 @@ export class EmployeeProfileComponent implements OnInit {
       return id;
     }
 
+  
+  }
+  goBack() {
+    this.router.navigate(['/'])
   }
 
   

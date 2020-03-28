@@ -12,9 +12,9 @@
     <div class="collapse navbar-collapse"
       id="navbarCollapse">
       <div class="navbar-nav">
-        <a href="#"
+        <!-- <a href="#"
           class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a>
+          (click)="service.goBack()">Back</a> -->
         <a href="#"
           *ngIf="userType=='candidate'"
           class="nav-item nav-link active"
@@ -27,7 +27,7 @@
           class="nav-item nav-link active active-link-page"
           [routerLink]="['/allJobs']">MyJobs</a>
 
-        <a href="#"
+        <a href="#" *ngIf="userType!='candidate'"
           class="nav-item nav-link active"
           [routerLink]="['/employee/postjob']">Post a Job</a>
 
@@ -36,9 +36,8 @@
         <a href="#"
           class="nav-item nav-link"
           data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()"
-            src="assets/icons8-logout-rounded-left-24.png"
-            alt=""></a>
+            (click)="service.logout()" class="logoutImage"
+ src="../../assets/logout.png" alt=""></a>
       </div>
     </div>
   </nav>
@@ -48,37 +47,6 @@
   <br>
 
 
-
-  <!-- <nav class="navbar navbar-light bg-light"
-  style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
-  <a class="navbar-brand mb-0 h3" href="#"
-    style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
-    Job Portal</a>
-  <div style="margin-right: 30%;">
-
-    <button mat-stroked-button>All Jobs</button>
-    &nbsp;
-
-    <button [routerLink]="['/candidateProfile']" mat-stroked-button>
-      Profile
-    </button>
-    &nbsp;
-    <button (click)="goBack()" mat-stroked-button>
-      Back
-    </button>
-  </div>
-  <div style="margin-right: 1%;" style="cursor: pointer;">
-    <img (click)="logout()" src="assets/icons8-logout-rounded-left-24.png" alt="">
-  </div>
-  <div class="row" style="float: right; margin-right: 1%;">
-    <img src="../../assets/1622452.png" height="33" width="57">
-  </div>
-</nav>
-<br> -->
-  <!-- Navbar code ends -->
-
-
-  <!-- ALL JOBS -->
 
 
   <div class="container-fluid">
@@ -96,8 +64,9 @@
         <label style="color: #0069D9;background: white;margin: 0px;"
           for="exampleFormControlInput1">You are
           searching</label>
-        <input type="email"
+        <input type="text"
           class="form-control"
+          name="text"
           id="exampleFormControlInput1"
           placeholder="Search here">
       </div>
@@ -108,7 +77,8 @@
         style="margin-left:10px;">
         <label style="color: #0069D9;background: white;margin: 0px;"
           for="exampleFormControlInput1">In</label>
-        <input type="email"
+        <input type="text"
+          name="city"
           class="form-control"
           id="exampleFormControlInput1"
           placeholder="Enter the city name">
@@ -117,7 +87,7 @@
         style="margin:30px 0px 0px 10px;">
         <button type="button"
           style="height:38px;"
-          [(ngModel)]="cityName"
+      
           class="btn btn-primary">Search</button>
       </div>
 

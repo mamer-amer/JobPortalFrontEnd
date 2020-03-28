@@ -6,6 +6,7 @@ import { id_ID } from 'ng-zorro-antd';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { browser } from 'protractor';
 
 
 @Injectable({
@@ -19,6 +20,8 @@ export class ApplicantServiceService {
 
    logout(){
     sessionStorage.clear();
+    localStorage.clear();
+    
      this.router.navigate(['']);
   }
 
@@ -95,16 +98,15 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/myJobs/"+id);
 
   }
+  applyJob(obj:any):Observable<any>{
+    return this.http.post(this.url + "api/job/applyJob",obj);
+
+  }
 
   goBack() {
 
     const token = sessionStorage.getItem('token');
-    if (token) {
-      window.location.replace(window.location.hash);
-    }
-    else {
-      this._location.back();
-    }
+    this._location.back();
 
   }
 
@@ -119,6 +121,14 @@ export class ApplicantServiceService {
   }
   toastWarning(message, title) {
     this.toastService.warning(message, title);
+  }
+
+  getReviewsById(id):Observable<any>{
+    return this.http.get(this.url + "api/review/averageRating?companyId="+id);
+  }
+
+  isAlreadyApplied(canId,jobId):Observable<any>{
+    return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId +"&jobId="+jobId);
   }
 
 }

@@ -25,10 +25,10 @@ export class CompanyProfileComponent implements OnInit {
    console.log(this.companyProfileObj)
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       if(res){
-        this.toastService.success('Successfull','Company Profile Posted')
+        this.toastService.info('Successfull','Company Profile Posted')
       }
       else{
-        this.toastService.success('Unsuccessfull', 'Company Profile Failed')
+        this.toastService.error('Unsuccessfull', 'Company Profile Failed')
 
       }
       console.log(res);

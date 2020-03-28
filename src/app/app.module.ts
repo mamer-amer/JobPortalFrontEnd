@@ -16,6 +16,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 
 import { NoopInterceptor } from './request.intercept';
 import {MatDialogModule} from '@angular/material/dialog';
@@ -52,6 +54,8 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
 import { ToastrModule } from 'ngx-toastr';
+
+import { DialogModule } from 'primeng/dialog';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -73,6 +77,7 @@ import { ToastrModule } from 'ngx-toastr';
     
   ],
   imports: [
+    ConfirmDialogModule,
     ToastrModule,
     NzUploadModule, 
     CommonModule,
@@ -92,6 +97,7 @@ import { ToastrModule } from 'ngx-toastr';
     MatTableModule,
     MatRadioModule,
     DropdownModule,
+    DialogModule,
     MatDialogModule,  
     NgxPaginationModule,
     MatDividerModule,
@@ -112,8 +118,8 @@ import { ToastrModule } from 'ngx-toastr';
     NgxMaterialTimepickerModule,
     StarRatingModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 5000,
-      positionClass: 'toast-top-left',
+      timeOut: 1000,
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar:true,
       progressAnimation:'decreasing',
@@ -130,6 +136,7 @@ import { ToastrModule } from 'ngx-toastr';
       multi: true
     },
     { provide: NZ_I18N, useValue: en_US },
+    ConfirmationService
     
   ],
   bootstrap: [AppComponent]

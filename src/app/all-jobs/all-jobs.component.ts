@@ -20,11 +20,11 @@ export class AllJobsComponent implements OnInit {
   /** Constants used to fill up our data base. */
 
   // pageChange=new EventEmitter();
-  selectedCategory :any;
+  selectedCategory: any;
   allJobs: Array<any> = []
   empty = false;
-  cityName:any;
-  userType:any;
+  cityName: any;
+  userType: any;
 
 
   constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
@@ -33,7 +33,7 @@ export class AllJobsComponent implements OnInit {
 
   }
   page = 1;
-   public total:any;
+  public total: any;
   itemsPerPage: any;
 
 
@@ -52,10 +52,10 @@ export class AllJobsComponent implements OnInit {
   marker: Mapboxgl.Marker;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   value = 3;
-// -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
+  // -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
 
   ngOnInit(): void {
-    this.userType =sessionStorage.getItem('userType');
+    this.userType = sessionStorage.getItem('userType');
     this.getPaginatedJobs(0);
     this.loadMap();
     this.showMarkersOnMap();
@@ -67,13 +67,13 @@ export class AllJobsComponent implements OnInit {
   pageChange(p): void {
 
     console.log(p);
-    if(this.selectedCategory!=null){
-      this.getJobsByCategory(this.selectedCategory,p-1);
-    } 
-    else{
+    if (this.selectedCategory != null) {
+      this.getJobsByCategory(this.selectedCategory, p - 1);
+    }
+    else {
       this.getPaginatedJobs(p - 1);
     }
-   
+
   }
 
 
@@ -82,8 +82,8 @@ export class AllJobsComponent implements OnInit {
 
   getPaginatedJobs(p): void {
     this.service.getPaginatedJobs(p).subscribe((response) => {
-     
-      if(response.totalElements>0){
+
+      if (response.totalElements > 0) {
         console.log(response)
         this.total = response.totalElements;
         this.page = p + 1;
@@ -91,13 +91,13 @@ export class AllJobsComponent implements OnInit {
         this.allJobs = response.content
         this.empty = false;
       }
-      else{
-        this.empty  = true;
+      else {
+        this.empty = true;
       }
     })
   }
 
-  getJobsByCategory(cat,p): void {
+  getJobsByCategory(cat, p): void {
 
     console.log(cat)
     this.allJobs = []
@@ -105,54 +105,73 @@ export class AllJobsComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 0;
     this.page = 0;
-   this.service.getPaginatedJobsByCategory(cat,p).subscribe((res)=>{
-       
-      if(res.totalElements>0){
+    this.service.getPaginatedJobsByCategory(cat, p).subscribe((res) => {
+
+      if (res.totalElements > 0) {
         this.allJobs = res.content;
         this.total = res.totalElements;
         this.page = p + 1;
         this.itemsPerPage = res.size;
         this.empty = false;
-       
+
       }
-      else{
+      else {
         this.empty = true;
       }
-     console.log(this.empty)
-   
-   })
+      console.log(this.empty)
+
+    })
   }
 
   showMarkersOnMap(): void {
     this.service.getAllJobs().subscribe(res => {
+      console.log("All jobs here", res)
 
-      res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title));
+      res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title, element.id));
     })
 
 
   }
 
 
-  routeToJobDetailsComponent(id):void{
-    this.router.navigate(['/job/'+id])
+  routeToJobDetailsComponent(id): void {
+    this.router.navigate(['/job/' + id])
   }
 
-  createMarker(long, lat, title) {
 
-    var popup = new Mapboxgl.Popup({ offset: 20 })
-      .setHTML('<div ><p class="capatalize" style="margin:5px;color:#464646;font-style:italic">' + title + '</p><div>')
+
+
+  createMarker(long, lat, title, id) {
+
+
+    // var popup = new Mapboxgl.Popup({ offset: 40 })
+      // .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><a>'+id+'</a><div>');
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
-      .setPopup(popup)
       .addTo(this.map);
 
 
-    marker.getElement().addEventListener('dblclick', () => {
-      // console.log(marker.getLngLat())
+    // marker.getElement().addEventListener('dblclick', () => {
+    //   console.log(marker.getLngLat())
+
+    // })
+    marker.getElement().addEventListener('click', () => {
+      console.log(marker.getLngLat())
+
     })
+
+    
+
+    
+
+
+
 
 
   }
+
+
+
 
 
 
@@ -164,11 +183,14 @@ export class AllJobsComponent implements OnInit {
         container: 'myMap', // container id
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [pos.lng, pos.lat], // starting position
-        zoom: 15// starting zoom
+        zoom: 6// starting zoom
       });
     })
   }
 
+  test() {
+    console.log("hello")
+  }
 
   getCurrentPosition(): Promise<any> {
     return new Promise((resolve, reject) => {

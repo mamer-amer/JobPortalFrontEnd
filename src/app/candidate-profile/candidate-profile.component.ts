@@ -136,8 +136,10 @@ export class CandidateProfileComponent implements OnInit {
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
       
       if(res.status==200){
-       this.toastService.success('Sucessfull','Candidate Profile Posted')
+        console.log("This is candidate response",res)
+       this.toastService.info('Sucessfull','Candidate Profile Posted')
       this.allJobsbtn = true;
+      sessionStorage.setItem('candidateId', res.result?res.result.candidateProfile.id:0);
       this.labelText = "Change your resume"
       console.log(res);
       }
@@ -166,11 +168,12 @@ export class CandidateProfileComponent implements OnInit {
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
-
+            
             this.candidateObj.field = res.candidateProfile.field;
             this.candidateObj.presentationLetter = res.candidateProfile.presentationLetter;
             this.candidateObj.cv = res.candidateProfile.cv;
             this.candidateObj.dp = res.candidateProfile.dp;
+            sessionStorage.setItem('candidateId',res.candidateProfile.id)
        
             this.candidateObj.imageContentType = res.candidateProfile.imageContentType;
             this.candidateObj.resumeContentType = res.candidateProfile.resumeContentType;
