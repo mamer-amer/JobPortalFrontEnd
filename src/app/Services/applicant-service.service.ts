@@ -66,6 +66,10 @@ export class ApplicantServiceService {
     return this.http.get(this.url+"api/job/paginatedjobs?page="+page);
   }
 
+  getJobsByCompany(page): Observable<any> {
+    return this.http.get(this.url + "api/job/myJobs/?page="+page);
+  }
+
   getPaginatedJobsByCategory(category,page):Observable<any>{
     category = category.replace(/&/g,'_and_');
     return this.http.get(this.url+"api/job/jobsbycategory?category="+category+"&page="+page);
@@ -131,4 +135,12 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId +"&jobId="+jobId);
   }
 
+  isAlreadyCommentedOnCompanyProfile(obj:any):Observable<any>{
+    return this.http.post(this.url + "api/review/comment",obj);
+  }
+
+  getAllJobsByCityName(city,page):Observable<any>{
+    return this.http.get(this.url + "api/job/searchbycity?city=" + city + "&page=" + page);
+
+  }
 }

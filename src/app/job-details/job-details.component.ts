@@ -18,11 +18,18 @@ export class JobDetailsComponent implements OnInit {
   companyId: Number;
   candidateId: any;
   jobId: any;
+  isSpinning = true;
+  
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
   rating = 0;
   review: String;
   btnApplied = false;
+  rating2: any = 0;
+  alreadyApplied = true;
+
+
 
   constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2) {
     this.jobObj = new JobDetails();
@@ -38,7 +45,7 @@ export class JobDetailsComponent implements OnInit {
     this.jobId = id;
     this.getJobById(id);
     this.getOtherCompanyJobs(id);
-    this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+    // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
 
 
   }
@@ -47,15 +54,16 @@ export class JobDetailsComponent implements OnInit {
   getJobById(id): void {
 
     this.service.getJobById(id).subscribe((res) => {
-      console.log("lol", res);
+
       this.jobObj = res.result;
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+      this.postRatingAndReview();
 
       // once get the job also get the rating againts its company
-     
+
     });
 
   }
@@ -67,15 +75,19 @@ export class JobDetailsComponent implements OnInit {
     });
   }
 
- 
+
 
 
   showDialog() {
+
     this.review = "";
     this.rating = 0;
+    this.rating2 = 0;
+
   }
 
   apply_for_job(): void {
+
 
     // console.table(this.jobObj);
     let obj = {
@@ -98,9 +110,9 @@ export class JobDetailsComponent implements OnInit {
 
   getCompanyRating(id: any): void {
     this.service.getReviewsById(id).subscribe(res => {
-      console.log("this is rating", res)
+    
       this.rating = res.result;
-
+      this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
     });
   }
 
@@ -108,27 +120,56 @@ export class JobDetailsComponent implements OnInit {
   alreadyAppliedJobsAgainstUser(canId, jobId) {
     this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
       this.btnApplied = res.result;
+      console.log("apply button nahy dkhana ?"+this.btnApplied)
 
-    })
+    });
+
+  }
+
+
+  postRatingAndReview() {
+    // console.table(this.jobObj);
+    let obj = {
+      "candidateId": this.candidateId,
+      "jobId": this.jobId,
+      "review": this.review,
+      "rating": this.rating2,
+      "companyId": this.companyId
+    }
+    this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
+     
+      if(res.status==200 || res.status==208){
+        this.alreadyApplied = true;
+        
+        // disable
+      }
+      else{
+        this.alreadyApplied = false;
+      }
+
+      console.log("kya scene bana comment box disbale krna hai?"+this.alreadyApplied)
+      
+      // this.;
+
+    });
+  }
+
+
+ 
+
+
+  
   }
 
   //  promise():Promise<any>{
-  //   return new Promise((resolve,reject)=>{
-  //     resolve(this.jobId!=null);
+  //  return new Promise((resolve,reject)=>{
+  //   resolve(this.jobId!=null);
   //   }).then
   //  }
-
-  
-
-// resolve runs the first function in .then
-
-
-  
+  // resolve runs the first function in .then  
   // On page refresh check for job applied and company reviews 
   // show reviews of every company
   // give review to the company after appliying on the job
   // show myJobs to employees only.
 
 
-
-}

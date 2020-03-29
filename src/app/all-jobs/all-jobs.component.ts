@@ -27,6 +27,8 @@ export class AllJobsComponent implements OnInit {
   userType: any;
 
 
+
+
   constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
 
@@ -56,7 +58,14 @@ export class AllJobsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
-    this.getPaginatedJobs(0);
+
+    if (this.userType == "candidate") {
+      this.getPaginatedJobs(0);
+    }
+    else {
+      this.getJobsByCompany(0);
+    }
+
     this.loadMap();
     this.showMarkersOnMap();
 
@@ -70,11 +79,19 @@ export class AllJobsComponent implements OnInit {
     if (this.selectedCategory != null) {
       this.getJobsByCategory(this.selectedCategory, p - 1);
     }
-    else {
+    else if (this.userType == "candidate") {
       this.getPaginatedJobs(p - 1);
+
+    }
+    else if (this.cityName == null) {
+      this.getJobsByCompany(p - 1);
+    }
+    else if (this.cityName != null) {
+      this.searchByCityName(this.cityName, p - 1);
     }
 
   }
+
 
 
 
@@ -145,7 +162,7 @@ export class AllJobsComponent implements OnInit {
 
 
     // var popup = new Mapboxgl.Popup({ offset: 40 })
-      // .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><a>'+id+'</a><div>');
+    // .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><a>'+id+'</a><div>');
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
       .addTo(this.map);
@@ -160,9 +177,9 @@ export class AllJobsComponent implements OnInit {
 
     })
 
-    
 
-    
+
+
 
 
 
@@ -204,6 +221,47 @@ export class AllJobsComponent implements OnInit {
         });
     });
 
+  }
+
+  getJobsByCompany(p) {
+    this.allJobs = []
+    this.total = 0;
+    this.itemsPerPage = 0;
+    this.page = 0;
+    this.service.getJobsByCompany(p).subscribe(response => {
+      console.log("this is what you want", response)
+      if (response.totalElements > 0) {
+        console.log(response)
+        this.total = response.totalElements;
+        this.page = p + 1;
+        this.itemsPerPage = response.size;
+        this.allJobs = response.content
+        this.empty = false;
+      }
+      else {
+        this.empty = true;
+      }
+    })
+  }
+
+  searchByCityName(city, page) {
+    this.allJobs = []
+    this.total = 0;
+    this.itemsPerPage = 0;
+    this.page = 0;
+    this.service.getAllJobsByCityName(city, page).pipe().subscribe(res => {
+      if (res.totalElements > 0) {
+        this.allJobs = res.content;
+        this.total = res.totalElements;
+        this.page = page + 1;
+        this.itemsPerPage = res.size;
+        this.empty = false;
+
+      }
+      else {
+        this.empty = true;
+      }
+    })
   }
 }
 

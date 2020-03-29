@@ -18,11 +18,12 @@ import { CommonModule, registerLocaleData } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
-
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import {MatDialogModule} from '@angular/material/dialog';
 
 import {MatIconModule} from '@angular/material/icon';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import {MatDividerModule} from '@angular/material/divider';
 import { StarRatingModule } from 'angular-star-rating';
@@ -53,9 +54,12 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
+// import { NzResultModule } from 'ng-zorro-antd/result';
 import { ToastrModule } from 'ngx-toastr';
 
 import { DialogModule } from 'primeng/dialog';
+import { FooterComponent } from './footer/footer.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -73,7 +77,9 @@ import { DialogModule } from 'primeng/dialog';
     EmployeeMyjobsComponent,
     EmployeeAlljobsComponent,
     CompanyProfileComponent,
-    JobDetailsComponent
+    JobDetailsComponent,
+    FooterComponent,
+    ErrorPageComponent
     
   ],
   imports: [
@@ -90,6 +96,7 @@ import { DialogModule } from 'primeng/dialog';
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
+    NzEmptyModule,
     MatBadgeModule,
     FormsModule,
     HttpClientModule,
@@ -102,6 +109,7 @@ import { DialogModule } from 'primeng/dialog';
     NgxPaginationModule,
     MatDividerModule,
     NgbModule,
+    NzSpinModule,
     MatIconModule,
     MatPaginatorModule,
     MatDividerModule,

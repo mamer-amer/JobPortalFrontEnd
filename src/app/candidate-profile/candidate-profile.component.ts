@@ -159,7 +159,7 @@ export class CandidateProfileComponent implements OnInit {
       //get the status of user
 
       this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
-        console.log("Yeh hai response", res);
+        
         if (res != null) {
           //the profile is already present
           this.candidateObj.name = res.name;

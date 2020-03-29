@@ -56,10 +56,10 @@
     </mat-card>
 
     <hr />
-    <form class="row">
+    <form class="row" *ngIf="userType=='candidate'">
 
 
-      <div class="form-group"
+      <!-- <div class="form-group"
         style="margin-left:10px;">
         <label style="color: #0069D9;background: white;margin: 0px;"
           for="exampleFormControlInput1">You are
@@ -69,17 +69,18 @@
           name="text"
           id="exampleFormControlInput1"
           placeholder="Search here">
-      </div>
+      </div> -->
 
 
 
       <div class="form-group"
         style="margin-left:10px;">
         <label style="color: #0069D9;background: white;margin: 0px;"
-          for="exampleFormControlInput1">In</label>
+          for="exampleFormControlInput1">Search by city</label>
         <input type="text"
           name="city"
           class="form-control"
+          [(ngModel)]="cityName"
           id="exampleFormControlInput1"
           placeholder="Enter the city name">
       </div>
@@ -87,7 +88,8 @@
         style="margin:30px 0px 0px 10px;">
         <button type="button"
           style="height:38px;"
-      
+          [disabled]="!cityName"
+          (click)="searchByCityName(cityName,0)"
           class="btn btn-primary">Search</button>
       </div>
 
@@ -164,7 +166,7 @@
               </div>
 
               <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
+           <!-- <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
                 <nz-avatar [nzSize]="64"
                   nzIcon="user"
                   style="background-color:#62a9ec;display:block;margin-bottom:10px;">
@@ -174,7 +176,7 @@
 
               </div>
 
-              <!-- if no jobs found  -->
+              if no jobs found  -->
 
             </mat-card>
           </div>
@@ -182,14 +184,15 @@
           <div class="row"
             style="width:100%">
 
-            <div class="col-lg-7 offset-lg-4 col-sm-7 offset-sm-4">
+            <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
               <div *ngIf="empty">
-                <h1 style="font-weight:bolder;padding-top:20px">NO JOBS FOUND </h1>
+                    <nz-empty></nz-empty>
+                <!-- <h1 style="font-weight:bolder;padding-top:20px">NO JOBS FOUND </h1>
                 <img src="../../assets/emptybox.jpg"
                   alt="no jobs found"
                   style="width:20%;margin-left:4%">
 
-              </div>
+              </div> -->
             </div>
           </div>
 
@@ -212,3 +215,7 @@
         </div>
       </div>
     </div>
+
+    <!-- Fooorter -->
+    
+    <!-- <app-footer></app-footer>  -->

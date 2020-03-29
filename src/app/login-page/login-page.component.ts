@@ -30,20 +30,20 @@ export class LoginPageComponent implements OnInit {
     // var output = this.service.checkUserandPass(uname, p);
     this.service.checkUserandPass(uname, p).subscribe(
       res => {
-        console.log("this is resp",res)
+        
         if (res.status == 200) {
           this.message.success(res.message, {
             nzDuration: 3000
           });
           this.showLoading = false;
-          console.log("toker", res);
+          console.log("User logged in", res);
 
           sessionStorage.setItem("userId",res.result.id);
           sessionStorage.setItem("token", res.result.token);
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
-          sessionStorage.setItem("userImage",res.result.userImage);
+       
          
 
           if (res.result.userType === "ADMIN") {
