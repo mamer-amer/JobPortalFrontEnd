@@ -16,6 +16,7 @@
              </h2>
              <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
              <nz-rate [(ngModel)]="rating"
+             nzAllowHalf
                [nzTooltips]="tooltips"></nz-rate>
            </div>
          </h4>
@@ -87,6 +88,7 @@
              </h2>
              <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
              <nz-rate [(ngModel)]="rating2"
+             nzAllowHalf
                [nzTooltips]="tooltips"></nz-rate>
            </div>
          </h4>
@@ -167,7 +169,7 @@
          <a href="#"
            *ngIf="userType=='employee'"
            class="nav-item nav-link active"
-           [routerLink]="['/candidateProfile']">MyProfile</a>
+           [routerLink]="['/companyProfile']">MyProfile</a>
 
          <a href="#"
            class="nav-item nav-link active active-link-page"
@@ -213,7 +215,7 @@
                class="col-lg-12"
                style="margin-bottom:5px;">
 
-               <mat-card (click)="getJobById(job.id)"
+               <mat-card class="hoverOnCard" (click)="getJobById(job.id)"
                  style="cursor: pointer;border-radius: 0px;height:120px;">
                  <h2 style="margin-bottom: 0px;font-weight:500;">
                    {{job.companyProfile.name}} - {{job.title}}
@@ -221,7 +223,7 @@
                  <p>{{job.city}}-{{job.country}}</p>
                  <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
                </mat-card>
-               <div *ngIf="job.id==jobObj['id']">
+               <!-- <div *ngIf="job.id==jobObj['id']">
 
                  <mat-card
                    style="border-left:5px solid #0069D9;border-radius: 0px;height:120px;background-color: rgb(231, 228, 228);">
@@ -233,7 +235,7 @@
                      <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
                    </div>
                  </mat-card>
-               </div>
+               </div> -->
              </div>
 
            </div>
@@ -346,7 +348,14 @@
    </div>
 
 
-
+ <ngx-spinner bdOpacity=1
+   bdColor="rgba(213,189,189,0.39)"
+   size="medium"
+   color="rgba(12,11,11,0.85)"
+   type="ball-clip-rotate-pulse"
+   [fullScreen]="true">
+   <p style="color: white">Loading..</p>
+ </ngx-spinner>
    <!-- Fooorter -->
    <hr style="margin-top:5px;" />
    <app-footer></app-footer>

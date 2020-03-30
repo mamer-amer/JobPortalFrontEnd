@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyProfile } from './companyProfile';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { ToastrService } from 'ngx-toastr';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-company-profile',
@@ -10,12 +11,14 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CompanyProfileComponent implements OnInit {
 
+  loadingText= "loading..";
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
-  constructor(public service:ApplicantServiceService,private toastService:ToastrService) { }
+  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService) { }
 
   ngOnInit() {
+    this.spinner.show();
     this.checkUserId();
     this.getEmployeeProfile();
     // this.getJobsPostedByEmployeeId();
@@ -92,7 +95,10 @@ export class CompanyProfileComponent implements OnInit {
 
   getEmployeeProfile(){
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
+      this.loadingText = "Getting Profile.."
       this.companyProfileObj = res.companyProfile ? res.companyProfile :new CompanyProfile();
+      this.spinner.hide();
+      
       // console.log("yeh company profile dega" + res ? res.companyProfile:null)
     })
   }

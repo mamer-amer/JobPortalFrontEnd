@@ -60,6 +60,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
+import { NgxSpinnerModule } from "ngx-spinner";
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -96,6 +97,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
+    NgxSpinnerModule,
     NzEmptyModule,
     MatBadgeModule,
     FormsModule,

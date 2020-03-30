@@ -2,6 +2,8 @@ import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute } from '@angular/router';
 import { JobDetails } from '../job-details/JobDetails'
+import { retry } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-job-details',
@@ -31,13 +33,14 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2) {
+  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2,private spinner:NgxSpinnerService) {
     this.jobObj = new JobDetails();
 
 
   }
 
   ngOnInit(): void {
+    this.spinner.show();
     this.candidateId = Number(sessionStorage.getItem('candidateId'));
     this.userType = sessionStorage.getItem('userType');
     console.log(this.activatedRoute)
@@ -61,6 +64,7 @@ export class JobDetailsComponent implements OnInit {
       this.getCompanyRating(this.companyId);
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
+      
 
       // once get the job also get the rating againts its company
 
@@ -102,6 +106,7 @@ export class JobDetailsComponent implements OnInit {
       console.log(res);
       this.companyId = res.result.companyProfile.id;
       this.getCompanyRating(this.companyId);
+      
     });
 
   }
@@ -120,7 +125,6 @@ export class JobDetailsComponent implements OnInit {
   alreadyAppliedJobsAgainstUser(canId, jobId) {
     this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
       this.btnApplied = res.result;
-      console.log("apply button nahy dkhana ?"+this.btnApplied)
 
     });
 
@@ -129,35 +133,51 @@ export class JobDetailsComponent implements OnInit {
 
   postRatingAndReview() {
     // console.table(this.jobObj);
-    let obj = {
-      "candidateId": this.candidateId,
-      "jobId": this.jobId,
-      "review": this.review,
-      "rating": this.rating2,
-      "companyId": this.companyId
+  
+    if(this.userType=="candidate"){
+      let obj = {
+        "candidateId": this.candidateId,
+        "jobId": this.jobId,
+        "review": this.review,
+        "rating": this.rating2,
+        "companyId": this.companyId
+      }
+      this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
+
+        if (res.status == 200 || res.status == 208) {
+          this.alreadyApplied = true;
+          
+
+          // disable
+        }
+        else {
+          this.alreadyApplied = false;
+        }
+
+         
+        // this.;
+
+      });
     }
-    this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
-     
-      if(res.status==200 || res.status==208){
-        this.alreadyApplied = true;
-        
-        // disable
-      }
-      else{
-        this.alreadyApplied = false;
-      }
-
-      console.log("kya scene bana comment box disbale krna hai?"+this.alreadyApplied)
-      
-      // this.;
-
-    });
+    else{
+      this.spinner.hide();
+      return;
+    }
+    
   }
 
 
  
 
 
+  // @HostListener('click') onMouseClick() {
+  //   this.highlight('red');
+  // }
+
+  // private highlight(color: string) {
+  //   this.el.nativeElement.style.background = color;
+  //   console.log(this.el.nativeElement)
+  // }
   
   }
 
