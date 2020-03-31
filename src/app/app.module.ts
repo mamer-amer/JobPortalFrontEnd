@@ -63,6 +63,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CompanyProfileDetailsComponent } from './company-profile-details/company-profile-details.component';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -82,7 +83,8 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     CompanyProfileComponent,
     JobDetailsComponent,
     FooterComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    CompanyProfileDetailsComponent
     
   ],
   imports: [

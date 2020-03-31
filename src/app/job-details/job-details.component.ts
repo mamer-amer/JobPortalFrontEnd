@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute } from '@angular/router';
 import { JobDetails } from '../job-details/JobDetails'
-import { retry } from 'rxjs/operators';
+import { Router } from '@angular/router'
 import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
@@ -21,7 +21,7 @@ export class JobDetailsComponent implements OnInit {
   candidateId: any;
   jobId: any;
   isSpinning = true;
-  
+
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
@@ -33,7 +33,7 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2,private spinner:NgxSpinnerService) {
+  constructor(private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private spinner: NgxSpinnerService) {
     this.jobObj = new JobDetails();
 
 
@@ -57,14 +57,13 @@ export class JobDetailsComponent implements OnInit {
   getJobById(id): void {
     this.spinner.show();
     this.service.getJobById(id).subscribe((res) => {
-
       this.jobObj = res.result;
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
-      
+
 
       // once get the job also get the rating againts its company
 
@@ -106,7 +105,7 @@ export class JobDetailsComponent implements OnInit {
       console.log(res);
       this.companyId = res.result.companyProfile.id;
       this.getCompanyRating(this.companyId);
-      
+
     });
 
   }
@@ -115,7 +114,7 @@ export class JobDetailsComponent implements OnInit {
 
   getCompanyRating(id: any): void {
     this.service.getReviewsById(id).subscribe(res => {
-    
+
       this.rating = res.result;
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
     });
@@ -134,8 +133,8 @@ export class JobDetailsComponent implements OnInit {
 
   postRatingAndReview() {
     // console.table(this.jobObj);
-    
-    if(this.userType=="candidate"){
+
+    if (this.userType == "candidate") {
       let obj = {
         "candidateId": this.candidateId,
         "jobId": this.jobId,
@@ -147,7 +146,7 @@ export class JobDetailsComponent implements OnInit {
 
         if (res.status == 200 || res.status == 208) {
           this.alreadyApplied = true;
-          
+
 
           // disable
         }
@@ -155,22 +154,24 @@ export class JobDetailsComponent implements OnInit {
           this.alreadyApplied = false;
         }
 
-         
+
         // this.;
 
       });
     }
-    else{
+    else {
       this.spinner.hide();
       return;
     }
 
-  
-    
+
+
   }
 
 
- 
+  routeToComapnyProfile(): void {
+    this.route.navigate(['companyProfileDetails/'+this.candidateId])
+  }
 
 
   // @HostListener('click') onMouseClick() {
@@ -181,8 +182,8 @@ export class JobDetailsComponent implements OnInit {
   //   this.el.nativeElement.style.background = color;
   //   console.log(this.el.nativeElement)
   // }
-  
-  }
+
+}
 
   //  promise():Promise<any>{
   //  return new Promise((resolve,reject)=>{

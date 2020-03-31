@@ -142,7 +142,6 @@ export class AllJobsComponent implements OnInit {
 
   showMarkersOnMap(): void {
     this.service.getAllJobs().subscribe(res => {
-      console.log("All jobs here", res)
 
       res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title, element.id));
     })
@@ -161,21 +160,20 @@ export class AllJobsComponent implements OnInit {
   createMarker(long, lat, title, id) {
 
 
-    // var popup = new Mapboxgl.Popup({ offset: 40 })
-    // .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><a>'+id+'</a><div>');
+    var popup = new Mapboxgl.Popup({ offset: 40 })
+    .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><div>');
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
+      .setPopup(popup)
       .addTo(this.map);
 
 
-    // marker.getElement().addEventListener('dblclick', () => {
-    //   console.log(marker.getLngLat())
-
-    // })
-    marker.getElement().addEventListener('click', () => {
+    marker.getElement().addEventListener('dblclick', () => {
       console.log(marker.getLngLat())
+      this.routeToJobDetailsComponent(id);
 
     })
+    
 
 
 
@@ -205,9 +203,7 @@ export class AllJobsComponent implements OnInit {
     })
   }
 
-  test() {
-    console.log("hello")
-  }
+ 
 
   getCurrentPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -222,6 +218,8 @@ export class AllJobsComponent implements OnInit {
     });
 
   }
+
+
 
   getJobsByCompany(p) {
     this.allJobs = []
@@ -243,6 +241,7 @@ export class AllJobsComponent implements OnInit {
       }
     })
   }
+
 
   searchByCityName(city, page) {
     this.allJobs = []

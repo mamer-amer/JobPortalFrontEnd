@@ -18,7 +18,10 @@
 
 .hoverOnCard:hover {
   background-color:#8080805e;
- 
-  
+   
+}
+
+p{
+  font-size: 12px;
 }
 
