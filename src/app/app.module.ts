@@ -56,11 +56,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
 // import { NzResultModule } from 'ng-zorro-antd/result';
 import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NgxSpinnerModule } from "ngx-spinner";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -84,7 +86,9 @@ import { NgxSpinnerModule } from "ngx-spinner";
     
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
     ConfirmDialogModule,
+    ReactiveFormsModule,
     ToastrModule,
     NzUploadModule, 
     CommonModule,

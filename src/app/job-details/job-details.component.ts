@@ -55,7 +55,7 @@ export class JobDetailsComponent implements OnInit {
 
 
   getJobById(id): void {
-
+    this.spinner.show();
     this.service.getJobById(id).subscribe((res) => {
 
       this.jobObj = res.result;
@@ -125,6 +125,7 @@ export class JobDetailsComponent implements OnInit {
   alreadyAppliedJobsAgainstUser(canId, jobId) {
     this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
       this.btnApplied = res.result;
+      this.spinner.hide();
 
     });
 
@@ -133,7 +134,7 @@ export class JobDetailsComponent implements OnInit {
 
   postRatingAndReview() {
     // console.table(this.jobObj);
-  
+    
     if(this.userType=="candidate"){
       let obj = {
         "candidateId": this.candidateId,
@@ -163,6 +164,8 @@ export class JobDetailsComponent implements OnInit {
       this.spinner.hide();
       return;
     }
+
+  
     
   }
 

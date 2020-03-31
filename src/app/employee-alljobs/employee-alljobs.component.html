@@ -1,347 +1,103 @@
-<div class="bs-example">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-    <a href="#"
-      class="navbar-brand">Job Portal</a>
-    <button type="button"
-      class="navbar-toggler"
-      data-toggle="collapse"
-      data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+<!--Main Navigation-->
+<header class="intro-header">
 
-    <div class="collapse navbar-collapse"
-      id="navbarCollapse">
-      <div class="navbar-nav">
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
-        <a href="#"
-          class="nav-item nav-link active"
-          [routerLink]="['/candidateProfile']">MyProfile</a>
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          [routerLink]="['/employee/myjobs']">MyJobs</a> -->
-
-      </div>
-      <div class="navbar-nav ml-auto">
-        <a href="#"
-          class="nav-item nav-link"
-          data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()"
- src="../../assets/logout.png" alt=""></a>
-      </div>
-    </div>
-  </nav>
-
-
-  <br>
-  <br>
-
-
-  <!-- <nav class="navbar navbar-light bg-light"
-    style="background-color: white !important;border-top-color: black;border-top-style:solid; border-top-width: thin; border-bottom-style: ridge; box-shadow:0px 5px 5px rgb(179, 179, 179);">
-
-
-    <div class="row" style="width:100%">
-
-        <div class="col-lg-2 offset-lg-1">
-            <a class="navbar-brand mb-0 h3" href="#"
-                style="font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight: 600;">
-                Job Portal</a>
-        </div>
-
-        <div class="col-lg-4">
-            <button (click)="service.goBack()"
-              class="btnNav"
-              mat-stroked-button>
-                Back
-            </button>
-
-            <button class="btnNav" [routerLink]="['/employee/myjobs']" mat-stroked-button>
-                My Jobs
-
-            </button>
-            <button class="btnNav" [routerLink]="['/employee/postjob']" mat-stroked-button>
-                Post Job
-
-            </button>
-
-
-            <button class="btnNav" [routerLink]="['/employee/alljobs']" mat-stroked-button>All Jobs</button>
-
-        </div>
-
-        <div class="col-lg-4">
-
-        </div>
-        <div class="col-lg-1">
-            <img (click)="service.logout()"
-              src="assets/icons8-logout-rounded-left-24.png"
-              alt="">
-        </div>
-        <div class="col-lg-2 offset-lg-1">
-
-        <img src="../../assets/1622452.png" height="33" width="57">
-    </div> -->
-  <!-- </div>
-</nav>
-<br>  -->
-
-
-  <!-- ALL JOBS -->
-
-
-  <div class="container-fluid">
-    <mat-card style="border-radius: 0px;">
-      <div style="width:100%;height:350px"
-        id="myMap"></div>
-    </mat-card>
-
-    <hr />
-    <form class="row">
-
-
-      <div class="form-group"
-        style="margin-left:10px;">
-        <label style="color: #0069D9;background-color:transparent !important;"
-          for="exampleFormControlInput1">You are searching</label>
-        <input type="email"
-          class="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Search here">
-      </div>
-
-
-
-      <div class="form-group"
-        style="margin-left:10px;">
-        <label style="color: #0069D9;"
-          for="exampleFormControlInput1">In</label>
-        <input type="email"
-          class="form-control"
-          id="exampleFormControlInput1"
-          placeholder="Enter the city name">
-      </div>
-      <div class="form-group"
-        style="margin:27px 0px 0px 10px;">
-        <button type="button"
-          style="height:39px;"
-          class="btn btn-primary">Search</button>
-      </div>
-
-    </form>
-    <hr style="margin-top: 0px;" />
-
-    <!-- JOBS CAT AND JOBS -->
-    <div class="row">
-
-      <!--JOB FIELDS -->
-      <div class="col-lg-3">
-        <mat-card style="height:600px;border-radius: 0px;margin-bottom:10px;">
-          <h2>Categories</h2>
-          <hr />
-          <p>Business & Finance</p>
-          <p>Computers & Technology</p>
-          <p>Contruction Trades</p>
-          <p>Education, Teaching & Training</p>
-          <p>Engineering & Engineering Technicians</p>
-          <p>Fishing, Farming & Forestry</p>
-          <p>Legal, Criminal Justice & Law Enforcement</p>
-
-          <p>Management</p>
-          <p>Media Communications & Broadcasting</p>
-          <p>Military & Armed Forces</p>
-          <p>Office Administration & Management</p>
-          <p>Production & Manufacturing</p>
-          <p>Installation, Repair & Maintenance</p>
-          <p>Sales & Marketing</p>
-          <p>Social & Life Sciences</p>
-          <p>Transportation & Moving</p>
-        </mat-card>
-      </div>
-      <div class="col-lg-9">
-        <div class="row">
-          <!-- <div class="col-lg-12" style="margin-bottom:10px;">
-                    <mat-card style="height: 120px;background-color:#F2F2F2;border-radius: 0px;">
-
-                    </mat-card>
-                </div> -->
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-              </div>
-
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
-              </div>
-            </mat-card>
+    <!--Navbar-->
+    <mdb-navbar SideClass="navbar navbar-expand-lg navbar-dark fixed-top scrolling-navbar">
+      <mdb-navbar-brand>
+        <a class="logo navbar-brand waves-light" mdbWavesEffect href="#"><strong>MDB</strong></a>
+      </mdb-navbar-brand>
+      <links>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active waves-light" mdbWavesEffect>
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item waves-light" mdbWavesEffect>
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item waves-light" mdbWavesEffect>
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+        </ul>
+        <form class="form-inline waves-light" mdbWavesEffect>
+          <div class="md-form">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
           </div>
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
+        </form>
+      </links>
+    </mdb-navbar>
+
+    <!--Intro Section-->
+    <section class="view intro-2">
+      <div class="full-bg-img mask rgba-gradient">
+        <div class="container flex-center">
+          <div class="d-flex align-items-center content-height w-100">
+            <div class="row flex-center pt-5 mt-3 w-100">
+              <div class="col-md-6 text-center text-md-left mb-5">
+                <div class="white-text">
+                  <h2 class="h1 h1-responsive font-bold wow fadeInLeft" data-wow-delay="0.3s">Sign up right
+                    now! </h2>
+                  <hr class="hr-light wow fadeInLeft" data-wow-delay="0.3s">
+                  <h6 class="wow fadeInLeft" data-wow-delay="0.3s">Lorem ipsum dolor sit amet, consectetur
+                    adipisicing
+                    elit. Rem repellendus quasi fuga nesciunt dolorum nulla magnam veniam sapiente, fugiat!
+                    Commodi sequi
+                    non animi ea dolor molestiae, quisquam iste, maiores. Nulla.</h6>
+                  <br>
+                  <a mdbBtn color="white" outline="true" class="wow fadeInLeft waves-light" data-wow-delay="0.3s"
+                    mdbWavesEffect>Learn more</a>
+                </div>
               </div>
 
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
+              <div class="col-md-6 col-xl-5 offset-xl-1">
+                <!--Form-->
+                <mdb-card class="wow fadeInRight" data-wow-delay="0.3s">
+                  <mdb-card-body>
+                    <!--Header-->
+                    <div class="text-center">
+                      <h3 class="white-text">
+                        <mdb-icon fas icon="user" class="text-white"></mdb-icon> Register:</h3>
+                      <hr class="hr-light">
+                    </div>
+                    <!--Body-->
+                    <div class="md-form">
+                      <mdb-icon fas icon="user" class="text-white active"></mdb-icon>
+                      <input type="text" id="form3" class="text-white form-control" mdbInput>
+                      <label for="form3" class="text-white">Your name</label>
+                    </div>
+                    <div class="md-form">
+                      <mdb-icon fas icon="envelope" class="text-white active"></mdb-icon>
+                      <input type="email" id="form2" class="text-white form-control" mdbInput>
+                      <label for="form2" class="text-white">Your email</label>
+                    </div>
+                    <div class="md-form">
+                      <mdb-icon fas icon="lock" class="text-white active"></mdb-icon>
+                      <input type="password" id="form4" class="text-white form-control" mdbInput>
+                      <label for="form4" class="text-white">Your password</label>
+                    </div>
+                    <div class="text-center mt-4">
+                      <button mdbBtn color="indigo" mdbWavesEffect>Sign up</button>
+                      <hr class="hr-light mb-3 mt-4">
+                      <div class="inline-ul text-center d-flex justify-content-center">
+                        <a class="p-2 m-2 tw-ic">
+                          <mdb-icon fab icon="twitter" class="text-white"></mdb-icon>
+                        </a>
+                        <a class="p-2 m-2 li-ic">
+                          <mdb-icon fab icon="linkedin-in" class="text-white"></mdb-icon>
+                        </a>
+                        <a class="p-2 m-2 ins-ic">
+                          <mdb-icon fab icon="instagram" class="text-white"></mdb-icon>
+                        </a>
+                      </div>
+                    </div>
+                  </mdb-card-body>
+                </mdb-card>
+                <!--/.Form-->
               </div>
-            </mat-card>
-          </div>
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-              </div>
-
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
-              </div>
-            </mat-card>
-          </div>
-
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-              </div>
-
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
-              </div>
-            </mat-card>
-          </div>
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-              </div>
-
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
-              </div>
-            </mat-card>
-          </div>
-          <div class="col-lg-12"
-            style="margin-bottom:10px;">
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
-              <div style="flex:4;">
-                <h2 style="font-weight:500; color: #489ceb;margin: 0px;">Web Developer/Designer</h2>
-                <h3 style="font-weight:500;margin: 0px;">Axact Corporation - <span
-                    style="color:rgb(129, 126, 126);">United States</span></h3>
-                <p style="margin-bottom:5px;">It is a long established fact that a reader will be distracted by the
-                  readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a
-                  more-or-less normal distribution of letters, as opposed to using Content here.</p>
-                <p style="color: rgb(146, 144, 144);;">2 days ago</p>
-              </div>
-
-              <!-- ICON -->
-              <div style="align-items: flex-end;display:flex;flex-direction: column;align-items: center;">
-                <nz-avatar [nzSize]="64"
-                  nzIcon="user"
-                  style="background-color:#62a9ec;display:block;margin-bottom:10px;"></nz-avatar>
-                <nz-rate [(ngModel)]="value"
-                  [nzTooltips]="tooltips"></nz-rate>
-
-              </div>
-            </mat-card>
-          </div>
-
-
-          <!-- //PAGINATION -->
-          <div class="col-lg-12"
-            style="margin:10px 0px 30px 0px;">
-            <nz-pagination [nzPageIndex]="1"
-              [nzTotal]="500"
-              [nzItemRender]="renderItemTemplate">
-            </nz-pagination>
-            <ng-template #renderItemTemplate
-              let-type
-              let-page="page">
-              <a *ngIf="type === 'pre'">Previous</a>
-              <a *ngIf="type === 'next'">Next</a>
-              <a *ngIf="type === 'page'">{{ page }}</a>
-            </ng-template>
+            </div>
           </div>
         </div>
-
-
       </div>
-    </div>
-  </div>
+    </section>
 
-
-  <!-- Fooorter -->
-  
-  <app-footer></app-footer>
+  </header>
+  <!--Main Navigation-->
