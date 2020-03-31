@@ -1,5 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
+
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
@@ -253,4 +255,8 @@ button.toast-close-button {
         color: #343a40 !important;
         background-color: white;
         
+}
+
+.logoutImage{
+  width:35px;
 }

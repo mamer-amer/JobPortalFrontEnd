@@ -17,7 +17,7 @@ export class NoopInterceptor implements HttpInterceptor {
 
   constructor(private router:Router){}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-      console.log("hello interceptor");
+    
 
 
       if(sessionStorage.length>0){
@@ -25,7 +25,7 @@ export class NoopInterceptor implements HttpInterceptor {
         return next.handle(changedReq).pipe(
           map((event: HttpEvent<any>) => {
               if (event instanceof HttpResponse) {
-                  console.log('event--->>>', event);
+                  // console.log('event--->>>', event);
               }
               return event;
           }),catchError((error: any) => {

@@ -12,26 +12,26 @@
     <div class="collapse navbar-collapse"
       id="navbarCollapse">
       <div class="navbar-nav">
-        <a href="#"
+        <!-- <a href="#"
           class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a>
+          (click)="goBack()">Back</a> -->
         <a href="#"
           class="nav-item nav-link active"
           [routerLink]="['/companyProfile']">MyProfile</a>
-        <a href="#"
-          class="nav-item nav-link active active-link-page"
-          [routerLink]="['/employee/postjob']">Post a Job</a>
-        <a href="#"
+          <a href="#"
           class="nav-item nav-link active"
           [routerLink]="['/allJobs']">MyJobs</a>
+          <a href="#"
+            class="nav-item nav-link active active-link-page"
+            [routerLink]="['/employee/postjob']">Post a Job</a>
 
       </div>
       <div class="navbar-nav ml-auto">
         <a href="#"
           class="nav-item nav-link"
           data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()"
-            src="assets/icons8-logout-rounded-left-24.png"
+            (click)="service.logout()" class="logoutImage"
+            src="../../assets/logout.png"
             alt=""></a>
       </div>
     </div>
@@ -224,3 +224,8 @@
       </div>
     </div>
   </div>
+
+
+  <!-- Fooorter -->
+ 
+  <app-footer></app-footer>

@@ -16,11 +16,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
-
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
+import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import {MatDialogModule} from '@angular/material/dialog';
 
 import {MatIconModule} from '@angular/material/icon';
+import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import {MatDividerModule} from '@angular/material/divider';
 import { StarRatingModule } from 'angular-star-rating';
@@ -51,7 +54,15 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
+// import { NzResultModule } from 'ng-zorro-antd/result';
 import { ToastrModule } from 'ngx-toastr';
+import { ReactiveFormsModule } from '@angular/forms';
+
+import { DialogModule } from 'primeng/dialog';
+import { FooterComponent } from './footer/footer.component';
+import { ErrorPageComponent } from './error-page/error-page.component';
+import { NgxSpinnerModule } from "ngx-spinner";
+import { MDBBootstrapModule } from 'angular-bootstrap-md';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -69,10 +80,15 @@ import { ToastrModule } from 'ngx-toastr';
     EmployeeMyjobsComponent,
     EmployeeAlljobsComponent,
     CompanyProfileComponent,
-    JobDetailsComponent
+    JobDetailsComponent,
+    FooterComponent,
+    ErrorPageComponent
     
   ],
   imports: [
+    MDBBootstrapModule.forRoot(),
+    ConfirmDialogModule,
+    ReactiveFormsModule,
     ToastrModule,
     NzUploadModule, 
     CommonModule,
@@ -85,6 +101,8 @@ import { ToastrModule } from 'ngx-toastr';
     MatSelectModule,
     MatButtonModule,
     MatCheckboxModule,
+    NgxSpinnerModule,
+    NzEmptyModule,
     MatBadgeModule,
     FormsModule,
     HttpClientModule,
@@ -92,10 +110,12 @@ import { ToastrModule } from 'ngx-toastr';
     MatTableModule,
     MatRadioModule,
     DropdownModule,
+    DialogModule,
     MatDialogModule,  
     NgxPaginationModule,
     MatDividerModule,
     NgbModule,
+    NzSpinModule,
     MatIconModule,
     MatPaginatorModule,
     MatDividerModule,
@@ -112,8 +132,8 @@ import { ToastrModule } from 'ngx-toastr';
     NgxMaterialTimepickerModule,
     StarRatingModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 5000,
-      positionClass: 'toast-top-left',
+      timeOut: 1000,
+      positionClass: 'toast-top-right',
       preventDuplicates: true,
       progressBar:true,
       progressAnimation:'decreasing',
@@ -130,6 +150,7 @@ import { ToastrModule } from 'ngx-toastr';
       multi: true
     },
     { provide: NZ_I18N, useValue: en_US },
+    ConfirmationService
     
   ],
   bootstrap: [AppComponent]

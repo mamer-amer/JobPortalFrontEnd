@@ -2,3 +2,23 @@
     display: block;
     background-color: #F2F2F2;
   }
+
+
+.alreadyAppliedButton{
+  width: 100%;
+}
+
+@media (min-width: 992px) {
+  .col-lg-2{
+  max-width: 13.666667% !important;
+  }
+
+}
+
+
+.hoverOnCard:hover {
+  background-color:#8080805e;
+ 
+  
+}
+

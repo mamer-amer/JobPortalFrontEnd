@@ -1,0 +1,65 @@
+ <div class="bs-example">
+   <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+     <a href="#"
+       class="navbar-brand">Job Portal</a>
+     <button type="button"
+       class="navbar-toggler"
+       data-toggle="collapse"
+       data-target="#navbarCollapse">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+
+     <div class="collapse navbar-collapse"
+       id="navbarCollapse">
+       <div class="navbar-nav">
+
+         <!-- <a href="#"
+          class="nav-item nav-link active"
+          (click)="service.goBack()">Back</a> -->
+
+         <a href="#"
+           *ngIf="userType=='candidate'"
+           class="nav-item nav-link active"
+           [routerLink]="['/candidateProfile']">MyProfile</a>
+         <a href="#"
+           *ngIf="userType=='employee'"
+           class="nav-item nav-link active"
+           [routerLink]="['/companyProfile']">MyProfile</a>
+
+         <!-- <a href="#"
+           class="nav-item nav-link active active-link-page"
+           [routerLink]="['/allJobs']">All Jobs</a>
+         <a href="#"
+           *ngIf="userType=='employee'"
+           class="nav-item nav-link active "
+           [routerLink]="['/employee/postjob']">Post a Job</a> -->
+
+       </div>
+       <div class="navbar-nav ml-auto">
+         <a href="#"
+           class="nav-item nav-link"
+           data-toggle="dropdown"><img style="color:white"
+             (click)="service.logout()"
+             class="logoutImage"
+             src="../../assets/logout.png"
+             alt=""></a>
+       </div>
+     </div>
+   </nav>
+
+
+   <br>
+   <br>
+
+
+
+
+<nz-result nzStatus="404"
+    nzTitle="404"
+    nzSubTitle="Sorry, the page you visited does not exist.">
+    <div nz-result-extra>
+      <button nz-button
+        
+        nzType="primary">Back Home</button>
+    </div>
+  </nz-result>
