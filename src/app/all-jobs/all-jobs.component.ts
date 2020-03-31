@@ -198,7 +198,7 @@ export class AllJobsComponent implements OnInit {
         container: 'myMap', // container id
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [pos.lng, pos.lat], // starting position
-        zoom: 6// starting zoom
+        zoom: 13// starting zoom
       });
     })
   }
