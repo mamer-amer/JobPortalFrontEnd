@@ -2,12 +2,9 @@ import { Component, OnInit, ViewChild, Input, EventEmitter } from '@angular/core
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
-
+import * as moment from 'moment';
 
 
 @Component({
@@ -25,13 +22,14 @@ export class AllJobsComponent implements OnInit {
   empty = false;
   cityName: any;
   userType: any;
+  date:string;
 
 
 
 
   constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
 
-
+    this.date=moment((new Date()), "YYYYMMDD").fromNow();
 
   }
   page = 1;
@@ -66,8 +64,9 @@ export class AllJobsComponent implements OnInit {
       this.getJobsByCompany(0);
     }
 
-    this.loadMap();
-    this.showMarkersOnMap();
+    this.loadMap()
+      .then(() => this.showMarkersOnMap())
+
 
 
 
@@ -161,7 +160,7 @@ export class AllJobsComponent implements OnInit {
 
 
     var popup = new Mapboxgl.Popup({ offset: 40 })
-    .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><div>');
+      .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><div>');
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
       .setPopup(popup)
@@ -173,7 +172,7 @@ export class AllJobsComponent implements OnInit {
       this.routeToJobDetailsComponent(id);
 
     })
-    
+
 
 
 
@@ -190,20 +189,25 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  loadMap() {
-    this.getCurrentPosition().then(pos => {
-      console.log(pos)
-      Mapboxgl.accessToken = environment.mapboxKey;
-      this.map = new Mapboxgl.Map({
-        container: 'myMap', // container id
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [pos.lng, pos.lat], // starting position
-        zoom: 13// starting zoom
-      });
+  loadMap(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      this.getCurrentPosition().then(pos => {
+
+        Mapboxgl.accessToken = environment.mapboxKey;
+        this.map = new Mapboxgl.Map({
+          container: 'myMap', // container id
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [pos.lng, pos.lat], // starting position
+          zoom: 13// starting zoom
+        });
+        resolve();
+      })
     })
+
   }
 
- 
+
 
   getCurrentPosition(): Promise<any> {
     return new Promise((resolve, reject) => {

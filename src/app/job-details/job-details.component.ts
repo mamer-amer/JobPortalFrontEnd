@@ -170,7 +170,7 @@ export class JobDetailsComponent implements OnInit {
 
 
   routeToComapnyProfile(): void {
-    this.route.navigate(['companyProfileDetails/'+this.candidateId])
+    this.route.navigate(['companyProfileDetails/'+this.companyId])
   }
 
 

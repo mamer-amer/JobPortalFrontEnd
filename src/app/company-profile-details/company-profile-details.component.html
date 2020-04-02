@@ -47,10 +47,31 @@
 
                     <hr />
 
-                    <h3 style="margin-left:10px;font-weight:600;display: inline;">ABCD Privated Limited </h3>
-                    <nz-rate style="margin-left: 15px;" [ngModel]="3"></nz-rate>
-                    <div class="container" style="border:1px solid rgb(218, 218, 218);height:150px">
+                    <h3 style="margin-left:10px;font-weight:600;display: inline;">{{companyProfile.name | uppercase }}  </h3>
+                    <nz-rate style="margin-left: 15px;" [disabled]="true" [ngModel]="avgRating" [nzTooltips]="tooltips"></nz-rate>
+                    <div class="container" style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
+                        <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
 
+                            <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span
+                                    style="color: gray;font-style: italic;font-weight: normal;">
+                                    {{companyProfile.contactName}}</span></h4>
+
+                            <h4 style="flex: 1;color: black">Contact Title: <span
+                                    style="color: gray;font-style: italic;font-weight: normal;">
+                                    {{companyProfile.contactTitle}} </span></h4>
+
+
+
+                        </div>
+                        <div style="display: flex;justify-content: center;align-items: center;">
+                            <h4 style="flex: 1;color: black;">Corporate Address: <span
+                                    style="color: gray;font-style: italic;font-weight: normal;">
+                                    {{companyProfile.corporateAddress}} </span></h4>
+
+                            <h4 style="flex: 1;color: black;">Billing Address: <span
+                                    style="color: gray;font-style: italic;font-weight: normal;">
+                                    {{companyProfile.billingAddress}} </span></h4>
+                        </div>
                     </div>
                 </mat-card>
             </div>
@@ -65,108 +86,23 @@
             <div class="col-lg-10">
                 <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
 
-                    <div>
+                    <div *ngFor="let candidate of companyReviewRating">
                         <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
                             nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
                         <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
-
-                            Ibrahim Shah
+                            {{candidate.name}}
                             <br>
-                            <nz-rate style="vertical-align: bottom" [ngModel]="3"></nz-rate>
+                            <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating"
+                                [nzTooltips]="tooltips"></nz-rate>
                         </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">Ibrahim Is the best
-                            candidate to complete any Frontside Web Programming task! Perfect smooth experience
-                            communicating and really quickly executing on the tasks at hand! If I had any problems
-                            creating anything in the web design web programing field I would defiantly first refer to
-                            Ibrahim for his help and support to execute and get done with the finished product. We spend
-                            a good 30 min fixing a problem and it got done in a matter of minutes. 100% recommend
-                            Ibrahim as your Freelancer and programmer, the perfect candidate to getting the job done!
+                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">
+                            {{candidate.review}}
                         </p>
                         <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
+                        <hr />
                     </div>
-                    <hr />
-                    <div>
-                        <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
-                            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                        <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
 
-                            Ibrahim Shah
-                            <br>
-                            <nz-rate style="vertical-align: bottom" [ngModel]="1"></nz-rate>
-                        </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">Ibrahim Is the best
-                            candidate to complete any Frontside Web Programming task! Perfect smooth experience
-                            communicating and really quickly executing on the tasks at hand! If I had any problems
-                            creating anything in the web design web programing field I would defiantly first refer to
-                            Ibrahim for his help and support to execute and get done with the finished product. We spend
-                            a good 30 min fixing a problem and it got done in a matter of minutes. 100% recommend
-                            Ibrahim as your Freelancer and programmer, the perfect candidate to getting the job done!
-                        </p>
-                        <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
-                    </div>
-                    <hr />
 
-                    <div>
-                        <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
-                            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                        <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
-
-                            Ibrahim Shah
-                            <br>
-                            <nz-rate style="vertical-align: bottom" [ngModel]="1"></nz-rate>
-                        </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">Ibrahim Is the best
-                            candidate to complete any Frontside Web Programming task! Perfect smooth experience
-                            communicating and really quickly executing on the tasks at hand! If I had any problems
-                            creating anything in the web design web programing field I would defiantly first refer to
-                            Ibrahim for his help and support to execute and get done with the finished product. We spend
-                            a good 30 min fixing a problem and it got done in a matter of minutes. 100% recommend
-                            Ibrahim as your Freelancer and programmer, the perfect candidate to getting the job done!
-                        </p>
-                        <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
-                    </div>
-                    <hr />
-                    <div>
-                        <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
-                            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                        <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
-
-                            Ibrahim Shah
-                            <br>
-                            <nz-rate style="vertical-align: bottom" [ngModel]="4"></nz-rate>
-                        </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">Ibrahim Is the best
-                            candidate to complete any Frontside Web Programming task! Perfect smooth experience
-                            communicating and really quickly executing on the tasks at hand! If I had any problems
-                            creating anything in the web design web programing field I would defiantly first refer to
-                            Ibrahim for his help and support to execute and get done with the finished product. We spend
-                            a good 30 min fixing a problem and it got done in a matter of minutes. 100% recommend
-                            Ibrahim as your Freelancer and programmer, the perfect candidate to getting the job done!
-                        </p>
-                        <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
-                    </div>
-                    <hr />
-
-                    <div>
-                        <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
-                            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                        <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
-
-                            Ibrahim Shah
-                            <br>
-                            <nz-rate style="vertical-align: bottom" [ngModel]="3"></nz-rate>
-                        </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">Ibrahim Is the best
-                            candidate to complete any Frontside Web Programming task! Perfect smooth experience
-                            communicating and really quickly executing on the tasks at hand! If I had any problems
-                            creating anything in the web design web programing field I would defiantly first refer to
-                            Ibrahim for his help and support to execute and get done with the finished product. We spend
-                            a good 30 min fixing a problem and it got done in a matter of minutes. 100% recommend
-                            Ibrahim as your Freelancer and programmer, the perfect candidate to getting the job done!
-                        </p>
-                        <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
-                    </div>
-                    <hr />
 
 
 
