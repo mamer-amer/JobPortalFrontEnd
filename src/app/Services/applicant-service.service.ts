@@ -54,7 +54,14 @@ export class ApplicantServiceService {
 
 
   getCurrentProfileUserStauts(userId:any):Observable<any>{
-    return this.http.get(this.url +"token/user/"+userId);
+    if(sessionStorage.getItem('userType')=="candidate"){
+      return this.http.get(this.url + "api/cp/" + userId);
+    }
+    else if (sessionStorage.getItem('userType') == "employee"){
+      return this.http.get(this.url + "api/companyprofile/userId/" + userId);
+
+    }
+   
    
   }
   getAllJobs():Observable<any>{
@@ -146,5 +153,12 @@ export class ApplicantServiceService {
   getAllJobsByCityName(city,page):Observable<any>{
     return this.http.get(this.url + "api/job/searchbycity?city=" + city + "&page=" + page);
 
+  }
+
+  getCountOfCandidates(jobId:any):Observable<any>{
+    return this.http.get(this.url + "api/job/candidatescount/"+jobId);
+  }
+  getAppliedCandidatesProfile(jobId:any):Observable<any>{
+    return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 }

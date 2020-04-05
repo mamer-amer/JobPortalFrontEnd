@@ -13,6 +13,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class JobDetailsComponent implements OnInit {
 
+  numOfCandidates:any = 0;
   jobObj: JobDetails;
   otherJobsArray: Array<any> = [];
   userType: any;
@@ -63,6 +64,7 @@ export class JobDetailsComponent implements OnInit {
       this.getCompanyRating(this.companyId);
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
+      this.displayCount(id);
 
 
       // once get the job also get the rating againts its company
@@ -174,26 +176,21 @@ export class JobDetailsComponent implements OnInit {
   }
 
 
-  // @HostListener('click') onMouseClick() {
-  //   this.highlight('red');
-  // }
+  displayCount(id:any){
+    this.service.getCountOfCandidates(id).subscribe((res=>{
+        console.log("Count of candidiares",res.result)
+        this.numOfCandidates = parseInt(res.result);
+    }),error=>{
+      console.log(error);
+    }
+    );
+  }
 
-  // private highlight(color: string) {
-  //   this.el.nativeElement.style.background = color;
-  //   console.log(this.el.nativeElement)
-  // }
+
+  routeToCandidatesProfiles(){
+    this.route.navigate(['/appliedcandidates/'+this.jobId])
+  }
+
 
 }
-
-  //  promise():Promise<any>{
-  //  return new Promise((resolve,reject)=>{
-  //   resolve(this.jobId!=null);
-  //   }).then
-  //  }
-  // resolve runs the first function in .then  
-  // On page refresh check for job applied and company reviews 
-  // show reviews of every company
-  // give review to the company after appliying on the job
-  // show myJobs to employees only.
-
 

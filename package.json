@@ -23,6 +23,7 @@
     "@angular/platform-browser": "~9.0.2",
     "@angular/platform-browser-dynamic": "~9.0.2",
     "@angular/router": "~9.0.2",
+    "@fortawesome/fontawesome-free": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^6.0.0",
     "angular-bootstrap-md": "^9.0.1",
     "angular-images-resizer": "^2.0.3",

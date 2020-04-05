@@ -20,6 +20,10 @@
   background-color:#8080805e;
    
 }
+.viewDetails{
+ float: right;
+  border-radius: 30px;
+}
 
 p{
   font-size: 12px;

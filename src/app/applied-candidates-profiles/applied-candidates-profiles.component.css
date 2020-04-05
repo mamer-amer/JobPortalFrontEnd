@@ -1,0 +1,138 @@
+/* html,
+body,
+header,
+.view {
+  height: 100%;
+}
+
+@media (min-width: 560px) and (max-width: 740px) {
+
+  html,
+  body,
+  header,
+  .view {
+    height: 650px;
+  }
+}
+
+@media (min-width: 800px) and (max-width: 850px) {
+
+  html,
+  body,
+  header,
+  .view {
+    height: 650px;
+  }
+
+} */
+
+/* .intro-2{
+-webkit-tap-highlight-color: transparent;
+--blue: #007bff;
+--indigo: #6610f2;
+--purple: #6f42c1;
+--pink: #e83e8c;
+--red: #dc3545;
+--orange: #fd7e14;
+--yellow: #ffc107;
+--green: #28a745;
+--teal: #20c997;
+--cyan: #17a2b8;
+--white: #fff;
+--gray: #6c757d;
+--gray-dark: #343a40;
+--primary: #007bff;
+--secondary: #6c757d;
+--success: #28a745;
+--info: #17a2b8;
+--warning: #ffc107;
+--danger: #dc3545;
+--light: #f8f9fa;
+--dark: #343a40;
+--breakpoint-xs: 0;
+--breakpoint-sm: 576px;
+--breakpoint-md: 768px;
+--breakpoint-lg: 992px;
+--breakpoint-xl: 1200px;
+--font-family-sans-serif: -apple-system,
+BlinkMacSystemFont,
+"Segoe UI",
+Roboto,
+"Helvetica Neue",
+Arial,
+"Noto Sans",
+sans-serif,
+"Apple Color Emoji",
+"Segoe UI Emoji",
+"Segoe UI Symbol",
+"Noto Color Emoji";
+--font-family-monospace: SFMono-Regular,
+Menlo,
+Monaco,
+Consolas,
+"Liberation Mono",
+"Courier New",
+monospace;
+font-size: 1rem;
+line-height: 1.5;
+color: #212529;
+text-align: left;
+font-family: "Roboto",
+sans-serif;
+font-weight: 300;
+box-sizing: border-box;
+display: block;
+position: relative;
+overflow: hidden;
+cursor: default;
+height: 100vh;
+background: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img%20(11).jpg")no-repeat center center;
+background-size: cover;
+} */
+/* Structure */
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+.viewDetails {
+  float: right;
+  border-radius: 30px;
+}
+
+@media all and (min-width: 768px) {
+  tr td {
+    vertical-align: middle !important;
+    overflow-wrap: break-word;
+  }
+
+  tr span:not([class]) {
+    padding: 1rem 1rem;
+  }
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.dotgreen{
+  
+      height: 16px;
+      width: 17px;
+      background-color: #0e8e31;
+    border-radius: 50%;
+    display: inline-block;
+  
+}
+
+
+.dotRed{
+  height: 16px;
+  width: 17px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+}
