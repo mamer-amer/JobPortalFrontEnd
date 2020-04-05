@@ -14,9 +14,16 @@ import { browser } from 'protractor';
 })
 export class ApplicantServiceService {
 
-  
+  private sourceObject = new Subject();
+  getObject = this.sourceObject.asObservable();
+
   constructor(private http: HttpClient, private _location: Location,private router:Router,private toastService:ToastrService) { }
    url:any = environment.baseUrl;
+
+
+  passObject(obj:any) {
+    this.sourceObject.next(obj);
+  }
 
    logout(){
     sessionStorage.clear();

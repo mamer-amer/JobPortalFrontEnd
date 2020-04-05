@@ -65,6 +65,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CompanyProfileDetailsComponent } from './company-profile-details/company-profile-details.component';
 import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
+import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -86,7 +87,8 @@ import { AppliedCandidatesProfilesComponent } from './applied-candidates-profile
     FooterComponent,
     ErrorPageComponent,
     CompanyProfileDetailsComponent,
-    AppliedCandidatesProfilesComponent
+    AppliedCandidatesProfilesComponent,
+    ViewCandidateProfileComponent
     
   ],
   imports: [

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Candidate } from '../candidate-profile/candidate';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Action } from 'rxjs/internal/scheduler/Action';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, NavigationExtras } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table'
 
 @Component({
@@ -16,7 +16,7 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
   editField: string;
   userType = sessionStorage.getItem('userType');
   jobId: any;
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute) { }
+  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private router:Router) { }
   dataSource: any;
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ back(){
       console.log(res);
       res.result.map(d => {
         this.candidatesArrays.push({
-          id: d.id,
+          candId: d.id,
           name:d.user.name,
           email:d.user.email,
           field: d.field,
@@ -76,7 +76,10 @@ back(){
   }
 
   gotoViewProfile(id:any){
-    console.log(this.candidatesArrays[id]);
+   
+    this.service.passObject(this.candidatesArrays[id]);
+   let candId =  this.candidatesArrays[id]['candId']
+    this.router.navigate(['/viewprofile'], { queryParams: { "index": id, "candidateId": candId } })
   }
 
 }
