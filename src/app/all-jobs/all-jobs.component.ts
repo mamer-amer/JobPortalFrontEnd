@@ -5,6 +5,8 @@ import { Location } from '@angular/common';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
 import * as moment from 'moment';
+import { NavbarService } from '../navbar.service';
+// import { NavbarService } from 'angular-bootstrap-md';
 
 
 @Component({
@@ -27,7 +29,7 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService:NavbarService) {
 
     this.date=moment((new Date()), "YYYYMMDD").fromNow();
 
@@ -55,6 +57,7 @@ export class AllJobsComponent implements OnInit {
   // -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
 
   ngOnInit(): void {
+    this.navService.showNav();
     this.userType = sessionStorage.getItem('userType');
 
     if (this.userType == "candidate") {

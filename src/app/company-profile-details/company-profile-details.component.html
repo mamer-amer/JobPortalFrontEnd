@@ -1,112 +1,101 @@
-<div class="bs-example">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-        <a href="#" class="navbar-brand">Job Portal</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+<app-navbar></app-navbar>
 
-        <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav">
+<br>
+<br>
 
 
 
-                <a href="#" class="nav-item nav-link active" [routerLink]="['/candidateProfile']">MyProfile</a>
 
-
-                <a href="#" class="nav-item nav-link active active-link-page"
-                    [routerLink]="['/allJobs']">{{'AllJobs'}}</a>
-
-            </div>
-            <div class="navbar-nav ml-auto">
-                <a href="#" class="nav-item nav-link" data-toggle="dropdown"><img style="color:white"
-                        class="logoutImage" src="../../assets/logout.png" alt=""></a>
-            </div>
-        </div>
-    </nav>
-
-
-    <br>
-    <br>
-
-
-    <!-- NAVBAR ENDS -->
-
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1">
-
-            </div>
-            <div class="col-lg-10">
-                <mat-card style="border-radius:0px;padding:20px">
-
-                    <nz-avatar [class.mat-elevation-z2]="true" style="margin:20px 20px 0px 20px" nzIcon="user"
-                        [nzShape]="'square'" [nzSize]="100"
-                        nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-
-
-                    <hr />
-
-                    <h3 style="margin-left:10px;font-weight:600;display: inline;">{{companyProfile.name | uppercase }}  </h3>
-                    <nz-rate style="margin-left: 15px;" [disabled]="true" [ngModel]="avgRating" [nzTooltips]="tooltips"></nz-rate>
-                    <div class="container" style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
-                        <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
-
-                            <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span
-                                    style="color: gray;font-style: italic;font-weight: normal;">
-                                    {{companyProfile.contactName}}</span></h4>
-
-                            <h4 style="flex: 1;color: black">Contact Title: <span
-                                    style="color: gray;font-style: italic;font-weight: normal;">
-                                    {{companyProfile.contactTitle}} </span></h4>
-
-
-
-                        </div>
-                        <div style="display: flex;justify-content: center;align-items: center;">
-                            <h4 style="flex: 1;color: black;">Corporate Address: <span
-                                    style="color: gray;font-style: italic;font-weight: normal;">
-                                    {{companyProfile.corporateAddress}} </span></h4>
-
-                            <h4 style="flex: 1;color: black;">Billing Address: <span
-                                    style="color: gray;font-style: italic;font-weight: normal;">
-                                    {{companyProfile.billingAddress}} </span></h4>
-                        </div>
-                    </div>
-                </mat-card>
-            </div>
-        </div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1">
 
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-1">
+    <div class="col-lg-10">
+      <mat-card style="border-radius:0px;padding:20px">
 
-            </div>
-            <div class="col-lg-10">
-                <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
-
-                    <div *ngFor="let candidate of companyReviewRating">
-                        <nz-avatar style="float: left;bottom:20px;" nzIcon="user" [nzSize]="64"
-                            nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
-                        <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
-                            {{candidate.name}}
-                            <br>
-                            <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating"
-                                [nzTooltips]="tooltips"></nz-rate>
-                        </p>
-                        <p style="font-style: italic;margin-left: 60px;color: rgb(153, 152, 152);">
-                            {{candidate.review}}
-                        </p>
-                        <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
-                        <hr />
-                    </div>
+        <nz-avatar [class.mat-elevation-z2]="true"
+          style="margin:20px 20px 0px 20px"
+          nzIcon="user"
+          [nzShape]="'square'"
+          [nzSize]="100"
+          [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'"></nz-avatar>
 
 
+        <hr />
+
+        <h3 style="display: inline;">{{companyProfile.name | uppercase }} </h3>
+        <nz-rate style="margin-left: 15px;"
+          [disabled]="true"
+          [ngModel]="avgRating"
+          [nzTooltips]="tooltips"></nz-rate>
+        <div class="container"
+          style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
+          <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
+
+            <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span
+                style="color: gray;font-weight: normal;">
+                {{companyProfile.contactName}}</span></h4>
+
+            <h4 style="flex: 1;color: black">Contact Title: <span
+                style="color: gray;font-weight: normal;">
+                {{companyProfile.contactTitle}} </span></h4>
 
 
 
-                </mat-card>
-            </div>
+          </div>
+          <div style="display: flex;justify-content: center;align-items: center;">
+            <h4 style="flex: 1;color: black;">Corporate Address: <span
+                style="color: gray;font-weight: normal;">
+                {{companyProfile.corporateAddress}} </span></h4>
+
+            <h4 style="flex: 1;color: black;">Billing Address: <span
+                style="color: gray;font-weight: normal;">
+                {{companyProfile.billingAddress}} </span></h4>
+          </div>
         </div>
+      </mat-card>
     </div>
+  </div>
+
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-1">
+    </div>
+    <div class="col-lg-10">
+      <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
+
+        <h3 class="text-center font-weight-bold">Comments <span class="badge pink">{{comments}}</span></h3>
+
+        <div *ngFor="let candidate of companyReviewRating">
+          <nz-avatar style="float: left"
+            nzIcon="user"
+            [nzSize]="64"
+            [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'"></nz-avatar>
+          <p style="vertical-align:bottom;font-weight: 600;margin-top: 35px;">
+            {{candidate.name}}
+            <br>
+            <nz-rate style="vertical-align: bottom"
+              [disabled]="true"
+              [ngModel]="candidate.rating"
+              [nzTooltips]="tooltips"></nz-rate>
+          </p>
+          <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
+            {{candidate.review}}
+          </p>
+          <p style="margin-left: 60px;opacity:0.7;font-size: 12px !important;">3 days ago</p>
+          <hr />
+        </div>
+
+
+
+
+
+      </mat-card>
+    </div>
+  </div>
+</div>
+<br>
+
+<app-footer></app-footer>

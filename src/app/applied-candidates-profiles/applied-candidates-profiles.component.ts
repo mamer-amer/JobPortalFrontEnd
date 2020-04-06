@@ -39,6 +39,7 @@ back(){
       res.result.map(d => {
         this.candidatesArrays.push({
           candId: d.id,
+          userId :d.user.id,
           name:d.user.name,
           email:d.user.email,
           field: d.field,
@@ -78,8 +79,8 @@ back(){
   gotoViewProfile(id:any){
    
     this.service.passObject(this.candidatesArrays[id]);
-   let candId =  this.candidatesArrays[id]['candId']
-    this.router.navigate(['/viewprofile'], { queryParams: { "index": id, "candidateId": candId } })
+   let userId =  this.candidatesArrays[id]['userId']
+    this.router.navigate(['/viewprofile'], { queryParams: { "index": id, "userId": userId } })
   }
 
 }

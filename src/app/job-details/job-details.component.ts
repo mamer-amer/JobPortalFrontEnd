@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { JobDetails } from '../job-details/JobDetails'
 import { Router } from '@angular/router'
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-job-details',
@@ -34,13 +35,16 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  constructor(private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private spinner: NgxSpinnerService) {
+  constructor(private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private spinner: NgxSpinnerService,private navbar:NavbarService) {
     this.jobObj = new JobDetails();
 
 
   }
 
   ngOnInit(): void {
+    this.navbar.showNav();
+
+
     this.spinner.show();
     this.candidateId = Number(sessionStorage.getItem('candidateId'));
     this.userType = sessionStorage.getItem('userType');
@@ -56,6 +60,7 @@ export class JobDetailsComponent implements OnInit {
 
 
   getJobById(id): void {
+  
     this.spinner.show();
     this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;

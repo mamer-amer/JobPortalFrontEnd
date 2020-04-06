@@ -66,6 +66,7 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CompanyProfileDetailsComponent } from './company-profile-details/company-profile-details.component';
 import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
 import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -88,7 +89,8 @@ import { ViewCandidateProfileComponent } from './view-candidate-profile/view-can
     ErrorPageComponent,
     CompanyProfileDetailsComponent,
     AppliedCandidatesProfilesComponent,
-    ViewCandidateProfileComponent
+    ViewCandidateProfileComponent,
+    NavbarComponent
     
   ],
   imports: [

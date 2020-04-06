@@ -4,6 +4,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -16,10 +17,12 @@ export class CompanyProfileComponent implements OnInit {
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
-  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService) { 
+  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService,
+    private navbar:NavbarService) { 
   }
 
   ngOnInit() {
+    this.navbar.showNav();
     this.spinner.show();
     this.checkUserId();
     this.getEmployeeProfile();

@@ -68,12 +68,15 @@ export class ApplicantServiceService {
       return this.http.get(this.url + "api/companyprofile/userId/" + userId);
 
     }
-   
-   
+ 
   }
   getAllJobs():Observable<any>{
     return this.http.get(this.url + "api/job/all");
    
+  }
+
+  getCandidateProfileForView(userId: any): Observable<any> {
+    return this.http.get(this.url+"api/cp/"+userId);
   }
 
   getPaginatedJobs(page):Observable<any>{

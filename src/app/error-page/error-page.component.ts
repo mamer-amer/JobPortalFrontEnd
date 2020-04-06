@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-error-page',
@@ -9,9 +10,10 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 export class ErrorPageComponent implements OnInit {
 
   userType;
-  constructor(public service:ApplicantServiceService) { }
+  constructor(public service:ApplicantServiceService,private navbar:NavbarService) { }
 
   ngOnInit(): void {
+    this.navbar.showNav()
     this.userType = sessionStorage.getItem('userType');
   }
 

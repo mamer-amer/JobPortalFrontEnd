@@ -7,6 +7,7 @@ import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -47,9 +48,10 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav:NavbarService) { }
 
   ngOnInit(): void {
+    this.nav.showNav();
     this.checkUserStauts();
 
 
