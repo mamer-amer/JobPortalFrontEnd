@@ -25,10 +25,10 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngOnInit(): void {
 
     
-   
 
     this.nav.showNav();
-    this.getParams ().then((result)=>{
+    this.getParams();
+    this.catchParams().then((result)=>{
         if(result){
           this.getCandidateProfile(this.userId);
         }
@@ -45,25 +45,22 @@ export class ViewCandidateProfileComponent implements OnInit {
     this.service.getCandidateProfileForView(userId).subscribe(d=>{
       this.candidateObj  = d;
       console.log(this.candidateObj);
+       const {result,name,email} =  d;
+       console.log(result +" " +name+" " + email)
     })
   }
 
-  // catchParams():Promise<any>{
-  //   return new Promise(function(resolve,reject){
-  //     resolve();
-  //     });
-  //   }
+  catchParams():Promise<any>{
+    return new Promise(function(resolve,reject){
+      resolve(true);
+      });
+    }
 
 
-    getParams():Promise<any>{
-     return new Promise(function(resolve,reject){
-       this.activatedRoute.queryParamMap.subscribe((params) => {
-         this.userId = params.get('userId');
-         resolve(true);
-         
-       });
-     });
-      
+    getParams(){
+      this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.userId = params.get('userId');
+    });
     }
    
 
