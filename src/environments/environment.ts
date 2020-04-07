@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  baseUrl:"http://localhost:8080/",
+  baseUrl: "https://jobs-app-portal.herokuapp.com/",
+  // baseUrl:"http://localhost:8080/",
+  // baseUrl:"https://remotemysql.com:3306/",
   mapboxKey:'pk.eyJ1IjoiaWJ1OTciLCJhIjoiY2s3eTFsYXRvMDJkNDNwcGd1cnF6NjNnNSJ9.PkJnAe_RPzMNlyA43HDf-A'
   //hello
   // baseUrl:"http://thegigster.ca/gigster/"
