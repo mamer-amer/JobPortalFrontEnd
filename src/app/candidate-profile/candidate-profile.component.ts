@@ -7,6 +7,7 @@ import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-candidate-profile',
@@ -47,9 +48,10 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav:NavbarService) { }
 
   ngOnInit(): void {
+    this.nav.showNav();
     this.checkUserStauts();
 
 
@@ -162,21 +164,21 @@ export class CandidateProfileComponent implements OnInit {
         
         if (res != null) {
           //the profile is already present
-          this.candidateObj.name = res.name;
-          this.candidateObj.email = res.email;
-          if (res.candidateProfile != null) {
+          this.candidateObj.name = sessionStorage.getItem('username');
+          this.candidateObj.email = sessionStorage.getItem('email');
+          if (res.result != null) {
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
             
-            this.candidateObj.field = res.candidateProfile.field;
-            this.candidateObj.presentationLetter = res.candidateProfile.presentationLetter;
-            this.candidateObj.cv = res.candidateProfile.cv;
-            this.candidateObj.dp = res.candidateProfile.dp;
-            sessionStorage.setItem('candidateId',res.candidateProfile.id)
+            this.candidateObj.field = res.result.field;
+            this.candidateObj.presentationLetter = res.result.presentationLetter;
+            this.candidateObj.cv = res.result.cv;
+            this.candidateObj.dp = res.result.dp;
+            sessionStorage.setItem('candidateId',res.result.id) 
        
-            this.candidateObj.imageContentType = res.candidateProfile.imageContentType;
-            this.candidateObj.resumeContentType = res.candidateProfile.resumeContentType;
+            this.candidateObj.imageContentType = res.result.imageContentType;
+            this.candidateObj.resumeContentType = res.result.resumeContentType;
           }
 
 
@@ -244,4 +246,5 @@ export class CandidateProfileComponent implements OnInit {
     //const url= window.URL.createObjectURL(blob);
     //window.open(url);
   }
+
 }

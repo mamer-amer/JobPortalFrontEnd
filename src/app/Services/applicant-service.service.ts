@@ -14,9 +14,16 @@ import { browser } from 'protractor';
 })
 export class ApplicantServiceService {
 
-  
+  private sourceObject = new Subject();
+  getObject = this.sourceObject.asObservable();
+
   constructor(private http: HttpClient, private _location: Location,private router:Router,private toastService:ToastrService) { }
    url:any = environment.baseUrl;
+
+
+  passObject(obj:any) {
+    this.sourceObject.next(obj);
+  }
 
    logout(){
     sessionStorage.clear();
@@ -54,12 +61,22 @@ export class ApplicantServiceService {
 
 
   getCurrentProfileUserStauts(userId:any):Observable<any>{
-    return this.http.get(this.url +"token/user/"+userId);
-   
+    if(sessionStorage.getItem('userType')=="candidate"){
+      return this.http.get(this.url + "api/cp/" + userId);
+    }
+    else if (sessionStorage.getItem('userType') == "employee"){
+      return this.http.get(this.url + "api/companyprofile/userId/" + userId);
+
+    }
+ 
   }
   getAllJobs():Observable<any>{
     return this.http.get(this.url + "api/job/all");
    
+  }
+
+  getCandidateProfileForView(userId: any): Observable<any> {
+    return this.http.get(this.url+"api/cp/"+userId);
   }
 
   getPaginatedJobs(page):Observable<any>{
@@ -96,6 +113,10 @@ export class ApplicantServiceService {
 
   postCompanyProfile(userId:any,companyProfile:any):Observable<any>{
     return this.http.post(this.url +"api/companyprofile/"+userId,companyProfile)
+  }
+
+  getCompanyProfile(companyId:any):Observable<any>{
+    return this.http.get(this.url+"api/companyprofile/"+companyId);
   }
 
   getJobsByEmployeeId(id:any):Observable<any>{
@@ -142,5 +163,12 @@ export class ApplicantServiceService {
   getAllJobsByCityName(city,page):Observable<any>{
     return this.http.get(this.url + "api/job/searchbycity?city=" + city + "&page=" + page);
 
+  }
+
+  getCountOfCandidates(jobId:any):Observable<any>{
+    return this.http.get(this.url + "api/job/candidatescount/"+jobId);
+  }
+  getAppliedCandidatesProfile(jobId:any):Observable<any>{
+    return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 }

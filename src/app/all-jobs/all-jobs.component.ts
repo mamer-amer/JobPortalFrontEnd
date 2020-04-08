@@ -2,12 +2,11 @@ import { Component, OnInit, ViewChild, Input, EventEmitter } from '@angular/core
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
-
+import * as moment from 'moment';
+import { NavbarService } from '../navbar.service';
+// import { NavbarService } from 'angular-bootstrap-md';
 
 
 @Component({
@@ -25,13 +24,14 @@ export class AllJobsComponent implements OnInit {
   empty = false;
   cityName: any;
   userType: any;
+  date:string;
 
 
 
 
-  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService:NavbarService) {
 
-
+    this.date=moment((new Date()), "YYYYMMDD").fromNow();
 
   }
   page = 1;
@@ -57,6 +57,7 @@ export class AllJobsComponent implements OnInit {
   // -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
 
   ngOnInit(): void {
+    this.navService.showNav();
     this.userType = sessionStorage.getItem('userType');
 
     if (this.userType == "candidate") {
@@ -66,8 +67,9 @@ export class AllJobsComponent implements OnInit {
       this.getJobsByCompany(0);
     }
 
-    this.loadMap();
-    this.showMarkersOnMap();
+    this.loadMap()
+      .then(() => this.showMarkersOnMap())
+
 
 
 
@@ -142,7 +144,6 @@ export class AllJobsComponent implements OnInit {
 
   showMarkersOnMap(): void {
     this.service.getAllJobs().subscribe(res => {
-      console.log("All jobs here", res)
 
       res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title, element.id));
     })
@@ -161,19 +162,17 @@ export class AllJobsComponent implements OnInit {
   createMarker(long, lat, title, id) {
 
 
-    // var popup = new Mapboxgl.Popup({ offset: 40 })
-    // .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><a>'+id+'</a><div>');
+    var popup = new Mapboxgl.Popup({ offset: 40 })
+      .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><div>');
     var marker = new Mapboxgl.Marker({})
       .setLngLat([long, lat])
+      .setPopup(popup)
       .addTo(this.map);
 
 
-    // marker.getElement().addEventListener('dblclick', () => {
-    //   console.log(marker.getLngLat())
-
-    // })
-    marker.getElement().addEventListener('click', () => {
+    marker.getElement().addEventListener('dblclick', () => {
       console.log(marker.getLngLat())
+      this.routeToJobDetailsComponent(id);
 
     })
 
@@ -185,6 +184,7 @@ export class AllJobsComponent implements OnInit {
 
 
 
+
   }
 
 
@@ -192,22 +192,25 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  loadMap() {
-    this.getCurrentPosition().then(pos => {
-      console.log(pos)
-      Mapboxgl.accessToken = environment.mapboxKey;
-      this.map = new Mapboxgl.Map({
-        container: 'myMap', // container id
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [pos.lng, pos.lat], // starting position
-        zoom: 6// starting zoom
-      });
+  loadMap(): Promise<any> {
+
+    return new Promise((resolve, reject) => {
+      this.getCurrentPosition().then(pos => {
+
+        Mapboxgl.accessToken = environment.mapboxKey;
+        this.map = new Mapboxgl.Map({
+          container: 'myMap', // container id
+          style: 'mapbox://styles/mapbox/streets-v11',
+          center: [pos.lng, pos.lat], // starting position
+          zoom: 13// starting zoom
+        });
+        resolve();
+      })
     })
+
   }
 
-  test() {
-    console.log("hello")
-  }
+
 
   getCurrentPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
@@ -222,6 +225,8 @@ export class AllJobsComponent implements OnInit {
     });
 
   }
+
+
 
   getJobsByCompany(p) {
     this.allJobs = []
@@ -243,6 +248,7 @@ export class AllJobsComponent implements OnInit {
       }
     })
   }
+
 
   searchByCityName(city, page) {
     this.allJobs = []

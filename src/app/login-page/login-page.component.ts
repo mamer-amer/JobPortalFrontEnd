@@ -67,10 +67,16 @@ export class LoginPageComponent implements OnInit {
         this.message.error(res.message, {
           nzDuration: 3000
         });
+         this.showLoading = false;
       }
-        this.showLoading = false;
+       
       }
+     
     );
+    // this.message.error("Error Occured", {
+    //   nzDuration: 3000
+    // });
+    this.showLoading = false;
 
     // if(output == true){
   }

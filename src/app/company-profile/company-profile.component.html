@@ -1,4 +1,4 @@
-<div class="bs-example">
+<!-- <div class="bs-example">
   <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
     <a href="#"
       class="navbar-brand">Job Portal</a>
@@ -13,9 +13,7 @@
       id="navbarCollapse">
       <div class="navbar-nav">
 
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
+      
 
         <a href="#"
          
@@ -42,9 +40,9 @@
  src="../../assets/logout.png" alt=""></a>
       </div>
     </div>
-  </nav>
+  </nav> -->
 
-
+<app-navbar></app-navbar>
   <br>
 
 
@@ -179,14 +177,14 @@
 
   </div>
 
-  <ngx-spinner bdOpacity=1
-    bdColor="rgba(213,189,189,0.39)"
-    size="medium"
-    color="rgba(242,242,242,0.76)"
-    type="ball-fussion"
-    [fullScreen]="true">
-    <p style="color: white">{{loadingText}}</p>
-  </ngx-spinner>
+   <ngx-spinner bdOpacity=1
+     bdColor="rgba(200, 216, 215, 0.25)"
+     size="medium"
+     color="rgba(12,11,11,0.85)"
+     type="ball-clip-rotate-pulse"
+     [fullScreen]="true">
+     <p style="color: white">Loading..</p>
+   </ngx-spinner>
 <!-- Fooorter -->
 <br>
 <br>

@@ -1,44 +1,8 @@
-<div class="bs-example">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-    <a href="#"
-      class="navbar-brand">Job Portal</a>
-    <button type="button"
-      class="navbar-toggler"
-      data-toggle="collapse"
-      data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse"
-      id="navbarCollapse">
-      <div class="navbar-nav">
-        <!-- <a href="#"
-          class="nav-item nav-link active"
-          (click)="service.goBack()">Back</a> -->
-        <a href="#"
-          class="nav-item nav-link active active-link-page"
-          [routerLink]="['/candidateProfile']">MyProfile</a>
-        <a href="#"
-          class="nav-item nav-link active"
-          [routerLink]="['/allJobs']">All Jobs</a>
-
-      </div>
-      <div class="navbar-nav ml-auto">
-        <a href="#"
-          class="nav-item nav-link"
-          data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()" class="logoutImage"
- src="../../assets/logout.png"
-            alt=""></a>
-      </div>
-    </div>
-  </nav>
-
-
-  <br>
-  <br>
-  <!-- Navbar code ends -->
-
+<app-navbar></app-navbar>
+<br>
+<br>
+<br>
 
   <!-- Profile Code -->
 
@@ -48,31 +12,22 @@
 
       <div class="col-lg-2 offset-lg-1 col-sm-10 col-md-3 offset-md-2 offset-sm-2">
         <img [src]="candidateObj.dp!=null?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
-          alt="Avatar"
-          class="avatar" />
+          alt="Avatar" class="avatar" />
         <label style="background-color:#3f51b5;font-size: 0.9em;margin-top: 5%;cursor: pointer;padding: 11px">Select
           Picture
-          <input type="file"
-            id="imgFile"
-            (change)="onImageChange($event)"
-            style="margin-left: 40%; " />
+          <input type="file" id="imgFile" (change)="onImageChange($event)" style="margin-left: 40%; " />
         </label>
       </div>
 
       <div class="col-md-7">
         <mat-card>
-          <form class="example-form"
-            #myForm="ngForm">
+          <form class="example-form" #myForm="ngForm">
             <h2>Update Profile</h2>
             <div class="row">
               <div class="col-md-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Name</mat-label>
-                  <input style="width: 100%;"
-                    matInput
-                    [(ngModel)]="candidateObj.name"
-                    placeholder="Name"
-                    name="name"
+                  <input style="width: 100%;" matInput [(ngModel)]="candidateObj.name" placeholder="Name" name="name"
                     required />
                 </mat-form-field>
               </div>
@@ -82,11 +37,7 @@
               <div class="col-md-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Email</mat-label>
-                  <input style="width: 100%;"
-                    matInput
-                    [(ngModel)]="candidateObj.email"
-                    placeholder="Email"
-                    name="email"
+                  <input style="width: 100%;" matInput [(ngModel)]="candidateObj.email" placeholder="Email" name="email"
                     required />
                 </mat-form-field>
               </div>
@@ -97,11 +48,8 @@
               <div class="col-md-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Choose Field</mat-label>
-                  <mat-select name="field"
-                    [(ngModel)]="candidateObj.field"
-                    required>
-                    <mat-option *ngFor="let f of fields"
-                      [value]="f.value">
+                  <mat-select name="field" [(ngModel)]="candidateObj.field" required>
+                    <mat-option *ngFor="let f of fields" [value]="f.value">
                       {{ f.viewValue }}
                     </mat-option>
                   </mat-select>
@@ -114,14 +62,10 @@
               <div class="col-md-12">
                 <mat-form-field class="example-full-width">
                   <mat-label>Presenation letter</mat-label>
-                  <textarea matInput
-                    style="margin-top: -2px;
+                  <textarea matInput style="margin-top: -2px;
                     margin-bottom: -2px;
                     height: 63px;
-                    "
-                    name="presentationLetter"
-                    placeholder="Enter your presenation letter"
-                    required
+                    " name="presentationLetter" placeholder="Enter your presenation letter" required
                     [(ngModel)]="candidateObj.presentationLetter"></textarea>
                 </mat-form-field>
               </div>
@@ -134,15 +78,11 @@
             <!-- File upload goes down -->
             <div class="row">
 
-              <div class="col-lg-4 col-sm-12 col-md-3"
-                style="margin-left:2px">
+              <div class="col-lg-4 col-sm-12 col-md-3" style="margin-left:2px">
 
                 <label
                   style="text-align: center;background-color:#3f51b5;font-size: 0.9em;cursor: pointer;width:100%">{{labelText}}
-                  <input type="file"
-                    name="myfile"
-                    id="imgFile"
-                    (change)="onFileChange($event)" />
+                  <input type="file" name="myfile" id="imgFile" (change)="onFileChange($event)" />
                 </label>
 
 
@@ -150,8 +90,7 @@
               <div class="col-4">
 
                 <div *ngIf="candidateObj.cv">
-                  <a style="cursor: pointer;color: crimson;"
-                    (click)="downloadFile()">
+                  <a style="cursor: pointer;color: crimson;" (click)="downloadFile()">
                     Download resume
                   </a>
                 </div>
@@ -161,14 +100,11 @@
             <br>
             <br>
 
-            
+
 
             <div class="row">
               <div class="col-lg-5 offset-lg-3">
-                <button mat-raised-button
-                  style="width:100%"
-                  [disabled]="formValidation()"
-                  (click)="updateProfile()"
+                <button mat-raised-button style="width:100%" [disabled]="formValidation()" (click)="updateProfile()"
                   color="primary">
                   Save
                 </button>
@@ -190,8 +126,8 @@
 
 
   </div>
-<!-- Fooorter -->
-<br>
-<br>
-<br>
-<app-footer></app-footer>
+  <!-- Fooorter -->
+  <br>
+  <br>
+  <br>
+  <app-footer></app-footer>

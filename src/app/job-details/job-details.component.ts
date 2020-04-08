@@ -2,8 +2,9 @@ import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute } from '@angular/router';
 import { JobDetails } from '../job-details/JobDetails'
-import { retry } from 'rxjs/operators';
+import { Router } from '@angular/router'
 import { NgxSpinnerService } from 'ngx-spinner';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-job-details',
@@ -13,6 +14,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 
 export class JobDetailsComponent implements OnInit {
 
+  numOfCandidates:any = 0;
   jobObj: JobDetails;
   otherJobsArray: Array<any> = [];
   userType: any;
@@ -21,7 +23,7 @@ export class JobDetailsComponent implements OnInit {
   candidateId: any;
   jobId: any;
   isSpinning = true;
-  
+
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
@@ -33,13 +35,16 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2,private spinner:NgxSpinnerService) {
+  constructor(private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private spinner: NgxSpinnerService,private navbar:NavbarService) {
     this.jobObj = new JobDetails();
 
 
   }
 
   ngOnInit(): void {
+    this.navbar.showNav();
+
+
     this.spinner.show();
     this.candidateId = Number(sessionStorage.getItem('candidateId'));
     this.userType = sessionStorage.getItem('userType');
@@ -55,16 +60,17 @@ export class JobDetailsComponent implements OnInit {
 
 
   getJobById(id): void {
+  
     this.spinner.show();
     this.service.getJobById(id).subscribe((res) => {
-
       this.jobObj = res.result;
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
-      
+      this.displayCount(id);
+
 
       // once get the job also get the rating againts its company
 
@@ -106,7 +112,7 @@ export class JobDetailsComponent implements OnInit {
       console.log(res);
       this.companyId = res.result.companyProfile.id;
       this.getCompanyRating(this.companyId);
-      
+
     });
 
   }
@@ -115,7 +121,7 @@ export class JobDetailsComponent implements OnInit {
 
   getCompanyRating(id: any): void {
     this.service.getReviewsById(id).subscribe(res => {
-    
+
       this.rating = res.result;
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
     });
@@ -134,8 +140,8 @@ export class JobDetailsComponent implements OnInit {
 
   postRatingAndReview() {
     // console.table(this.jobObj);
-    
-    if(this.userType=="candidate"){
+
+    if (this.userType == "candidate") {
       let obj = {
         "candidateId": this.candidateId,
         "jobId": this.jobId,
@@ -147,7 +153,7 @@ export class JobDetailsComponent implements OnInit {
 
         if (res.status == 200 || res.status == 208) {
           this.alreadyApplied = true;
-          
+
 
           // disable
         }
@@ -155,44 +161,41 @@ export class JobDetailsComponent implements OnInit {
           this.alreadyApplied = false;
         }
 
-         
+
         // this.;
 
       });
     }
-    else{
+    else {
       this.spinner.hide();
       return;
     }
 
-  
-    
+
+
   }
 
 
- 
-
-
-  // @HostListener('click') onMouseClick() {
-  //   this.highlight('red');
-  // }
-
-  // private highlight(color: string) {
-  //   this.el.nativeElement.style.background = color;
-  //   console.log(this.el.nativeElement)
-  // }
-  
+  routeToComapnyProfile(): void {
+    this.route.navigate(['companyProfileDetails/'+this.companyId])
   }
 
-  //  promise():Promise<any>{
-  //  return new Promise((resolve,reject)=>{
-  //   resolve(this.jobId!=null);
-  //   }).then
-  //  }
-  // resolve runs the first function in .then  
-  // On page refresh check for job applied and company reviews 
-  // show reviews of every company
-  // give review to the company after appliying on the job
-  // show myJobs to employees only.
 
+  displayCount(id:any){
+    this.service.getCountOfCandidates(id).subscribe((res=>{
+        console.log("Count of candidiares",res.result)
+        this.numOfCandidates = parseInt(res.result);
+    }),error=>{
+      console.log(error);
+    }
+    );
+  }
+
+
+  routeToCandidatesProfiles(){
+    this.route.navigate(['/appliedcandidates/'+this.jobId])
+  }
+
+
+}
 

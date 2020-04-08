@@ -95,3 +95,11 @@ mat-card{
   text-decoration: underline;
   color: blue;
  }
+
+ p{
+   font-size: 12px;
+ }
+
+ span {
+   font-size: 12px;
+ }

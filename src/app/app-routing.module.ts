@@ -10,6 +10,9 @@ import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.co
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { JobDetailsComponent } from './job-details/job-details.component'
 import { ErrorPageComponent } from './error-page/error-page.component';
+import {CompanyProfileDetailsComponent} from './company-profile-details/company-profile-details.component'
+import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
+import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
@@ -21,6 +24,10 @@ const routes: Routes = [
   { path: "allJobs", component: AllJobsComponent },
   { path: "companyProfile", component: CompanyProfileComponent },
   { path: "job/:id", component: JobDetailsComponent },
+  {path:'companyProfileDetails/:id',component:CompanyProfileDetailsComponent},
+  {path:"appliedcandidates/:id",component:AppliedCandidatesProfilesComponent},
+  { path:"viewprofile",component:ViewCandidateProfileComponent},
+
   { path: '**', component: ErrorPageComponent }
 ];
 

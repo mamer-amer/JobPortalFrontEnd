@@ -57,12 +57,16 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 // import { NzResultModule } from 'ng-zorro-antd/result';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
-
+// import { MatIconModule } from '@angular/material/icon'
 import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NgxSpinnerModule } from "ngx-spinner";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
+import { CompanyProfileDetailsComponent } from './company-profile-details/company-profile-details.component';
+import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
+import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
+import { NavbarComponent } from './navbar/navbar.component';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -82,7 +86,11 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
     CompanyProfileComponent,
     JobDetailsComponent,
     FooterComponent,
-    ErrorPageComponent
+    ErrorPageComponent,
+    CompanyProfileDetailsComponent,
+    AppliedCandidatesProfilesComponent,
+    ViewCandidateProfileComponent,
+    NavbarComponent
     
   ],
   imports: [

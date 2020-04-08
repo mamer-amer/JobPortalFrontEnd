@@ -9,6 +9,7 @@ import csc from 'country-state-city'
 import { MessageService } from 'primeng/api/public_api';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router } from '@angular/router';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-employee-profile',
@@ -48,13 +49,13 @@ export class EmployeeProfileComponent implements OnInit {
   ];
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService,private router:Router) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService,private router:Router,private navbar:NavbarService) { }
 
 
 
   ngOnInit(): void {
    
-
+    this.navbar.showNav();
     this.jobObj = new Job();
     this.getCountries();
 
@@ -196,7 +197,14 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   
-  
+  numberOnly(event): boolean {
+    const charCode = (event.which) ? event.which : event.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+      return false;
+    }
+    return true;
+
+  }
 
 
 
