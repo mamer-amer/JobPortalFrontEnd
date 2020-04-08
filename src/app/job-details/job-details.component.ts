@@ -20,7 +20,7 @@ export class JobDetailsComponent implements OnInit {
   userType: any;
   display = false;
   companyId: Number;
-  candidateId: any;
+  candidateId: any=0;
   jobId: any;
   isSpinning = true;
 
@@ -42,13 +42,10 @@ export class JobDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.navbar.showNav();
-
-
-    this.spinner.show();
-    this.candidateId = Number(sessionStorage.getItem('candidateId'));
     this.userType = sessionStorage.getItem('userType');
-    console.log(this.activatedRoute)
     let { id } = this.activatedRoute.snapshot.params;
     this.jobId = id;
     this.getJobById(id);
@@ -64,10 +61,11 @@ export class JobDetailsComponent implements OnInit {
     this.spinner.show();
     this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;
+      console.log(this.jobObj)
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
-      this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+      // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
       this.displayCount(id);
 
@@ -129,11 +127,15 @@ export class JobDetailsComponent implements OnInit {
 
 
   alreadyAppliedJobsAgainstUser(canId, jobId) {
-    this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
-      this.btnApplied = res.result;
-      this.spinner.hide();
-
-    });
+    if(this.userType=="candidate"){
+      this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
+        this.btnApplied = res.result;
+      });
+    }
+    else{
+      return;
+    }
+   
 
   }
 
@@ -160,9 +162,6 @@ export class JobDetailsComponent implements OnInit {
         else {
           this.alreadyApplied = false;
         }
-
-
-        // this.;
 
       });
     }

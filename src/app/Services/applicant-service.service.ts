@@ -171,4 +171,6 @@ export class ApplicantServiceService {
   getAppliedCandidatesProfile(jobId:any):Observable<any>{
     return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
+
+ 
 }

@@ -52,7 +52,7 @@ import { AllJobsComponent } from './all-jobs/all-jobs.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
-// import { NzResultModule } from 'ng-zorro-antd/result';
+// import { NzResultModule } from 'ng-zorro-antd/result'; 
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { MatIconModule } from '@angular/material/icon'
@@ -67,6 +67,8 @@ import { ViewCandidateProfileComponent } from './view-candidate-profile/view-can
 import { NavbarComponent } from './navbar/navbar.component';
 import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
+import * as moment from 'moment';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -90,7 +92,7 @@ import { MomentPipe } from './pipes/momentPipe';
     ViewCandidateProfileComponent,
     NavbarComponent,
     LoaderComponent,
-    MomentPipe
+    MomentPipe,
     
   ],
   imports: [
@@ -129,6 +131,7 @@ import { MomentPipe } from './pipes/momentPipe';
     MatDividerModule,
     MatSnackBarModule,
     ExportAsModule,
+    NzToolTipModule,
     NgZorroAntdModule,
     NzDatePickerModule,
     NzTimePickerModule,
@@ -151,6 +154,7 @@ import { MomentPipe } from './pipes/momentPipe';
     // MatGridListModule
   ],
   providers: [
+
     NgxSpinnerService,
     MatDatepickerModule,
     {

@@ -31,7 +31,7 @@ export class AllJobsComponent implements OnInit {
 
   constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService:NavbarService) {
 
-    this.date = moment((new Date()), "YYYYMMDD").fromNow();
+    // this.date = moment((new Date()), "YYYYMMDD").fromNow();
 
   }
   page = 1;
@@ -108,8 +108,6 @@ export class AllJobsComponent implements OnInit {
         this.page = p + 1;
         this.itemsPerPage = response.size;
         this.allJobs = response.content
-        
-        
         this.empty = false;
       }
       else {

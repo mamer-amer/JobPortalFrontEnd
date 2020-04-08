@@ -212,7 +212,7 @@
               </div>
 
             </div>
-            <div *ngIf="(userType=='candidate' && btnApplied==false)"
+            <div *ngIf="(userType=='candidate' && btnApplied!=true)"
               style="display: flex; justify-content: flex-end;">
               <button type="button"
                 data-toggle="modal"
@@ -225,7 +225,7 @@
 
 
             <div class="row"
-              *ngIf="userType=='candidate' && btnApplied==true">
+              *ngIf="userType=='candidate' && btnApplied!=false">
               <div class="col-lg-12  col-sm-12">
 
                 <div style="display: flex;justify-content: flex-end;">
@@ -247,12 +247,15 @@
               </div>
             </div>
 
+
             <div class="row"
               *ngIf="userType=='employee'">
 
-              <div class="col-lg-12">
+              <div class="col-lg-12 "
+                *ngIf="numOfCandidates!=0">
                 <button type="button"
                   class="btn btn-success viewDetails"
+
                   (click)="routeToCandidatesProfiles()">View Details</button>
               </div>
 

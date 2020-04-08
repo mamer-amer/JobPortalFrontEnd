@@ -30,7 +30,7 @@ export class NoopInterceptor implements HttpInterceptor {
                   this.spinner.hide();
               }
               return event;
-          }),catchError((error: any) => {
+          }),catchError((error: any) => { 
             if(error instanceof HttpErrorResponse) {
                     console.log(error);
               this.spinner.hide();
@@ -47,6 +47,7 @@ export class NoopInterceptor implements HttpInterceptor {
       }else{
         // // sessionStorage.clear();
         // this.router.navigate(['']);
+        this.spinner.hide();
          const changedReq = req.clone({headers: req.headers.set('Content-Type', 'application/json')});
         // const changedReq = req.clone();
          //return next.handle(changedReq);

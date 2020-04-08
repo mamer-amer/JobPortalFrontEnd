@@ -141,7 +141,6 @@ export class CandidateProfileComponent implements OnInit {
         console.log("This is candidate response",res)
        this.toastService.info('Sucessfull','Candidate Profile Posted')
       this.allJobsbtn = true;
-      sessionStorage.setItem('candidateId', res.result?res.result.candidateProfile.id:0);
       this.labelText = "Change your resume"
       console.log(res);
       }
@@ -175,8 +174,6 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
-            sessionStorage.setItem('candidateId',res.result.id) 
-       
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
           }

@@ -1,5 +1,5 @@
 <!-- <div class="bs-example"> -->
-  <!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
+<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
     <a href="#"
       class="navbar-brand">Job Portal</a>
     <button type="button"
@@ -44,167 +44,182 @@
   </nav> -->
 <app-navbar></app-navbar>
 
-  <br>
-  <br>
+<br>
+<br>
 
 
 
 
-  <div class="container">
-    <mat-card style="border-radius: 0px;">
-      <div style="width:100%;height:350px"
-        id="myMap"></div>
-    </mat-card>
+<div class="container">
+  <mat-card style="border-radius: 0px;">
+    <div style="width:100%;height:350px"
+      id="myMap"></div>
+  </mat-card>
 
-    <hr />
-    <form class="row"
-      *ngIf="userType=='candidate'">
-
-
-
-      <div class="form-group"
-        style="margin-left:10px;">
-        <label style="color: #0069D9;background: white;margin: 0px;"
-          for="exampleFormControlInput1">Search by city</label>
-        <input type="text"
-          name="city"
-          class="form-control"
-          [(ngModel)]="cityName"
-          id="exampleFormControlInput1"
-          placeholder="Enter the city name">
-      </div>
-      <div class="form-group"
-        style="margin:30px 0px 0px 10px;">
-        <button type="button"
-          style="height:38px;"
-          [disabled]="!cityName"
-          (click)="searchByCityName(cityName,0)"
-          class="btn btn-primary">Search</button>
-      </div>
-
-    </form>
-    <hr style="margin-top: 0px;" />
-
-    <!-- JOBS CAT AND JOBS -->
-    <div class="row">
-
-      <!--JOB FIELDS -->
-      <div class="col-lg-3">
-        <mat-card style="border-radius: 0px;margin-bottom:10px;">
-          <h2>Categories</h2>
-          <hr />
-          <p class="hoverable"
-            (click)="getPaginatedJobs(0)">All</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
-            Training</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
-            Engineering Technicians</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
-            Justice & Law Enforcement</p>
-
-          <p class="hoverable"
-            (click)="getJobsByCategory('Management',0)">Management</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications &
-            Broadcasting</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration &
-            Management</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
-            Maintenance</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
-          <p class="hoverable"
-            (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
-        </mat-card>
-      </div>
-      <div class="col-lg-9">
-        <div class="row">
-
-          <nz-skeleton *ngIf="!empty"
-            [nzActive]="true"
-            [nzParagraph]="{ rows: 6 }"
-            [nzLoading]="!allJobs.length">
-
-            <div
-              *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total }"
-              (click)="routeToJobDetailsComponent(job.id)"
-              class="col-lg-12"
-              style="margin-bottom:10px;">
-
-
-              <mat-card
-                style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
+  <hr />
+  <form class="row"
+    *ngIf="userType=='candidate'">
 
 
 
+    <div class="form-group"
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: white;margin: 0px;"
+        for="exampleFormControlInput1">Search by city</label>
+      <input type="text"
+        name="city"
+        class="form-control"
+        [(ngModel)]="cityName"
+        id="exampleFormControlInput1"
+        placeholder="Enter the city name">
+    </div>
+    <div class="form-group"
+      style="margin:30px 0px 0px 10px;">
+      <button type="button"
+        style="height:38px;"
+        [disabled]="!cityName"
+        (click)="searchByCityName(cityName,0)"
+        class="btn btn-primary">Search</button>
+    </div>
+
+  </form>
+  <hr style="margin-top: 0px;" />
+
+  <!-- JOBS CAT AND JOBS -->
+  <div class="row">
+
+    <!--JOB FIELDS -->
+    <div class="col-lg-3">
+      <mat-card style="border-radius: 0px;margin-bottom:10px;">
+        <h2>Categories</h2>
+        <hr />
+        <p class="hoverable"
+          (click)="getPaginatedJobs(0)">All</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
+          Training</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
+          Engineering Technicians</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
+          Justice & Law Enforcement</p>
+
+        <p class="hoverable"
+          (click)="getJobsByCategory('Management',0)">Management</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications &
+          Broadcasting</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration &
+          Management</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
+          Maintenance</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
+        <p class="hoverable"
+          (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
+      </mat-card>
+    </div>
+    <div class="col-lg-9">
+      <div class="row">
+
+        <nz-skeleton *ngIf="!empty"
+          [nzActive]="true"
+          [nzParagraph]="{ rows: 6 }"
+          [nzLoading]="!allJobs.length">
+
+          <div
+            *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total }"
+            (click)="routeToJobDetailsComponent(job.id)"
+            class="col-lg-12"
+            style="margin-bottom:10px;">
 
 
+            <mat-card
+              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
 
-                <div style="flex:4;">
-                  <h3 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
-                  <h4 style="font-weight:500;margin: 0px;">{{job.category}} - <span
-                      style="color:rgb(129, 126, 126);">{{job.city}}</span></h4>
-                  <p style="margin-bottom:5px;">{{job.description}}.</p>
-                  <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
-                </div>
+              <div style="flex:4;">
+                <h3 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
 
+                <h4 style="font-weight:500;margin: 0px;">{{job.category}} - <span
+                    style="color:rgb(129, 126, 126);">{{job.city}}</span>
+                  <!-- icons span starts here -->
+                  <span class="options" *ngIf="userType=='employee'"
+                    style="float:right">
+                    <img class="edit_delete"
+                      nz-tooltip nzTooltipTitle="Edit Job"
+                      [routerLink]="['/employee/postjob']"
+                      [queryParams]="{ 'jobId': job.id}"
+                      alt="Edit Job"
+                      src="https://img.icons8.com/color/48/000000/edit.png" />
 
-              <!-- if no jobs found  --> 
+                    <img class="edit_delete"
+                      nz-tooltip nzTooltipTitle="Delete Job"
+                      alt="DeleteJob"
+                      src="https://img.icons8.com/color/48/000000/delete-forever.png" />
 
-              </mat-card>
-            </div>
-          </nz-skeleton>
+                  </span>
+                  <!-- icons spans finish here -->
+                </h4>
+                <p style="margin-bottom:5px;">{{job.description}}.</p>
+                <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
 
-          <div class="row"
-            style="width:100%">
-
-            <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
-              <div *ngIf="empty">
-                <nz-empty></nz-empty>
-            
               </div>
+
+
+              <!-- if no jobs found  -->
+
+            </mat-card>
+          </div>
+        </nz-skeleton>
+
+        <div class="row"
+          style="width:100%">
+
+          <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
+            <div *ngIf="empty">
+              <nz-empty></nz-empty>
+
             </div>
+          </div>
 
-            <!-- //PAGINATION -->
-            <div class="col-lg-12"
-              style="margin:10px 0px 30px 0px;">
+          <!-- //PAGINATION -->
+          <div class="col-lg-12"
+            style="margin:10px 0px 30px 0px;">
 
-              <div class="has-text-centered">
-                <pagination-controls (pageChange)="pageChange($event)"
-                  directionLinks="true"
-                  responsive="true"
-                  previousLabel="Previous"
-                  nextLabel="Next"
-                  screenReaderCurrentLabel="You're on page">
-                </pagination-controls>
-                <!-- <pagination-controls id="foo"
+            <div class="has-text-centered">
+              <pagination-controls (pageChange)="pageChange($event)"
+                directionLinks="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+              <!-- <pagination-controls id="foo"
                 (pageChange)="pageChange($event)"></pagination-controls> -->
-              </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
 
-      <!-- Fooorter -->
+    <!-- Fooorter -->
 
-      <!-- <app-footer></app-footer>  -->
+    <!-- <app-footer></app-footer>  -->
