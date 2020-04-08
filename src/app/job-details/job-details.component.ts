@@ -20,7 +20,7 @@ export class JobDetailsComponent implements OnInit {
   userType: any;
   display = false;
   companyId: Number;
-  candidateId: any;
+  candidateId: any=0;
   jobId: any;
   isSpinning = true;
 
@@ -42,8 +42,9 @@ export class JobDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+
     this.navbar.showNav();
-    this.candidateId = Number(sessionStorage.getItem('candidateId'));
     this.userType = sessionStorage.getItem('userType');
     let { id } = this.activatedRoute.snapshot.params;
     this.jobId = id;
@@ -57,10 +58,11 @@ export class JobDetailsComponent implements OnInit {
 
     this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;
+      console.log(this.jobObj)
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
-      this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+      // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
       this.displayCount(id);
 
@@ -125,11 +127,15 @@ export class JobDetailsComponent implements OnInit {
 
 
   alreadyAppliedJobsAgainstUser(canId, jobId) {
-    this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
-      this.btnApplied = res.result;
-
-
-    },error=> this.toastService.error('Error','Something went wrong'));
+    if(this.userType=="candidate"){
+      this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
+        this.btnApplied = res.result;
+      });
+    }
+    else{
+      return;
+    }
+   
 
   }
 
@@ -147,9 +153,8 @@ export class JobDetailsComponent implements OnInit {
       }
       this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
 
-        if (res.status == 200 || res.status == 208) {
+        if (res.status == 200 || res.status == 208 || res.status==500) {
           this.alreadyApplied = true;
-
 
           // disable
         }
@@ -157,10 +162,9 @@ export class JobDetailsComponent implements OnInit {
           this.alreadyApplied = false;
         }
 
-
-        // this.;
-
-      });
+      }),error=>{
+        this.alreadyApplied = false;
+      }
     }
     else {
 

@@ -16,6 +16,18 @@ mat-label {
   font-size: 1.1em;
 }
 
+.edit_delete{
+  width: 32px;
+}
+.fa-pencil{
+  padding-right:13px;
+}
+
+.options{
+  font-size:18px;
+  padding: 8px
+}
+
 label[_ngcontent-xet-c379] {
   background: white !important;
 }

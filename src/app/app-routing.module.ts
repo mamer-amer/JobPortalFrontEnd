@@ -5,8 +5,6 @@ import { RegisterComponent } from './register/register.component';
 import { CandidateProfileComponent } from './candidate-profile/candidate-profile.component';
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { AllJobsComponent } from './all-jobs/all-jobs.component';
-import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component'
-import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component'
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { JobDetailsComponent } from './job-details/job-details.component'
 import { ErrorPageComponent } from './error-page/error-page.component';
@@ -26,18 +24,6 @@ const routes: Routes = [
   {
     path: "employee/postjob",
     component: EmployeeProfileComponent,
-    canActivate: [AuthGuard],
-    data: { "employee": true }
-  },
-  {
-    path: "employee/alljobs",
-    component: EmployeeAlljobsComponent,
-    canActivate: [AuthGuard],
-    data: { "employee": true }
-  },
-  {
-    path: "employee/myjobs",
-    component: EmployeeMyjobsComponent,
     canActivate: [AuthGuard],
     data: { "employee": true }
   },

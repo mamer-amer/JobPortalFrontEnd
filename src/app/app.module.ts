@@ -49,24 +49,26 @@ import { CandidateProfileComponent } from './candidate-profile/candidate-profile
 import { EmployeeProfileComponent } from './employee-profile/employee-profile.component';
 import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { AllJobsComponent } from './all-jobs/all-jobs.component';
-import { EmployeeMyjobsComponent } from './employee-myjobs/employee-myjobs.component';
-import { EmployeeAlljobsComponent } from './employee-alljobs/employee-alljobs.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { JobDetailsComponent } from './job-details/job-details.component'; 
-// import { NzResultModule } from 'ng-zorro-antd/result';
+// import { NzResultModule } from 'ng-zorro-antd/result'; 
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { MatIconModule } from '@angular/material/icon'
 import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
-import { NgxSpinnerModule } from "ngx-spinner";
+import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { CompanyProfileDetailsComponent } from './company-profile-details/company-profile-details.component';
 import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
 import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { LoaderComponent } from './loader/loader.component';
+import { MomentPipe } from './pipes/momentPipe';
+import * as moment from 'moment';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -81,8 +83,6 @@ import { NavbarComponent } from './navbar/navbar.component';
     CandidateProfileComponent,
     EmployeeProfileComponent,
     AllJobsComponent,
-    EmployeeMyjobsComponent,
-    EmployeeAlljobsComponent,
     CompanyProfileComponent,
     JobDetailsComponent,
     FooterComponent,
@@ -90,7 +90,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     CompanyProfileDetailsComponent,
     AppliedCandidatesProfilesComponent,
     ViewCandidateProfileComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoaderComponent,
+    MomentPipe,
     
   ],
   imports: [
@@ -129,6 +131,7 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatDividerModule,
     MatSnackBarModule,
     ExportAsModule,
+    NzToolTipModule,
     NgZorroAntdModule,
     NzDatePickerModule,
     NzTimePickerModule,
@@ -151,6 +154,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     // MatGridListModule
   ],
   providers: [
+
+    NgxSpinnerService,
     MatDatepickerModule,
     {
       provide: HTTP_INTERCEPTORS,

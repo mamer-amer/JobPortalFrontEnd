@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as Mapboxgl from 'mapbox-gl';
 import { Job } from '../Job'
@@ -8,8 +8,9 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import csc from 'country-state-city'
 import { MessageService } from 'primeng/api/public_api';
 import { NzMessageService } from 'ng-zorro-antd';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../navbar.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-employee-profile',
@@ -18,7 +19,9 @@ import { NavbarService } from '../navbar.service';
 })
 export class EmployeeProfileComponent implements OnInit {
 
+  @ViewChild('myform') contactForm: NgForm;
 
+  check="hello"
   jobObj: Job;
   selectedField;
   map: Mapboxgl.Map;
@@ -47,27 +50,35 @@ export class EmployeeProfileComponent implements OnInit {
     { value: 'Transportation & Moving', viewValue: 'Transportation & Moving' },
 
   ];
+  jobId: any;
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService,private router:Router,private navbar:NavbarService) { }
+  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
 
 
 
   ngOnInit(): void {
-   
-    this.navbar.showNav();
     this.jobObj = new Job();
-    this.getCountries();
+    this.navbar.showNav();
 
+    if (this.catchParams() != undefined) {
+      this.getJobByParamsJobId(this.jobId);
+    }
+
+
+
+    else {
+      this.getCountries();
+      this.getCurrentLocationOnPageLoad();
+
+    }
+  }
+
+  getCurrentLocationOnPageLoad() {
     this.getPosition().then(pos => {
 
-      Mapboxgl.accessToken = environment.mapboxKey;
-      this.map = new Mapboxgl.Map({
-        container: 'myMap', // container id
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [pos.lng, pos.lat], // starting position
-        zoom: 12// starting zoom
-      });
+      this.createMap(pos.lng,pos.lat)
+
       this.jobObj.latitude = pos.lat;
       this.jobObj.longitude = pos.lng;
 
@@ -77,8 +88,6 @@ export class EmployeeProfileComponent implements OnInit {
         .setLngLat([pos.lng, pos.lat])
         .addTo(this.map);
 
-
-
       this.marker.on("drag", (e) => {
         let { lng, lat } = e.target.getLngLat();
         this.jobObj.latitude = lat;
@@ -87,10 +96,17 @@ export class EmployeeProfileComponent implements OnInit {
       })
 
     });
+  }
+
+
+  catchParams() {
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.jobId = params.get('jobId');
+    });
+    return this.jobId;
 
 
   }
-
 
   createMarker(long, lat) {
 
@@ -108,12 +124,15 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
 
+
+
+
   submitJob(myForm): void {
 
 
-    this.jobObj.city=myForm.city.name;
-    this.jobObj.country=myForm.country.name;
-    this.jobObj.province=myForm.province.name
+    this.jobObj.city = myForm.city.name;
+    this.jobObj.country = myForm.country.name;
+    this.jobObj.province = myForm.province.name
     this.jobObj.title = myForm.title;
     this.jobObj.description = myForm.description;
     this.jobObj.salary = myForm.salary;
@@ -126,17 +145,17 @@ export class EmployeeProfileComponent implements OnInit {
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
       console.log(res)
-      if(res.status==200){
-        
-          this.toastService.info('Successfull','Job Posted Successfully');
+      if (res.status == 200) {
+
+        this.toastService.info('Successfull', 'Job Posted Successfully');
       }
-      else{
+      else {
         this.toastService.error('Unsucessfull', 'Job can not be posted');
 
       }
-     
+
     }, err => {
-        this.toastService.error('Unsucessfull', 'Job can not be posted');
+      this.toastService.error('Unsucessfull', 'Job can not be posted');
 
       console.log(err)
 
@@ -190,13 +209,13 @@ export class EmployeeProfileComponent implements OnInit {
       return id;
     }
 
-  
+
   }
   goBack() {
     this.router.navigate(['/'])
   }
 
-  
+
   numberOnly(event): boolean {
     const charCode = (event.which) ? event.which : event.keyCode;
     if (charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -204,6 +223,27 @@ export class EmployeeProfileComponent implements OnInit {
     }
     return true;
 
+  }
+
+  getJobByParamsJobId(id: any) {
+    this.service.getJobById(id).subscribe((res) => {
+      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category,type } = res.result;
+      this.contactForm.setValue({ title, description, salary, publishFrom, publishTo, country, city, province, category, type });
+      this.createMap(longitude,latitude);
+      this.createMarker(longitude, latitude);
+    });
+  }
+
+
+  createMap(lng,lat){
+
+    Mapboxgl.accessToken = environment.mapboxKey;
+    this.map = new Mapboxgl.Map({
+      container: 'myMap', // container id
+      style: 'mapbox://styles/mapbox/streets-v11',
+      center: [lng, lat], // starting position
+      zoom: 12// starting zoom
+    });
   }
 
 

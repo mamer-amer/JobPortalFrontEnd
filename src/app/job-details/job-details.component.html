@@ -1,21 +1,26 @@
 <!-- The Modal -->
-<div class="modal fade" id="myModal">
+<div class="modal fade"
+  id="myModal">
   <div class="modal-dialog modal-dialog-centered">
-    <form #myForm="ngForm"  class="modal-content">
+    <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title" style="margin:0px">
+        <h4 class="modal-title"
+          style="margin:0px">
           <div>
             <h3 style="font-weight: 600;margin-bottom:3px;">Company Bio
 
             </h3>
             <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
-            <nz-rate [(ngModel)]="rating" name="star1" nzAllowHalf [nzTooltips]="tooltips">
-            </nz-rate>
+            <nz-rate [(ngModel)]="rating"
+              nzAllowHalf
+              [nzTooltips]="tooltips"></nz-rate>
           </div>
         </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button"
+          class="close"
+          data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
@@ -37,17 +42,25 @@
         <hr style="margin-top:5px;" />
         <!-- Text area -->
         <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
-        <textarea required #comment1 name="review" class="form-control" rows="4" placeholder="Write your comments ..."
-          [(ngModel)]="review" id="comment"></textarea>
+        <textarea class="form-control"
+          rows="4"
+          placeholder="Write your comments ..."
+          [(ngModel)]="review"
+          id="comment"></textarea>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button [disabled]="myForm.invalid" (click)="apply_for_job()" type="button"  class="btn btn-success" data-dismiss="modal">Apply</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button"
+          class="btn btn-success"
+          (click)="apply_for_job()"
+          data-dismiss="modal">Apply</button>
+        <button type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal">Close</button>
       </div>
 
-    </form>
+    </div>
   </div>
 </div>
 
@@ -58,23 +71,28 @@
 
 <!-- Second Modal -->
 <!-- The Modal -->
-<div class="modal fade" id="myModal2">
+<div class="modal fade"
+  id="myModal2">
   <div class="modal-dialog modal-dialog-centered">
-    <form #myForm="ngForm" (ngSubmit)="apply_for_job()" class="modal-content">
+    <div class="modal-content">
 
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title" style="margin:0px">
+        <h4 class="modal-title"
+          style="margin:0px">
           <div>
             <h3 style="font-weight: 600;margin-bottom:3px;">Company Bio
 
             </h3>
             <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
-            <nz-rate name="star" [(ngModel)]="rating2" nzAllowHalf [nzTooltips]="tooltips">
-            </nz-rate>
+            <nz-rate [(ngModel)]="rating2"
+              nzAllowHalf
+              [nzTooltips]="tooltips"></nz-rate>
           </div>
         </h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <button type="button"
+          class="close"
+          data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
@@ -84,31 +102,27 @@
 
         <!-- Text area -->
         <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
-        <textarea name="review1" required #comment class="form-control" rows="4" placeholder="Write your comments ..."
-          [(ngModel)]="review" id="comment"></textarea>
+        <textarea class="form-control"
+          rows="4"
+          placeholder="Write your comments ..."
+          [(ngModel)]="review"
+          id="comment"></textarea>
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button [disabled]="myForm.invalid" type="button" (click)="apply_for_job()" class="btn btn-success" (click)="postRatingAndReview()"
+        <button type="button"
+          class="btn btn-success"
+          (click)="postRatingAndReview()"
           data-dismiss="modal">Apply</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal">Close</button>
       </div>
 
-    </form>
+    </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -123,7 +137,8 @@
 <!-- Navbar code ends -->
 
 <div>
-  <div class="container " style="margin-top:20px;">
+  <div class="container "
+    style="margin-top:20px;">
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-12">
 
@@ -135,14 +150,18 @@
 
     <div class="row">
 
-      <div class="col-lg-5" style="height: 510px; overflow-y: scroll;">
+      <div class="col-lg-5"
+        style="height: 510px; overflow-y: scroll;">
 
         <!-- //COMPANIES OTHER JOBS -->
         <div class="row">
 
-          <div *ngFor="let job of otherJobsArray" class="col-lg-12" style="margin-bottom:5px;">
+          <div *ngFor="let job of otherJobsArray"
+            class="col-lg-12"
+            style="margin-bottom:5px;">
             <div *ngIf="job.id!=jobObj['id']">
-              <mat-card class="hoverOnCard" (click)="getJobById(job.id)"
+              <mat-card class="hoverOnCard"
+                (click)="getJobById(job.id)"
                 style="cursor: pointer;border-radius: 0px;height:120px;">
                 <h4 style="margin-bottom: 0px;font-weight:500;">
                   {{job.companyProfile.name}} - {{job.title}}
@@ -177,33 +196,50 @@
             <img style="width: 12%;
                 border-radius: 40px;"
               [src]="jobObj.companyProfile.logo!=null?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
-              alt="Avatar" class="avatar" />
+              alt="Avatar"
+              class="avatar" />
 
             <div>
               <h3 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h3>
               <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.city}} </p>
-
+              <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);"
+                *ngIf="userType=='employee'">Candidates Applied : {{numOfCandidates}}</p>
+              <p *ngIf="userType=='candidate'"
+                (click)="routeToComapnyProfile()"
+                style="text-decoration: underline;color: blue;margin:0px 0px 0px 10px;cursor: pointer;"> visit profile
+              </p>
 
             </div>
 
           </div>
-          <div *ngIf="(userType=='candidate' && btnApplied==false)" style="display: flex; justify-content: flex-end;">
-            <button type="button" data-toggle="modal" data-target="#myModal" (click)="showDialog()"
-              style="border-radius:30px;margin:0px 10px 5px 0px;font-size: 12px;" class="btn btn-primary">Apply to
+          <div *ngIf="(userType=='candidate' && btnApplied!=true)"
+            style="display: flex; justify-content: flex-end;">
+            <button type="button"
+              data-toggle="modal"
+              data-target="#myModal"
+              (click)="showDialog()"
+              style="border-radius:30px;margin:0px 10px 5px 0px;font-size: 12px;"
+              class="btn btn-primary">Apply to
               job</button>
           </div>
 
 
-          <div class="row" *ngIf="userType=='candidate' && btnApplied==true">
+          <div class="row"
+            *ngIf="userType=='candidate' && btnApplied!=false">
             <div class="col-lg-12  col-sm-12">
 
               <div style="display: flex;justify-content: flex-end;">
 
-                <button *ngIf="alreadyApplied!=true" type="button" data-toggle="modal" data-target="#myModal2"
-                  (click)="showDialog()" style="border-radius:30px;margin:5px;font-size: 12px;"
+                <button *ngIf="alreadyApplied!=true"
+                  type="button"
+                  data-toggle="modal"
+                  data-target="#myModal2"
+                  (click)="showDialog()"
+                  style="border-radius:30px;margin:5px;font-size: 12px;"
                   class="btn btn-success ">Comment</button>
 
-                <button type="button" [disabled]="true"
+                <button type="button"
+                  [disabled]="true"
                   style="cursor: initial;border-radius:30px;margin:5px;font-size:12px;"
                   class="btn btn-dark ">Applied</button>
               </div>
@@ -212,6 +248,19 @@
           </div>
 
 
+          <div class="row"
+            *ngIf="userType=='employee'">
+
+            <div class="col-lg-12 "
+              *ngIf="numOfCandidates!=0">
+              <button type="button"
+                class="btn btn-success viewDetails"
+                (click)="routeToCandidatesProfiles()">View Details</button>
+            </div>
+
+
+
+          </div>
 
 
           <hr style="margin-top:5px;" />
@@ -228,8 +277,14 @@
           <hr />
           <h2 style="font-weight:500;">Full Job Description</h2>
           <p style="font-weight: 600;margin-bottom:3px;">Company Name</p>
-          <nz-rate [(ngModel)]="rating" style="float:right" [disabled]="true" [nzTooltips]="tooltips">
+
+          <nz-rate [(ngModel)]="rating"
+            style="float:right"
+            [disabled]="true"
+            [nzTooltips]="tooltips">
           </nz-rate>
+
+
           <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
           <p style="font-weight: 600;margin-bottom:3px;">City</p>
           <p style="color:rgb(129, 126, 126);">{{jobObj.city}}</p>
@@ -250,10 +305,14 @@
   </div>
 
 </div>
-<!-- 
-SPINNER -->
-<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse" [fullScreen]="true">
+
+
+<ngx-spinner bdOpacity=1
+  bdColor="rgba(200, 216, 215, 0.25)"
+  size="medium"
+  color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>
 <!-- Fooorter -->
