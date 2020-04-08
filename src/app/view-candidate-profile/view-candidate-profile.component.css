@@ -58,3 +58,26 @@ li{
   color: white;
 }
 
+
+@media screen and (orientation:portrait) {
+  .userImage {
+    width: 100%;
+    height: 500px;
+  }
+}
+
+@media all and (max-color: 4) {
+  .userImage {
+    width: 100%;
+    height: 500px;
+
+  }
+}
+
+@media only all and (max-width: 47.9375em) {
+  .userImage {
+   width: 100%;
+   height: 500px;
+  }
+}
+
