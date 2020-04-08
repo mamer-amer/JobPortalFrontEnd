@@ -40,16 +40,23 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
  
- 
+  ngAfterViewInit(){
+
+  }
   getCandidateProfile(userId) {
-    this.service.getCandidateProfileForView(userId).subscribe(d=>{
-      this.candidateObj  = d;
+    this.service.getCandidateProfileForView(userId).subscribe(d => {
+      this.candidateObj = d;
       console.log(this.candidateObj);
-       const {result,name,email} =  d;
-       console.log(result +" " +name+" " + email)
+      const { result: { id, field, resumeContentType, imageContentType, presenationLetter="No presenation Letter found", dp, cv, user: { name: username, email } } } = d
+      this.candidateObj = { id, field, resumeContentType, imageContentType, presenationLetter, dp, cv, username, email }
+      console.log(this.candidateObj);
+
+
     })
   }
 
+ 
+  
   catchParams():Promise<any>{
     return new Promise(function(resolve,reject){
       resolve(true);
@@ -62,6 +69,41 @@ export class ViewCandidateProfileComponent implements OnInit {
       this.userId = params.get('userId');
     });
     }
+
+
+
+  getMIMEtype(extn) {
+    let ext = extn.toLowerCase();
+    let MIMETypes = {
+      'text/plain': 'txt',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
+      'application/msword': 'doc',
+      'application/pdf': 'pdf',
+      'image/jpeg': 'jpg',
+      'image/bmp': 'bmp',
+      'image/png': 'png',
+      'application/vnd.ms-excel': 'xls',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
+      'application/rtf': 'rtf',
+      'application/vnd.ms-powerpoint': 'ppt',
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx'
+    }
+    return MIMETypes[ext];
+  }
+
+  downloadFile() {
+
+    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
+    const downloadLink = document.createElement("a");
+    const fileName = this.candidateObj.username+"." + extension;
+
+    downloadLink.href = source;
+    downloadLink.download = fileName;
+    downloadLink.click();
+    //const url= window.URL.createObjectURL(blob);
+    //window.open(url);
+  }
    
 
 }

@@ -288,12 +288,12 @@
 
                 <div style="display: flex;justify-content: flex-end;">
 
-                  <button *ngIf="!alreadyApplied"
+                  <button *ngIf="alreadyApplied!=true"
                     type="button"
                     data-toggle="modal"
                     data-target="#myModal2"
                     (click)="showDialog()"
-                    style="border-radius:30px;width:80px;margin:5px;font-size: 12px;"
+                    style="border-radius:30px;margin:5px;font-size: 12px;"
                     class="btn btn-success ">Comment</button>
 
                   <button type="button"

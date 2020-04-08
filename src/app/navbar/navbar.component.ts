@@ -10,9 +10,11 @@ import { NavbarService } from '../navbar.service';
 export class NavbarComponent implements OnInit {
 
   userType:any;
+  userName:any;
   constructor(public service:ApplicantServiceService,public navbarService:NavbarService) { }
 
   ngOnInit(): void {
+    this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
   
   }

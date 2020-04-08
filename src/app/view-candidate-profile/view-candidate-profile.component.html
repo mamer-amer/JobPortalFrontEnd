@@ -4,56 +4,105 @@
 <div class="container">
 
   <div class="row">
-
-    <div class="col-lg-4 offset-lg-4">
-
-      <!-- Card -->
-      <div class="card profile-card">
-
-        <!-- Avatar -->
-        <div class="avatar z-depth-1-half mb-4">
-          <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(10).jpg"
-            class="rounded-circle"
-            alt="First sample avatar image">
-        </div>
-
-
-        <div class="card-body pt-0 mt-0">
-          <!-- Name -->
-          <div class="text-center">
-            <h3 class="mb-3 font-weight-bold"><strong></strong></h3>
-            <h6 class="font-weight-bold blue-text mb-4"></h6>
-          </div>
-
-          <ul class="striped list-unstyled">
-            <li><strong>E-mail address:</strong></li>
-
-            <li><strong>Phone number:</strong> +1 234 5678 90</li>
-
-            <li><strong>Company:</strong> The Company, Inc</li>
-
-            <li><strong>Twitter username:</strong> @anna.doe</li>
-
-            <li><strong>Instagram username:</strong> @anna.doe</li>
-          </ul>
-
-          <div class="row;"style="width:100%">
-            <div class="col-lg-11 offset-lg-1">
-             
-                <button mdbBtn
-                type="button"
-                color="unique"
-                mdbWavesEffect>Download Resume</button>
+    <!-- Image Card -->
+    <div class="col-lg-3 col-sm-12 col-xsm-12">
+      <mdb-card>
+        <mdb-card-header>User Image</mdb-card-header>
+        <mdb-card-body>
+          <div class="row">
+            <div class="col-lg-12">
+              <img class="userImage"
+                [src]="candidateObj?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
+                alt="Avatar" />
             </div>
-
           </div>
-        </div>
+          <br>
 
-      </div>
-      <!-- Card -->
+          <!-- Social ioncs -->
+          <div class="row">
+            <div class="col-lg-12">
+              <button style="width:100%"
+                class="btn"
+                mdbWavesEffect>Refer To
+                <i class="fa fa-reply"
+                  aria-hidden="true"></i>
+              </button>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="col-lg-3 offset-lg-2">
+              <a href="#"
+                class="fa fa-facebook icons"></a>
+            </div>
+            <div class="col-lg-3">
+              <a href="#"
+                class="fa fa-twitter icons"></a>
+            </div>
+          </div>
+          <br>
 
+          <!-- Refer buttons -->
+
+        </mdb-card-body>
+      </mdb-card>
+    </div>
+    <!-- Details Card -->
+    <div class="col-lg-9 ">
+      <mdb-card>
+        <mdb-card-header>User Details</mdb-card-header>
+        <mdb-card-body>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <h5>Name :<span class="details">{{candidateObj?candidateObj.username:''}}</span> </h5>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-lg-12">
+              <h5>Email : <span class="details">{{candidateObj?candidateObj.email:''}}</span> </h5>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-lg-12">
+              <h5>Field : <span class="details">{{candidateObj?candidateObj.field:''}}</span> </h5>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <h5>Presenation Letter : </h5>
+              <div class="form-group">
+
+                <textarea class="form-control"
+                  name="presenationLetter"
+                  rows="3"
+                  [disabled]="true">
+
+                  {{candidateObj?candidateObj.presentationLetter:"No  presentation letter found"}}
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="downloadBox"
+            (click)="downloadFile()">
+            <a>
+              <button class="btn"><i class="fa fa-download"></i> Download Resume</button>
+              <span>{{candidateObj?candidateObj.username +"."+candidateObj.resumeContentType :''}}</span>
+            </a>
+          </div>
+        </mdb-card-body>
+      </mdb-card>
     </div>
   </div>
+
+
+
 </div>
 <br>
 <br>
