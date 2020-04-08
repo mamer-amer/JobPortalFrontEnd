@@ -5,7 +5,7 @@ import { JobDetails } from '../job-details/JobDetails'
 import { Router } from '@angular/router'
 import { NgxSpinnerService } from 'ngx-spinner';
 import { NavbarService } from '../navbar.service';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-job-details',
   templateUrl: './job-details.component.html',
@@ -14,7 +14,7 @@ import { NavbarService } from '../navbar.service';
 
 export class JobDetailsComponent implements OnInit {
 
-  numOfCandidates:any = 0;
+  numOfCandidates: any = 0;
   jobObj: JobDetails;
   otherJobsArray: Array<any> = [];
   userType: any;
@@ -35,7 +35,7 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  constructor(private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private spinner: NgxSpinnerService,private navbar:NavbarService) {
+  constructor( private toastService: ToastrService,private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private navbar: NavbarService) {
     this.jobObj = new JobDetails();
 
 
@@ -50,15 +50,12 @@ export class JobDetailsComponent implements OnInit {
     this.jobId = id;
     this.getJobById(id);
     this.getOtherCompanyJobs(id);
-    // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
-
 
   }
 
 
   getJobById(id): void {
-  
-    this.spinner.show();
+
     this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;
       console.log(this.jobObj)
@@ -72,7 +69,7 @@ export class JobDetailsComponent implements OnInit {
 
       // once get the job also get the rating againts its company
 
-    });
+    },error=> this.toastService.error('Error','Something went wrong'));
 
   }
 
@@ -97,7 +94,7 @@ export class JobDetailsComponent implements OnInit {
   apply_for_job(): void {
 
 
-    // console.table(this.jobObj);
+
     let obj = {
       "candidateId": this.candidateId,
       "jobId": this.jobId,
@@ -106,12 +103,15 @@ export class JobDetailsComponent implements OnInit {
       "companyId": this.companyId
     }
 
+  
+
     this.service.applyJob(obj).subscribe(res => {
-      console.log(res);
+      
+      this.toastService.info('Successful','Successfully applied to the job!')
       this.companyId = res.result.companyProfile.id;
       this.getCompanyRating(this.companyId);
 
-    });
+    },err=>  this.toastService.error('Error','Something went wrong!'));
 
   }
 
@@ -122,7 +122,7 @@ export class JobDetailsComponent implements OnInit {
 
       this.rating = res.result;
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
-    });
+    },error=> this.toastService.error('Error','Something went wrong'));
   }
 
 
@@ -141,7 +141,7 @@ export class JobDetailsComponent implements OnInit {
 
 
   postRatingAndReview() {
-    // console.table(this.jobObj);
+
 
     if (this.userType == "candidate") {
       let obj = {
@@ -153,9 +153,8 @@ export class JobDetailsComponent implements OnInit {
       }
       this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
 
-        if (res.status == 200 || res.status == 208) {
+        if (res.status == 200 || res.status == 208 || res.status==500) {
           this.alreadyApplied = true;
-
 
           // disable
         }
@@ -163,10 +162,12 @@ export class JobDetailsComponent implements OnInit {
           this.alreadyApplied = false;
         }
 
-      });
+      }),error=>{
+        this.alreadyApplied = false;
+      }
     }
     else {
-      this.spinner.hide();
+
       return;
     }
 
@@ -176,23 +177,23 @@ export class JobDetailsComponent implements OnInit {
 
 
   routeToComapnyProfile(): void {
-    this.route.navigate(['companyProfileDetails/'+this.companyId])
+    this.route.navigate(['companyProfileDetails/' + this.companyId])
   }
 
 
-  displayCount(id:any){
-    this.service.getCountOfCandidates(id).subscribe((res=>{
-        console.log("Count of candidiares",res.result)
-        this.numOfCandidates = parseInt(res.result);
-    }),error=>{
+  displayCount(id: any) {
+    this.service.getCountOfCandidates(id).subscribe((res => {
+      
+      this.numOfCandidates = parseInt(res.result);
+    }), error => {
       console.log(error);
     }
     );
   }
 
 
-  routeToCandidatesProfiles(){
-    this.route.navigate(['/appliedcandidates/'+this.jobId])
+  routeToCandidatesProfiles() {
+    this.route.navigate(['/appliedcandidates/' + this.jobId])
   }
 
 

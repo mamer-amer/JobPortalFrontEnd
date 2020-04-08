@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { LoginService } from "./login.service";
 import { NzMessageService } from 'ng-zorro-antd';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
@@ -11,7 +11,7 @@ import { NzMessageService } from 'ng-zorro-antd';
 export class LoginPageComponent implements OnInit {
   errorVisible = false;
   showLoading = false;
-  constructor(private router: Router, private service: LoginService,private message: NzMessageService) {}
+  constructor( private toastService: ToastrService,private router: Router, private service: LoginService,private message: NzMessageService) {}
 
   ngOnInit(): void {
     localStorage.clear();
@@ -26,17 +26,13 @@ export class LoginPageComponent implements OnInit {
   }
 
   check(uname: string, p: string) {
-    this.showLoading = true;
-    // var output = this.service.checkUserandPass(uname, p);
+ 
     this.service.checkUserandPass(uname, p).subscribe(
       res => {
         
         if (res.status == 200) {
-          this.message.success(res.message, {
-            nzDuration: 3000
-          });
-          this.showLoading = false;
-          console.log("User logged in", res);
+           
+          this.toastService.info('Successfull','User authenticated')
 
           sessionStorage.setItem("userId",res.result.id);
           sessionStorage.setItem("token", res.result.token);
@@ -44,8 +40,7 @@ export class LoginPageComponent implements OnInit {
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
        
-         
-
+        
           if (res.result.userType === "ADMIN") {
             setTimeout(() => {
               this.router.navigate(["/adduser"]);
@@ -63,22 +58,11 @@ export class LoginPageComponent implements OnInit {
           }
         }
       else{
-        console.log("error")
-        this.message.error(res.message, {
-          nzDuration: 3000
-        });
-         this.showLoading = false;
-      }
-       
-      }
-     
+        this.toastService.error('Unuccessfull','Invalid login credentials');  
+      } 
+      },err=>this.toastService.error('Unuccessfull','Invalid login credentials')
     );
-    // this.message.error("Error Occured", {
-    //   nzDuration: 3000
-    // });
-    this.showLoading = false;
-
-    // if(output == true){
+  
   }
 
   routeToRegister() {

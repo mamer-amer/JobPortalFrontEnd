@@ -1,47 +1,5 @@
-<!-- <div class="bs-example"> -->
-<!-- <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-    <a href="#"
-      class="navbar-brand">Job Portal</a>
-    <button type="button"
-      class="navbar-toggler"
-      data-toggle="collapse"
-      data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse"
-      id="navbarCollapse">
-      <div class="navbar-nav">
-      
-        <a href="#"
-          *ngIf="userType=='candidate'"
-          class="nav-item nav-link active"
-          [routerLink]="['/candidateProfile']">MyProfile</a>
-        <a href="#"
-          *ngIf="userType=='employee'"
-          class="nav-item nav-link active"
-          [routerLink]="['/companyProfile']">MyProfile</a>
-        <a href="#"
-          class="nav-item nav-link active active-link-page"
-          [routerLink]="['/allJobs']"> {{userType=='employee'?'MyJobs':'AllJobs'}}</a>
 
-        <a href="#"
-          *ngIf="userType!='candidate'"
-          class="nav-item nav-link active"
-          [routerLink]="['/employee/postjob']">Post a Job</a>
-
-      </div>
-      <div class="navbar-nav ml-auto">
-        <a href="#"
-          class="nav-item nav-link"
-          data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()"
-            class="logoutImage"
-            src="../../assets/logout.png"
-            alt=""></a>
-      </div>
-    </div>
-  </nav> -->
 <app-navbar></app-navbar>
 
 <br>
@@ -59,8 +17,6 @@
   <hr />
   <form class="row"
     *ngIf="userType=='candidate'">
-
-
 
     <div class="form-group"
       style="margin-left:10px;">
@@ -219,6 +175,10 @@
       </div>
     </div>
 
+    <ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+      type="ball-clip-rotate-pulse" [fullScreen]="true">
+      <p style="color: white">Loading..</p>
+    </ngx-spinner>
 
     <!-- Fooorter -->
 
