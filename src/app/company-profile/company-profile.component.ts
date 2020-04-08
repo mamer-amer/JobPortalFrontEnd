@@ -23,7 +23,7 @@ export class CompanyProfileComponent implements OnInit {
 
   ngOnInit() {
     this.navbar.showNav();
-    this.spinner.show();
+    // this.spinner.show();
     this.checkUserId();
     this.getEmployeeProfile();
     // this.getJobsPostedByEmployeeId();
@@ -47,7 +47,7 @@ export class CompanyProfileComponent implements OnInit {
   _handleReaderImageLoaded(readerEvt) {
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
-    //console.log(btoa(binaryString));
+  
     this.companyProfileObj.logo = base64textString;
 
   }
@@ -58,7 +58,7 @@ export class CompanyProfileComponent implements OnInit {
       let file = event.target.files[0];
       reader.onload = this._handleReaderImageLoaded.bind(this);
       this.companyProfileObj.logoContentType = file.type
-      //console.log("1"+this.appFormObj.resumeContentType)
+    
       reader.readAsBinaryString(file);
 
     }
@@ -102,11 +102,11 @@ export class CompanyProfileComponent implements OnInit {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
       this.loadingText = "Getting Profile.."
       this.companyProfileObj = res.result ? res.result :new CompanyProfile();
-      this.spinner.hide();
-      
-      // console.log("yeh company profile dega" + res ? res.companyProfile:null)
+     
+     
     }),error=>{
-      this.spinner.hide();
+      // this.spinner.hide();
+      
     }
   }
 

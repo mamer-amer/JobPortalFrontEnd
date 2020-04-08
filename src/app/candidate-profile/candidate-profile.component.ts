@@ -134,19 +134,19 @@ export class CandidateProfileComponent implements OnInit {
 
   updateProfile() {
 
-    console.log(this.candidateObj);
+  
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
       
       if(res.status==200){
         console.log("This is candidate response",res)
-       this.toastService.info('Sucessfull','Candidate Profile Posted')
+       this.toastService.info('Sucessful','Candidate profile posted!')
       this.allJobsbtn = true;
       sessionStorage.setItem('candidateId', res.result?res.result.candidateProfile.id:0);
       this.labelText = "Change your resume"
       console.log(res);
       }
       else{
-       this.toastService.error('Unsuccessfull','Candidate Profile failed');
+       this.toastService.error('Unsuccessful','Candidate Profile failed');
       }
      
     });
@@ -243,8 +243,7 @@ export class CandidateProfileComponent implements OnInit {
     downloadLink.href = source;
     downloadLink.download = fileName;
     downloadLink.click();
-    //const url= window.URL.createObjectURL(blob);
-    //window.open(url);
+    
   }
 
 }

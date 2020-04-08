@@ -48,13 +48,7 @@
       [(ngModel)]="registerObj.password"
       name="psw"
       required />
-    <!-- <label for="psw"><b>Repeat Password</b></label>
-    <input type="password"
-      #password
-      placeholder="Repeat Password"
-      [(ngModel)]="repeatPassword"
-      name="psw"
-      required /> -->
+  
     <label for="userType"><b>User Type</b></label>
     <br />
     <nz-select nzShowSearch
@@ -77,12 +71,19 @@
       (click)="registerUser()">
       Register
     </button>
-    <div *ngIf="showLoading"
+    <!-- <div *ngIf="showLoading"
       style="margin-left: 50%;margin-top: 5%;">
       <div class="spinner-grow text-dark"
         role="status">
         <span class="sr-only">Loading...</span>
       </div>
-    </div>
+    </div> -->
   </form>
 </div>
+
+
+
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse" [fullScreen]="true">
+  <p style="color: white">Loading..</p>
+</ngx-spinner>

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Register } from './Register';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NzMessageService } from 'ng-zorro-antd';
-
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   showLoading: boolean;
  
 
-  constructor(private router:Router,private service: ApplicantServiceService, private message: NzMessageService) { }
+  constructor( private toastService: ToastrService,private router:Router,private service: ApplicantServiceService, private message: NzMessageService) { }
 
   ngOnInit(): void {
   }
@@ -30,29 +30,19 @@ export class RegisterComponent implements OnInit {
   
   registerUser(){
     sessionStorage.clear()
-    this.showLoading = true;
     this.registerObj.active = true;
 
-    
-    console.log(this.registerObj)
     this.service.registerUser(this.registerObj).subscribe(d=>{
      
       if(d.status == 200){
-        this.showLoading = false;
-        this.message.success(d.message, {
-         nzDuration: 3000
-       });
-        // this.RouterAccortingTocheckUserType(this.registerObj); 
+        this.toastService.info('Successfull','User successfully registered')
         this.routeToLogin();
       }
       else{
-        this.showLoading = false;
-        this.message.error(d.message, {
-          nzDuration: 3000
-        });
+        this.toastService.error('Unsuccessful','Something went wrong!')
       }
-      console.log(d)
-    })
+     
+    },err=> this.toastService.error('Unsuccessful','Something went wrong!'))
 
   }
 
