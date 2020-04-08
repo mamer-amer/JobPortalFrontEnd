@@ -10,15 +10,16 @@ import {
 import { Observable,throwError,of  } from "rxjs";
 import { Router } from '@angular/router';
 import { map, catchError } from 'rxjs/operators';
+import { NgxSpinnerService } from 'ngx-spinner';
 // import { nextContext } from "@angular/core/src/render3";
 
 @Injectable()
 export class NoopInterceptor implements HttpInterceptor {
 
-  constructor(private router:Router){}
+  constructor(private router: Router, private spinner: NgxSpinnerService){}
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     
-
+    this.spinner.show();
 
       if(sessionStorage.length>0){
         const changedReq = req.clone({headers: req.headers.set('Authorization', sessionStorage.getItem('token'))});
@@ -26,13 +27,17 @@ export class NoopInterceptor implements HttpInterceptor {
           map((event: HttpEvent<any>) => {
               if (event instanceof HttpResponse) {
                   // console.log('event--->>>', event);
+                  this.spinner.hide();
               }
               return event;
           }),catchError((error: any) => {
             if(error instanceof HttpErrorResponse) {
                     console.log(error);
-                    if(error.status == 401)
-                    this.router.navigate(['']);
+              this.spinner.hide();
+              this.router.navigate(['**']);
+                    if(error.status == 401){
+                      this.router.navigate(['']);
+                    }
             }
             return of(error);
         })
