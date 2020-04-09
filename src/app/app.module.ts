@@ -70,12 +70,7 @@ import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-// import {AgmCoreModule} from '@agm/core'
 
-
-// import {MatPaginator} from '@angular/material/paginator';
-// import {MatTableDataSource} from '@angular/material/table';
-// import {MatGridListModule} from '@angular/material/grid-list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,6 +113,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzModalModule,
     FormsModule,
     HttpClientModule,
+    
     MatCardModule,
     MatTableModule,
     MatRadioModule,

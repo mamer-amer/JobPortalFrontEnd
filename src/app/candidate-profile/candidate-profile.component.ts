@@ -7,6 +7,7 @@ import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
+import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
 
 @Component({
@@ -16,17 +17,30 @@ import { NavbarService } from '../navbar.service';
 })
 export class CandidateProfileComponent implements OnInit {
 
+
+  showUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    hidePreviewIconInNonImage: true
+  };
+  previewImage: string | undefined = '';
+  previewVisible = false;
+
+
+
   userId;
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
-  color:any=false;
+  color: any = false;
   exportAsConfig: ExportAsConfig = {
     type: 'pdf', // the type you want to download
     elementId: 'myTableElementId', // the id of html/table element
   }
 
+
+
   fields: any[] = [
-    {value:"all",viewValue:"Show All Jobs"},
+    { value: "all", viewValue: "Show All Jobs" },
     { value: 'Business and Finance', viewValue: 'Business and Finance' },
     { value: 'Computers and Technology', viewValue: 'Computers and Technology' },
     { value: 'Contruction Trades', viewValue: 'Contruction Trades' },
@@ -48,7 +62,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav:NavbarService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
 
   ngOnInit(): void {
     this.nav.showNav();
@@ -58,8 +72,24 @@ export class CandidateProfileComponent implements OnInit {
   }
 
 
+  // handleChange({ file }): void {
+  //   const status = file.status;
+  //   if (status !== 'uploading') {
+  //     console.log(file);
+  //   }
+  //   if (status === 'done') {
+  //     this.msg.success(`${file.name} file uploaded successfully.`);
+  //   } else if (status === 'error') {
+  //     this.msg.error(`${file.name} file upload failed.`);
+  //   }
+  // }
 
 
+
+  // handlePreview = (file: UploadFile) => {
+  //   this.previewImage = file.url || file.thumbUrl;
+  //   this.previewVisible = true;
+  // };
 
 
 
@@ -132,22 +162,24 @@ export class CandidateProfileComponent implements OnInit {
   }
 
 
+  
+
   updateProfile() {
 
-  
+
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
-      
-      if(res.status==200){
-        console.log("This is candidate response",res)
-       this.toastService.info('Sucessful','Candidate profile posted!')
-      this.allJobsbtn = true;
-      this.labelText = "Change your resume"
-      console.log(res);
+
+      if (res.status == 200) {
+        console.log("This is candidate response", res)
+        this.toastService.info('Sucessful', 'Candidate profile posted!')
+        this.allJobsbtn = true;
+        this.labelText = "Change your resume"
+        console.log(res);
       }
-      else{
-       this.toastService.error('Unsuccessful','Candidate Profile failed');
+      else {
+        this.toastService.error('Unsuccessful', 'Candidate Profile failed');
       }
-     
+
     });
   }
 
@@ -160,7 +192,7 @@ export class CandidateProfileComponent implements OnInit {
       //get the status of user
 
       this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
-        
+
         if (res != null) {
           //the profile is already present
           this.candidateObj.name = sessionStorage.getItem('username');
@@ -169,12 +201,12 @@ export class CandidateProfileComponent implements OnInit {
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
-            
+
             this.candidateObj.field = res.result.field;
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
-            sessionStorage.setItem('dp',this.candidateObj.dp);
+            sessionStorage.setItem('dp', this.candidateObj.dp);
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
           }
@@ -241,7 +273,7 @@ export class CandidateProfileComponent implements OnInit {
     downloadLink.href = source;
     downloadLink.download = fileName;
     downloadLink.click();
-    
+
   }
 
 }
