@@ -35,8 +35,24 @@ label {
   background: grey;
   display: table;
   color: #fff;
+  
 }
 
 .navbar {
     justify-content: start !important;
+}
+
+.btn,
+.fileButton {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.fileButton{
+  width: 100%;
+  text-align: center;
 }

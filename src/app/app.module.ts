@@ -69,6 +69,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzModalModule } from 'ng-zorro-antd/modal';
 // import {AgmCoreModule} from '@agm/core'
 
 
@@ -114,6 +115,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NgxSpinnerModule,
     NzEmptyModule,
     MatBadgeModule,
+    NzModalModule,
     FormsModule,
     HttpClientModule,
     MatCardModule,

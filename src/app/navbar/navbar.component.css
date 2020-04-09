@@ -1,1 +1,5 @@
 .navbar { background-color: #e91e63; } 
+h5{
+    font-weight: lighter;
+    font-size: 1.12rem !important;
+}

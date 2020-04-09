@@ -1,21 +1,58 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { LoginService } from "./login.service";
-import { NzMessageService } from 'ng-zorro-antd';
+import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
+import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
   styleUrls: ["./login-page.component.css"]
 })
 export class LoginPageComponent implements OnInit {
+  isVisible = false;
+  isOkLoading = false;
   errorVisible = false;
   showLoading = false;
-  constructor( private toastService: ToastrService,private router: Router, private service: LoginService,private message: NzMessageService) {}
+  basicModal:MDBModalRef;
+  constructor(private toastService: ToastrService, private router: Router, private service: LoginService,private modalService:NzModalService) {}
 
   ngOnInit(): void {
-    localStorage.clear();
+    if(sessionStorage.length>0){
+     
+      // this.showModal();
+      this.showDeleteConfirm();
+    }
+    else{
+      localStorage.clear();
+    }
+    
   }
+
+  
+
+  showDeleteConfirm(): void {
+    this.modalService.confirm({
+      nzTitle: 'Are you sure you want to logout?',
+      nzContent: '<b style="color: red;">Press Ok to logout and cancel to go back</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () =>{
+          sessionStorage.clear();
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+          window.history.go(-1);
+      }
+    });
+  }
+  
+
+  
+
+
+
+
   login(email, password) {
     this.errorVisible = false;
     if (email == "stepway" && password == "123") {
@@ -25,6 +62,7 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
+  
   check(uname: string, p: string) {
  
     this.service.checkUserandPass(uname, p).subscribe(

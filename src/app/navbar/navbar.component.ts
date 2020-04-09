@@ -11,11 +11,14 @@ export class NavbarComponent implements OnInit {
 
   userType:any;
   userName:any;
+  userImage:any;
   constructor( private toastService: ToastrService,public service:ApplicantServiceService,public navbarService:NavbarService) { }
 
   ngOnInit(): void {
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
+    this.userImage = sessionStorage.getItem('dp');
+
   
   }
   

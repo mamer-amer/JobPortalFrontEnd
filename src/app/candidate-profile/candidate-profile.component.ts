@@ -174,6 +174,7 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
+            sessionStorage.setItem('dp',this.candidateObj.dp);
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
           }

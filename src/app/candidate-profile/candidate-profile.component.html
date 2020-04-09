@@ -78,21 +78,25 @@
             <!-- File upload goes down -->
             <div class="row">
 
-              <div class="col-lg-4 col-sm-12 col-md-3" style="margin-left:2px">
+              <div class="col-lg-5 offset-lg-1 col-sm-12 col-md-4"
+                style="margin-top: 5px;">
 
-                <label
-                  style="text-align: center;background-color:#3f51b5;font-size: 0.9em;cursor: pointer;width:100%">{{labelText}}
-                  <input type="file" name="myfile" id="imgFile" (change)="onFileChange($event)" />
+                <label class="fileButton"
+                  >{{labelText}}
+                  <input class="btn" type="file" name="myfile" id="imgFile" (change)="onFileChange($event)" />
                 </label>
 
 
               </div>
-              <div class="col-4">
+              <div class="col-lg-5 col-md-6 col-sm-12">
 
                 <div *ngIf="candidateObj.cv">
-                  <a style="cursor: pointer;color: crimson;" (click)="downloadFile()">
-                    Download resume
-                  </a>
+                    <a>
+                      <button (click)="downloadFile()"
+                        class="btn" style="width:100%"><i class="fa fa-download"></i> Download Resume</button>
+                      <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :''}}</span>
+                    </a>
+  
                 </div>
 
               </div>
@@ -104,8 +108,8 @@
 
             <div class="row">
               <div class="col-lg-5 offset-lg-3">
-                <button mat-raised-button style="width:100%" [disabled]="formValidation()" (click)="updateProfile()"
-                  color="primary">
+                <button  style="width:100%" [disabled]="formValidation()" (click)="updateProfile()"
+                  class="btn">
                   Save
                 </button>
 
