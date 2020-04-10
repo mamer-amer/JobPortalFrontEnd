@@ -11,7 +11,10 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../navbar.service';
 import { NgForm } from '@angular/forms';
-
+import { FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { MapboxService } from '../Services/mapbox.service'
 @Component({
   selector: 'app-employee-profile',
   templateUrl: './employee-profile.component.html',
@@ -20,8 +23,11 @@ import { NgForm } from '@angular/forms';
 export class EmployeeProfileComponent implements OnInit {
 
   @ViewChild('myform') contactForm: NgForm;
-
-  check="hello"
+  myControl = new FormControl();
+  options: string[] = [];
+  filteredPlaces: Array<string> = [];
+  selectedPlace;
+  check = "hello"
   jobObj: Job;
   selectedField;
   map: Mapboxgl.Map;
@@ -30,6 +36,8 @@ export class EmployeeProfileComponent implements OnInit {
   countries: Array<any> = [];
   cities: Array<any> = [];
   provinces: Array<any> = [];
+
+  jobTypes:Array<string> = ["Full-time", "Part-time", "Contract", "Internship", "New-Grad"];
 
   fields: any[] = [
     { value: 'Business & Finance', viewValue: 'Business & Finance' },
@@ -53,11 +61,25 @@ export class EmployeeProfileComponent implements OnInit {
   jobId: any;
 
 
-  constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
+  constructor(private mapboxService: MapboxService, private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
 
 
 
   ngOnInit(): void {
+
+    this.myControl.valueChanges.subscribe((value) => {
+
+      this.filteredPlaces = []
+      if (value)
+        this.mapboxService.getGeoLocations(value).subscribe((res) => {
+          res.features.map((places) => {
+            this.filteredPlaces.push(places)
+
+          })
+        })
+    })
+
+
     this.jobObj = new Job();
     this.navbar.showNav();
 
@@ -74,26 +96,31 @@ export class EmployeeProfileComponent implements OnInit {
     }
   }
 
+
+  onPlaceSelect(v) {
+    this.selectedPlace = v;
+    this.map.flyTo({
+      center: [
+        v.center[0],
+        v.center[1]
+      ],
+      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+    });
+
+    this.marker.setLngLat([v.center[0], v.center[1]])
+    this.jobObj.longitude = v.center[0];
+    this.jobObj.latitude = v.center[1];
+
+
+  }
+
+
   getCurrentLocationOnPageLoad() {
     this.getPosition().then(pos => {
 
-      this.createMap(pos.lng,pos.lat)
+      this.createMap(pos.lng, pos.lat)
 
-      this.jobObj.latitude = pos.lat;
-      this.jobObj.longitude = pos.lng;
-
-      this.marker = new Mapboxgl.Marker({
-        draggable: true
-      })
-        .setLngLat([pos.lng, pos.lat])
-        .addTo(this.map);
-
-      this.marker.on("drag", (e) => {
-        let { lng, lat } = e.target.getLngLat();
-        this.jobObj.latitude = lat;
-        this.jobObj.longitude = lng;
-
-      })
+      this.createMarker(pos.lng, pos.lat)
 
     });
   }
@@ -110,16 +137,21 @@ export class EmployeeProfileComponent implements OnInit {
 
   createMarker(long, lat) {
 
-    const marker = new Mapboxgl.Marker({
-      draggable: true,
+    this.jobObj.latitude = lat;
+    this.jobObj.longitude = long;
+
+    this.marker = new Mapboxgl.Marker({
+      draggable: true
     })
       .setLngLat([long, lat])
       .addTo(this.map);
 
-    marker.on('drag', () => {
-      console.log(marker.getLngLat())
-    })
+    this.marker.on("drag", (e) => {
+      let { lng, lat } = e.target.getLngLat();
+      this.jobObj.latitude = lat;
+      this.jobObj.longitude = lng;
 
+    })
 
   }
 
@@ -127,7 +159,7 @@ export class EmployeeProfileComponent implements OnInit {
 
 
 
-  submitJob(myForm): void {
+  submitJob(myForm,formTemplate): void {
 
 
     this.jobObj.city = myForm.city.name;
@@ -141,13 +173,18 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.category = myForm.category;
     this.jobObj.type = myForm.title;
 
-    console.log(this.jobObj)
+  
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
-      console.log(res)
+    
       if (res.status == 200) {
 
         this.toastService.info('Successfull', 'Job Posted Successfully');
+        formTemplate.reset();
+        this.selectedPlace=[];
+        this.filteredPlaces=[];
+        setTimeout(()=>this.router.navigate(['allJobs']),1000)
+        
       }
       else {
         this.toastService.error('Unsucessfull', 'Job can not be posted');
@@ -157,9 +194,13 @@ export class EmployeeProfileComponent implements OnInit {
     }, err => {
       this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-      console.log(err)
-
     })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.options.filter(place => place.toLowerCase().indexOf(filterValue) === 0);
   }
 
 
@@ -227,15 +268,15 @@ export class EmployeeProfileComponent implements OnInit {
 
   getJobByParamsJobId(id: any) {
     this.service.getJobById(id).subscribe((res) => {
-      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category,type } = res.result;
+      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
       this.contactForm.setValue({ title, description, salary, publishFrom, publishTo, country, city, province, category, type });
-      this.createMap(longitude,latitude);
+      this.createMap(longitude, latitude);
       this.createMarker(longitude, latitude);
     });
   }
 
 
-  createMap(lng,lat){
+  createMap(lng, lat) {
 
     Mapboxgl.accessToken = environment.mapboxKey;
     this.map = new Mapboxgl.Map({

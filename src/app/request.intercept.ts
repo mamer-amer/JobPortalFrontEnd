@@ -22,10 +22,10 @@ export class NoopInterceptor implements HttpInterceptor {
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-
+    this.spinner.show();
 
     if (sessionStorage.length > 0) {
-      this.spinner.show();
+      
       const changedReq = req.clone({ headers: req.headers.set('Authorization', sessionStorage.getItem('token')) });
       return next.handle(changedReq).pipe(
         map((event: HttpEvent<any>) => {
@@ -46,7 +46,7 @@ export class NoopInterceptor implements HttpInterceptor {
 
       );
     } else {
-      this.spinner.show();
+     
       const changedReq = req.clone({ headers: req.headers.set('Content-Type', 'application/json') })
 
       return next.handle(changedReq).pipe(
