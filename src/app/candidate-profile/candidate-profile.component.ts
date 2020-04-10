@@ -19,14 +19,14 @@ export class CandidateProfileComponent implements OnInit {
   userId;
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
-  color:any=false;
+  color: any = false;
   exportAsConfig: ExportAsConfig = {
     type: 'pdf', // the type you want to download
     elementId: 'myTableElementId', // the id of html/table element
   }
 
   fields: any[] = [
-    {value:"all",viewValue:"Show All Jobs"},
+    { value: "all", viewValue: "Show All Jobs" },
     { value: 'Business and Finance', viewValue: 'Business and Finance' },
     { value: 'Computers and Technology', viewValue: 'Computers and Technology' },
     { value: 'Contruction Trades', viewValue: 'Contruction Trades' },
@@ -48,7 +48,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav:NavbarService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService) { }
 
   ngOnInit(): void {
     this.nav.showNav();
@@ -134,20 +134,20 @@ export class CandidateProfileComponent implements OnInit {
 
   updateProfile() {
 
-  
+
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
-      
-      if(res.status==200){
-        console.log("This is candidate response",res)
-       this.toastService.info('Sucessful','Candidate profile posted!')
-      this.allJobsbtn = true;
-      this.labelText = "Change your resume"
-      console.log(res);
+
+      if (res.status == 200) {
+        console.log("This is candidate response", res)
+        this.toastService.info('Sucessful', 'Candidate profile posted!')
+        this.allJobsbtn = true;
+        this.labelText = "Change your resume"
+        console.log(res);
       }
-      else{
-       this.toastService.error('Unsuccessful','Candidate Profile failed');
+      else {
+        this.toastService.error('Unsuccessful', 'Candidate Profile failed');
       }
-     
+
     });
   }
 
@@ -160,7 +160,7 @@ export class CandidateProfileComponent implements OnInit {
       //get the status of user
 
       this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
-        
+
         if (res != null) {
           //the profile is already present
           this.candidateObj.name = sessionStorage.getItem('username');
@@ -169,7 +169,7 @@ export class CandidateProfileComponent implements OnInit {
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
-            
+
             this.candidateObj.field = res.result.field;
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
@@ -232,15 +232,21 @@ export class CandidateProfileComponent implements OnInit {
 
   downloadFile() {
 
-    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
-    const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
-    const downloadLink = document.createElement("a");
-    const fileName = "download." + extension;
+    // const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    // const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
+    // const downloadLink = document.createElement("a");
+    // const fileName = "download." + extension;
 
-    downloadLink.href = source;
-    downloadLink.download = fileName;
-    downloadLink.click();
-    
+    // downloadLink.href = source;
+    // downloadLink.download = fileName;
+    // downloadLink.target="_blank"
+    // downloadLink.click();
+
+    let pdfWindow = window.open("")
+    pdfWindow.document.write("<iframe width='100%' height='100%' src='data:" +
+      this.candidateObj['resumeContentType'] + ";base64, " + encodeURI(this.candidateObj["cv"]) +
+      "'></iframe>")
+
   }
 
 }

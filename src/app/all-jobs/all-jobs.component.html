@@ -30,9 +30,9 @@
         placeholder="Enter the city name">
     </div>
     <div class="form-group"
-      style="margin:30px 0px 0px 10px;">
+      style="margin:25px 0px 0px 0px;">
       <button type="button"
-        style="height:38px;"
+        style="height:38px;line-height: 10px;"
         [disabled]="!cityName"
         (click)="searchByCityName(cityName,0)"
         class="btn btn-primary">Search</button>
@@ -49,46 +49,46 @@
       <mat-card style="border-radius: 0px;margin-bottom:10px;">
         <h2>Categories</h2>
         <hr />
-        <p class="hoverable"
+        <p class="categories"
           (click)="getPaginatedJobs(0)">All</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
           Training</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
           Engineering Technicians</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
           Justice & Law Enforcement</p>
 
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Management',0)">Management</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications &
           Broadcasting</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration &
           Management</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
           Maintenance</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
       </mat-card>
     </div>

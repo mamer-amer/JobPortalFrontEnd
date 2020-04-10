@@ -74,16 +74,16 @@
                 </mat-form-field>
               </div>
               <div class="col-lg-5">
-               
-                  <mat-form-field style="width:100%">
-                    <mat-label>Job Type</mat-label>
-                    <mat-select required ngModel name="type">
-                      <mat-option *ngFor="let t of jobTypes" [value]="t">
-                        {{t}}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                
+
+                <mat-form-field style="width:100%">
+                  <mat-label>Job Type</mat-label>
+                  <mat-select required ngModel name="type">
+                    <mat-option *ngFor="let t of jobTypes" [value]="t">
+                      {{t}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+
               </div>
 
 
@@ -131,17 +131,11 @@
                     left: 22%;
                     top: 18px;
                     color: rgb(121, 118, 118);">search</mat-icon>
-                    <input required [class.mat-elevation-z4]="true" name="location"  style="width: 60%;text-align: center;margin-left: 20%;position:absolute;text-overflow: ellipsis
-                    ;text-indent: 30px;
-                      top:10px;border-radius:30px;height:40px;z-index: 1000;background-color: white;
-                      font-size: 12px;" matInput
-                      [formControl]="myControl" [matAutocomplete]="auto" placeholder="Search">
-                    <mat-autocomplete #auto="matAutocomplete"
-                    >
-                      <mat-option 
-                       style="font-size: 12px !important;" *ngFor="let selectedPlace of filteredPlaces" 
-                       [value]="selectedPlace.place_name"
-                       (click)="onPlaceSelect(selectedPlace)">
+                    <input required [class.mat-elevation-z4]="true" name="location" class="search" matInput [formControl]="myControl" [matAutocomplete]="auto"
+                      placeholder="Search">
+                    <mat-autocomplete #auto="matAutocomplete">
+                      <mat-option style="font-size: 12px !important;" *ngFor="let selectedPlace of filteredPlaces"
+                        [value]="selectedPlace.place_name" (click)="onPlaceSelect(selectedPlace)">
                         {{selectedPlace.place_name}}
                       </mat-option>
                     </mat-autocomplete>
