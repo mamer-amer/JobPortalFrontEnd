@@ -1,4 +1,5 @@
 export class CompanyProfile{
+    id?:any;
     name:string;
     corporateAddress:string;
     billingAddress:string;

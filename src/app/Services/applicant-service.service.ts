@@ -172,5 +172,9 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 
+  deleteJob(id:any,page:any):Observable<any>{
+    return this.http.delete(this.url+"api/job/delete/"+id+"/page?page="+parseInt(page));
+  }
+
  
 }

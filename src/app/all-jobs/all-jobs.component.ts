@@ -6,6 +6,10 @@ import * as Mapboxgl from 'mapbox-gl';
 import { environment } from '../../environments/environment'
 import * as moment from 'moment';
 import { NavbarService } from '../navbar.service';
+import { Http2ServerRequest } from 'http2';
+import { request } from 'http';
+import { HttpClient } from 'selenium-webdriver/http';
+import { ToastrService } from 'ngx-toastr';
 // import { NavbarService } from 'angular-bootstrap-md';
 
 
@@ -29,7 +33,7 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService:NavbarService) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService, private toastService:ToastrService) {
 
     // this.date = moment((new Date()), "YYYYMMDD").fromNow();
 
@@ -268,6 +272,38 @@ export class AllJobsComponent implements OnInit {
         this.empty = true;
       }
     })
+  }
+
+
+
+  deleteJob(id:any,index:any,page:any){
+   
+    console.log("This job is going to be delete",this.allJobs[index]);
+    this.service.deleteJob(id,page-1).subscribe(res=>{
+       if(res.status==200){
+         this.toastService.info('Deleted')
+         this.loadMap()
+           .then(() => this.showMarkersOnMap())
+         if (res.totalElements > 0) {
+           this.allJobs = res.content;
+           this.total = res.totalElements;
+           this.page = page + 1;
+           this.itemsPerPage = res.size;
+           this.empty = false;
+
+         }
+         else {
+           this.empty = true;
+         }
+       }
+
+       else{
+         this.toastService.error('Failed')
+
+       }
+    }),error=>{
+       this.toastService.error('Failed')
+    }
   }
 }
 

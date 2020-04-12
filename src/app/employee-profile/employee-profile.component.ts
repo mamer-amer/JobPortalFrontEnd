@@ -21,7 +21,8 @@ export class EmployeeProfileComponent implements OnInit {
 
   @ViewChild('myform') contactForm: NgForm;
 
-  check="hello"
+ 
+  demo="hello"
   jobObj: Job;
   selectedField;
   map: Mapboxgl.Map;
@@ -60,6 +61,7 @@ export class EmployeeProfileComponent implements OnInit {
   ngOnInit(): void {
     this.jobObj = new Job();
     this.navbar.showNav();
+    this.getCountries();
 
     if (this.catchParams() != undefined) {
       this.getJobByParamsJobId(this.jobId);
@@ -68,7 +70,7 @@ export class EmployeeProfileComponent implements OnInit {
 
 
     else {
-      this.getCountries();
+    
       this.getCurrentLocationOnPageLoad();
 
     }
@@ -184,6 +186,7 @@ export class EmployeeProfileComponent implements OnInit {
   }
   countryChange(countryObj): void {
     if (countryObj.value) {
+      console.log(countryObj);
       this.provinces = csc.getStatesOfCountry(countryObj.value.id)
     }
     else {
@@ -228,7 +231,10 @@ export class EmployeeProfileComponent implements OnInit {
   getJobByParamsJobId(id: any) {
     this.service.getJobById(id).subscribe((res) => {
       const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category,type } = res.result;
-      this.contactForm.setValue({ title, description, salary, publishFrom, publishTo, country, city, province, category, type });
+      this.contactForm.control.patchValue({ title, description, salary, country, city, province, category, type})
+
+      this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
+      this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
       this.createMap(longitude,latitude);
       this.createMarker(longitude, latitude);
     });

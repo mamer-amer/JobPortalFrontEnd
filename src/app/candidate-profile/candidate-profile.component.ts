@@ -61,36 +61,19 @@ export class CandidateProfileComponent implements OnInit {
   ];
 
   candidateObj: Candidate = new Candidate();
-
+  
   constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
 
   ngOnInit(): void {
     this.nav.showNav();
     this.checkUserStauts();
-
+    this.candidateObj.presentationLetter = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque magnam delectus et porro, obcaecati eius nemo unde velit inventore recusandae! Facere eveniet fuga dolor ut repudiandae vitae similique molestiae beatae."
+    
 
   }
 
 
-  // handleChange({ file }): void {
-  //   const status = file.status;
-  //   if (status !== 'uploading') {
-  //     console.log(file);
-  //   }
-  //   if (status === 'done') {
-  //     this.msg.success(`${file.name} file uploaded successfully.`);
-  //   } else if (status === 'error') {
-  //     this.msg.error(`${file.name} file upload failed.`);
-  //   }
-  // }
-
-
-
-  // handlePreview = (file: UploadFile) => {
-  //   this.previewImage = file.url || file.thumbUrl;
-  //   this.previewVisible = true;
-  // };
-
+  
 
 
 

@@ -113,7 +113,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NzModalModule,
     FormsModule,
     HttpClientModule,
-    
     MatCardModule,
     MatTableModule,
     MatRadioModule,
@@ -125,6 +124,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NgbModule,
     NzSpinModule,
     MatIconModule,
+
     MatPaginatorModule,
     MatDividerModule,
     MatSnackBarModule,

@@ -1,46 +1,3 @@
-<!-- <div class="bs-example">
-  <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-    <a href="#"
-      class="navbar-brand">Job Portal</a>
-    <button type="button"
-      class="navbar-toggler"
-      data-toggle="collapse"
-      data-target="#navbarCollapse">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse"
-      id="navbarCollapse">
-      <div class="navbar-nav">
-
-      
-
-        <a href="#"
-         
-          class="nav-item nav-link active active-link-page"
-          [routerLink]="['/companyProfile']">MyProfile</a>
-
-
-        <a href="#"
-          *ngIf="companyProfileObj"
-          class="nav-item nav-link active"
-          [routerLink]="['/allJobs']">MyJobs</a>
-
-        <a href="#"
-          *ngIf="companyProfileObj"
-          class="nav-item nav-link active"
-          [routerLink]="['/employee/postjob']">Post a Job</a>
-
-      </div>
-      <div class="navbar-nav ml-auto">
-        <a href="#"
-          class="nav-item nav-link"
-          data-toggle="dropdown"><img style="color:white"
-            (click)="service.logout()" class="logoutImage"
- src="../../assets/logout.png" alt=""></a>
-      </div>
-    </div>
-  </nav> -->
 
 <app-navbar></app-navbar>
   <br>
@@ -70,6 +27,8 @@
                 class="example-header-image"></div>
               <mat-card-title>Company Profile</mat-card-title>
             </mat-card-header>
+            
+            <a class="viewProfileLink" [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your profile</a>
 
             <!-- image row -->
             <div class="row">
