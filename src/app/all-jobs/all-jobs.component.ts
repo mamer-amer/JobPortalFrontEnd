@@ -282,13 +282,14 @@ export class AllJobsComponent implements OnInit {
     this.service.deleteJob(id,page-1).subscribe(res=>{
        if(res.status==200){
          this.toastService.info('Deleted')
+        //  this.allJobs.slice(index,1);
          this.loadMap()
            .then(() => this.showMarkersOnMap())
-         if (res.totalElements > 0) {
-           this.allJobs = res.content;
-           this.total = res.totalElements;
-           this.page = page + 1;
-           this.itemsPerPage = res.size;
+         if (res.result.totalElements > 0) {
+          this.allJobs = res.result.content;
+           this.total = res.result.totalElements;
+           this.page = res.result?res.result.pageable.pageNumber + 1:1;
+           this.itemsPerPage = res.result.size;
            this.empty = false;
 
          }
