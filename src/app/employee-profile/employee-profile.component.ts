@@ -21,8 +21,6 @@ export class EmployeeProfileComponent implements OnInit {
 
   @ViewChild('myform') contactForm: NgForm;
 
- 
-  demo="hello"
   jobObj: Job;
   selectedField;
   map: Mapboxgl.Map;
@@ -31,6 +29,7 @@ export class EmployeeProfileComponent implements OnInit {
   countries: Array<any> = [];
   cities: Array<any> = [];
   provinces: Array<any> = [];
+  label:String;
 
   fields: any[] = [
     { value: 'Business & Finance', viewValue: 'Business & Finance' },
@@ -51,7 +50,7 @@ export class EmployeeProfileComponent implements OnInit {
     { value: 'Transportation & Moving', viewValue: 'Transportation & Moving' },
 
   ];
-  jobId: any;
+  jobId: any=undefined;
 
 
   constructor(private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
@@ -64,13 +63,14 @@ export class EmployeeProfileComponent implements OnInit {
     this.getCountries();
 
     if (this.catchParams() != undefined) {
+      this.label = "EDIT A JOB"
       this.getJobByParamsJobId(this.jobId);
     }
 
 
 
     else {
-    
+      this.label = "POST A JOB"
       this.getCurrentLocationOnPageLoad();
 
     }
@@ -79,7 +79,7 @@ export class EmployeeProfileComponent implements OnInit {
   getCurrentLocationOnPageLoad() {
     this.getPosition().then(pos => {
 
-      this.createMap(pos.lng,pos.lat)
+      this.createMap(pos.lng, pos.lat)
 
       this.jobObj.latitude = pos.lat;
       this.jobObj.longitude = pos.lng;
@@ -145,23 +145,49 @@ export class EmployeeProfileComponent implements OnInit {
 
     console.log(this.jobObj)
 
-    this.jobService.postJob(this.jobObj).subscribe((res) => {
-      console.log(res)
-      if (res.status == 200) {
+  
+    if (this.catchParams() != undefined) {
 
-        this.toastService.info('Successfull', 'Job Posted Successfully');
-      }
-      else {
+      this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
+        if (res.status == 200) {
+
+          this.toastService.info('Successfull', 'Job Updated Successfully');
+        }
+        else {
+          this.toastService.error('Unsucessfull', 'Job can not be updated');
+
+        }
+
+      }, err => {
+        this.toastService.error('Unsucessfull', 'Failed to update serve failure');
+
+        console.log(err)
+      })
+    }
+
+
+
+    else {
+
+      this.jobService.postJob(this.jobObj).subscribe((res) => {
+        console.log(res)
+        if (res.status == 200) {
+
+          this.toastService.info('Successfull', 'Job Posted Successfully');
+        }
+        else {
+          this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+        }
+
+      }, err => {
         this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-      }
+        console.log(err)
 
-    }, err => {
-      this.toastService.error('Unsucessfull', 'Job can not be posted');
+      })
 
-      console.log(err)
-
-    })
+    }
   }
 
 
@@ -230,18 +256,18 @@ export class EmployeeProfileComponent implements OnInit {
 
   getJobByParamsJobId(id: any) {
     this.service.getJobById(id).subscribe((res) => {
-      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category,type } = res.result;
-      this.contactForm.control.patchValue({ title, description, salary, country, city, province, category, type})
+      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
+      this.contactForm.control.patchValue({ title, description, salary, country, city, province, category, type })
 
       this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
       this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
-      this.createMap(longitude,latitude);
+      this.createMap(longitude, latitude);
       this.createMarker(longitude, latitude);
     });
   }
 
 
-  createMap(lng,lat){
+  createMap(lng, lat) {
 
     Mapboxgl.accessToken = environment.mapboxKey;
     this.map = new Mapboxgl.Map({

@@ -179,5 +179,9 @@ export class ApplicantServiceService {
   postReviewAgainstCandidate(obj:any):Observable<any>{
     return this.http.post(this.url +"api/review/reivewAgainstCandidate",obj)
   }
+
+  updateJob(id:any,jobObj:any):Observable<any>{
+    return this.http.put(this.url +"api/job/update/"+id,jobObj);
+  }
  
 }
