@@ -14,11 +14,13 @@
             </h3>
             <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
             <nz-rate [(ngModel)]="rating"
+              [disabled]="alreadyCommented"
               nzAllowHalf
               [nzTooltips]="tooltips"></nz-rate>
           </div>
         </h4>
         <button type="button"
+          
           class="close"
           data-dismiss="modal">&times;</button>
       </div>
@@ -41,9 +43,10 @@
 
         <hr style="margin-top:5px;" />
         <!-- Text area -->
-        <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
+        <p  style="font-weight: 600;margin-bottom:3px;">Review :</p>
         <textarea class="form-control"
           rows="4"
+          [disabled]="alreadyCommented"
           placeholder="Write your comments ..."
           [(ngModel)]="review"
           id="comment"></textarea>
@@ -87,6 +90,7 @@
             <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
             <nz-rate [(ngModel)]="rating2"
               nzAllowHalf
+              [disabled]="alreadyCommented"
               [nzTooltips]="tooltips"></nz-rate>
           </div>
         </h4>
@@ -98,12 +102,12 @@
       <!-- Modal body -->
       <div class="modal-body">
 
-
-
         <!-- Text area -->
         <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
         <textarea class="form-control"
           rows="4"
+          [disabled]="alreadyCommented"
+
           placeholder="Write your comments ..."
           [(ngModel)]="review"
           id="comment"></textarea>
@@ -195,8 +199,9 @@
           <div style="display:flex;padding:20px 20px 0px 20px;">
             <img style="width: 12%;
                 border-radius: 40px;"
-              [src]="jobObj.companyProfile.logo!=null?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
+              [src]="jobObj.companyProfile?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
               alt="Avatar"
+              
               class="avatar" />
 
             <div>
@@ -212,7 +217,7 @@
             </div>
 
           </div>
-          <div *ngIf="(userType=='candidate' && btnApplied!=true)"
+          <div *ngIf="userType=='candidate' && btnApplied!=true"
             style="display: flex; justify-content: flex-end;">
             <button type="button"
               data-toggle="modal"
@@ -230,7 +235,7 @@
 
               <div style="display: flex;justify-content: flex-end;">
 
-                <button *ngIf="alreadyApplied!=true"
+                <button *ngIf="alreadyCommented==false"
                   type="button"
                   data-toggle="modal"
                   data-target="#myModal2"

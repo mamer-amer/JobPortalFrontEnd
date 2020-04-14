@@ -33,6 +33,7 @@ export class CompanyProfileComponent implements OnInit {
    console.log(this.companyProfileObj)
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       if(res){
+        sessionStorage.setItem('dp', this.companyProfileObj.logo);
         this.toastService.info('Successfull','Company Profile Posted')
       }
       else{
@@ -102,6 +103,8 @@ export class CompanyProfileComponent implements OnInit {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
       this.loadingText = "Getting Profile.."
       this.companyProfileObj = res.result ? res.result :new CompanyProfile();
+      sessionStorage.setItem('dp', this.companyProfileObj.logo);
+
      
      
     }),error=>{

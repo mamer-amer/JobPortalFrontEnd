@@ -1,7 +1,15 @@
 p{
     font-size: 13px;
+    margin-left:79px !important;
 }
 
 h4{
     font-size: 1.05rem !important;
+}
+nz-avatar {
+    margin-right: 16px;
+}
+
+sub{
+    font-size: 9px;
 }

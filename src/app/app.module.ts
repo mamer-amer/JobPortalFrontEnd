@@ -69,12 +69,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
-// import {AgmCoreModule} from '@agm/core'
+import { NzModalModule } from 'ng-zorro-antd/modal';
 
-
-// import {MatPaginator} from '@angular/material/paginator';
-// import {MatTableDataSource} from '@angular/material/table';
-// import {MatGridListModule} from '@angular/material/grid-list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -114,6 +110,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NgxSpinnerModule,
     NzEmptyModule,
     MatBadgeModule,
+    NzModalModule,
     FormsModule,
     HttpClientModule,
     MatCardModule,
@@ -127,6 +124,7 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
     NgbModule,
     NzSpinModule,
     MatIconModule,
+
     MatPaginatorModule,
     MatDividerModule,
     MatSnackBarModule,

@@ -75,8 +75,8 @@ export class ApplicantServiceService {
    
   }
 
-  getCandidateProfileForView(userId: any): Observable<any> {
-    return this.http.get(this.url+"api/cp/"+userId);
+  getCandidateProfileForView(userId: any,candId:any): Observable<any> {
+    return this.http.get(this.url+"api/cp/complete?userId="+userId+"&candidateId="+candId);
   }
 
   getPaginatedJobs(page):Observable<any>{
@@ -172,5 +172,12 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 
+  deleteJob(id:any,page:any):Observable<any>{
+    return this.http.delete(this.url+"api/job/delete/"+id+"/page?page="+parseInt(page));
+  }
+
+  postReviewAgainstCandidate(obj:any):Observable<any>{
+    return this.http.post(this.url +"api/review/reivewAgainstCandidate",obj)
+  }
  
 }

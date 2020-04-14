@@ -71,7 +71,8 @@ mat-label {
 
 mat-card-title{
     margin-top:3%;
-    font-size:14px
+    font-size:14px;
+    margin-bottom: 0px !important;
 }
 
  @media only all and (max-width:43.75em) {
@@ -88,4 +89,8 @@ mat-card-title{
 
  .companyLogo{
       margin-top: 3%;
+ }
+
+ .viewProfileLink{
+   padding-left: 45px;
  }

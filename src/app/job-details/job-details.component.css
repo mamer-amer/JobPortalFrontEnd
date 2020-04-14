@@ -29,3 +29,13 @@ p{
   font-size: 12px;
 }
 
+.btn-secondary,
+.btn-success {
+  background-color: black !important;
+}
+
+.avatar{
+  width: 13% !important;
+  height: 82px !important;
+  border-radius: 0px !important;
+}

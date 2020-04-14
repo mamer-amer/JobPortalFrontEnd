@@ -1,1 +1,25 @@
 .navbar { background-color: #e91e63; } 
+h6{
+    font-weight: bold;
+    font-size: 1.12rem !important;
+    /* padding-right: 16px;  */
+    color: white;
+    overflow-wrap: break-word;
+
+    /* padding-top:10px */
+}
+
+
+/* small{
+    margin-bottom: -0.301em !important;
+} */
+sub{
+    bottom:-0.81em !important;
+    color:white;
+    margin:0px;
+    font-size:10px;
+    float:right;
+}
+.userInfo{
+    padding-right: 16px;
+}

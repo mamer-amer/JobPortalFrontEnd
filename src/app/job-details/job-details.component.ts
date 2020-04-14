@@ -31,7 +31,7 @@ export class JobDetailsComponent implements OnInit {
   review: String;
   btnApplied = false;
   rating2: any = 0;
-  alreadyApplied = true;
+  alreadyCommented = true;
 
 
 
@@ -53,6 +53,8 @@ export class JobDetailsComponent implements OnInit {
 
   }
 
+ 
+
 
   getJobById(id): void {
 
@@ -64,7 +66,10 @@ export class JobDetailsComponent implements OnInit {
       this.getCompanyRating(this.companyId);
       // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview();
-      this.displayCount(id);
+     if(this.userType!="candidate"){
+       this.displayCount(id);
+     } 
+     
 
 
       // once get the job also get the rating againts its company
@@ -92,9 +97,6 @@ export class JobDetailsComponent implements OnInit {
   }
 
   apply_for_job(): void {
-
-
-
     let obj = {
       "candidateId": this.candidateId,
       "jobId": this.jobId,
@@ -106,10 +108,35 @@ export class JobDetailsComponent implements OnInit {
   
 
     this.service.applyJob(obj).subscribe(res => {
+      console.log(res);
       
-      this.toastService.info('Successful','Successfully applied to the job!')
-      this.companyId = res.result.companyProfile.id;
-      this.getCompanyRating(this.companyId);
+      if(res.status==200){
+        this.toastService.info('Successful', 'Successfully applied to the job!')
+        this.companyId = res.result?res.result.companyProfile.id:0;
+        this.getCompanyRating(this.companyId);
+        this.alreadyCommented = true;
+      }
+      else if(res.status==500){
+        
+        this.toastService.error('Error', 'Something went wrong!');
+      }
+      else if(res.status==208){
+        // company or review phly hy de chuka hai user again nhy deskta
+        this.companyId = res.result ? res.result.companyProfile.id : 0;
+        this.btnApplied = true;
+        // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+
+        this.toastService.info('Sucessfull', 'Applied sucessfully');
+      }
+      else if(res.status==100){
+        this.btnApplied = true;
+        // this.alreadyAppliedJobsAgainstUser(this.candidateId,this.jobId);
+        //view the comment button and disbale the applied button
+        this.companyId = res.result ? res.result.companyProfile.id : 0;
+        this.toastService.info('Sucessfull', 'Applied');
+
+      }
+      
 
     },err=>  this.toastService.error('Error','Something went wrong!'));
 
@@ -129,14 +156,11 @@ export class JobDetailsComponent implements OnInit {
   alreadyAppliedJobsAgainstUser(canId, jobId) {
     if(this.userType=="candidate"){
       this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
+        console.log("Btn applied disabled ? "+res.result)
         this.btnApplied = res.result;
       });
     }
-    else{
-      return;
-    }
-   
-
+  
   }
 
 
@@ -152,25 +176,22 @@ export class JobDetailsComponent implements OnInit {
         "companyId": this.companyId
       }
       this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
+          console.log("Is already comment",res)
+        if (res.status == 200 || res.status == 208) {
+          this.alreadyCommented = true;
 
-        if (res.status == 200 || res.status == 208 || res.status==500) {
-          this.alreadyApplied = true;
 
           // disable
         }
         else {
-          this.alreadyApplied = false;
+          this.alreadyCommented = false;
         }
 
       }),error=>{
-        this.alreadyApplied = false;
+        this.alreadyCommented = false;
       }
     }
-    else {
-
-      return;
-    }
-
+   
 
 
   }
