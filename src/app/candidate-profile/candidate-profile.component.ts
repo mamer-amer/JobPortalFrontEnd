@@ -7,6 +7,7 @@ import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
 import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
+import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
 
 @Component({
@@ -16,6 +17,17 @@ import { NavbarService } from '../navbar.service';
 })
 export class CandidateProfileComponent implements OnInit {
 
+
+  showUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    hidePreviewIconInNonImage: true
+  };
+  previewImage: string | undefined = '';
+  previewVisible = false;
+
+
+
   userId;
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
@@ -24,6 +36,8 @@ export class CandidateProfileComponent implements OnInit {
     type: 'pdf', // the type you want to download
     elementId: 'myTableElementId', // the id of html/table element
   }
+
+
 
   fields: any[] = [
     { value: "all", viewValue: "Show All Jobs" },
@@ -46,18 +60,19 @@ export class CandidateProfileComponent implements OnInit {
 
   ];
 
+
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService) { }
+  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
+
 
   ngOnInit(): void {
     this.nav.showNav();
     this.checkUserStauts();
+    this.candidateObj.presentationLetter = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque magnam delectus et porro, obcaecati eius nemo unde velit inventore recusandae! Facere eveniet fuga dolor ut repudiandae vitae similique molestiae beatae."
 
 
   }
-
-
 
 
 
@@ -132,6 +147,8 @@ export class CandidateProfileComponent implements OnInit {
   }
 
 
+
+
   updateProfile() {
 
 
@@ -174,6 +191,7 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
+            sessionStorage.setItem('dp', this.candidateObj.dp);
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
           }

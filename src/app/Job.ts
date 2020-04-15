@@ -8,6 +8,7 @@ export class Job {
     publishFrom:Date;
     publishTo:Date;
     country:String;
+    address:string;
     city:String;
     province:String;
     category:String;

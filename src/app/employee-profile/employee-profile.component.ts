@@ -27,7 +27,8 @@ export class EmployeeProfileComponent implements OnInit {
   options: string[] = [];
   filteredPlaces: Array<string> = [];
   selectedPlace;
-  check = "hello"
+
+
   jobObj: Job;
   selectedField;
   map: Mapboxgl.Map;
@@ -36,8 +37,9 @@ export class EmployeeProfileComponent implements OnInit {
   countries: Array<any> = [];
   cities: Array<any> = [];
   provinces: Array<any> = [];
+  label: String;
 
-  jobTypes:Array<string> = ["Full-time", "Part-time", "Contract", "Internship", "New-Grad"];
+  jobTypes: Array<string> = ["Full-time", "Part-time", "Contract", "Internship", "New-Grad"];
 
   fields: any[] = [
     { value: 'Business & Finance', viewValue: 'Business & Finance' },
@@ -58,7 +60,7 @@ export class EmployeeProfileComponent implements OnInit {
     { value: 'Transportation & Moving', viewValue: 'Transportation & Moving' },
 
   ];
-  jobId: any;
+  jobId: any = undefined;
 
 
   constructor(private mapboxService: MapboxService, private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
@@ -82,15 +84,17 @@ export class EmployeeProfileComponent implements OnInit {
 
     this.jobObj = new Job();
     this.navbar.showNav();
+    this.getCountries();
 
     if (this.catchParams() != undefined) {
+      this.label = "EDIT A JOB"
       this.getJobByParamsJobId(this.jobId);
     }
 
 
 
     else {
-      this.getCountries();
+      this.label = "POST A JOB"
       this.getCurrentLocationOnPageLoad();
 
     }
@@ -159,7 +163,7 @@ export class EmployeeProfileComponent implements OnInit {
 
 
 
-  submitJob(myForm,formTemplate): void {
+  submitJob(myForm, formTemplate): void {
 
 
     this.jobObj.city = myForm.city.name;
@@ -171,37 +175,71 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.publishFrom = myForm.publishFrom;
     this.jobObj.publishTo = myForm.publishTo
     this.jobObj.category = myForm.category;
+    this.jobObj.address = myForm.address;
     this.jobObj.type = myForm.title;
 
-  
+
 
     this.jobService.postJob(this.jobObj).subscribe((res) => {
-    
+
       if (res.status == 200) {
 
         this.toastService.info('Successfull', 'Job Posted Successfully');
         formTemplate.reset();
-        this.selectedPlace=[];
-        this.filteredPlaces=[];
-        setTimeout(()=>this.router.navigate(['allJobs']),1000)
-        
+        this.selectedPlace = [];
+        this.filteredPlaces = [];
+        setTimeout(() => this.router.navigate(['allJobs']), 1000)
+
       }
       else {
         this.toastService.error('Unsucessfull', 'Job can not be posted');
 
+        if (this.catchParams() != undefined) {
+
+          this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
+            if (res.status == 200) {
+
+              this.toastService.info('Successfull', 'Job Updated Successfully');
+            }
+            else {
+              this.toastService.error('Unsucessfull', 'Job can not be updated');
+
+            }
+
+          }, err => {
+            this.toastService.error('Unsucessfull', 'Failed to update serve failure');
+
+            console.log(err)
+          })
+        }
+
+
+
+        else {
+
+          this.jobService.postJob(this.jobObj).subscribe((res) => {
+            console.log(res)
+            if (res.status == 200) {
+
+              this.toastService.info('Successfull', 'Job Posted Successfully');
+            }
+            else {
+              this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+            }
+
+          }, err => {
+            this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+            console.log(err)
+
+          })
+
+        }
       }
-
-    }, err => {
-      this.toastService.error('Unsucessfull', 'Job can not be posted');
-
     })
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.options.filter(place => place.toLowerCase().indexOf(filterValue) === 0);
-  }
 
 
   getPosition(): Promise<any> {
@@ -225,6 +263,7 @@ export class EmployeeProfileComponent implements OnInit {
   }
   countryChange(countryObj): void {
     if (countryObj.value) {
+
       this.provinces = csc.getStatesOfCountry(countryObj.value.id)
     }
     else {
@@ -267,9 +306,22 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   getJobByParamsJobId(id: any) {
+
     this.service.getJobById(id).subscribe((res) => {
-      const { title, description, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
-      this.contactForm.setValue({ title, description, salary, publishFrom, publishTo, country, city, province, category, type });
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
+      this.contactForm.control.patchValue({ title, description, salary, category, type, address })
+
+      let countryObj = csc.getAllCountries().find(c => c.name == country);
+      let stateObj = csc.getStatesOfCountry(countryObj.id).find(s => s.name == province);
+      let cityObj = csc.getCitiesOfState(stateObj.id).find(cit => cit.name == city)
+      this.provinces = csc.getStatesOfCountry(countryObj.id);
+      this.cities = csc.getCitiesOfState(stateObj.id);
+
+      this.contactForm.control.get("country").setValue(countryObj);
+      this.contactForm.control.get("province").setValue(stateObj);
+      this.contactForm.control.get("city").setValue(cityObj);
+      this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
+      this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
       this.createMap(longitude, latitude);
       this.createMarker(longitude, latitude);
     });

@@ -49,7 +49,7 @@ const routes: Routes = [
     path: 'companyProfileDetails/:id',
     component: CompanyProfileDetailsComponent,
     canActivate: [AuthGuard],
-    data: { "candidate": true }
+    data: { "candidate": true,"employee":true }
   },
   { path: "appliedcandidates/:id", component: AppliedCandidatesProfilesComponent },
   { path: "viewprofile", component: ViewCandidateProfileComponent},

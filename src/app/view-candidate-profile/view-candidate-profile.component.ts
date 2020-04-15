@@ -17,6 +17,9 @@ export class ViewCandidateProfileComponent implements OnInit {
   candidateObj:any;
   name:any;
   userId: string;
+  candidateId:any;
+  reviewBtn: any;
+  companyDetailsWithReviews:Array<any>=[];
 
   public constructor(private activatedRoute: ActivatedRoute,private service:ApplicantServiceService,public nav:NavbarService) {
    
@@ -30,7 +33,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     this.getParams();
     this.catchParams().then((result)=>{
         if(result){
-          this.getCandidateProfile(this.userId);
+          this.getCandidateProfile(this.userId,this.candidateId);
         }
     },(error)=>{
       console.log(error);
@@ -43,16 +46,19 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngAfterViewInit(){
 
   }
-  getCandidateProfile(userId) {
-    this.service.getCandidateProfileForView(userId).subscribe(d => {
-      this.candidateObj = d;
-      console.log(this.candidateObj);
-      const { result: { id, field, resumeContentType, imageContentType, presenationLetter="No presenation Letter found", dp, cv, user: { name: username, email } } } = d
-      this.candidateObj = { id, field, resumeContentType, imageContentType, presenationLetter, dp, cv, username, email }
-      console.log(this.candidateObj);
-
+  getCandidateProfile(userId,candidateId) {
+    this.service.getCandidateProfileForView(userId,candidateId).subscribe(d => {
+      const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview}}= d;
+      const { id,field,imageContentType,resumeContentType,presentationLetter,dp,cv,user:{id:userId,name,email}} = candidateProfile;
+      this.candidateObj = {id, field, imageContentType, resumeContentType, presentationLetter, dp, cv,userId, name, email }
+      this.reviewBtn = alreadyGivenReview;
+      this.companyDetailsWithReviews = companiesWithReviewDTOList
+      
 
     })
+  }
+  goToReviewSection() {
+    document.getElementById("review").scrollIntoView();
   }
 
  
@@ -67,6 +73,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     getParams(){
       this.activatedRoute.queryParamMap.subscribe((params) => {
       this.userId = params.get('userId');
+      this.candidateId=params.get('candId');
     });
     }
 
@@ -96,7 +103,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
     const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
     const downloadLink = document.createElement("a");
-    const fileName = this.candidateObj.username+"." + extension;
+    const fileName = this.candidateObj.name+"." + extension;
 
     downloadLink.href = source;
     downloadLink.download = fileName;
@@ -105,6 +112,24 @@ export class ViewCandidateProfileComponent implements OnInit {
     //window.open(url);
   }
    
+    postReview(review:String){
+      let obj = {
+        review:review,
+        rating:0,
+        candidateId:this.candidateId,
+        jobId:0,
+        ratedBy:sessionStorage.getItem('userType')
 
+      }
+      this.service.postReviewAgainstCandidate(obj).subscribe(res=>{
+        console.log("tHIS IS THE RESPONSE",res);
+        if(res.status==200){
+          this.companyDetailsWithReviews = res.result ? res.result : '';
+          this.reviewBtn = true;
+        }
+        
+      })
+
+    }
 }
   
