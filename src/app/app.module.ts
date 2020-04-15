@@ -69,7 +69,12 @@ import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
+// import {AgmCoreModule} from '@agm/core'
+
 import { NzModalModule } from 'ng-zorro-antd/modal';
+
 
 @NgModule({
   declarations: [
@@ -89,6 +94,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NavbarComponent,
     LoaderComponent,
     MomentPipe,
+
     
   ],
   imports: [
@@ -102,6 +108,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
+    MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,

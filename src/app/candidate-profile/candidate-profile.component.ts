@@ -60,20 +60,22 @@ export class CandidateProfileComponent implements OnInit {
 
   ];
 
+
   candidateObj: Candidate = new Candidate();
-  
+
   constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
+
 
   ngOnInit(): void {
     this.nav.showNav();
     this.checkUserStauts();
     this.candidateObj.presentationLetter = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque magnam delectus et porro, obcaecati eius nemo unde velit inventore recusandae! Facere eveniet fuga dolor ut repudiandae vitae similique molestiae beatae."
-    
+
 
   }
 
 
-  
+
 
 
 
@@ -145,7 +147,7 @@ export class CandidateProfileComponent implements OnInit {
   }
 
 
-  
+
 
   updateProfile() {
 
@@ -248,14 +250,20 @@ export class CandidateProfileComponent implements OnInit {
 
   downloadFile() {
 
-    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
-    const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
-    const downloadLink = document.createElement("a");
-    const fileName = "download." + extension;
+    // const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    // const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
+    // const downloadLink = document.createElement("a");
+    // const fileName = "download." + extension;
 
-    downloadLink.href = source;
-    downloadLink.download = fileName;
-    downloadLink.click();
+    // downloadLink.href = source;
+    // downloadLink.download = fileName;
+    // downloadLink.target="_blank"
+    // downloadLink.click();
+
+    let pdfWindow = window.open("")
+    pdfWindow.document.write("<iframe width='100%' height='100%' src='data:" +
+      this.candidateObj['resumeContentType'] + ";base64, " + encodeURI(this.candidateObj["cv"]) +
+      "'></iframe>")
 
   }
 

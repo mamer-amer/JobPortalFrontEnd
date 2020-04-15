@@ -172,6 +172,13 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 
+
+  globalJobSearch(city,type,company,page):Observable<any>
+  {
+    return this.http.get(this.url+`api/job/globalsearch?city=${city}&type=${type}&company=${company}&page=${page}`);
+  }
+
+
   deleteJob(id:any,page:any):Observable<any>{
     return this.http.delete(this.url+"api/job/delete/"+id+"/page?page="+parseInt(page));
   }
@@ -183,5 +190,6 @@ export class ApplicantServiceService {
   updateJob(id:any,jobObj:any):Observable<any>{
     return this.http.put(this.url +"api/job/update/"+id,jobObj);
   }
+
  
 }

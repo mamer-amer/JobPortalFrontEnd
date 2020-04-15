@@ -102,7 +102,7 @@ mat-card{
  }
 
 
- .hoverable:hover{
+ .categories:hover{
 
   text-decoration: underline;
   color: blue;
@@ -115,3 +115,5 @@ mat-card{
  span {
    font-size: 12px;
  }
+
+

@@ -18,7 +18,7 @@
 
     <div class="form-group"
       style="margin-left:10px;">
-      <label style="color: #0069D9;background: white;margin: 0px;"
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
         for="exampleFormControlInput1">Search by city</label>
       <input type="text"
         name="city"
@@ -26,13 +26,40 @@
         [(ngModel)]="cityName"
         id="exampleFormControlInput1"
         placeholder="Enter the city name">
+        
     </div>
     <div class="form-group"
-      style="margin:30px 0px 0px 10px;">
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
+        for="exampleFormControlInput1">Search by company</label>
+      <input type="text"
+        name="company"
+        class="form-control"
+        [(ngModel)]="companyName"
+        id="exampleFormControlInput1"
+        placeholder="Enter the company name">
+        
+    </div>
+    <div class="form-group"
+    style="margin-left:10px;">
+    <label style="color: #0069D9;background: transparent;margin: 0px;"
+      for="exampleFormControlInput1">Search by job-type</label>
+      <nz-select  nzShowSearch  nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
+        <nz-option nzLabel="All" nzValue="all"></nz-option>
+        <nz-option nzLabel="Full-time" nzValue="fullTime"></nz-option>
+        <nz-option nzLabel="Part-time" nzValue="partTime"></nz-option>
+        <nz-option nzLabel="Internship" nzValue="internship"></nz-option>
+        <nz-option nzLabel="Contract" nzValue="contract"></nz-option>
+        <nz-option nzLabel="New-Grad" nzValue="newGrad"></nz-option>
+      </nz-select>
+      
+  </div>
+    <div class="form-group"
+      style="margin:25px 0px 0px 0px;">
       <button type="button"
-        style="height:38px;"
-        [disabled]="!cityName"
-        (click)="searchByCityName(cityName,0)"
+        style="height:38px;line-height: 10px;"
+     
+        (click)="globalSearch(cityName,selectedJobType,companyName,0)"
         class="btn btn-primary">Search</button>
     </div>
 
@@ -47,46 +74,46 @@
       <mat-card style="border-radius: 0px;margin-bottom:10px;">
         <h2>Categories</h2>
         <hr />
-        <p class="hoverable"
+        <p class="categories"
           (click)="getPaginatedJobs(0)">All</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
           Training</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
           Engineering Technicians</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
           Justice & Law Enforcement</p>
 
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Management',0)">Management</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications &
           Broadcasting</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration &
           Management</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
           Maintenance</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
-        <p class="hoverable"
+        <p class="categories"
           (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
       </mat-card>
     </div>
@@ -105,7 +132,7 @@
 
 
             <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;">
+              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
 
               <div style="flex:4;">
                 <h3 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
@@ -122,7 +149,7 @@
                     nzTooltipTitle="View Job"
                     (click)="routeToJobDetailsComponent(job.id)"
                     alt="View Job"
-                    style='font-size:20px'>
+                    style='font-size:20px;cursor: pointer;'>
                     
                   </i>
                   <i class='fa fa-pencil edit_delete'
@@ -131,7 +158,7 @@
                     [routerLink]="['/employee/postjob']"
                     [queryParams]="{ 'jobId': job.id}"
                     alt="Edit Job"
-                    style='font-size:20px'>
+                    style='font-size:20px;cursor: pointer;'>
 
                   </i>
 
@@ -140,7 +167,7 @@
                       nzTooltipTitle="Delete Job"
                       (click)="deleteJob(job.id,i,page)"
                       alt="Delete Job"
-                      style='font-size:20px'>
+                      style='font-size:20px;cursor: pointer;'>
 
                     </i>
 
@@ -156,7 +183,7 @@
                       nzTooltipTitle="View Job"
                       (click)="routeToJobDetailsComponent(job.id)"
                       alt="View Job"
-                      style='font-size:20px'>
+                      style='font-size:20px;cursor: pointer;'>
 
                     </i>
                   </span>
@@ -199,8 +226,7 @@
                 nextLabel="Next"
                 screenReaderCurrentLabel="You're on page">
               </pagination-controls>
-              <!-- <pagination-controls id="foo"
-                (pageChange)="pageChange($event)"></pagination-controls> -->
+            
             </div>
           </div>
         </div>
