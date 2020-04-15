@@ -108,6 +108,11 @@ export class ViewCandidateProfileComponent implements OnInit {
     downloadLink.href = source;
     downloadLink.download = fileName;
     downloadLink.click();
+
+    let pdfWindow = window.open("")
+    pdfWindow.document.write("<iframe width='100%' height='100%' src='data:" +
+      this.candidateObj['resumeContentType'] + ";base64, " + encodeURI(this.candidateObj["cv"]) +
+      "'></iframe>")
     //const url= window.URL.createObjectURL(blob);
     //window.open(url);
   }

@@ -43,7 +43,7 @@ back(){
           name:d.user.name,
           email:d.user.email,
           field: d.field,
-          profileActive: d.user.profileActive,
+          profileActive: d.user.profileActive==true?"Active":"Inactive",
           presentationLetter: d.presentationLetter,
           cv: d.cv,
           dp: d.dp,
