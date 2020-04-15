@@ -37,6 +37,7 @@
     "moment": "^2.24.0",
     "ng-zorro-antd": "^8.5.2",
     "ngx-export-as": "^1.4.0",
+    "ngx-extended-pdf-viewer": "^3.0.1",
     "ngx-material-timepicker": "^5.4.2",
     "ngx-pagination": "^5.0.0",
     "ngx-spinner": "^9.0.1",

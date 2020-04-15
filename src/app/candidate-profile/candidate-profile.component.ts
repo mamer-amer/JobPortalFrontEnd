@@ -250,15 +250,15 @@ export class CandidateProfileComponent implements OnInit {
 
   downloadFile() {
 
-    // const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
-    // const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
-    // const downloadLink = document.createElement("a");
-    // const fileName = "download." + extension;
+    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
+    const downloadLink = document.createElement("a");
+    const fileName =this.candidateObj.name + extension;
 
-    // downloadLink.href = source;
-    // downloadLink.download = fileName;
-    // downloadLink.target="_blank"
-    // downloadLink.click();
+    downloadLink.href = source;
+    downloadLink.download = fileName;
+    downloadLink.target="_blank"
+    downloadLink.click();
 
     let pdfWindow = window.open("")
     pdfWindow.document.write("<iframe width='100%' height='100%' src='data:" +

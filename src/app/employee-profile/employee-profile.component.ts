@@ -176,68 +176,52 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.publishTo = myForm.publishTo
     this.jobObj.category = myForm.category;
     this.jobObj.address = myForm.address;
-    this.jobObj.type = myForm.type; 
+    this.jobObj.type = myForm.type;
 
+    if (this.catchParams() != undefined) {
 
+      this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
+        if (res.status == 200) {
 
-    this.jobService.postJob(this.jobObj).subscribe((res) => {
+          this.toastService.info('Successfull', 'Job Updated Successfully');
+        }
+        else {
+          this.toastService.error('Unsucessfull', 'Job can not be updated');
 
-      if (res.status == 200) {
+        }
 
-        this.toastService.info('Successfull', 'Job Posted Successfully');
-        formTemplate.reset();
-        this.selectedPlace = [];
-        this.filteredPlaces = [];
-        setTimeout(() => this.router.navigate(['allJobs']), 1000)
+      }, err => {
+        this.toastService.error('Unsucessfull', 'Failed to update serve failure');
 
-      }
-      else {
+        console.log(err)
+      })
+    }
+
+    else {
+
+      this.jobService.postJob(this.jobObj).subscribe((res) => {
+        console.log(res)
+        if (res.status == 200) {
+          formTemplate.reset();
+          this.selectedPlace = [];
+          this.filteredPlaces = [];
+          setTimeout(() => this.router.navigate(['allJobs']), 1000)
+          this.toastService.info('Successfull', 'Job Posted Successfully');
+        }
+        else {
+          this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+        }
+
+      }, err => {
         this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-        if (this.catchParams() != undefined) {
+        console.log(err)
 
-          this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
-            if (res.status == 200) {
+      })
 
-              this.toastService.info('Successfull', 'Job Updated Successfully');
-            }
-            else {
-              this.toastService.error('Unsucessfull', 'Job can not be updated');
+    }
 
-            }
-
-          }, err => {
-            this.toastService.error('Unsucessfull', 'Failed to update serve failure');
-
-            console.log(err)
-          })
-        }
-
-
-
-        else {
-
-          this.jobService.postJob(this.jobObj).subscribe((res) => {
-            console.log(res)
-            if (res.status == 200) {
-
-              this.toastService.info('Successfull', 'Job Posted Successfully');
-            }
-            else {
-              this.toastService.error('Unsucessfull', 'Job can not be posted');
-
-            }
-
-          }, err => {
-            this.toastService.error('Unsucessfull', 'Job can not be posted');
-
-            console.log(err)
-
-          })
-
-        }
-      }
-    })
   }
 
 
