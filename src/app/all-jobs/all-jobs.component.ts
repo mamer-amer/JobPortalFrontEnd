@@ -17,19 +17,22 @@ import { NavbarService } from '../navbar.service';
 export class AllJobsComponent implements OnInit {
 
   /** Constants used to fill up our data base. */
-
+  selectedJobType = "all";
   // pageChange=new EventEmitter();
   selectedCategory: any;
   allJobs: Array<any> = []
+  companyName="";
   empty = false;
-  cityName: any;
+  cityName: any="";
   userType: any;
-  date:string;
+  date: string;
+
+  isAllJobs=true;
 
 
 
 
-  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService:NavbarService) {
+  constructor(private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService) {
 
     // this.date = moment((new Date()), "YYYYMMDD").fromNow();
 
@@ -77,7 +80,7 @@ export class AllJobsComponent implements OnInit {
 
   pageChange(p): void {
 
-    console.log(p);
+   
     if (this.selectedCategory != null) {
       this.getJobsByCategory(this.selectedCategory, p - 1);
     }
@@ -86,10 +89,10 @@ export class AllJobsComponent implements OnInit {
 
     }
     else if (this.cityName == null) {
-      this.getJobsByCompany(p - 1);
+      this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
     }
     else if (this.cityName != null) {
-      this.searchByCityName(this.cityName, p - 1);
+      this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
     }
 
   }
@@ -118,7 +121,7 @@ export class AllJobsComponent implements OnInit {
 
   getJobsByCategory(cat, p): void {
 
-    console.log(cat)
+    
     this.allJobs = []
     this.selectedCategory = cat;
     this.total = 0;
@@ -176,15 +179,6 @@ export class AllJobsComponent implements OnInit {
 
     })
 
-
-
-
-
-
-
-
-
-
   }
 
 
@@ -234,9 +228,9 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
     this.service.getJobsByCompany(p).subscribe(response => {
-      console.log("this is what you want", response)
+   
       if (response.totalElements > 0) {
-        console.log(response)
+       
         this.total = response.totalElements;
         this.page = p + 1;
         this.itemsPerPage = response.size;
@@ -249,6 +243,24 @@ export class AllJobsComponent implements OnInit {
     })
   }
 
+
+  globalSearch(city, type, company,pageNo) {
+    
+    this.service.globalJobSearch(city, type, company,pageNo).subscribe(response => {
+      console.log("this is what you want", response)
+      if (response.totalElements > 0) {
+        console.log(response)
+        this.total = response.totalElements;
+      
+        this.itemsPerPage = response.size;
+        this.allJobs = response.content
+        this.empty = false;
+      }
+      else {
+        this.empty = true;
+      }
+    })
+  }
 
   searchByCityName(city, page) {
     this.allJobs = []

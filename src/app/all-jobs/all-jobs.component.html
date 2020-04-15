@@ -20,7 +20,7 @@
 
     <div class="form-group"
       style="margin-left:10px;">
-      <label style="color: #0069D9;background: white;margin: 0px;"
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
         for="exampleFormControlInput1">Search by city</label>
       <input type="text"
         name="city"
@@ -28,13 +28,40 @@
         [(ngModel)]="cityName"
         id="exampleFormControlInput1"
         placeholder="Enter the city name">
+        
     </div>
+    <div class="form-group"
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
+        for="exampleFormControlInput1">Search by company</label>
+      <input type="text"
+        name="company"
+        class="form-control"
+        [(ngModel)]="companyName"
+        id="exampleFormControlInput1"
+        placeholder="Enter the company name">
+        
+    </div>
+    <div class="form-group"
+    style="margin-left:10px;">
+    <label style="color: #0069D9;background: transparent;margin: 0px;"
+      for="exampleFormControlInput1">Search by job-type</label>
+      <nz-select  nzShowSearch  nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
+        <nz-option nzLabel="All" nzValue="all"></nz-option>
+        <nz-option nzLabel="Full-time" nzValue="fullTime"></nz-option>
+        <nz-option nzLabel="Part-time" nzValue="partTime"></nz-option>
+        <nz-option nzLabel="Internship" nzValue="internship"></nz-option>
+        <nz-option nzLabel="Contract" nzValue="contract"></nz-option>
+        <nz-option nzLabel="New-Grad" nzValue="newGrad"></nz-option>
+      </nz-select>
+      
+  </div>
     <div class="form-group"
       style="margin:25px 0px 0px 0px;">
       <button type="button"
         style="height:38px;line-height: 10px;"
-        [disabled]="!cityName"
-        (click)="searchByCityName(cityName,0)"
+     
+        (click)="globalSearch(cityName,selectedJobType,companyName,0)"
         class="btn btn-primary">Search</button>
     </div>
 

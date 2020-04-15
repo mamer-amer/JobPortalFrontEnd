@@ -273,3 +273,25 @@ button.toast-close-button {
 .purple.lighten-1{
   background-color: black !important;
 }
+
+
+
+.ant-select-selection{
+  height: 37px !important;
+  margin-top: 1px !important;
+  width: 150px !important;
+ }
+ .ant-select-selection__placeholder{
+  /* display: block !important; */
+
+  line-height: 23px !important;
+  color: #6c757d !important;
+  font-weight: 400 !important;
+  font-size: 15px;
+ }
+ .ant-select-selection-selected-value
+ {
+  line-height: 35px;
+  font-weight: 400;
+  font-size: 15px;
+ }

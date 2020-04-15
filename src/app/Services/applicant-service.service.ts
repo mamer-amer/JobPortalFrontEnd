@@ -172,5 +172,11 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
   }
 
+
+  globalJobSearch(city,type,company,page):Observable<any>
+  {
+    return this.http.get(this.url+`api/job/globalsearch?city=${city}&type=${type}&company=${company}&page=${page}`);
+  }
+
  
 }
