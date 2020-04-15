@@ -176,7 +176,7 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.publishTo = myForm.publishTo
     this.jobObj.category = myForm.category;
     this.jobObj.address = myForm.address;
-    this.jobObj.type = myForm.title;
+    this.jobObj.type = myForm.type; 
 
 
 
