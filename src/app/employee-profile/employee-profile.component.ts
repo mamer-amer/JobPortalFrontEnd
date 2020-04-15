@@ -39,7 +39,7 @@ export class EmployeeProfileComponent implements OnInit {
   provinces: Array<any> = [];
   label: String;
 
-  jobTypes: Array<string> = ["Full-time", "Part-time", "Contract", "Internship", "New-Grad"];
+  jobTypes: Array<string> = ["Freelance","Full-time", "Part-time", "Internship", "Temporary"];
 
   fields: any[] = [
     { value: 'Business & Finance', viewValue: 'Business & Finance' },
