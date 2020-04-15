@@ -257,7 +257,7 @@ export class AllJobsComponent implements OnInit {
       if (response.totalElements > 0) {
         console.log(response)
         this.total = response.totalElements;
-      
+        this.page  = response.pageable.pageNumber + 1;
         this.itemsPerPage = response.size;
         this.allJobs = response.content
         this.empty = false;
