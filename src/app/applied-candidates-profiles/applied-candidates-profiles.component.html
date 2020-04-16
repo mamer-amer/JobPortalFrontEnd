@@ -13,12 +13,12 @@
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link waves-light"
-        *ngIf="userType=='employee'" [routerLink]="['/allJobs']"
+        *ngIf="userType=='employer'" [routerLink]="['/allJobs']"
           mdbWavesEffect>MyJobs<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link waves-light"
-         *ngIf="userType=='employee'"
+         *ngIf="userType=='employer'"
         [routerLink]="['/employee/postjob']"
           mdbWavesEffect>Post Job</a>
       </li>
@@ -79,7 +79,7 @@
             [routerLink]="['/candidateProfile']"
             href="#">My Profile</a>
 
-          <a *ngIf="userType=='employee'" class="dropdown-item waves-light"
+          <a *ngIf="userType=='employer'" class="dropdown-item waves-light"
             mdbWavesEffect
             [routerLink]="['/companyProfile']"
             href="#">My Profile</a>

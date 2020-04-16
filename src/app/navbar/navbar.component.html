@@ -11,7 +11,7 @@
 
     <!-- Links  Employer-->
     <ul class="navbar-nav mr-auto"
-      *ngIf="userType=='employee'">
+      *ngIf="userType=='employer'">
       <li class="nav-item active">
         <a class="nav-link waves-light"
           [routerLink]="['/allJobs']"
@@ -139,7 +139,7 @@
             [routerLink]="['/candidateProfile']"
             href="#">My Profile</a>
 
-          <a *ngIf="userType=='employee'"
+          <a *ngIf="userType=='employer'"
             class="dropdown-item waves-light"
             mdbWavesEffect
             [routerLink]="['/companyProfile']"
