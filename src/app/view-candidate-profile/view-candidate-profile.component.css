@@ -80,6 +80,11 @@ li{
    height: 500px;
   }
 }
+@media only all and (max-width: 47.9375em) {
+  .ratingSectionSpan {
+   margin-top: -3px;
+  }
+}
 
 
 

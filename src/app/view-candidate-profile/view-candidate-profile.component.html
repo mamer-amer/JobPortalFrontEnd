@@ -18,6 +18,15 @@
           </div>
           <br>
 
+           <div class="row">
+             <div class="col-lg-11 offset-lg-2 col-md-11 offset-md-1 col-sm-8 offset-sm-3">
+              <nz-rate 
+                [disabled]="true"
+                [(ngModel)]="candidateObj?candidateObj.rating:rating"
+                [nzTooltips]="tooltips"></nz-rate>
+             </div>
+           </div>
+
           <!-- Social ioncs -->
           <div class="row"
             *ngIf="!reviewBtn">
@@ -126,18 +135,19 @@
           <div *ngFor="let company of companyDetailsWithReviews">
 
             <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-           
-              <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
-               
+
+              <ul style="margin-left: auto"
+                class="list-unstyled list-inline mb-0">
+
                 <li class="list-inline-item"><a href=""
                     style="color:#1890ff !important"
                     [routerLink]="['/companyProfileDetails/',company.id]"
                     class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
                     profile</a></li>
-               
+
               </ul>
             </div>
-            
+
             <nz-avatar style="float: left"
               nzIcon="user"
               [nzSize]="64"
@@ -145,10 +155,10 @@
             <h5 style="vertical-align:bottom;font-weight: 600;">
               {{company.name}}
               <br>
-              <!-- <nz-rate style="vertical-align: bottom"
-              [disabled]="true"
-              [ngModel]="company.rating"
-              [nzTooltips]="tooltips"></nz-rate> -->
+              <nz-rate style="vertical-align: bottom"
+                [disabled]="true"
+                [ngModel]="company.rating"
+                [nzTooltips]="tooltips"></nz-rate>
             </h5>
             <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
               {{company.review}}
@@ -162,14 +172,28 @@
       </div>
     </div>
 
-    <br/>
+    <br />
     <!-- write your review here as an employee or recuiter -->
-    <div class="row" *ngIf="!reviewBtn">
+    <div class="row"
+      *ngIf="!reviewBtn">
       <div class="col-lg-12">
         <div id="review"
-          class="card-header border-0 font-weight-bold">Leave a reply (logged in user)</div>
+          class="card-header border-0 font-weight-bold">Leave a review
+          <span style="float:right;text-align: center"
+            class="ratingSectionSpan">
+            
+              <p style="display: inline-block">Rate {{candidateObj?candidateObj.name:"example"}}</p>
+              &nbsp;
+              <nz-rate 
+                [(ngModel)]="rating"
+                [nzTooltips]="tooltips"></nz-rate>
+   
 
-        <div class="d-md-flex flex-md-fill px-1">
+          </span>
+        </div>
+
+
+        <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
           <div class="md-form w-100">
             <textarea class="form-control md-textarea pt-0"
               id="exampleFormControlTextarea1"
@@ -179,7 +203,9 @@
           </div>
         </div>
         <div class="text-center">
-          <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md" style="background-color: black !important">Submit</button>
+          <button (click)="postReview(review.value)"
+            class="btn btn-default btn-rounded btn-md"
+            style="background-color: black !important">Submit</button>
         </div>
       </div>
     </div>
