@@ -14,12 +14,15 @@ import { resolve } from 'path';
 export class ViewCandidateProfileComponent implements OnInit {
   firstname: any;
   lastname: any;
-  candidateObj:any;
+  candidateObj:CadnidateWithReview;
   name:any;
   userId: string;
   candidateId:any;
   reviewBtn: any;
   companyDetailsWithReviews:Array<any>=[];
+  rating: any=0;
+  tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
 
   public constructor(private activatedRoute: ActivatedRoute,private service:ApplicantServiceService,public nav:NavbarService) {
    
@@ -48,9 +51,9 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
   getCandidateProfile(userId,candidateId) {
     this.service.getCandidateProfileForView(userId,candidateId).subscribe(d => {
-      const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview}}= d;
+      const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview,rating}}= d;
       const { id,field,imageContentType,resumeContentType,presentationLetter,dp,cv,user:{id:userId,name,email}} = candidateProfile;
-      this.candidateObj = {id, field, imageContentType, resumeContentType, presentationLetter, dp, cv,userId, name, email }
+      this.candidateObj = {id, field, imageContentType, resumeContentType, presentationLetter, dp, cv,userId, name, email,rating }
       this.reviewBtn = alreadyGivenReview;
       this.companyDetailsWithReviews = companiesWithReviewDTOList
       
@@ -120,7 +123,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     postReview(review:String){
       let obj = {
         review:review,
-        rating:0,
+        rating:this.rating,
         candidateId:this.candidateId,
         jobId:0,
         ratedBy:sessionStorage.getItem('userType')
@@ -129,12 +132,30 @@ export class ViewCandidateProfileComponent implements OnInit {
       this.service.postReviewAgainstCandidate(obj).subscribe(res=>{
         console.log("tHIS IS THE RESPONSE",res);
         if(res.status==200){
+          this.candidateObj.rating = 0;
           this.companyDetailsWithReviews = res.result ? res.result : '';
+          this.candidateObj.rating = res.result?res.result.rating:0;
           this.reviewBtn = true;
         }
         
       })
 
     }
+
+    
 }
   
+interface CadnidateWithReview{
+    id?:any;
+     field?:any;
+     imageContentType?:any;
+      resumeContentType?:any;
+      presentationLetter?:any;
+      dp?:any;
+      cv?:any;
+      userId?:any;
+      name?:any;
+     email?:any;
+     rating?:any;
+
+}

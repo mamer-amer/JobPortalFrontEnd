@@ -25,31 +25,31 @@ const routes: Routes = [
     path: "employee/postjob",
     component: EmployeeProfileComponent,
     canActivate: [AuthGuard],
-    data: { "employee": true }
+    data: { "employer": true }
   },
   {
     path: "allJobs",
     component: AllJobsComponent,
     canActivate: [AuthGuard],
-    data: { "employee": true, "candidate": true }
+    data: { "employer": true, "candidate": true }
   },
   {
     path: "companyProfile",
     component: CompanyProfileComponent,
     canActivate: [AuthGuard],
-    data: { "employee": true }
+    data: { "employer": true }
   },
   {
     path: "job/:id",
     component: JobDetailsComponent,
     canActivate: [AuthGuard],
-    data: { "employee": true, "candidate": true }
+    data: { "employer": true, "candidate": true }
   },
   {
     path: 'companyProfileDetails/:id',
     component: CompanyProfileDetailsComponent,
     canActivate: [AuthGuard],
-    data: { "candidate": true,"employee":true }
+    data: { "candidate": true,"employer":true }
   },
   { path: "appliedcandidates/:id", component: AppliedCandidatesProfilesComponent },
   { path: "viewprofile", component: ViewCandidateProfileComponent},

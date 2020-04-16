@@ -46,19 +46,9 @@ export class RegisterComponent implements OnInit {
 
   }
 
-  RouterAccortingTocheckUserType({userType}:any){
-    if(userType=="candidate"){
-      this.router.navigate(['/candidateProfile'])
-    }
-    else if (userType == "employee"){
-      this.router.navigate(['/employeeProfile']);
-    }
-    else{
-      //do something
-    }
+
   }
 
 
 
 
-}

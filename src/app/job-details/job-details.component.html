@@ -208,7 +208,7 @@
               <h3 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h3>
               <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.city}} </p>
               <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);"
-                *ngIf="userType=='employee'">Candidates Applied : {{numOfCandidates}}</p>
+                *ngIf="userType=='employer'">Candidates Applied : {{numOfCandidates}}</p>
               <p *ngIf="userType=='candidate'"
                 (click)="routeToComapnyProfile()"
                 style="text-decoration: underline;color: blue;margin:0px 0px 0px 10px;cursor: pointer;"> visit profile
@@ -254,7 +254,7 @@
 
 
           <div class="row"
-            *ngIf="userType=='employee'">
+            *ngIf="userType=='employer'">
 
             <div class="col-lg-12 "
               *ngIf="numOfCandidates!=0">
