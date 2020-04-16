@@ -24,6 +24,9 @@
                 [disabled]="true"
                 [(ngModel)]="candidateObj?candidateObj.rating:rating"
                 [nzTooltips]="tooltips"></nz-rate>
+                <p style="margin-left:13px !important;color:lightgray">
+                  &nbsp;&nbsp;Rating (5/{{candidateObj?candidateObj.rating:rating}})
+                </p>
              </div>
            </div>
 
