@@ -134,7 +134,7 @@ export class ViewCandidateProfileComponent implements OnInit {
         if(res.status==200){
           this.candidateObj.rating = 0;
           this.companyDetailsWithReviews = res.result ? res.result : '';
-          this.candidateObj.rating = res.result?res.result.rating:0;
+          this.candidateObj.rating = res.rating?res.rating:0;
           this.reviewBtn = true;
         }
         
