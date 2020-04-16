@@ -7,185 +7,186 @@
 
 
 <div class="container">
-  <mat-card style="border-radius: 0px;">
-    <div style="width:100%;height:350px" id="myMap"></div>
-  </mat-card>
+<mat-card style="border-radius: 0px;">
+<div style="width:100%;height:350px" id="myMap"></div>
+</mat-card>
 
+<hr />
+<form class="row" *ngIf="userType=='candidate'">
+
+<div class="form-group" style="margin-left:10px;">
+<label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+  city</label>
+<input type="text" name="city" class="form-control" [(ngModel)]="cityName" id="exampleFormControlInput1"
+  placeholder="Enter the city name">
+
+</div>
+<div class="form-group" style="margin-left:10px;">
+<label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+  company</label>
+<input type="text" name="company" class="form-control" [(ngModel)]="companyName" id="exampleFormControlInput1"
+  placeholder="Enter the company name">
+
+</div>
+<div class="form-group" style="margin-left:10px;">
+<label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+  job-type</label>
+<nz-select nzShowSearch nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
+  <nz-option nzLabel="All" nzValue="all"></nz-option>
+  <nz-option nzLabel="Full-time" nzValue="fullTime"></nz-option>
+  <nz-option nzLabel="Part-time" nzValue="partTime"></nz-option>
+  <nz-option nzLabel="Internship" nzValue="internship"></nz-option>
+  <nz-option nzLabel="Contract" nzValue="contract"></nz-option>
+  <nz-option nzLabel="New-Grad" nzValue="newGrad"></nz-option>
+</nz-select>
+
+</div>
+<div class="form-group" style="margin:25px 0px 0px 0px;">
+<button type="button" style="height:38px;line-height: 10px;"
+  (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
+</div>
+
+</form>
+<hr style="margin-top: 0px;" />
+
+<!-- JOBS CAT AND JOBS -->
+<div class="row">
+
+<!--JOB FIELDS -->
+<div class="col-lg-3">
+<mat-card style="border-radius: 0px;margin-bottom:10px;">
+  <h2>Categories</h2>
   <hr />
-  <form class="row" *ngIf="userType=='candidate'">
+  <p class="categories" (click)="getPaginatedJobs(0)">All</p>
+  <p class="categories" (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
+  <p class="categories" (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
+  <p class="categories" (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
+  <p class="categories" (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
+    Training</p>
+  <p class="categories" (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
+    Engineering Technicians</p>
+  <p class="categories" (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry
+  </p>
+  <p class="categories" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
+    Justice & Law Enforcement</p>
 
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
-        city</label>
-      <input type="text" name="city" class="form-control" [(ngModel)]="cityName" id="exampleFormControlInput1"
-        placeholder="Enter the city name">
+  <p class="categories" (click)="getJobsByCategory('Management',0)">Management</p>
+  <p class="categories" (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications
+    &
+    Broadcasting</p>
+  <p class="categories" (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
+  <p class="categories" (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration
+    &
+    Management</p>
+  <p class="categories" (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
+  <p class="categories" (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
+    Maintenance</p>
+  <p class="categories" (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
+  <p class="categories" (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
+  <p class="categories" (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
+</mat-card>
+</div>
+<div class="col-lg-9">
+<div class="row">
 
-    </div>
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
-        company</label>
-      <input type="text" name="company" class="form-control" [(ngModel)]="companyName" id="exampleFormControlInput1"
-        placeholder="Enter the company name">
+  <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
 
-    </div>
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
-        job-type</label>
-      <nz-select nzShowSearch nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
-        <nz-option nzLabel="All" nzValue="all"></nz-option>
-        <nz-option nzLabel="Full-time" nzValue="fullTime"></nz-option>
-        <nz-option nzLabel="Part-time" nzValue="partTime"></nz-option>
-        <nz-option nzLabel="Internship" nzValue="internship"></nz-option>
-        <nz-option nzLabel="Contract" nzValue="contract"></nz-option>
-        <nz-option nzLabel="New-Grad" nzValue="newGrad"></nz-option>
-      </nz-select>
+    <div
+      *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
+      class="col-lg-12" style="margin-bottom:10px;">
 
-    </div>
-    <div class="form-group" style="margin:25px 0px 0px 0px;">
-      <button type="button" style="height:38px;line-height: 10px;"
-        (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
-    </div>
 
-  </form>
-  <hr style="margin-top: 0px;" />
+      <mat-card
+        style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
 
-  <!-- JOBS CAT AND JOBS -->
-  <div class="row">
+        <div style="flex:4;">
+          <h3 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
 
-    <!--JOB FIELDS -->
-    <div class="col-lg-3">
-      <mat-card style="border-radius: 0px;margin-bottom:10px;">
-        <h2>Categories</h2>
-        <hr />
-        <p class="categories" (click)="getPaginatedJobs(0)">All</p>
-        <p class="categories" (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
-        <p class="categories" (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
-        <p class="categories" (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
-        <p class="categories" (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
-          Training</p>
-        <p class="categories" (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
-          Engineering Technicians</p>
-        <p class="categories" (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry
-        </p>
-        <p class="categories" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
-          Justice & Law Enforcement</p>
+          <h4 style="font-weight:500;margin: 0px;">{{job.category}} - <span
+              style="color:rgb(129, 126, 126);">City: {{job.city}}</span>
+            <!-- icons span starts here -->
+            <span class="options" *ngIf="userType!='candidate'" style="float:right">
 
-        <p class="categories" (click)="getJobsByCategory('Management',0)">Management</p>
-        <p class="categories" (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications
-          &
-          Broadcasting</p>
-        <p class="categories" (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
-        <p class="categories" (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration
-          &
-          Management</p>
-        <p class="categories" (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
-        <p class="categories" (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
-          Maintenance</p>
-        <p class="categories" (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
-        <p class="categories" (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
-        <p class="categories" (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
+              <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
+                (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
+                style='font-size:20px;cursor: pointer;'>
+
+              </i>
+              <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
+                [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
+                style='font-size:20px;cursor: pointer;'>
+
+              </i>
+
+              <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
+                (click)="deleteJob(job.id,i,page)" alt="Delete Job" style='font-size:20px;cursor: pointer;'>
+
+              </i>
+
+            </span>
+
+
+            <!-- ELSE block -->
+            <!--only show this to candidate  -->
+            <span class="options" *ngIf="userType=='candidate'" style="float:right;">
+              <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
+                (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
+                style='font-size:20px;cursor: pointer;'>
+
+              </i>
+            </span>
+
+
+
+            <!-- icons spans finish here -->
+          </h4>
+          <p style="margin-bottom: 0px">Company : <b>{{job?job.companyProfile.name:''}}</b></p>
+          <p style="margin-bottom:5px;">Description : 
+            {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
+          <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
+
+        </div>
+
+
+        <!-- if no jobs found  -->
+
       </mat-card>
     </div>
-    <div class="col-lg-9">
-      <div class="row">
+  </nz-skeleton>
 
-        <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
+  <div class="row" style="width:100%">
 
-          <div
-            *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
-            class="col-lg-12" style="margin-bottom:10px;">
+    <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
+      <div *ngIf="empty">
+        <nz-empty></nz-empty>
 
-
-            <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
-
-              <div style="flex:4;">
-                <h3 style="font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
-
-                <h4 style="font-weight:500;margin: 0px;">{{job.category}} - <span
-                    style="color:rgb(129, 126, 126);">{{job.city}}</span>
-                  <!-- icons span starts here -->
-                  <span class="options" *ngIf="userType!='candidate'" style="float:right">
-
-                    <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
-                      (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-                    <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
-                      [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-
-                    <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
-                      (click)="deleteJob(job.id,i,page)" alt="Delete Job" style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-
-                  </span>
-
-
-                  <!-- ELSE block -->
-                  <!--only show this to candidate  -->
-                  <span class="options" *ngIf="userType=='candidate'" style="float:right;">
-                    <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
-                      (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-                  </span>
-
-
-
-                  <!-- icons spans finish here -->
-                </h4>
-                <p style="margin-bottom:5px;">
-                  {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
-                <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
-
-              </div>
-
-
-              <!-- if no jobs found  -->
-
-            </mat-card>
-          </div>
-        </nz-skeleton>
-
-        <div class="row" style="width:100%">
-
-          <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
-            <div *ngIf="empty">
-              <nz-empty></nz-empty>
-
-            </div>
-          </div>
-
-          <!-- //PAGINATION -->
-          <div class="col-lg-12" style="margin:10px 0px 30px 0px;">
-
-            <div class="has-text-centered">
-              <pagination-controls (pageChange)="pageChange($event)" directionLinks="true" responsive="true"
-                previousLabel="Previous" nextLabel="Next" screenReaderCurrentLabel="You're on page">
-              </pagination-controls>
-
-            </div>
-          </div>
-        </div>
       </div>
     </div>
 
-    <ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
-      type="ball-clip-rotate-pulse" [fullScreen]="true">
-      <p style="color: white">Loading..</p>
-    </ngx-spinner>
+    <!-- //PAGINATION -->
+    <div class="col-lg-12" style="margin:10px 0px 30px 0px;">
 
-    <!-- Fooorter -->
-<br>
-<!-- <div class="row">
-  <div class="col-lg-12">
-    <app-footer></app-footer>
+      <div class="has-text-centered">
+        <pagination-controls (pageChange)="pageChange($event)" directionLinks="true" responsive="true"
+          previousLabel="Previous" nextLabel="Next" screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+
+      </div>
+    </div>
   </div>
 </div>
-     -->
+</div>
+
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+type="ball-clip-rotate-pulse" [fullScreen]="true">
+<p style="color: white">Loading..</p>
+</ngx-spinner>
+
+<!-- Fooorter -->
+<br>
+<!-- <div class="row">
+<div class="col-lg-12">
+<app-footer></app-footer>
+</div>
+</div>
+-->

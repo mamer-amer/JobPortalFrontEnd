@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
 import { ToastrService } from 'ngx-toastr';
@@ -17,10 +17,12 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
-    // this.userImage = sessionStorage.getItem('dp');
+    
 
   
   }
+
+  
   getImage(){
 
   }

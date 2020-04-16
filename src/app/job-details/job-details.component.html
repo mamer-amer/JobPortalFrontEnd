@@ -20,7 +20,6 @@
           </div>
         </h4>
         <button type="button"
-          
           class="close"
           data-dismiss="modal">&times;</button>
       </div>
@@ -43,7 +42,7 @@
 
         <hr style="margin-top:5px;" />
         <!-- Text area -->
-        <p  style="font-weight: 600;margin-bottom:3px;">Review :</p>
+        <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
         <textarea class="form-control"
           rows="4"
           [disabled]="alreadyCommented"
@@ -107,7 +106,6 @@
         <textarea class="form-control"
           rows="4"
           [disabled]="alreadyCommented"
-
           placeholder="Write your comments ..."
           [(ngModel)]="review"
           id="comment"></textarea>
@@ -171,7 +169,7 @@
                   {{job.companyProfile.name}} - {{job.title}}
                 </h4>
                 <p>{{job.city}}-{{job.country}}</p>
-                <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
+                <p style="font-size:12px;color: rgb(160, 158, 158);margin-bottom: 8px;">{{job.date | myPipe}}</p>
               </mat-card>
             </div>
             <div *ngIf="job.id==jobObj['id']">
@@ -181,7 +179,7 @@
                   {{job.companyProfile.name}} - {{job.title}}
                 </h4>
                 <p>{{job.city}}-{{job.country}}</p>
-                <p style="font-size:12px;color: rgb(160, 158, 158);">20 days ago</p>
+                <p style="font-size:12px;color: rgb(160, 158, 158);margin-bottom: 8px;">{{job.date | myPipe}}</p>
               </mat-card>
             </div>
 
@@ -201,12 +199,21 @@
                 border-radius: 40px;"
               [src]="jobObj.companyProfile?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
               alt="Avatar"
-              
               class="avatar" />
 
             <div>
               <h3 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h3>
-              <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.city}} </p>
+              <span style="display:inline-flex">
+
+                  <p style="margin:4px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
+                  &nbsp;&nbsp;
+                <nz-rate [(ngModel)]="rating"
+                  [disabled]="true"
+                  [nzTooltips]="tooltips">
+                </nz-rate>
+
+              </span>
+              <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">City : {{jobObj.city}} </p>
               <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);"
                 *ngIf="userType=='employer'">Candidates Applied : {{numOfCandidates}}</p>
               <p *ngIf="userType=='candidate'"
@@ -284,7 +291,6 @@
           <p style="font-weight: 600;margin-bottom:3px;">Company Name</p>
 
           <nz-rate [(ngModel)]="rating"
-            style="float:right"
             [disabled]="true"
             [nzTooltips]="tooltips">
           </nz-rate>
@@ -302,7 +308,7 @@
               style="color:rgb(107, 105, 105);font-size: 12px;font-weight:normal;">
               {{jobObj.companyProfile.corporateAddress}} , {{jobObj.city}}</span> </p>
           <p style="font-weight: 600;margin-bottom:3px;">Posted - <span
-              style="color:rgb(99, 98, 98);font-size: 12px;font-weight:normal;"> 3 hours ago</span> </p>
+              style="color:rgb(99, 98, 98);font-size: 12px;font-weight:normal;"> {{ jobObj.date | myPipe}}</span> </p>
 
         </mat-card>
       </div>
