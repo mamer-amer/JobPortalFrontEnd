@@ -6,7 +6,10 @@
 footer {
   width: 100%;
   background-color:black;
-  min-height: 250px;
+    position: relative;
+    left: 0;
+    bottom: 0;
+  /* min-height: 250px; */
   padding: 10px 0px 25px 0px;
 }
 
@@ -14,7 +17,7 @@ footer {
   padding-top: 40px;
   margin-bottom: 20px;
 }
-
+/*  */
 footer p {
   font-size: 13px;
   color: #CCC;

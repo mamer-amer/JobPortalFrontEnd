@@ -11,12 +11,16 @@ import { NavbarService } from '../navbar.service';
 })
 export class CompanyProfileDetailsComponent implements OnInit {
 
+  reviewBtn:any;
   companyId:number;
   companyReviewRating:Array<any>=[];
   companyDetails:Object;
   companyProfile:CompanyProfile;
   avgRating:number=0;
   comments:any=0;
+  rating:any=0;
+  userType=sessionStorage.getItem('userType');
+  userId = sessionStorage.getItem('userId');
   
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
@@ -47,6 +51,24 @@ export class CompanyProfileDetailsComponent implements OnInit {
       console.log(this.companyReviewRating);
     })
     
+  }
+
+  postReview(review:string){
+    let obj = {
+      "candidateId": this.userId,
+      "jobId": 0,
+      "review": review,
+      "rating": this.rating,
+      "companyId": this.companyId
+    }
+
+    console.table(obj)
+
+    this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
+      // this.avgRating = res.result?res.result
+      this.avgRating = res.result?res.result:this.avgRating;
+      console.log(res);
+    });
   }
 
 }

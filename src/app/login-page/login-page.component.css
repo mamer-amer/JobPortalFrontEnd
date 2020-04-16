@@ -58,6 +58,7 @@ body, html {
 
    button {
      margin-right: 8px;
+     
    }
   form{
     box-shadow: 0px 20px 20px 3px rgba(0, 0, 0, 0.2),
@@ -72,7 +73,7 @@ body, html {
      background-image: url("../../assets/findJob.jpg");
 
      height: 100%;
-
+      width: 100%;
      /* Center and scale the image nicely */
      background-position: left;
      background-repeat: no-repeat;
@@ -84,7 +85,7 @@ body, html {
      .bg-img {
        background-image: none;
        background-color: black;
-       margin-right:5%;
+       margin-right:2%;
        
      }
    }
@@ -92,7 +93,7 @@ body, html {
    @media all and (max-color: 4) {
      .bg-img {
        background-image: none;
-       margin-right: 5%;
+       margin-right: 2%;
 
      }
    }
@@ -101,6 +102,11 @@ body, html {
      .bg-img {
        background-image: none;
        background-color: black;
-       margin-right:5%;
+       margin-right:2%;
      }
    }
+ @media only all and (max-width:43.75em) {
+   .container{
+      overflow-y: scroll;
+   }
+  }

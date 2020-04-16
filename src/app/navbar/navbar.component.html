@@ -12,6 +12,11 @@
     <!-- Links  Employer-->
     <ul class="navbar-nav mr-auto"
       *ngIf="userType=='employer'">
+      <li class="nav-item">
+        <a class="nav-link waves-light"
+          (click)="goBack()"
+          mdbWavesEffect>Back</a>
+      </li>
       <li class="nav-item active">
         <a class="nav-link waves-light"
           [routerLink]="['/allJobs']"
@@ -22,10 +27,6 @@
           [routerLink]="['/employee/postjob']"
           mdbWavesEffect>Post Job</a>
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link waves-light"
-          mdbWavesEffect>Pricing</a>
-      </li> -->
 
       <!-- Dropdown -->
       <!-- <li class="nav-item dropdown"

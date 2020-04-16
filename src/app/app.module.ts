@@ -69,6 +69,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 // import {AgmCoreModule} from '@agm/core'
@@ -110,6 +111,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    NzBackTopModule,
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,

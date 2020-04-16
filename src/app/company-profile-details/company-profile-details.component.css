@@ -13,3 +13,17 @@ nz-avatar {
 sub{
     font-size: 9px;
 }
+
+
+
+@media only all and (max-width: 47.9375em) {
+  .ratingSectionSpan {
+    margin-top: -3px;
+  }
+}
+.badge-info {
+  font-size:10px;
+  /* color:black !important; */
+  /* background-color: yellow !important; */
+}
+

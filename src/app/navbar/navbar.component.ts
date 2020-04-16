@@ -25,4 +25,9 @@ export class NavbarComponent implements OnInit {
 
   }
 
+
+  goBack(){
+    window.history.go(-1);
+  }
+
 }
