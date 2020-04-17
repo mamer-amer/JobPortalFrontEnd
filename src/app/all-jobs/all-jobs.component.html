@@ -170,7 +170,10 @@
 
             <!-- icons spans finish here -->
           </h4>
-          <p style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:''}}</b></p>
+          <p *ngIf="userType!='candidate'" style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:''}}</b></p>
+          
+          <p *ngIf="userType=='candidate'" style="margin-bottom: 0px">Company : <b>{{job?job.name:''}}</b></p>
+
           <p style="margin-bottom:5px;">Description : 
             {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
           <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
