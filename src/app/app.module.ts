@@ -14,6 +14,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
@@ -111,6 +112,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    NzPopconfirmModule,
     NzBackTopModule,
     MatNativeDateModule,
     MatSelectModule,

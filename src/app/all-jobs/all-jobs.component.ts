@@ -12,6 +12,7 @@
   import { ToastrService } from 'ngx-toastr';
   import { FormControl } from '@angular/forms';
   import { MapboxService } from '../Services/mapbox.service';
+import { NzModalService } from 'ng-zorro-antd';
   // import { NavbarService } from 'angular-bootstrap-md';
 
 
@@ -44,7 +45,7 @@
 
 
 
-    constructor(private mapboxService: MapboxService,private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService, private toastService:ToastrService) {
+    constructor(private mapboxService: MapboxService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService, private toastService: ToastrService, private modalService: NzModalService) {
 
 
       // this.date = moment((new Date()), "YYYYMMDD").fromNow();
@@ -58,6 +59,22 @@
     logout() {
       sessionStorage.clear();
       this.router.navigateByUrl('');
+    }
+
+    showDeleteConfirm(jobId:any,index:any,page:any): void {
+      this.modalService.confirm({
+        nzTitle: 'Are you sure you want to delete?',
+        nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+          this.deleteJob(jobId,index,page)
+        },
+        nzCancelText: 'No',
+        nzOnCancel: () => {
+          // window.history.go(-1);
+        }
+      });
     }
 
 

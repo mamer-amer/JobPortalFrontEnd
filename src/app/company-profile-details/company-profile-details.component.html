@@ -37,7 +37,7 @@
                 [disabled]="true"
                 [ngModel]="avgRating"
                 [nzTooltips]="tooltips"></nz-rate>
-              <small style="color:lightgray">Rating (5/{{avgRating}})</small>
+              <small style="color:lightgray">Rating (5/{{avgRating | number:'1.0-1'}})</small>
             </span>
           </div>
 
@@ -81,7 +81,7 @@
 
         <div *ngFor="let candidate of companyReviewRating">
 
-          <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
+          <div *ngIf="userType!='candidate'" class="card-header border-0 font-weight-bold d-flex justify-content-between">
 
             <ul style="margin-left: auto"
               class="list-unstyled list-inline mb-0">

@@ -1,75 +1,3 @@
-<!-- The Modal -->
-<div class="modal fade"
-  id="myModal">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title"
-          style="margin:0px">
-          <div>
-            <h3 style="font-weight: 600;margin-bottom:3px;">Company Bio
-
-            </h3>
-            <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
-            <nz-rate [(ngModel)]="rating"
-              [disabled]="alreadyCommented"
-              nzAllowHalf
-              [nzTooltips]="tooltips"></nz-rate>
-          </div>
-        </h4>
-        <button type="button"
-          class="close"
-          data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-
-        <p style="font-weight: 600;margin-bottom:3px;">City</p>
-        <p style="color:rgb(129, 126, 126);">{{jobObj.city}}</p>
-        <hr style="margin-top:5px;" />
-        <p style="font-weight: 600;margin:5px 0px 2px 0px;">Description</p>
-        <p style="color:rgb(129, 126, 126);">{{jobObj.description}}.</p>
-        <hr style="margin-top:5px;" />
-
-        <p style="font-weight:600;margin-bottom:3px;">Address - <span
-            style="color:rgb(107, 105, 105);font-size: 12px;font-weight:normal;">
-            {{jobObj.companyProfile.corporateAddress}} , {{jobObj.city}}</span> </p>
-
-
-
-        <hr style="margin-top:5px;" />
-        <!-- Text area -->
-        <p style="font-weight: 600;margin-bottom:3px;">Review :</p>
-        <textarea class="form-control"
-          rows="4"
-          [disabled]="alreadyCommented"
-          placeholder="Write your comments ..."
-          [(ngModel)]="review"
-          id="comment"></textarea>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button"
-          class="btn btn-success"
-          (click)="apply_for_job()"
-          data-dismiss="modal">Apply</button>
-        <button type="button"
-          class="btn btn-secondary"
-          data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-
-
-
-
 
 <!-- Second Modal -->
 <!-- The Modal -->
@@ -115,11 +43,11 @@
       <div class="modal-footer">
         <button type="button"
           class="btn btn-success"
-          (click)="postRatingAndReview()"
-          data-dismiss="modal">Apply</button>
+          (click)="postRatingAndReview('posting')"
+          data-dismiss="modal">Continue</button>
         <button type="button"
           class="btn btn-secondary"
-          data-dismiss="modal">Close</button>
+          data-dismiss="modal">Skip</button>
       </div>
 
     </div>
@@ -227,9 +155,8 @@
           <div *ngIf="userType=='candidate' && btnApplied!=true"
             style="display: flex; justify-content: flex-end;">
             <button type="button"
-              data-toggle="modal"
-              data-target="#myModal"
-              (click)="showDialog()"
+             
+              (click)="apply_for_job()"
               style="border-radius:30px;margin:0px 10px 5px 0px;font-size: 12px;"
               class="btn btn-primary">Apply to
               job</button>

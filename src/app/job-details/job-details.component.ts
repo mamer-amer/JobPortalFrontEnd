@@ -65,7 +65,7 @@ export class JobDetailsComponent implements OnInit {
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
       // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
-      this.postRatingAndReview();
+      this.postRatingAndReview(undefined);
      if(this.userType!="candidate"){
        this.displayCount(id);
      } 
@@ -164,7 +164,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
 
-  postRatingAndReview() {
+  postRatingAndReview(value:String) {
 
 
     if (this.userType == "candidate") {
@@ -179,6 +179,10 @@ export class JobDetailsComponent implements OnInit {
           console.log("Is already comment",res)
         if (res.status == 200 || res.status == 208) {
           this.alreadyCommented = true;
+          if(value=="posting"){
+            this.toastService.success('Thankyou for your time');
+
+          }
 
 
           // disable

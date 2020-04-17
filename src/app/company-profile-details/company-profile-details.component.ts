@@ -45,15 +45,17 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
       this.avgRating=res.avgRating;
-     this.companyProfile=res.companyProfile;
+      this.companyProfile=res.companyProfile;
       this.companyReviewRating=res.companyReviewRatingDTOList;
       this.comments = this.companyReviewRating.length;
+      this.reviewBtn = res.alreadyCommented;
       console.log(this.companyReviewRating);
     })
     
   }
 
   postReview(review:string){
+    // here wer are saving userId in canidateId because we dont have candidateId in this page
     let obj = {
       "candidateId": this.userId,
       "jobId": 0,
@@ -66,8 +68,13 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
     this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
       // this.avgRating = res.result?res.result
-      this.avgRating = res.result?res.result:this.avgRating;
-      console.log(res);
+      if(res.status==200){
+        this.companyReviewRating = res.result?res.result:this.companyReviewRating;
+       this.avgRating = res.result ? res.rating : this.avgRating;
+       this.reviewBtn = true;
+        console.log(res);
+      }
+     
     });
   }
 
