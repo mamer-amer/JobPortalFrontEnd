@@ -20,11 +20,13 @@ export class LoginPageComponent implements OnInit {
 
   ngOnInit(): void {
     if(sessionStorage.length>0){
-     
+      // window.history.go(-1);
+      this.router.navigate(['/allJobs'])
       // this.showModal();
-      this.showDeleteConfirm();
+      // this.showDeleteConfirm();
     }
     else{
+      sessionStorage.clear();
       localStorage.clear();
     }
     
@@ -43,7 +45,7 @@ export class LoginPageComponent implements OnInit {
       },
       nzCancelText: 'No',
       nzOnCancel: () => {
-          window.history.go(-1);
+         
       }
     });
   }
