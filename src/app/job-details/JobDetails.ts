@@ -7,6 +7,7 @@ export  class JobDetails {
     city: String;
     category: String;
     type: String;
+    date:any;
     companyProfile = {
         name : "",
         corporateAddress: "",

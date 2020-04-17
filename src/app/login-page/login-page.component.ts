@@ -14,6 +14,7 @@ export class LoginPageComponent implements OnInit {
   isOkLoading = false;
   errorVisible = false;
   showLoading = false;
+  status = false;
   basicModal:MDBModalRef;
   constructor(private toastService: ToastrService, private router: Router, private service: LoginService,private modalService:NzModalService) {}
 
@@ -64,20 +65,20 @@ export class LoginPageComponent implements OnInit {
 
   
   check(uname: string, p: string) {
-
+    this.status = true;
     this.service.checkUserandPass(uname, p).subscribe(
       res => {
-
+        
         if (res.status == 200) {
-
+          
           this.toastService.info('Successfull', 'User authenticated')
-
           sessionStorage.setItem("userId", res.result.id);
           sessionStorage.setItem("token", res.result.token);
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
-
+          this.status = false;
+          
 
           if (res.result.userType === "ADMIN") {
             setTimeout(() => {
@@ -97,8 +98,12 @@ export class LoginPageComponent implements OnInit {
         }
         else {
           this.toastService.error('Unuccessfull', 'Invalid login credentials');
+          this.status = false;
         }
-      }, err => this.toastService.error('Unuccessfull', 'Invalid login credentials')
+      }, err => {
+        this.toastService.error('Unuccessfull', 'Invalid login credentials')
+        this.status = false
+      }
     );
 
   }

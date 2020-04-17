@@ -16,12 +16,14 @@ export class ViewCandidateProfileComponent implements OnInit {
   lastname: any;
   candidateObj:CadnidateWithReview;
   name:any;
-  userId: string;
+  userId: any;
   candidateId:any;
   reviewBtn: any;
   companyDetailsWithReviews:Array<any>=[];
   rating: any=0;
+  userType:any;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+
 
 
   public constructor(private activatedRoute: ActivatedRoute,private service:ApplicantServiceService,public nav:NavbarService) {
@@ -30,7 +32,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    
+    this.userType = sessionStorage.getItem('userType');
 
     this.nav.showNav();
     this.getParams();
@@ -75,8 +77,8 @@ export class ViewCandidateProfileComponent implements OnInit {
 
     getParams(){
       this.activatedRoute.queryParamMap.subscribe((params) => {
-      this.userId = params.get('userId');
-      this.candidateId=params.get('candId');
+      this.userId = params.get('userId')!=null?params.get('userId'):0;
+        this.candidateId = params.get('candId') != null ? params.get('candId') : 0;
     });
     }
 
@@ -134,7 +136,7 @@ export class ViewCandidateProfileComponent implements OnInit {
         if(res.status==200){
           this.candidateObj.rating = 0;
           this.companyDetailsWithReviews = res.result ? res.result : '';
-          this.candidateObj.rating = res.result?res.result.rating:0;
+          this.candidateObj.rating = res.rating?res.rating:0;
           this.reviewBtn = true;
         }
         

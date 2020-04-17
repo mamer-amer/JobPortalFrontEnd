@@ -39,6 +39,20 @@ label[_ngcontent-xet-c379] {
   border-radius: 50%;
 }
 
+ .search {
+   padding-left: 35px;
+   width: 60%;
+   text-align: center;
+   margin-left: 20%;
+   position: absolute;
+   top: 10px;
+   border-radius: 30px;
+   height: 40px;
+   z-index: 1000;
+   background-color: white;
+   font-size: 12px;
+ }
+
 #imgFile {
   display: none;
 }
@@ -117,3 +131,7 @@ mat-card{
  }
 
 
+input:focus{
+  border:0px;
+  
+}

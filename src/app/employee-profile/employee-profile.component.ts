@@ -68,6 +68,9 @@ export class EmployeeProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
+    this.jobObj = new Job();
+    this.navbar.showNav();
+    this.getCountries();
 
     this.myControl.valueChanges.subscribe((value) => {
 
@@ -81,10 +84,7 @@ export class EmployeeProfileComponent implements OnInit {
         })
     })
 
-
-    this.jobObj = new Job();
-    this.navbar.showNav();
-    this.getCountries();
+    
 
     if (this.catchParams() != undefined) {
       this.label = "EDIT A JOB"

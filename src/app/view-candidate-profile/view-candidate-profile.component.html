@@ -24,12 +24,15 @@
                 [disabled]="true"
                 [(ngModel)]="candidateObj?candidateObj.rating:rating"
                 [nzTooltips]="tooltips"></nz-rate>
+                <p style="margin-left:13px !important;color:lightgray">
+                  &nbsp;&nbsp;Rating (5/{{candidateObj?candidateObj.rating:rating}})
+                </p>
              </div>
            </div>
 
           <!-- Social ioncs -->
           <div class="row"
-            *ngIf="!reviewBtn">
+            *ngIf="!reviewBtn && userType!='candidate'">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <a><button style="width:100%"
                   class="btn"
@@ -174,8 +177,8 @@
 
     <br />
     <!-- write your review here as an employee or recuiter -->
-    <div class="row"
-      *ngIf="!reviewBtn">
+    <div class="row" 
+      *ngIf="!reviewBtn && userType!='candidate'">
       <div class="col-lg-12">
         <div id="review"
           class="card-header border-0 font-weight-bold">Leave a review

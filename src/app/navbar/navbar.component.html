@@ -4,7 +4,7 @@
 
   <!-- Navbar brand -->
   <mdb-navbar-brand><a class="navbar-brand"
-      href="#">Job-Board</a></mdb-navbar-brand>
+      [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
@@ -12,6 +12,11 @@
     <!-- Links  Employer-->
     <ul class="navbar-nav mr-auto"
       *ngIf="userType=='employer'">
+      <li class="nav-item">
+        <a class="nav-link waves-light"
+          (click)="goBack()"
+          mdbWavesEffect>Back</a>
+      </li>
       <li class="nav-item active">
         <a class="nav-link waves-light"
           [routerLink]="['/allJobs']"
@@ -22,10 +27,6 @@
           [routerLink]="['/employee/postjob']"
           mdbWavesEffect>Post Job</a>
       </li>
-      <!-- <li class="nav-item">
-        <a class="nav-link waves-light"
-          mdbWavesEffect>Pricing</a>
-      </li> -->
 
       <!-- Dropdown -->
       <!-- <li class="nav-item dropdown"
@@ -62,6 +63,12 @@
     <!-- Links -->
     <ul class="navbar-nav mr-auto"
       *ngIf="userType=='candidate'">
+
+<li class="nav-item">
+  <a class="nav-link waves-light"
+    (click)="goBack()"
+    mdbWavesEffect>Back</a>
+
       <li class="nav-item active">
         <a class="nav-link waves-light"
           [routerLink]="['/allJobs']"
@@ -115,11 +122,42 @@
        
       </div>
 
+      <li class="nav-item avatar dropdown" 
+        *ngIf="userType=='employer'"
+        dropdown>
+        <a dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect>
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'"
+            alt=""
+            style="height:42px;width:40px"
+            class="img-fluid rounded-circle z-depth-0"></a>
+        <div *dropdownMenu
+          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
+          role="menu">
+       
+            <a 
+              class="dropdown-item waves-light"
+              mdbWavesEffect
+              [routerLink]="['/companyProfileDetails/',userId]"
+              href="#">View Profile</a>
+          <a 
+            class="dropdown-item waves-light"
+            mdbWavesEffect
+            [routerLink]="['/companyProfile']"
+            href="#">Edit Profile</a>
 
 
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            (click)="service.logout()">Log out</a>
+        </div>
+      </li>
 
 
-      <li class="nav-item avatar dropdown"
+      <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'"
         dropdown>
         <a dropdownToggle
           mdbWavesEffect
@@ -135,15 +173,20 @@
           role="menu">
           <a class="dropdown-item waves-light"
             mdbWavesEffect
-            *ngIf="userType=='candidate'"
-            [routerLink]="['/candidateProfile']"
+           
+            [routerLink]="['/viewprofile']"
+            [queryParams]="{'userId':0,'candId':0}"
             href="#">My Profile</a>
 
-          <a *ngIf="userType=='employer'"
-            class="dropdown-item waves-light"
+          <a class="dropdown-item waves-light"
             mdbWavesEffect
-            [routerLink]="['/companyProfile']"
-            href="#">My Profile</a>
+           
+            [routerLink]="['/candidateProfile']"
+            href="#">Edit Profile</a>
+
+            
+      
+
 
 
           <a class="dropdown-item waves-light"
@@ -156,3 +199,11 @@
 
 
 </mdb-navbar>
+<!-- <button nz-popconfirm
+  nzPopconfirmTitle="Are you sure delete this task?"
+  (nzOnConfirm)="confirm()"
+  (nzOnCancel)="cancel()"
+  nzPopconfirmPlacement="topLeft"
+  nz-button>
+
+</button> -->

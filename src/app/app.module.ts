@@ -14,6 +14,7 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import {MatCardModule} from '@angular/material/card';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import {MatTableModule} from '@angular/material/table';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
@@ -69,6 +70,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { MomentPipe } from './pipes/momentPipe';
 import * as moment from 'moment';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 // import {AgmCoreModule} from '@agm/core'
@@ -110,6 +112,8 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     MatInputModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    NzPopconfirmModule,
+    NzBackTopModule,
     MatNativeDateModule,
     MatSelectModule,
     MatButtonModule,

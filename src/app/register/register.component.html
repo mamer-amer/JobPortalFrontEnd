@@ -69,6 +69,8 @@
       mat-stroked-button
       style="color: whitesmoke; background-color: black;font-weight: lighter;width:100%"
       (click)="registerUser()">
+       <span *ngIf="status"
+         class="spinner-border spinner-border-sm"></span>
       Register
     </button>
     
