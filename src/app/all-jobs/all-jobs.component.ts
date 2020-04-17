@@ -161,12 +161,19 @@ import { NzModalService } from 'ng-zorro-antd';
         this.getPaginatedJobs(p - 1);
 
       }
-      else if (this.cityName == null) {
+      else if (this.cityName == null && this.userType=="candidate") {
         this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
       }
-      else if (this.cityName != null) {
+      else if (this.cityName != null && this.userType == "candidate") {
         this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
       }
+
+      else if (this.userType != "candidate") {
+        this.getJobsByCompany(p - 1);
+      }
+      // else if (this.cityName != null && this.userType != "candidate") {
+      //   this.searchByCityName(this.cityName, p - 1);
+      // }
 
     }
 
