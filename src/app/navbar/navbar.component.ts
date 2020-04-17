@@ -17,6 +17,7 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
+    this.userImage = sessionStorage.getItem('dp');
     
 
   

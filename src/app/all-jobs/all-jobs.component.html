@@ -7,9 +7,39 @@
 
 
 <div class="container">
-<mat-card style="border-radius: 0px;">
-<div style="width:100%;height:350px" id="myMap"></div>
+
+<mat-card [class.mat-elevation-z3]="true">
+
+  <div style="position: relative;border-radius:0px;">
+   
+    <input required
+      [class.mat-elevation-z4]="true"
+      name="location"
+      class="search"
+      matInput
+      [formControl]="myControl"
+      [matAutocomplete]="auto"
+      placeholder="Search">
+
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option style="font-size: 12px !important;"
+        *ngFor="let selectedPlace of filteredPlaces"
+        [value]="selectedPlace.place_name"
+        (click)="onPlaceSelect(selectedPlace)">
+        {{selectedPlace.place_name}}
+      </mat-option>
+    </mat-autocomplete>
+  <div style="width:100%;height:350px"
+    id="myMap"></div>
+
+
+  </div>
+
 </mat-card>
+
+<!-- <mat-card >
+<div style="width:100%;height:350px" id="myMap"></div>
+</mat-card> -->
 
 <hr />
 <form class="row" *ngIf="userType=='candidate'">
@@ -140,7 +170,7 @@
 
             <!-- icons spans finish here -->
           </h4>
-          <p style="margin-bottom: 0px">Company : <b>{{job?job.companyProfile.name:''}}</b></p>
+          <p style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:''}}</b></p>
           <p style="margin-bottom:5px;">Description : 
             {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
           <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>

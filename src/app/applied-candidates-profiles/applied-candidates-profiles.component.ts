@@ -5,6 +5,8 @@ import { Action } from 'rxjs/internal/scheduler/Action';
 import { ActivatedRoute, ParamMap, Router, NavigationExtras } from '@angular/router';
 import { MatTableDataSource } from '@angular/material/table'
 
+import { NavbarService } from '../navbar.service';
+
 @Component({
   selector: 'app-applied-candidates-profiles',
   templateUrl: './applied-candidates-profiles.component.html',
@@ -16,11 +18,11 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
   editField: string;
   userType = sessionStorage.getItem('userType');
   jobId: any;
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private router:Router) { }
+  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private router: Router, private nav: NavbarService) { }
   dataSource: any;
 
   ngOnInit(): void {
-
+    this.nav.showNav()
     this.getParams();
     this.getAllProfiles(this.jobId);
 
