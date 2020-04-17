@@ -181,7 +181,18 @@
         </div>
 
 
-        <!-- if no jobs found  -->
+    </div>
+    <div class="form-group" style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+        job-type</label>
+      <nz-select nzShowSearch nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
+        <nz-option nzLabel="All" nzValue="all"></nz-option>
+        <nz-option nzLabel="Full-time" nzValue="Full-Time"></nz-option>
+        <nz-option nzLabel="Part-time" nzValue="Part-Time"></nz-option>
+        <nz-option nzLabel="Freelance" nzValue="Freelance"></nz-option>
+        <nz-option nzLabel="Internship" nzValue="Internship"></nz-option>
+        <nz-option nzLabel="Temporary" nzValue="Temporary"></nz-option>
+      </nz-select>
 
       </mat-card>
     </div>
