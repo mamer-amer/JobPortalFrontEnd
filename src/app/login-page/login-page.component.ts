@@ -4,6 +4,7 @@ import { LoginService } from "./login.service";
 import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
+import { Subject } from 'rxjs';
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
@@ -16,6 +17,9 @@ export class LoginPageComponent implements OnInit {
   showLoading = false;
   status = false;
   basicModal:MDBModalRef;
+
+  
+
   constructor(private toastService: ToastrService, private router: Router, private service: LoginService,private modalService:NzModalService) {}
 
   ngOnInit(): void {
@@ -79,6 +83,7 @@ export class LoginPageComponent implements OnInit {
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
+          this.service.sendId.next(res.result.id);
           this.status = false;
           
 

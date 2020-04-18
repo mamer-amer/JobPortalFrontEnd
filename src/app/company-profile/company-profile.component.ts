@@ -7,6 +7,7 @@ import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { NavbarService } from '../navbar.service';
 import {NavbarComponent} from '../navbar/navbar.component'
 import { Subject } from 'rxjs';
+import { LoginService } from '../login-page/login.service';
 
 @Component({
   selector: 'app-company-profile',
@@ -22,7 +23,7 @@ export class CompanyProfileComponent implements OnInit {
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
-  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService,
+  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService,private loginService:LoginService,
     private navbar:NavbarService) { 
   }
 
@@ -39,7 +40,9 @@ export class CompanyProfileComponent implements OnInit {
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       if(res){
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
+        this.loginService.sendId.next(sessionStorage.getItem('userId'));
         this.logoChangeObservable.next();
+        this
         this.toastService.info('Successfull','Company Profile Posted')
       }
       else{

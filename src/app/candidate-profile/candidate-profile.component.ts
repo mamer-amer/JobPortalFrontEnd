@@ -20,6 +20,10 @@ export class CandidateProfileComponent implements OnInit {
 
   logoChangeObservable = new Subject<string>();
   logoMessage = this.logoChangeObservable.asObservable();
+
+
+
+
   cv;
   showUploadList = {
     showPreviewIcon: true,
@@ -165,6 +169,7 @@ export class CandidateProfileComponent implements OnInit {
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
 
       if (res.status == 200) {
+        
         console.log("This is candidate response", res)
         this.toastService.info('Sucessful', 'Candidate profile posted!')
         this.allJobsbtn = true;
