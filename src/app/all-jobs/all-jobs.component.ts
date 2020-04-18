@@ -102,20 +102,10 @@ import { NzModalService } from 'ng-zorro-antd';
       this.navService.showNav();
       this.userType = sessionStorage.getItem('userType');
 
-      this.myControl.valueChanges.subscribe((value) => {
-
-        this.filteredPlaces = []
-        if (value)
-          this.mapboxService.getGeoLocations(value).subscribe((res) => {
-            res.features.map((places) => {
-              this.filteredPlaces.push(places)
-
-            })
-          })
-      })
+     
 
       if (this.userType == "candidate") {
-        this.getPaginatedJobs(0);
+        this.globalSearch(this.cityName,this.selectedJobType,this.companyName,0);
       }
       else {
         this.getJobsByCompany(0);
@@ -132,24 +122,7 @@ import { NzModalService } from 'ng-zorro-antd';
 
 
 
-    onPlaceSelect(v) {
-      this.selectedPlace = v;
-      // console.log(this.selectedPlace)
-      this.map.flyTo({
-        center: [
-          v.center[0],
-          v.center[1]
-        ],
-        essential: true // this animation is considered essential with respect to prefers-reduced-motion
-      });
-
-      this.marker
-      .setLngLat([v.center[0], v.center[1]])
-      
-      
-
-
-    }
+   
 
     pageChange(p): void {
 
@@ -157,16 +130,22 @@ import { NzModalService } from 'ng-zorro-antd';
       if (this.selectedCategory != null) {
         this.getJobsByCategory(this.selectedCategory, p - 1);
       }
-      else if (this.userType == "candidate") {
-        this.getPaginatedJobs(p - 1);
 
+      else if(this.userType=="candidate" && this.selectedCategory==null){
+        this.globalSearch(this.cityName,this.selectedJobType,this.companyName,p-1);
       }
-      else if (this.cityName == null && this.userType=="candidate") {
-        this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
-      }
-      else if (this.cityName != null && this.userType == "candidate") {
-        this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
-      }
+      // else if (this.userType == "candidate") {
+      //   this.getPaginatedJobs(p - 1);
+
+      // }
+      // else if (this.cityName == null && this.userType=="candidate") {
+      //   this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
+      // }
+      // else if (this.cityName != null && this.userType == "candidate") {
+      //   this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
+      // }
+
+
 
       else if (this.userType != "candidate") {
         this.getJobsByCompany(p - 1);

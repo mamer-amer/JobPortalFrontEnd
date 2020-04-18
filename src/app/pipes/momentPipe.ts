@@ -10,7 +10,7 @@ export class MomentPipe implements PipeTransform{
 
         transform(date:any,before="Posting date"){
             const modifiedDate = moment(new Date(date)).fromNow();
-            console.log(modifiedDate)
+            // console.log(modifiedDate)
             return `${before} : ${modifiedDate}`
             
         }
