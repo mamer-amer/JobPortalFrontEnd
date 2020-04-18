@@ -175,7 +175,7 @@ export class ApplicantServiceService {
 
   globalJobSearch(city,type,company,page):Observable<any>
   {
-    return this.http.get(this.url+`api/job/globalsearch?city=${city}&type=${type}&company=${company}&page=${page}`);
+    return this.http.get(this.url +`api/job/specifications?city=${city}&type=${type}&company=${company}&page=${page}`);
   }
 
 
