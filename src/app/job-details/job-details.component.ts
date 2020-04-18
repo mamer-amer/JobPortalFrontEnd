@@ -27,7 +27,7 @@ export class JobDetailsComponent implements OnInit {
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
-  rating = 0;
+  rating:any;
   review: String;
   btnApplied = false;
   rating2: any = 0;
@@ -60,7 +60,7 @@ export class JobDetailsComponent implements OnInit {
 
     this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;
-      console.log(this.jobObj)
+      // console.log(this.jobObj)
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
@@ -91,7 +91,7 @@ export class JobDetailsComponent implements OnInit {
   showDialog() {
 
     this.review = "";
-    this.rating = 0;
+    // this.rating = 0;
     this.rating2 = 0;
 
   }
@@ -124,14 +124,13 @@ export class JobDetailsComponent implements OnInit {
         // company or review phly hy de chuka hai user again nhy deskta
         this.companyId = res.result ? res.result.companyProfile.id : 0;
         this.btnApplied = true;
-        // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+     
 
         this.toastService.info('Sucessfull', 'Applied sucessfully');
       }
       else if(res.status==100){
         this.btnApplied = true;
-        // this.alreadyAppliedJobsAgainstUser(this.candidateId,this.jobId);
-        //view the comment button and disbale the applied button
+        
         this.companyId = res.result ? res.result.companyProfile.id : 0;
         this.toastService.info('Sucessfull', 'Applied');
 
@@ -146,8 +145,10 @@ export class JobDetailsComponent implements OnInit {
 
   getCompanyRating(id: any): void {
     this.service.getReviewsById(id).subscribe(res => {
-
+      
       this.rating = res.result;
+     
+     
       this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
     },error=> this.toastService.error('Error','Something went wrong'));
   }
@@ -179,9 +180,10 @@ export class JobDetailsComponent implements OnInit {
           console.log("Is already comment",res)
         if (res.status == 200 || res.status == 208) {
           this.alreadyCommented = true;
+        
           if(value=="posting"){
             this.toastService.success('Thankyou for your time');
-
+           this.rating = res.rating;
           }
 
 
