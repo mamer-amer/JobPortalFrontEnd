@@ -27,7 +27,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
   public constructor(public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, public nav: NavbarService) {
-
+    this.candidateObj = new CadnidateWithReview();
   }
 
   ngOnInit(): void {
@@ -58,8 +58,9 @@ export class ViewCandidateProfileComponent implements OnInit {
       this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
       this.reviewBtn = alreadyGivenReview;
       this.companyDetailsWithReviews = companiesWithReviewDTOList
-
-      this.cv = "data:" + this.candidateObj['resumeContentType'] + ";base64," + encodeURI(this.candidateObj["cv"])
+      console.log(this.candidateObj, "==========")
+      this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
+      console.log(this.cv)
     })
   }
   goToReviewSection() {
@@ -99,7 +100,9 @@ export class ViewCandidateProfileComponent implements OnInit {
       'application/rtf': 'rtf',
       'application/vnd.ms-powerpoint': 'ppt',
       'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
-      "docx": 'docx'
+      "docx": 'docx',
+      "pdf":'application/pdf',
+      "doc":"doc"
     }
     return MIMETypes[ext];
   }
@@ -108,7 +111,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   downloadFile() {
 
-    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    const extension =this.candidateObj['resumeContentType'];
     const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
     const downloadLink = document.createElement("a");
     const fileName = this.candidateObj.name + "." + extension;
@@ -156,11 +159,11 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 }
 
-interface CadnidateWithReview {
+class CadnidateWithReview {
   id?: any;
   field?: any;
-  imageContentType?: any;
-  resumeContentType?: any;
+  imageContentType?: any = "";
+  resumeContentType?: any = "";
   presentationLetter?: any;
   dp?: any;
   cv?: any;

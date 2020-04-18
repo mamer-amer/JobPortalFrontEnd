@@ -120,19 +120,20 @@ export class CandidateProfileComponent implements OnInit {
 
 
   onFileChange(event) {
-   
+
     let reader = new FileReader();
 
     try {
       if (event.target.files && event.target.files.length > 0) {
         let file = event.target.files[0];
-       
+        if (this.fileExtensionAllowed(file.name)) {
 
-        reader.onload = this._handleReaderLoaded.bind(this);
-        this.candidateObj.resumeContentType = file.type ? file.type : "docx";
-        reader.readAsBinaryString(file);
-        
-        
+          reader.onload = this._handleReaderLoaded.bind(this);
+          this.candidateObj.resumeContentType = this.getFileExtension(file.name)
+          reader.readAsBinaryString(file);
+        }
+        else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
+
 
       }
     }
@@ -172,7 +173,7 @@ export class CandidateProfileComponent implements OnInit {
 
       }
       else {
-        this.toastService.error('Unsuccessful', 'Candidate Profile failed');
+        this.toastService.error('Unsuccessful', 'This attachment type is not allowed');
       }
 
     });
@@ -206,8 +207,8 @@ export class CandidateProfileComponent implements OnInit {
 
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
-            this.cv = "data:" + this.candidateObj['resumeContentType'] + ";base64," + encodeURI(this.candidateObj["cv"])
-
+            this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+            console.log(this.candidateObj, "=========");
 
           }
         }
@@ -259,14 +260,16 @@ export class CandidateProfileComponent implements OnInit {
       'application/rtf': 'rtf',
       'application/vnd.ms-powerpoint': 'ppt',
       'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
-      'docx': 'docx'
+      'docx': 'docx',
+      'pdf': 'application/pdf',
+      "doc":"doc"
     }
     return MIMETypes[ext];
   }
 
   downloadFile() {
 
-    const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
+    const extension = this.candidateObj['resumeContentType'];
     const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
     const downloadLink = document.createElement("a");
     const fileName = this.candidateObj.name + "." + extension;
@@ -278,8 +281,24 @@ export class CandidateProfileComponent implements OnInit {
 
   }
 
- 
 
+
+  getFileExtension = (filename) => filename.split('.').pop();
+
+  fileExtensionAllowed(filename) {
+
+
+    let extensionsAllowed = {
+      "doc": true,
+      "docx": true,
+      "pdf": true
+    }
+    let ext = this.getFileExtension(filename)
+
+
+
+    return extensionsAllowed[ext];
+  }
   //MODAL 
 
 

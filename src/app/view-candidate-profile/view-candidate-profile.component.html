@@ -221,9 +221,14 @@
   (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 
   
-  <ngx-doc-viewer  [url]="cv" [viewer]="candidateObj.resumeContentType=='docx' ? 'mammoth' : 'pdf'"
-    [ngStyle]="candidateObj.resumeContentType=='docx'?{'width':'100%','height':'65vh','overflow':'scroll'}:{'width':'100%','height':'65vh'}">
-  </ngx-doc-viewer>
+  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="cv"
+  [viewer]="candidateObj.resumeContentType=='pdf' ? 'pdf' : 'mammoth'"
+  [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'65vh','overflow':'scroll'}:{'width':'100%','height':'65vh'}">
+</ngx-doc-viewer>
+<div *ngIf="candidateObj.resumeContentType=='doc'"
+  style="height:200px;display: flex;justify-content: center;align-items: center;">
+  <p>Preview not available</p>
+</div>
   <button (click)="downloadFile()" class="btn" style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
     Download</button>
   <button (click)="handleCancel()" class="btn" style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
