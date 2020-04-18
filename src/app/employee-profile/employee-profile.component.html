@@ -155,20 +155,12 @@ style="margin-bottom: 30px;">
               appearance="legacy">
               <mat-label>Job Address</mat-label>
                <input required
-                 name="location"
+                 name="address"
                  class="searchaddress"
                  matInput
-                 [formControl]="myControl"
-                 [matAutocomplete]="auto"
+                 
                  placeholder="Search">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option style="font-size: 12px !important;"
-                  *ngFor="let selectedPlace of filteredPlaces"
-                  [value]="selectedPlace.place_name"
-                  (click)="onPlaceSelect(selectedPlace)">
-                  {{selectedPlace.place_name}}
-                </mat-option>
-              </mat-autocomplete>
+              
              
 
             </mat-form-field>

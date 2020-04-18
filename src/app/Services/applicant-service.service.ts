@@ -191,5 +191,10 @@ export class ApplicantServiceService {
     return this.http.put(this.url +"api/job/update/"+id,jobObj);
   }
 
+  //recruiter
+
+  getRecruiterProfile(id):Observable<any>{
+    return this.http.get(this.url+"api/recruiter")
+  }
  
 }
