@@ -5,6 +5,8 @@ import { ToastrService } from 'ngx-toastr';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 import { NavbarService } from '../navbar.service';
+import {NavbarComponent} from '../navbar/navbar.component'
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-company-profile',
@@ -14,6 +16,9 @@ import { NavbarService } from '../navbar.service';
 export class CompanyProfileComponent implements OnInit {
 
   loadingText= "loading..";
+  logoChangeObservable=new Subject<string>();
+  logoMessage=this.logoChangeObservable.asObservable();
+
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
   userId:any;
@@ -34,6 +39,7 @@ export class CompanyProfileComponent implements OnInit {
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       if(res){
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
+        this.logoChangeObservable.next();
         this.toastService.info('Successfull','Company Profile Posted')
       }
       else{
@@ -104,8 +110,7 @@ export class CompanyProfileComponent implements OnInit {
       this.loadingText = "Getting Profile.."
       this.companyProfileObj = res.result ? res.result :new CompanyProfile();
       sessionStorage.setItem('dp', this.companyProfileObj.logo);
-
-     
+   
      
     }),error=>{
       // this.spinner.hide();

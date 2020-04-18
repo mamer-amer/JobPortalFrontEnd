@@ -27,7 +27,7 @@
         <div class="row" style="width:100%">
           <div class="col-lg-8">
             
-            <h3 style="display: inline;">{{companyProfile.name | uppercase }}<span class="badge badge-info">LTD</span>
+            <h3 style="display: inline;">{{companyProfile.name | uppercase }} <span class="badge badge-info">LTD</span>
             </h3>
           </div>
 
@@ -37,7 +37,7 @@
                 [disabled]="true"
                 [ngModel]="avgRating"
                 [nzTooltips]="tooltips"></nz-rate>
-              <small style="color:lightgray">Rating (5/{{avgRating | number:'1.0-1'}})</small>
+              <small style="color:lightgray"> Rating ({{avgRating | number:'1.0-1'}}/5)</small>
             </span>
           </div>
 

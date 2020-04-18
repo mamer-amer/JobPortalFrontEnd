@@ -13,46 +13,27 @@
       <div class="file-field">
         <div class="mb-3">
           <img [src]="candidateObj.dp!=null?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
-            class="rounded-circle z-depth-1-half avatar-pic avatar"
-            
-            alt="example placeholder avatar">
+            class="rounded-circle z-depth-1-half avatar-pic avatar" alt="example placeholder avatar">
         </div>
         <div class="d-flex justify-content-center">
-          <div style="background-color: black !important"
-            class="btn btn-mdb-color btn-rounded float-left">
+          <div style="background-color: black !important" class="btn btn-mdb-color btn-rounded float-left">
             <span>Add photo</span>
-            <input type="file"
-             
-              (change)="onImageChange($event)">
+            <input type="file" (change)="onImageChange($event)">
           </div>
         </div>
       </div>
-      <!-- <img [src]="candidateObj.dp!=null?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
-        alt="Avatar"
-        class="avatar" />
-      <label style="background-color:#3f51b5;font-size: 0.9em;margin-top: 5%;cursor: pointer;padding: 11px">Select
-        Picture
-        <input type="file"
-          id="imgFile"
-          (change)="onImageChange($event)"
-          style="margin-left: 40%; " />
-      </label> -->
+
     </div>
 
     <div class="col-md-7">
       <mat-card>
-        <form class="example-form"
-          #myForm="ngForm">
+        <form class="example-form" #myForm="ngForm">
           <h2>Update Profile</h2>
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
                 <mat-label>Name</mat-label>
-                <input style="width: 100%;"
-                  matInput
-                  [(ngModel)]="candidateObj.name"
-                  placeholder="Name"
-                  name="name"
+                <input style="width: 100%;" matInput [(ngModel)]="candidateObj.name" placeholder="Name" name="name"
                   required />
               </mat-form-field>
             </div>
@@ -62,11 +43,7 @@
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
                 <mat-label>Email</mat-label>
-                <input style="width: 100%;"
-                  matInput
-                  [(ngModel)]="candidateObj.email"
-                  placeholder="Email"
-                  name="email"
+                <input style="width: 100%;" matInput [(ngModel)]="candidateObj.email" placeholder="Email" name="email"
                   required />
               </mat-form-field>
             </div>
@@ -77,11 +54,8 @@
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
                 <mat-label>Choose Field</mat-label>
-                <mat-select name="field"
-                  [(ngModel)]="candidateObj.field"
-                  required>
-                  <mat-option *ngFor="let f of fields"
-                    [value]="f.value">
+                <mat-select name="field" [(ngModel)]="candidateObj.field" required>
+                  <mat-option *ngFor="let f of fields" [value]="f.value">
                     {{ f.viewValue }}
                   </mat-option>
                 </mat-select>
@@ -93,17 +67,13 @@
           <div class="row">
             <div class="col-md-12">
               <mat-form-field class="example-full-width">
-                <mat-label>Presenation letter</mat-label>
-                <textarea matInput
-                  style="margin-top: -2px;
+                <mat-label>Presentation letter</mat-label>
+                <textarea matInput style="margin-top: -2px;
                     margin-bottom: -2px;
                     height: 63px;
-                    "
-                  name="presentationLetter"
-                  placeholder="Enter your presenation letter"
-                  required
+                    " name="presentationLetter" placeholder="Enter your presenation letter" required
                   [(ngModel)]="candidateObj.presentationLetter">
-                  
+
                 </textarea>
               </mat-form-field>
             </div>
@@ -116,15 +86,10 @@
           <!-- File upload goes down -->
           <div class="row">
 
-            <div class="col-lg-5 offset-lg-1 col-sm-12 col-md-6"
-              style="margin-top: 5px;">
+            <div class="col-lg-5 offset-lg-1 col-sm-12 col-md-6" style="margin-top: 5px;">
 
               <label class="fileButton">{{labelText}}
-                <input class="btn"
-                  type="file"
-                  name="myfile"
-                  id="imgFile"
-                  (change)="onFileChange($event)" />
+                <input class="btn" accept=".pdf,.docx" type="file" name="myfile" id="imgFile" (change)="onFileChange($event)" />
               </label>
 
 
@@ -134,9 +99,8 @@
 
               <div *ngIf="candidateObj.cv">
                 <a>
-                  <button (click)="downloadFile()"
-                    class="btn"
-                    style="width:100%"><i class="fa fa-download"></i> Download Resume</button>
+                  <button (click)="showModal()" class="btn" style="width:100%"><i class="fa fa-download"></i> Preview
+                    Resume</button>
                   <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :''}}</span>
                 </a>
 
@@ -152,10 +116,7 @@
 
           <div class="row">
             <div class="col-lg-5 offset-lg-3">
-              <button style="width:100%"
-                [disabled]="formValidation()"
-                (click)="updateProfile()"
-                class="btn">
+              <button style="width:100%" [disabled]="formValidation()" (click)="updateProfile()" class="btn">
                 Save
               </button>
 
@@ -177,48 +138,20 @@
 
 </div>
 
-<!--<div class="clearfix">
-  <nz-upload nzAction="https://jsonplaceholder.typicode.com/posts/"
-    (nzChange)="handleChange($event)"
-    nzListType="picture-card"
-    [nzMultiple]="false"
-    [nzLimit]="1"
-    
-    [nzShowUploadList]="showUploadList"
-    [nzPreview]="handlePreview">
-    <i nz-icon
-      nzType="plus"></i>
-    <div class="ant-upload-text">Upload</div>
-  </nz-upload>
+<!-- //MODAL -->
+<nz-modal style="overflow:hidden" [(nzVisible)]="isVisible" [nzFooter]="null" [nzClosable]="false"
+  (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 
+  <!-- <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(cv)" width="100%" height="400" frameBorder="0"></iframe> -->
+  <ngx-doc-viewer  [url]="cv" [viewer]="candidateObj.resumeContentType=='docx' ? 'mammoth' : 'pdf'"
+    [ngStyle]="candidateObj.resumeContentType=='docx'?{'width':'100%','height':'65vh','overflow':'scroll'}:{'width':'100%','height':'65vh'}">
+  </ngx-doc-viewer>
+  <button (click)="downloadFile()" class="btn" style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
+    Download</button>
+  <button (click)="handleCancel()" class="btn" style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
+</nz-modal>
 
-  <nz-modal [nzVisible]="previewVisible"
-    [nzContent]="modalContent"
-  
-    [nzFooter]="null"
-    (nzOnCancel)="previewVisible = false">
-    <ng-template #modalContent>
-      <img [src]="previewImage"
-        [ngStyle]="{ width: '100%' }" />
-    </ng-template>
-  </nz-modal>
-
-
-</div>-->
-<!-- Fooorter -->
 <br>
 <br>
 <br>
 <app-footer></app-footer>
-<!-- <ngx-extended-pdf-viewer [base64Src]="candidateObj.cv"
-  useBrowserLocale="true"
-  height="80vh"></ngx-extended-pdf-viewer> -->
-
-
-
-<ngx-spinner 
-  bdColor = "rgba(0, 0, 0, 0.8)" size = "medium" color = "#fff"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
-  <p style="color: white">Loading..</p>
-</ngx-spinner>

@@ -3,6 +3,9 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
 import { ToastrService } from 'ngx-toastr';
 import { NzMessageService } from 'ng-zorro-antd/message';
+import { BehaviorSubject, Subject } from 'rxjs';
+import {CompanyProfileComponent} from '../company-profile/company-profile.component'
+import { CandidateProfileComponent } from '../candidate-profile/candidate-profile.component';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -14,7 +17,14 @@ export class NavbarComponent implements OnInit {
   userName:any;
   userImage:any;
   userId:any;
-  constructor(private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService) { }
+
+  
+  
+  constructor(private candP:CandidateProfileComponent,private companyProf:CompanyProfileComponent,private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService) { 
+
+   this.companyProf.logoChangeObservable.subscribe(()=> this.userImage = sessionStorage.getItem('dp'));
+   this.candP.logoChangeObservable.subscribe(()=>  this.userImage = sessionStorage.getItem('dp'))
+  }
 
   ngOnInit(): void {
     this.userName = sessionStorage.getItem('username');
@@ -26,7 +36,7 @@ export class NavbarComponent implements OnInit {
   
   }
 
-  
+ 
   getImage(){
 
   }

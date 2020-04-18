@@ -9,7 +9,8 @@ import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
-
+import { Subject } from 'rxjs';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
@@ -17,7 +18,9 @@ import { NavbarService } from '../navbar.service';
 })
 export class CandidateProfileComponent implements OnInit {
 
-
+  logoChangeObservable = new Subject<string>();
+  logoMessage = this.logoChangeObservable.asObservable();
+  cv;
   showUploadList = {
     showPreviewIcon: true,
     showRemoveIcon: true,
@@ -63,7 +66,7 @@ export class CandidateProfileComponent implements OnInit {
 
   candidateObj: Candidate = new Candidate();
 
-  constructor(private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
+  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
 
 
   ngOnInit(): void {
@@ -102,6 +105,7 @@ export class CandidateProfileComponent implements OnInit {
     //console.log(btoa(binaryString));
     this.candidateObj.cv = base64textString;
     //console.log(this.appFormObj.resume)
+    this.cv = "data:" + this.candidateObj['resumeContentType'] + ";base64," + encodeURI(this.candidateObj["cv"])
 
   }
 
@@ -110,21 +114,25 @@ export class CandidateProfileComponent implements OnInit {
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
     this.candidateObj.dp = base64textString;
-    console.log(this.candidateObj.dp)
+
 
   }
 
 
   onFileChange(event) {
-    console.log(event);
+   
     let reader = new FileReader();
+
     try {
       if (event.target.files && event.target.files.length > 0) {
         let file = event.target.files[0];
-        reader.onload = this._handleReaderLoaded.bind(this);
-        this.candidateObj.resumeContentType = file.type;
-        reader.readAsBinaryString(file);
+       
 
+        reader.onload = this._handleReaderLoaded.bind(this);
+        this.candidateObj.resumeContentType = file.type ? file.type : "docx";
+        reader.readAsBinaryString(file);
+        
+        
 
       }
     }
@@ -141,6 +149,7 @@ export class CandidateProfileComponent implements OnInit {
       this.candidateObj.imageContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
+
       console.log(this.candidateObj.dp)
 
     }
@@ -159,7 +168,8 @@ export class CandidateProfileComponent implements OnInit {
         this.toastService.info('Sucessful', 'Candidate profile posted!')
         this.allJobsbtn = true;
         this.labelText = "Change your resume"
-        console.log(res);
+        this.checkUserStauts()
+
       }
       else {
         this.toastService.error('Unsuccessful', 'Candidate Profile failed');
@@ -192,11 +202,14 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
             sessionStorage.setItem('dp', this.candidateObj.dp);
+            this.logoChangeObservable.next();
+
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
+            this.cv = "data:" + this.candidateObj['resumeContentType'] + ";base64," + encodeURI(this.candidateObj["cv"])
+
+
           }
-
-
         }
 
         else {
@@ -208,6 +221,8 @@ export class CandidateProfileComponent implements OnInit {
 
     }
   }
+
+
 
 
   checkParams() {
@@ -243,7 +258,8 @@ export class CandidateProfileComponent implements OnInit {
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
       'application/rtf': 'rtf',
       'application/vnd.ms-powerpoint': 'ppt',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx'
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
+      'docx': 'docx'
     }
     return MIMETypes[ext];
   }
@@ -253,18 +269,36 @@ export class CandidateProfileComponent implements OnInit {
     const extension = this.getMIMEtype(this.candidateObj['resumeContentType']);
     const source = "data:" + extension + ";base64," + this.candidateObj["cv"];
     const downloadLink = document.createElement("a");
-    const fileName =this.candidateObj.name + extension;
+    const fileName = this.candidateObj.name + "." + extension;
 
     downloadLink.href = source;
     downloadLink.download = fileName;
-    downloadLink.target="_blank"
+    downloadLink.target = "_blank"
     downloadLink.click();
 
-    let pdfWindow = window.open("")
-    pdfWindow.document.write("<iframe width='100%' height='100%' src='data:" +
-      this.candidateObj['resumeContentType'] + ";base64, " + encodeURI(this.candidateObj["cv"]) +
-      "'></iframe>")
+  }
 
+ 
+
+  //MODAL 
+
+
+  isVisible = false;
+
+
+
+  showModal(): void {
+    this.isVisible = true;
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
   }
 
 }

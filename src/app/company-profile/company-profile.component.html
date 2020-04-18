@@ -38,9 +38,10 @@
                   alt="Avatar"
                   class="avatar" />
                 <label style="cursor:pointer">
-                  <input *ngIf="!companyProfileObj.logo"
+                  <input 
                     type="file"
                     id="imgFile"
+
                     (change)="onImageChange($event)" />
                 </label>
               </div>

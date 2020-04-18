@@ -135,6 +135,7 @@ import { NzModalService } from 'ng-zorro-antd';
     onPlaceSelect(v) {
       this.selectedPlace = v;
       // console.log(this.selectedPlace)
+      console.log(v)
       this.map.flyTo({
         center: [
           v.center[0],
@@ -143,9 +144,7 @@ import { NzModalService } from 'ng-zorro-antd';
         essential: true // this animation is considered essential with respect to prefers-reduced-motion
       });
 
-      this.marker
-      .setLngLat([v.center[0], v.center[1]])
-      
+     
       
 
 
@@ -272,6 +271,7 @@ import { NzModalService } from 'ng-zorro-antd';
             center: [pos.lng, pos.lat], // starting position
             zoom: 13// starting zoom
           });
+         this.map.addControl(new Mapboxgl.FullscreenControl());
           resolve();
         })
       })
@@ -388,6 +388,11 @@ import { NzModalService } from 'ng-zorro-antd';
         this.toastService.error('Failed')
       }
     }
+
+    
+
+
+    
   }
 
 
