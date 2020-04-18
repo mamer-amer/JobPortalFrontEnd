@@ -111,7 +111,7 @@ export class JobDetailsComponent implements OnInit {
       console.log(res);
       
       if(res.status==200){
-        this.toastService.info('Successful', 'Successfully applied to the job!')
+      this.toastService.info('Successful', 'Successfully applied to the job!')
         this.companyId = res.result?res.result.companyProfile.id:0;
         this.getCompanyRating(this.companyId);
         this.alreadyCommented = true;
