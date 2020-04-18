@@ -282,7 +282,7 @@ button.toast-close-button {
 .ant-select-selection{
   height: 37px !important;
   margin-top: 1px !important;
-  width: 150px !important;
+  width: 300px !important;
  }
  .ant-select-selection__placeholder{
   /* display: block !important; */

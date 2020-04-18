@@ -72,7 +72,7 @@ export class CandidateProfileComponent implements OnInit {
   ngOnInit(): void {
     this.nav.showNav();
     this.checkUserStauts();
-    this.candidateObj.presentationLetter = "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Cumque magnam delectus et porro, obcaecati eius nemo unde velit inventore recusandae! Facere eveniet fuga dolor ut repudiandae vitae similique molestiae beatae."
+    
 
 
   }

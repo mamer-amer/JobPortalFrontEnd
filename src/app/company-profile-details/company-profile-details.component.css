@@ -14,7 +14,9 @@ sub{
     font-size: 9px;
 }
 
-
+.reviewHeader{
+  background-color:rgba(0, 0, 0, 0.33) !important;
+}
 
 @media only all and (max-width: 47.9375em) {
   .ratingSectionSpan {

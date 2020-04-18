@@ -71,6 +71,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       if(res.status==200){
         this.companyReviewRating = res.result?res.result:this.companyReviewRating;
        this.avgRating = res.result ? res.rating : this.avgRating;
+       this.comments = this.companyReviewRating.length;
        this.reviewBtn = true;
         console.log(res);
       }

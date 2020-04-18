@@ -16,6 +16,9 @@ li{
   cursor: pointer;
   font-size: 13px;
 }
+.reviewHeader {
+  background-color: rgba(0, 0, 0, 0.33) !important;
+}
 
 .details{
   color: gray;
