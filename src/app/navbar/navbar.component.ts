@@ -18,6 +18,7 @@ export class NavbarComponent implements OnInit {
   userName:any;
   userImage:any;
   userId = sessionStorage.getItem('userId');
+  companyId:any=sessionStorage.getItem('companyId');
 
 
   
@@ -26,13 +27,15 @@ export class NavbarComponent implements OnInit {
 
    this.companyProf.logoChangeObservable.subscribe(()=> this.userImage = sessionStorage.getItem('dp'));
    this.candP.logoChangeObservable.subscribe(()=>  this.userImage = sessionStorage.getItem('dp'))
+
+    this.logingSerivce.loggedInUserId.subscribe(value => {
+      this.companyId = value ? value : sessionStorage.getItem('companyId');
+      console.log("This is company id",this.companyId)
+    })
   }
 
   ngOnInit(): void {
-    this.logingSerivce.loggedInUserId.subscribe(value=>{
-      this.userId = value?value:sessionStorage.getItem('userId');
-      console.log("This is user id",this.userId)
-    })
+    
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
     

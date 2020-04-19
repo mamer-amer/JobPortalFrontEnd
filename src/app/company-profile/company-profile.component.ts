@@ -40,9 +40,11 @@ export class CompanyProfileComponent implements OnInit {
     this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
       if(res){
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
-        this.loginService.sendId.next(sessionStorage.getItem('userId'));
+        sessionStorage.setItem('companyId', res.result.id);
+
+        this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.logoChangeObservable.next();
-        this
+      
         this.toastService.info('Successfull','Company Profile Posted')
       }
       else{
@@ -59,6 +61,9 @@ export class CompanyProfileComponent implements OnInit {
     let base64textString = btoa(binaryString);
   
     this.companyProfileObj.logo = base64textString;
+    sessionStorage.removeItem('dp');
+    sessionStorage.setItem('dp',this.companyProfileObj.logo);
+    this.logoChangeObservable.next();
 
   }
 
@@ -111,8 +116,16 @@ export class CompanyProfileComponent implements OnInit {
   getEmployeeProfile(){
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
       this.loadingText = "Getting Profile.."
-      this.companyProfileObj = res.result ? res.result :new CompanyProfile();
-      sessionStorage.setItem('dp', this.companyProfileObj.logo);
+      if(res.status==200 && res.result!=null){
+        this.companyProfileObj.id = sessionStorage.setItem('companyId',res.result.id)
+        
+        this.loginService.sendId.next(sessionStorage.getItem('companyId'));
+        this.companyProfileObj = res.result ? res.result : new CompanyProfile();
+        sessionStorage.setItem('dp', this.companyProfileObj.logo);
+
+      }
+     
+      
    
      
     }),error=>{

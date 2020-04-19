@@ -1,23 +1,29 @@
-<mdb-navbar *ngIf="navbarService.display" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
+<mdb-navbar *ngIf="navbarService.display"
+  SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
   [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand"
+      [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
 
     <!-- Links  Employer-->
-    <ul class="navbar-nav mr-auto" *ngIf="userType=='employer'">
+    <ul class="navbar-nav mr-auto"
+      *ngIf="userType=='employer'">
       <!-- <li class="nav-item">
         <a class="nav-link waves-light" (click)="goBack()" mdbWavesEffect>Back</a>
       </li> -->
       <li class="nav-item active">
-        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>My Jobs<span
-            class="sr-only">(current)</span></a>
+        <a class="nav-link waves-light"
+          [routerLink]="['/allJobs']"
+          mdbWavesEffect>My Jobs<span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
+        <a class="nav-link waves-light"
+          [routerLink]="['/employee/postjob']"
+          mdbWavesEffect>Post Job</a>
       </li>
 
       <!-- Dropdown -->
@@ -53,13 +59,15 @@
 
     <!-- Candidate  -->
     <!-- Links -->
-    <ul class="navbar-nav mr-auto" *ngIf="userType=='candidate'">
+    <ul class="navbar-nav mr-auto"
+      *ngIf="userType=='candidate'">
 
-      
+
 
       <li class="nav-item active">
-        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>All Jobs<span
-            class="sr-only">(current)</span></a>
+        <a class="nav-link waves-light"
+          [routerLink]="['/allJobs']"
+          mdbWavesEffect>All Jobs<span class="sr-only">(current)</span></a>
       </li>
 
     </ul>
@@ -74,34 +82,65 @@
 
       </div>
 
-      <li class="nav-item avatar dropdown" *ngIf="userType=='employer'" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'" alt=""
-            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"></a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+      <li class="nav-item avatar dropdown"
+        *ngIf="userType=='employer'"
+        dropdown>
+        <a dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect>
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'"
+            alt=""
+            style="height:42px;width:40px"
+            class="img-fluid rounded-circle z-depth-0"></a>
+        <div *dropdownMenu
+          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
+          role="menu">
 
           <a class="dropdown-item waves-light"
             mdbWavesEffect
-            [routerLink]="['/companyProfileDetails/',userId]"
+            [routerLink]="['/companyProfileDetails/',companyId]"
             href="#">View Profile</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfile']" href="#">Edit
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            [routerLink]="['/companyProfile']"
+            href="#">Edit
             Profile</a>
 
 
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            (click)="service.logout()">Log out</a>
         </div>
       </li>
 
 
-      <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'" alt=""
-            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"></a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/viewprofile']"
-            [queryParams]="{'userId':0,'candId':0}" href="#">My Profile</a>
+      <li class="nav-item avatar dropdown"
+        *ngIf="userType=='candidate'"
+        dropdown>
+        <a dropdownToggle
+          mdbWavesEffect
+          type="button"
+          class="nav-link dropdown-toggle waves-light"
+          mdbWavesEffect>
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'"
+            alt=""
+            style="height:42px;width:40px"
+            class="img-fluid rounded-circle z-depth-0"></a>
+        <div *dropdownMenu
+          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
+          role="menu">
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            [routerLink]="['/viewprofile']"
+            [queryParams]="{'userId':0,'candId':0}"
+            href="#">My Profile</a>
 
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/candidateProfile']" href="#">Edit
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            [routerLink]="['/candidateProfile']"
+            href="#">Edit
             Profile</a>
 
 
@@ -109,7 +148,9 @@
 
 
 
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
+          <a class="dropdown-item waves-light"
+            mdbWavesEffect
+            (click)="service.logout()">Log out</a>
         </div>
       </li>
     </ul>

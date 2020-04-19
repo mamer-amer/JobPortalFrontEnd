@@ -118,6 +118,9 @@ export class CandidateProfileComponent implements OnInit {
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
     this.candidateObj.dp = base64textString;
+    sessionStorage.removeItem('dp');
+    sessionStorage.setItem('dp', this.candidateObj.dp);
+    this.logoChangeObservable.next();
 
 
   }
