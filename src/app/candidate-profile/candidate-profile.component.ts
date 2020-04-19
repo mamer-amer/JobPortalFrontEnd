@@ -108,8 +108,8 @@ export class CandidateProfileComponent implements OnInit {
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
     this.candidateObj.cv = base64textString;
-    //console.log(this.appFormObj.resume)
-    this.cv = "data:" + this.candidateObj['resumeContentType'] + ";base64," + encodeURI(this.candidateObj["cv"])
+    
+    this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
 
   }
 
@@ -134,9 +134,11 @@ export class CandidateProfileComponent implements OnInit {
       if (event.target.files && event.target.files.length > 0) {
         let file = event.target.files[0];
         if (this.fileExtensionAllowed(file.name)) {
-
-          reader.onload = this._handleReaderLoaded.bind(this);
           this.candidateObj.resumeContentType = this.getFileExtension(file.name)
+        
+          reader.onload = this._handleReaderLoaded.bind(this);
+         
+          
           reader.readAsBinaryString(file);
         }
         else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
@@ -215,6 +217,7 @@ export class CandidateProfileComponent implements OnInit {
 
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
+           
             this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
            
 
