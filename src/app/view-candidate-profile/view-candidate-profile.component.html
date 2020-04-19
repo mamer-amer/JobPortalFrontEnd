@@ -217,13 +217,13 @@
 </section>
 <br>
 <!-- //MODAL -->
-<nz-modal style="overflow:hidden" [(nzVisible)]="isVisible" [nzFooter]="null" [nzClosable]="false"
+<nz-modal nzWidth="60%"   [nzStyle]="{ top: '20px' }"  [nzBodyStyle]="{'height':'95vh'}" style="overflow:hidden" [(nzVisible)]="isVisible" [nzFooter]="null" [nzClosable]="false"
   (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 
   
   <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="cv"
   [viewer]="candidateObj.resumeContentType=='pdf' ? 'pdf' : 'mammoth'"
-  [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'65vh','overflow':'scroll'}:{'width':'100%','height':'65vh'}">
+  [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
 </ngx-doc-viewer>
 <div *ngIf="candidateObj.resumeContentType=='doc'"
   style="height:200px;display: flex;justify-content: center;align-items: center;">

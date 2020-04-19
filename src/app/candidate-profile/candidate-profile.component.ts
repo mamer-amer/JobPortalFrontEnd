@@ -158,7 +158,7 @@ export class CandidateProfileComponent implements OnInit {
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
 
-      console.log(this.candidateObj.dp)
+  
 
     }
   }
@@ -216,7 +216,7 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;
             this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
-            console.log(this.candidateObj, "=========");
+           
 
           }
         }
