@@ -11,7 +11,7 @@
 
     <!-- Links  Employer-->
     <ul class="navbar-nav mr-auto"
-      *ngIf="userType=='employer'">
+      *ngIf="userType!='candidate'">
       <!-- <li class="nav-item">
         <a class="nav-link waves-light" (click)="goBack()" mdbWavesEffect>Back</a>
       </li> -->
@@ -83,7 +83,7 @@
       </div>
 
       <li class="nav-item avatar dropdown"
-        *ngIf="userType=='employer'"
+        *ngIf="userType!='candidate'"
         dropdown>
         <a dropdownToggle
           mdbWavesEffect
@@ -100,7 +100,7 @@
 
           <a class="dropdown-item waves-light"
             mdbWavesEffect
-            [routerLink]="['/companyProfileDetails/',companyId]"
+            [routerLink]="['/companyProfileDetails/',companyId?companyId:'0']"
             href="#">View Profile</a>
           <a class="dropdown-item waves-light"
             mdbWavesEffect

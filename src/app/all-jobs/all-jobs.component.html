@@ -29,7 +29,7 @@
   </mat-card>
 
   <hr />
-  <form class="row" *ngIf="userType=='candidate'">
+  <form class="row" *ngIf="userType=='candidate'" #myFrom="ngForm">
 
     <div class="form-group" style="margin-left:10px;">
       <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
@@ -67,6 +67,10 @@
       <button type="button" style="height:38px;line-height: 10px;"
         (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
     </div>
+    <div class="form-group" style="margin:25px 0px 0px 0px;">
+      <button type="button" style="height:38px;line-height: 10px;"
+        (click)="clearForm()" class="btn btn-danger">Clear</button>
+    </div>
 
   </form>
   <hr style="margin-top: 0px;" />
@@ -78,6 +82,7 @@
     <div class="col-lg-3">
       <mat-card style="border-radius: 0px;margin-bottom:10px;">
         <h2>Categories</h2>
+        <span>Selected Category : <h5 style="color:#4284f4;font-size: 1.05rem !important">{{selectedCategory}}</h5></span>
         <hr />
         <p class="categories" (click)="getPaginatedJobs(0)">All</p>
         <p class="categories" (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
@@ -164,7 +169,7 @@
                   <!-- icons spans finish here -->
                 </h4>
                 <p
-                  style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:''}}</b></p>
+                  style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:job.name}}</b></p>
 
                 <!-- <p *ngIf="userType=='candidate'"
                   style="margin-bottom: 0px">Company : <b>{{job?job.name:''}}</b></p> -->

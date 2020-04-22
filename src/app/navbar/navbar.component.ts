@@ -30,7 +30,7 @@ export class NavbarComponent implements OnInit {
 
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
-      console.log("This is company id",this.companyId)
+     
     })
   }
 
