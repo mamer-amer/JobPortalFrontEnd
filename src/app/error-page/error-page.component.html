@@ -1,10 +1,127 @@
-<app-navbar></app-navbar>
+<!-- <app-navbar></app-navbar> -->
+<!-- <br> -->
+<div style="display:block;position:relative"
 
-<br>
-<br>
+  [style.width]="width">
+  <slideshow #slideshow
+    [imageUrls]="imageSources"
+    [height]="height"
+    [minHeight]="minHeight"
+    [arrowSize]="arrowSize"
+    [showArrows]="showArrows"
+    [disableSwiping]="disableSwiping"
+    [autoPlay]="autoPlay"
+    [stopAutoPlayOnSlide]="stopAutoPlayOnSlide"
+    [debug]="debug"
+    [backgroundSize]="backgroundSize"
+    [backgroundPosition]="backgroundPosition"
+    [backgroundRepeat]="backgroundRepeat"
+    [showDots]="showDots"
+    [dotColor]="dotColor"
+    [showCaptions]="showCaptions"
+    [captionColor]="captionColor"
+    [captionBackground]="captionBackground"
+    [lazyLoad]="lazyLoad"
+    [hideOnNoSlides]="hideOnNoSlides"
+    [fullscreen]="fullscreen">
+  </slideshow>
 
 
-<!--Modal: Login / Register Form-->
+  <div class="row dark-div" >
+    <div class="col-lg-5 offset-lg-1">
+      <div class="text-center">
+        <a href=""
+           style="font-size: x-large !important;font-weight: bold"
+          class="btn btn-default my-3 mainPageButtons"
+         
+          data-toggle="modal" data-target="#modalLRForm">Login</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="text-center">
+        <a href=""
+           style="font-size: x-large !important;font-weight: bold"
+          class="btn btn-default my-3 mainPageButtons"
+         data-toggle="modal" data-target="#modalLRForm">Register</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- View only information -->
+<div 
+  class="bg-white">
+  <div 
+    class="container col-sm-10 col-sm-offset-1 home-counter">
+    <div 
+      class="row ">
+      <div 
+        class="col-md-3 col-6">
+        <div 
+          class="text-center"><img 
+            class="img-responsive"
+            src="../../assets/images/1.jpg">
+          <h2 
+            class="text-green animation all"
+            id="counter1">100000</h2>
+          <h4 
+            class="font-grey">Associates</h4>
+        </div>
+      </div>
+      <div 
+        class="col-md-3 col-6">
+        <div 
+          class="text-center"><img 
+            class="img-responsive"
+            src="../../assets/images/4.jpg">
+          <h2 
+            class="text-orange animation all"
+            id="counter2">300</h2>
+          <h4 
+            class="font-grey">Clients</h4>
+        </div>
+      </div>
+      <div 
+        class="col-md-3 col-6">
+        <div 
+          class="text-center"><img 
+            class="img-responsive"
+            src="../../assets/images/2.jpg">
+          <h2 
+            class="text-blue animation all"
+            id="counter3">350</h2>
+          <h4 
+            class="font-grey">Employees</h4>
+        </div>
+      </div>
+      <div 
+        class="col-md-3 col-6">
+        <div 
+          class="text-center"><img 
+            class="img-responsive"
+            src="../../assets/images/3.jpg">
+            <h2 
+            class="text-yellow animation all"
+            id="counter4">26</h2>
+          <h4 
+            class="font-grey">Years Of Service</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <div class="modal fade"
   id="modalLRForm"
   tabindex="-1"
@@ -13,19 +130,16 @@
   aria-hidden="true">
   <div class="modal-dialog cascading-modal"
     role="document">
-    <!--Content-->
     <div class="modal-content">
 
-      <!--Modal cascading tabs-->
       <div class="modal-c-tabs">
 
-        <!-- Nav tabs -->
         <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3"
           role="tablist">
           <li class="nav-item">
             <a class="nav-link active"
               data-toggle="tab"
-              href="#panel7"
+              href="#login"
               role="tab"><i class="fa fa-user"
                 aria-hidden="true"></i>
               Login</a>
@@ -33,21 +147,18 @@
           <li class="nav-item">
             <a class="nav-link"
               data-toggle="tab"
-              href="#panel8"
+              href="#register"
               role="tab"><i class="fa fa-user-plus"
                 aria-hidden="true"></i>
               Register</a>
           </li>
         </ul>
 
-        <!-- Tab panels -->
         <div class="tab-content">
-          <!--Panel 7-->
           <div class="tab-pane fade in show active"
-            id="panel7"
+            id="login"
             role="tabpanel">
 
-            <!--Body-->
             <div class="modal-body mb-1">
 
               <div class="md-form form-sm mb-5">
@@ -58,7 +169,7 @@
                   class="form-control form-control-sm validate">
                 <label data-error="wrong"
                   data-success
-                  for="modalLRInput10">Your email</label>
+                  for="modalLRInput11">Your email</label>
               </div>
 
               <div class="md-form form-sm mb-4">
@@ -68,7 +179,7 @@
                   class="form-control form-control-sm validate">
                 <label data-error="wrong"
                   data-success
-                  for="modalLRInput11">Your password</label>
+                  for="modalLRInput12">Your password</label>
               </div>
               <div class="text-center mt-2">
                 <button class="btn btn-info">Log in <i class="fa fa-sign-in ml-1"></i></button>
@@ -77,17 +188,12 @@
             
 
           </div>
-          <!--/.Panel 7-->
 
-          <!--Panel 8-->
           <div class="tab-pane fade"
-            id="panel8"
+            id="register"
             role="tabpanel">
 
-            <!--Body-->
             <div class="modal-body">
-
-
 
 
               <div class="md-form form-sm mb-5">
@@ -98,17 +204,19 @@
                   class="form-control form-control-sm validate">
                 <label data-error="wrong"
                   data-success
-                  for="modalLRInput12">Your Full Name</label>
+                  for="modalLRInput15">Your Full Name</label>
               </div>
 
               <div class="md-form form-sm mb-5">
                 <i class="fa fa-envelope prefix"></i>
                 <input type="email"
-                  id="modalLRInput12"
+
+
+                  id="modalLRInput16"
                   class="form-control form-control-sm validate">
                 <label data-error="wrong"
                   data-success
-                  for="modalLRInput12">Your email</label>
+                  for="modalLRInput16">Your email</label>
               </div>
 
               <div class="md-form form-sm mb-5">
@@ -138,8 +246,6 @@
                         </mat-select>
                       </mat-form-field>
                   
-                    
-
 
                   </div>
                 </div>
@@ -151,32 +257,21 @@
               </div>
 
             </div>
-            <!--Footer-->
-            <!-- <div class="modal-footer">
-            
-              <button type="button"
-                class="btn  waves-effect ml-auto"
-                data-dismiss="modal">Close</button>
-            </div> -->
+           
           </div>
-          <!--/.Panel 8-->
+       
         </div>
 
       </div>
     </div>
-    <!--/.Content-->
+   
   </div>
 </div>
-<!--Modal: Login / Register Form-->
 
-<div class="text-center">
-  <a href=""
-    class="btn btn-default  my-3"
-    data-toggle="modal"
-    data-target="#modalLRForm">JOB BOARD</a>
-</div>
-
-<nz-result nzStatus="404"
+<br>
+<br>
+<app-footer></app-footer>
+<!-- <nz-result nzStatus="404"
   nzTitle="404"
   nzSubTitle="Sorry, the page you visited does not exist.">
   <div nz-result-extra>
@@ -185,4 +280,4 @@
       (click)="clear()"
       nzType="primary">Back Home</button>
   </div>
-</nz-result>
+</nz-result> -->

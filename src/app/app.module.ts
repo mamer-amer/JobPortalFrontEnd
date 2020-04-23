@@ -22,6 +22,7 @@ import { ConfirmationService } from 'primeng/api';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
+import { SlideshowModule } from 'ng-simple-slideshow';
 
 
 import { MatIconModule } from '@angular/material/icon';
@@ -140,7 +141,7 @@ import { EditRecruiterProfileComponent } from './edit-recruiter-profile/edit-rec
     NgbModule,
     NzSpinModule,
     MatIconModule,
-
+    SlideshowModule,
     MatPaginatorModule,
     MatDividerModule,
     MatSnackBarModule,
