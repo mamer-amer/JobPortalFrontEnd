@@ -298,3 +298,30 @@ button.toast-close-button {
   font-weight: 400;
   font-size: 15px;
  }
+
+
+ /* .ng-star-inserted{
+  top: 10px;
+  right: 14px;
+} */
+
+
+nz-badge {
+  margin-right: 40px;
+  
+}
+
+.head-example {
+  width: 32px;
+  height: 42px;
+  border-radius: 4px;
+  background: #eee;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+
+.navbar {
+  height: 65px !important;
+}

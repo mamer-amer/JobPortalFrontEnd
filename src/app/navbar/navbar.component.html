@@ -1,73 +1,38 @@
-<mdb-navbar *ngIf="navbarService.display"
-  SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
+<mdb-navbar *ngIf="navbarService.display" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
   [containerInside]="false">
 
   <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand"
-      [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
+  <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
 
   <!-- Collapsible content -->
   <links>
 
     <!-- Links  Employer-->
-    <ul class="navbar-nav mr-auto"
-      *ngIf="userType=='employer'">
+    <ul class="navbar-nav mr-auto" *ngIf="userType=='employer'">
       <!-- <li class="nav-item">
         <a class="nav-link waves-light" (click)="goBack()" mdbWavesEffect>Back</a>
       </li> -->
       <li class="nav-item active">
-        <a class="nav-link waves-light"
-          [routerLink]="['/allJobs']"
-          mdbWavesEffect>My Jobs<span class="sr-only">(current)</span></a>
+        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>My Jobs<span
+            class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link waves-light"
-          [routerLink]="['/employee/postjob']"
-          mdbWavesEffect>Post Job</a>
+        <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
       </li>
 
-      <!-- Dropdown -->
-      <!-- <li class="nav-item dropdown"
-        dropdown>
-        <a dropdownToggle
-          mdbWavesEffect
-          type="button"
-          class="nav-link dropdown-toggle waves-light"
-          mdbWavesEffect>
-          Basic dropdown<span class="caret"></span></a>
-        <div *dropdownMenu
-          class="dropdown-menu dropdown dropdown-primary"
-          role="menu">
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            href="#">Action</a>
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            href="#">Another action</a>
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            href="#">Something else here</a>
-          <div class="divider dropdown-divider"></div>
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            href="#">Separated link</a>
-        </div>
-      </li> -->
 
     </ul>
 
 
     <!-- Candidate  -->
     <!-- Links -->
-    <ul class="navbar-nav mr-auto"
-      *ngIf="userType=='candidate'">
+    <ul class="navbar-nav mr-auto" *ngIf="userType=='candidate'">
 
 
 
       <li class="nav-item active">
-        <a class="nav-link waves-light"
-          [routerLink]="['/allJobs']"
-          mdbWavesEffect>All Jobs<span class="sr-only">(current)</span></a>
+        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>All Jobs<span
+            class="sr-only">(current)</span></a>
       </li>
 
     </ul>
@@ -76,71 +41,99 @@
 
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
+      <a (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
+        [nzDropdownMenu]="menu">
+        <div>
+          <nz-badge
+            [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
+            [nzCount]="notificationsCount">
+            <a class="head-example">
+              <i nz-icon [ngClass]="notificationOpen ? 'notification-open-class' : 'notification-close-class'"
+                nzType="bell" nzTheme="fill"></i>
+            </a>
+          </nz-badge>
+
+
+        </div>
+      </a>
+      <nz-dropdown-menu #menu="nzDropdownMenu">
+
+        <ul style="padding: 0px;width: 500px;" nz-menu>
+          <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
+            <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Notifications</p>
+            <p (click)="readAllNotications()" class="underLine" style="margin:5px 0px 0px 0px ;color: rgb(39, 39, 226);">Mark All As Read</p>
+          </div>
+          <li nz-menu-divider></li>
+
+
+          <div *ngFor="let notification of notifications" class="notificationItem"
+          [style.background-color]="notification.notified?'white':'#E5EAF2'"
+            style="border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+            nz-menu-item>
+            <span style="flex: 1;">
+              <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.candidateDp?'data:image/jpeg;base64,'+notification.candidateDp:
+              '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+              </nz-avatar>
+            </span>
+            <div style="flex: 7;white-space:pre-line;">
+              <span style="font-weight: bold;">{{notification.candidate}}</span> applied for
+              your
+              <span style="font-weight: bold;">{{notification.jobTitle}} </span> job
+            </div>
+          </div>
+
+
+          <!-- <div class="notificationItem" style="background-color: #E5EAF2;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;" nz-menu-item>
+            <span style="flex: 1;"> 
+            <nz-avatar  [nzSize]="48" nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png">
+            </nz-avatar>
+          </span>
+            <span style="flex: 8;white-space:pre-line;">Ibrahim Shah applied for your frontend jo</span>
+          </div> -->
+
+
+
+
+
+          <div style="height: 30px;text-align: center;line-height: 30px;">
+            <p class="underLine" style="color: rgb(41, 97, 209);">See All</p>
+          </div>
+        </ul>
+
+
+      </nz-dropdown-menu>
 
       <div class="userInfo">
         <h6>{{userName}}<br><sub>{{userType}}</sub></h6>
 
       </div>
 
-      <li class="nav-item avatar dropdown"
-        *ngIf="userType=='employer'"
-        dropdown>
-        <a dropdownToggle
-          mdbWavesEffect
-          type="button"
-          class="nav-link dropdown-toggle waves-light"
-          mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'"
-            alt=""
-            style="height:42px;width:40px"
-            class="img-fluid rounded-circle z-depth-0"></a>
-        <div *dropdownMenu
-          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
-          role="menu">
+      <li class="nav-item avatar dropdown" *ngIf="userType=='employer'" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'" alt=""
+            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
 
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            [routerLink]="['/companyProfileDetails/',companyId]"
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfileDetails/',companyId]"
             href="#">View Profile</a>
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            [routerLink]="['/companyProfile']"
-            href="#">Edit
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfile']" href="#">Edit
             Profile</a>
 
 
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            (click)="service.logout()">Log out</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
         </div>
       </li>
 
 
-      <li class="nav-item avatar dropdown"
-        *ngIf="userType=='candidate'"
-        dropdown>
-        <a dropdownToggle
-          mdbWavesEffect
-          type="button"
-          class="nav-link dropdown-toggle waves-light"
-          mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'"
-            alt=""
-            style="height:42px;width:40px"
-            class="img-fluid rounded-circle z-depth-0"></a>
-        <div *dropdownMenu
-          class="dropdown-menu dropdown-menu-right dropdown dropdown-primary"
-          role="menu">
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            [routerLink]="['/viewprofile']"
-            [queryParams]="{'userId':0,'candId':0}"
-            href="#">My Profile</a>
+      <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'" dropdown>
+        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'../../assets/user.png'" alt=""
+            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"></a>
+        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/viewprofile']"
+            [queryParams]="{'userId':0,'candId':0}" href="#">My Profile</a>
 
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            [routerLink]="['/candidateProfile']"
-            href="#">Edit
+          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/candidateProfile']" href="#">Edit
             Profile</a>
 
 
@@ -148,9 +141,7 @@
 
 
 
-          <a class="dropdown-item waves-light"
-            mdbWavesEffect
-            (click)="service.logout()">Log out</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
         </div>
       </li>
     </ul>
