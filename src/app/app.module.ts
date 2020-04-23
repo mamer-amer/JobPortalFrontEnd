@@ -78,6 +78,7 @@ import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer'
 // import {AgmCoreModule} from '@agm/core'
 import {SafePipeModule } from 'safe-pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
+import { EditRecruiterProfileComponent } from './edit-recruiter-profile/edit-recruiter-profile.component';
 
 
 @NgModule({
@@ -98,6 +99,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
     NavbarComponent,
     LoaderComponent,
     MomentPipe,
+    EditRecruiterProfileComponent,
 
 
   ],
