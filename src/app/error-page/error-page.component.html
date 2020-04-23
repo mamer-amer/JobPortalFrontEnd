@@ -1,18 +1,188 @@
-<!-- <app-navbar></app-navbar> -->
+<app-navbar></app-navbar>
 
-   <br>
-   <br>
+<br>
+<br>
+
+
+<!--Modal: Login / Register Form-->
+<div class="modal fade"
+  id="modalLRForm"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog cascading-modal"
+    role="document">
+    <!--Content-->
+    <div class="modal-content">
+
+      <!--Modal cascading tabs-->
+      <div class="modal-c-tabs">
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3"
+          role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active"
+              data-toggle="tab"
+              href="#panel7"
+              role="tab"><i class="fa fa-user"
+                aria-hidden="true"></i>
+              Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              data-toggle="tab"
+              href="#panel8"
+              role="tab"><i class="fa fa-user-plus"
+                aria-hidden="true"></i>
+              Register</a>
+          </li>
+        </ul>
+
+        <!-- Tab panels -->
+        <div class="tab-content">
+          <!--Panel 7-->
+          <div class="tab-pane fade in show active"
+            id="panel7"
+            role="tabpanel">
+
+            <!--Body-->
+            <div class="modal-body mb-1">
+
+              <div class="md-form form-sm mb-5">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="email"
+                  name="email"
+                  id="modalLRInput11"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  data-success
+                  for="modalLRInput10">Your email</label>
+              </div>
+
+              <div class="md-form form-sm mb-4">
+                <i class="fa fa-lock prefix"></i>
+                <input type="password"
+                  id="modalLRInput12"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  data-success
+                  for="modalLRInput11">Your password</label>
+              </div>
+              <div class="text-center mt-2">
+                <button class="btn btn-info">Log in <i class="fa fa-sign-in ml-1"></i></button>
+              </div>
+            </div>
+            
+
+          </div>
+          <!--/.Panel 7-->
+
+          <!--Panel 8-->
+          <div class="tab-pane fade"
+            id="panel8"
+            role="tabpanel">
+
+            <!--Body-->
+            <div class="modal-body">
 
 
 
+
+              <div class="md-form form-sm mb-5">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="text"
+                  id="modalLRInput15"
+                  name="name"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  data-success
+                  for="modalLRInput12">Your Full Name</label>
+              </div>
+
+              <div class="md-form form-sm mb-5">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="email"
+                  id="modalLRInput12"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  data-success
+                  for="modalLRInput12">Your email</label>
+              </div>
+
+              <div class="md-form form-sm mb-5">
+                <i class="fa fa-lock prefix"></i>
+                <input type="password"
+                  id="modalLRInput13"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  data-success
+                  for="modalLRInput13">Your password</label>
+              </div>
+
+              <div class="md-form form-sm mb-4">
+                <div class="row">
+                  <div class="col-lg-1">
+                    <i class="fa fa-list prefix"></i>
+                  </div>
+
+                  <div class="col-lg-11 col-md-11 col-sm-10 offset-sm-1 offset-xsm-1">
+                      <mat-form-field style="width:98%;margin-right:2%">
+                        <mat-label>Select Type</mat-label>
+                        <mat-select >
+                          <mat-option *ngFor="let type of userTypes"
+                            [value]="type.value">
+                            {{type.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                  
+                    
+
+
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="text-center form-sm mt-2">
+                <button class="btn btn-info">Sign up <i class="fa fa-sign-in ml-1"></i></button>
+              </div>
+
+            </div>
+            <!--Footer-->
+            <!-- <div class="modal-footer">
+            
+              <button type="button"
+                class="btn  waves-effect ml-auto"
+                data-dismiss="modal">Close</button>
+            </div> -->
+          </div>
+          <!--/.Panel 8-->
+        </div>
+
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: Login / Register Form-->
+
+<div class="text-center">
+  <a href=""
+    class="btn btn-default  my-3"
+    data-toggle="modal"
+    data-target="#modalLRForm">JOB BOARD</a>
+</div>
 
 <nz-result nzStatus="404"
-    nzTitle="404"
-    nzSubTitle="Sorry, the page you visited does not exist.">
-    <div nz-result-extra>
-      <button nz-button
-        routerLink=""
-        (click)="clear()"
-        nzType="primary">Back Home</button>
-    </div>
-  </nz-result>
+  nzTitle="404"
+  nzSubTitle="Sorry, the page you visited does not exist.">
+  <div nz-result-extra>
+    <button nz-button
+      routerLink=""
+      (click)="clear()"
+      nzType="primary">Back Home</button>
+  </div>
+</nz-result>

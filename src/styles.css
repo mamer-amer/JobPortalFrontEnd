@@ -298,3 +298,8 @@ button.toast-close-button {
   font-weight: 400;
   font-size: 15px;
  }
+
+ .cdk-global-overlay-wrapper,
+ .cdk-overlay-container {
+   z-index: 99999 !important;
+ }

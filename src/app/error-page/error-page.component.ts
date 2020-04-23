@@ -10,9 +10,16 @@ import { NavbarService } from '../navbar.service';
 export class ErrorPageComponent implements OnInit {
 
   userType;
+  userTypes :Array<any>;
+  selectedValue:any;
   constructor(public service:ApplicantServiceService,private navbar:NavbarService) { }
 
   ngOnInit(): void {
+    this.userTypes = [
+      { value: 'employer', viewValue: 'Employer' },
+      { value: 'candidate', viewValue: 'Candidate' },
+      { value: 'recruiter', viewValue: 'Recruiter' },
+    ];
     this.navbar.showNav()
     this.userType = sessionStorage.getItem('userType');
   }

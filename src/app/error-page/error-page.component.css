@@ -1,0 +1,25 @@
+  mat-select,
+  mat-from-field {
+    width: 100% !important;
+  }
+
+
+/* ._list{
+    flex-direction : column;
+} */
+
+.md-tabs .nav-link.active{
+    background-color:rgba(255, 255, 255, 0.24) !important;
+}
+
+.light-blue.darken-3{
+    background-color:black !important;
+}
+
+.btn{
+    background-color: black !important;
+}
+
+mat-select-value:focus + .fa-list{
+    color: #4285f4 !important;
+}
