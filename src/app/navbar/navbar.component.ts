@@ -70,8 +70,11 @@ export class NavbarComponent implements OnInit {
   readAllNotications() {
     if (this.companyId) {
       this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
-       
-        this.notifications = res
+
+        if (res?.result) {
+          this.notifications = res.result
+          this.getNotificationsCount(this.companyId);
+        }
       })
     }
   }
