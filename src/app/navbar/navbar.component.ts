@@ -7,8 +7,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { CompanyProfileComponent } from '../company-profile/company-profile.component'
 import { CandidateProfileComponent } from '../candidate-profile/candidate-profile.component';
 import { LoginService } from '../login-page/login.service';
-
-
+import { Router } from '@angular/router'
+import * as moment from 'moment';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -27,7 +27,7 @@ export class NavbarComponent implements OnInit {
 
 
 
-  constructor(private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
+  constructor(private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
     this.notificationOpen = false;
     this.companyProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
@@ -67,6 +67,14 @@ export class NavbarComponent implements OnInit {
     window.history.go(-1);
   }
 
+  readNotification(jobId) {
+
+    if (jobId && this.companyId)
+      this.service.markAnotificationAsRead(this.companyId, jobId).subscribe(() => {
+        this.router.navigate(['appliedcandidates/' + jobId])
+
+      })
+  }
   readAllNotications() {
     if (this.companyId) {
       this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {

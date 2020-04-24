@@ -207,7 +207,12 @@ export class ApplicantServiceService {
   }
 
   markAllNoticationsAsRead(id): Observable<any> {
-    return this.http.get(this.url+"api/companyprofile/notifications_read/" + id);
+    return this.http.get(this.url + "api/companyprofile/notifications_read/" + id);
+  }
+
+  markAnotificationAsRead(companyId, jobId): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notification_marked?companyId="
+      + companyId + "&jobId=" + jobId)
   }
 
 }
