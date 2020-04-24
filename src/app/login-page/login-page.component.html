@@ -1,5 +1,319 @@
 <router-outlet></router-outlet>
-<div class="bg-img">
+<!-- <app-navbar></app-navbar> -->
+<!-- <br> -->
+<div style="display:block;position:relative"
+  [style.width]="width">
+  <slideshow #slideshow
+    [imageUrls]="imageSources"
+    [height]="height"
+    [minHeight]="minHeight"
+    [arrowSize]="arrowSize"
+    [showArrows]="showArrows"
+    [disableSwiping]="disableSwiping"
+    [autoPlay]="autoPlay"
+    [stopAutoPlayOnSlide]="stopAutoPlayOnSlide"
+    [debug]="debug"
+    [backgroundSize]="backgroundSize"
+    [backgroundPosition]="backgroundPosition"
+    [backgroundRepeat]="backgroundRepeat"
+    [showDots]="showDots"
+    [dotColor]="dotColor"
+    [showCaptions]="showCaptions"
+    [captionColor]="captionColor"
+    [captionBackground]="captionBackground"
+    [lazyLoad]="lazyLoad"
+    [hideOnNoSlides]="hideOnNoSlides"
+    [fullscreen]="fullscreen">
+  </slideshow>
+
+
+  <div class="row dark-div">
+    <div class="col-lg-5 offset-lg-1">
+      <div class="text-center">
+        <a href=""
+          style="font-size: x-large !important;font-weight: bold"
+          class="btn btn-default my-3 mainPageButtons"
+          data-toggle="modal"
+          data-target="#modalLRForm">Login</a>
+      </div>
+    </div>
+    <div class="col-lg-5">
+      <div class="text-center">
+        <a href=""
+          style="font-size: x-large !important;font-weight: bold"
+          class="btn btn-default my-3 mainPageButtons"
+          data-toggle="modal"
+          data-target="#modalLRForm">Register</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<!-- View only information -->
+<div class="bg-white">
+  <div class="container col-sm-10 col-sm-offset-1 home-counter">
+    <div class="row ">
+      <div class="col-md-3 col-6">
+        <div class="text-center"><img class="img-responsive"
+            src="../../assets/images/1.jpg">
+          <h2 class="text-green animation all"
+            id="counter1">100000</h2>
+          <h4 class="font-grey">Associates</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center"><img class="img-responsive"
+            src="../../assets/images/4.jpg">
+          <h2 class="text-orange animation all"
+            id="counter2">300</h2>
+          <h4 class="font-grey">Clients</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center"><img class="img-responsive"
+            src="../../assets/images/2.jpg">
+          <h2 class="text-blue animation all"
+            id="counter3">350</h2>
+          <h4 class="font-grey">Employees</h4>
+        </div>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="text-center"><img class="img-responsive"
+            src="../../assets/images/3.jpg">
+          <h2 class="text-yellow animation all"
+            id="counter4">26</h2>
+          <h4 class="font-grey">Years Of Service</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade"
+  id="modalLRForm"
+  #modalLRForm
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog cascading-modal"
+    role="document">
+    <div class="modal-content">
+
+      <div class="modal-c-tabs">
+
+        <ul class="nav nav-tabs md-tabs tabs-2 light-blue darken-3"
+          role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active"
+              data-toggle="tab"
+              href="#login"
+              role="tab"><i class="fa fa-user"
+                aria-hidden="true"></i>
+              Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link"
+              data-toggle="tab"
+              href="#register"
+              role="tab"><i class="fa fa-user-plus"
+                aria-hidden="true"></i>
+              Register</a>
+          </li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane fade in show active"
+            id="login"
+            role="tabpanel">
+
+            <div class="modal-body mb-1">
+
+
+              <button type="button"
+                #closebutton
+                class="close"
+                data-dismiss="modal"></button>
+
+
+              <div class="md-form form-sm mb-5">
+                <i class="fa fa-envelope prefix"></i>
+                <input type="email"
+                  name="loginEmail"
+                  id="modalLRInput11"
+                  [(ngModel)]="loginEmail"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  
+                  for="modalLRInput11">Your email</label>
+              </div>
+
+              <div class="md-form form-sm mb-4">
+                <i class="fa fa-lock prefix"></i>
+                <input type="password"
+                  id="modalLRInput12"
+                  name="loginPassword"
+                  [(ngModel)]="loginPassword"
+                  class="form-control form-control-sm validate">
+                <label data-error="wrong"
+                  
+                  for="modalLRInput12">Your password</label>
+              </div>
+              <div class="text-center mt-2">
+                <button class="btn btn-info"
+                  (click)="check(loginEmail,loginPassword)">
+                  <span *ngIf="status"
+                    class="spinner-border spinner-border-sm"></span>
+
+                  Log in<i class="fa fa-sign-in ml-1"></i>
+
+                </button>
+              </div>
+            </div>
+
+
+          </div>
+
+
+
+
+
+          <div class="tab-pane fade"
+            id="register"
+            role="tabpanel">
+            <div class="modal-body">
+
+
+              <button type="button"
+                #closebutton
+                class="close"
+                data-dismiss="modal"></button>
+
+              <form #myForm="ngForm">
+
+
+                <div class="md-form form-sm mb-5">
+                  <i class="fa fa-envelope prefix"></i>
+                  <input type="text"
+                    id="modalLRInput15"
+                    #name
+                    [(ngModel)]="registerObj.name"
+                    name="name"
+                    class="form-control form-control-sm validate">
+                  <label data-error="wrong"
+                    
+                    for="modalLRInput15">Your Full Name</label>
+                </div>
+
+                <div class="md-form form-sm mb-5">
+                  <i class="fa fa-envelope prefix"></i>
+                  <input type="email"
+                    id="modalLRInput16"
+                    [(ngModel)]="registerObj.email"
+                    required
+                    name="email"
+                    #email
+                    class="form-control form-control-sm validate">
+                  <label data-error="wrong"
+                    
+                    for="modalLRInput16">Your email</label>
+                </div>
+
+                <div class="md-form form-sm mb-5">
+                  <i class="fa fa-lock prefix"></i>
+                  <input type="password"
+                    id="modalLRInput13"
+                   
+                    [(ngModel)]="registerObj.password"
+                    required
+                    name="password"
+                    class="form-control form-control-sm validate">
+                  <label data-error="wrong"
+                    
+                    for="modalLRInput13">Your password</label>
+                </div>
+
+                <div class="md-form form-sm mb-4">
+                  <div class="row">
+                    <div class="col-lg-1">
+                      <i class="fa fa-list prefix"></i>
+                    </div>
+
+                    <div class="col-lg-11 col-md-11 col-sm-10 offset-sm-1 offset-xsm-1">
+                      <mat-form-field style="width:98%;margin-right:2%"
+                        data-error="wrong"
+                        >
+                        <mat-label>Select Type</mat-label>
+                        <mat-select 
+                        name="userType"
+                        [(ngModel)]="registerObj.userType">
+                          <mat-option *ngFor="let type of userTypes"
+                            [value]="type.value">
+                            {{type.viewValue}}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+
+
+                    </div>
+                  </div>
+
+                </div>
+
+                <div class="text-center form-sm mt-2">
+                  <button class="btn btn-info"
+                    (click)="registerUser()"> <span *ngIf="status"
+                      class="spinner-border spinner-border-sm"></span>Sign up
+                    <i class="fa fa-sign-in ml-1"></i></button>
+                </div>
+              </form>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<br>
+<br>
+<app-footer></app-footer>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--<div class="bg-img">
 
   <form action="/action_page.php"
     
@@ -35,7 +349,7 @@
       required>
     <br>
     <br>
-    <!-- <button type="submit" class="btn">Login</button> -->
+     <button type="submit" class="btn">Login</button> 
     <button type="submit"
       mat-stroked-button
       style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 5%;"
@@ -53,7 +367,7 @@
     </button>
 
   </form>
-</div>
+</div>-->
 
 
 

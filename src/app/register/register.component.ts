@@ -24,9 +24,6 @@ export class RegisterComponent implements OnInit {
   
   
 
-  routeToLogin(){
-    this.router.navigate([""])
-  }
   
   registerUser(){
     sessionStorage.clear()
@@ -54,6 +51,10 @@ export class RegisterComponent implements OnInit {
 
   }
 
+
+  routeToLogin() {
+    this.router.navigate([""])
+  }
 
   }
 

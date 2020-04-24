@@ -1,6 +1,5 @@
-
 /*  */
-body, html {
+/* body, html {
     height: 100%;
     font-family: Arial, Helvetica, sans-serif;
   }
@@ -8,12 +7,12 @@ body, html {
   * {
     box-sizing: border-box;
     overflow: hidden;
-  }
-  
-  
-  
-  /* Add styles to the form container */
-  .container {
+  } */
+
+
+
+/* Add styles to the form container */
+/* .container {
     position: absolute;
     right: 0;
     margin-right: 100px;
@@ -22,91 +21,185 @@ body, html {
     padding: 16px;
     height: 75%;
     background-color: white;
-    /* border-style: ridge; */
-    /* box-shadow:0px 5px 5px rgb(179, 179, 179); */
-    /* box-shadow: 0 0 60px #e2e2e2; */
-  }
   
-  /* Full-width input fields */
-  input[type=text], input[type=password] {
+  } */
+
+/* Full-width input fields */
+/*input[type=text], input[type=password] {
     width: 100%;
     padding: 15px;
     margin: 5px 0 22px 0;
     border: none;
     background: #f1f1f1;
-  }
-  
-  input[type=text]:focus, input[type=password]:focus {
+  }*/
+
+/*input[type=text]:focus, input[type=password]:focus {
     background-color: #ddd;
     outline: none;
-  }
-  
-  /* Set a style for the submit button */
-  .btn {
-    /* background-color: #4CAF50; */
-    /* color: white; */
-    padding: 16px 20px;
-    /* border: none; */
-    /* cursor: pointer; */
-    /* width: 100%; */
-    /* opacity: 0.9; */
-  }
-  
-  .btn:hover {
-    opacity: 1;
-  }
+  }*/
 
-   button {
+/* Set a style for the submit button */
+/*.btn {
+     background-color: #4CAF50; 
+     color: white; 
+    padding: 16px 20px;
+     border: none; 
+     cursor: pointer; 
+     width: 100%; 
+     opacity: 0.9; 
+  }*/
+
+/*.btn:hover {
+    opacity: 1;
+  }*/
+
+/*button {
      margin-right: 8px;
      
-   }
-  form{
+   }*/
+/*form{
     box-shadow: 0px 20px 20px 3px rgba(0, 0, 0, 0.2),
     0px 1px 1px 0px rgba(0, 0, 0, 0.14),
     0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     
-  }
+  }*/
 
 
-   .bg-img {
-     /* The image used */
+/*.bg-img {
+      The image used 
      background-image: url("../../assets/findJob.jpg");
 
      height: 100%;
       width: 100%;
-     /* Center and scale the image nicely */
+      Center and scale the image nicely 
      background-position: left;
      background-repeat: no-repeat;
      background-size: contain;
      position: relative;
-   }
+   }*/
 
-   @media screen and (orientation:portrait) {
+/*@media screen and (orientation:portrait) {
      .bg-img {
        background-image: none;
        background-color: black;
        margin-right:2%;
        
      }
-   }
+   }*/
 
-   @media all and (max-color: 4) {
+/*@media all and (max-color: 4) {
      .bg-img {
        background-image: none;
        margin-right: 2%;
 
      }
-   }
+   }*/
 
-   @media only all and (max-width:43.75em) {
+/* @media only all and (max-width:43.75em) {
      .bg-img {
        background-image: none;
        background-color: black;
        margin-right:2%;
      }
-   }
- @media only all and (max-width:43.75em) {
+   } */
+/* @media only all and (max-width:43.75em) {
    .container{
       overflow-y: scroll;
    }
-  }
+  } */
+
+mat-select,
+mat-from-field {
+  width: 100% !important;
+}
+
+
+/* ._list{
+    flex-direction : column;
+} */
+
+.md-tabs .nav-link.active {
+  background-color: rgba(255, 255, 255, 0.24) !important;
+}
+
+.light-blue.darken-3 {
+  background-color: black !important;
+}
+
+.btn {
+  background-color: black !important;
+}
+
+mat-select-value:focus+.fa-list {
+  color: #4285f4 !important;
+}
+
+
+.dark-div {
+  margin-left: auto;
+  margin-right: auto;
+  align-items: center;
+  max-width: 1000px;
+  background: rgba(0, 0, 0, .6);
+  padding: 18px 20px 20px;
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+
+}
+
+
+.mainPageButtons {
+  background-color: #01779cf0 !important;
+}
+
+a {
+  font-size: medium;
+  width: 90% !important;
+}
+
+
+.bg-white {
+  background: #fff;
+  padding-top: 35px;
+  padding-bottom: 35px;
+}
+
+
+.animation {
+  animation: 1s ease-in-out all !important;
+}
+
+.text-orange {
+  color: #ff6803 !important;
+  font-weight: 700 !important;
+  font-size: 48px !important;
+}
+
+.font-grey {
+  color: #818b95 !important;
+}
+
+.text-blue {
+  color: #0e005a !important;
+  font-weight: 700 !important;
+  font-size: 48px !important;
+}
+
+.text-yellow {
+  color: #eabc21 !important;
+  font-weight: 700 !important;
+  font-size: 48px !important;
+}
+
+.text-green {
+  color: #056e6d !important;
+  font-weight: 700 !important;
+  font-size: 48px !important;
+}
+/* input.ng-valid{
+    box-shadow: 0 1px 0 0 #4284f4 !important;
+    border-bottom: 1px solid #4284f4 !important;
+    } */
+
