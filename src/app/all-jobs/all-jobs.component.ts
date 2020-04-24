@@ -10,7 +10,7 @@ import { Http2ServerRequest } from 'http2';
 import { request } from 'http';
 import { HttpClient } from 'selenium-webdriver/http';
 import { ToastrService } from 'ngx-toastr';
-import { FormControl } from '@angular/forms';
+import { FormControl, NgForm } from '@angular/forms';
 import { MapboxService } from '../Services/mapbox.service';
 import { NzModalService } from 'ng-zorro-antd';
 // import { NavbarService } from 'angular-bootstrap-md';
@@ -23,6 +23,7 @@ import { NzModalService } from 'ng-zorro-antd';
 })
 export class AllJobsComponent implements OnInit {
 
+  @ViewChild('myFrom') myFrom:NgForm
   /** Constants used to fill up our data base. */
   selectedJobType = "all";
   // pageChange=new EventEmitter();
@@ -37,6 +38,7 @@ export class AllJobsComponent implements OnInit {
   isAllJobs = true;
   selectedPlace: any;
   myControl = new FormControl();
+
   options: string[] = [];
   filteredPlaces: Array<string> = [];
 
@@ -156,33 +158,23 @@ export class AllJobsComponent implements OnInit {
   pageChange(p): void {
 
 
-    if (this.selectedCategory != null) {
+    if (this.selectedCategory != null && this.userType=="candidate") {
       this.getJobsByCategory(this.selectedCategory, p - 1);
     }
 
-    else if (this.userType == "candidate" && this.selectedCategory == null) {
+    else if (this.userType == "candidate" && this.selectedCategory == null && (this.cityName!=null || this.selectedJobType!=null || this.companyName!=null)) {
       this.globalSearch(this.cityName, this.selectedJobType, this.companyName, p - 1);
     }
-    // else if (this.userType == "candidate") {
-    //   this.getPaginatedJobs(p - 1);
-
-    // }
-    // else if (this.cityName == null && this.userType=="candidate") {
-    //   this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
-    // }
-    // else if (this.cityName != null && this.userType == "candidate") {
-    //   this.globalSearch(this.cityName,this.selectedJobType,this.companyName, p - 1);
-    // }
+  
 
 
-
-    else if (this.userType != "candidate") {
+    else if (this.userType != "candidate" && this.selectedCategory == null) {
       this.getJobsByCompany(p - 1);
     }
-    // else if (this.cityName != null && this.userType != "candidate") {
-    //   this.searchByCityName(this.cityName, p - 1);
-    // }
-
+    else if(this.userType!="candidate" && this.selectedCategory!=null){
+      this.getJobsByCategory(this.selectedCategory,p-1);
+    }
+  
   }
 
 
@@ -191,20 +183,37 @@ export class AllJobsComponent implements OnInit {
 
 
   getPaginatedJobs(p): void {
-    this.service.getPaginatedJobs(p).subscribe((response) => {
+    this.allJobs = []
+    this.total = 0;
+    this.itemsPerPage = 0;
+    this.page = 0;
 
-      if (response.totalElements > 0) {
-        console.log(response)
-        this.total = response.totalElements;
-        this.page = p + 1;
-        this.itemsPerPage = response.size;
-        this.allJobs = response.content
-        this.empty = false;
+    if(this.userType=="candidate"){
+      this.service.getPaginatedJobs(p).subscribe((response) => {
+        this.selectedCategory = null;
+        if (response.totalElements > 0) {
+          console.log(response)
+          this.total = response.totalElements;
+          this.page = p + 1;
+          this.itemsPerPage = response.size;
+          this.allJobs = response.content
+          this.empty = false;
+        }
+        else {
+          this.page = response.pageable.pageNumber + 1;
+          this.total = response.totalElements;
+          this.empty = true;
+        }
+      }), error => {
+        setTimeout(() => {
+          this.empty = true;
+        }, 2000)
       }
-      else {
-        this.empty = true;
-      }
-    })
+    }
+    else{
+      this.getJobsByCompany(0);
+    }
+   
   }
 
   getJobsByCategory(cat, p): void {
@@ -220,17 +229,27 @@ export class AllJobsComponent implements OnInit {
       if (res.totalElements > 0) {
         this.allJobs = res.content;
         this.total = res.totalElements;
-        this.page = p + 1;
+        this.page = res.pageable.pageNumber + 1;
         this.itemsPerPage = res.size;
         this.empty = false;
 
       }
       else {
-        this.empty = true;
+        this.page = res.pageable.pageNumber + 1;
+        this.total = res.totalElements;
+
+          setTimeout(() => {
+            this.empty = true;
+          }, 2000)
+        
       }
       console.log(this.empty)
 
-    })
+    }),error=>{
+      setTimeout(()=>{
+        this.empty = true;
+      },2000)
+    }
   }
 
   showMarkersOnMap(): void {
@@ -328,6 +347,8 @@ export class AllJobsComponent implements OnInit {
         this.empty = false;
       }
       else {
+        this.page = response.pageable.pageNumber + 1;
+        this.total = response.totalElements;
         this.empty = true;
       }
     })
@@ -335,6 +356,11 @@ export class AllJobsComponent implements OnInit {
 
 
   globalSearch(city, type, company, pageNo) {
+    this.allJobs = []
+    this.total = 0;
+    this.itemsPerPage = 0;
+    this.page = 0;
+    this.selectedCategory = null;
 
     this.service.globalJobSearch(city, type, company, pageNo).subscribe(response => {
       console.log("this is what you want", response)
@@ -347,9 +373,15 @@ export class AllJobsComponent implements OnInit {
         this.empty = false;
       }
       else {
+        this.page = response.pageable.pageNumber + 1;
+        this.total = response.totalElements;
         this.empty = true;
       }
-    })
+    }),error => {
+      setTimeout(() => {
+        this.empty = true;
+      }, 2000)
+    }
   }
 
   searchByCityName(city, page) {
@@ -367,6 +399,7 @@ export class AllJobsComponent implements OnInit {
 
       }
       else {
+        this.total = res.totalElements;
         this.empty = true;
       }
     })
@@ -392,6 +425,8 @@ export class AllJobsComponent implements OnInit {
 
         }
         else {
+          this.page = res.pageable.pageNumber + 1;
+          this.total = res.result.totalElements;
           this.empty = true;
         }
       }
@@ -405,6 +440,14 @@ export class AllJobsComponent implements OnInit {
     }
   }
 
+
+  clearForm(){
+    console.log(this.myFrom.valid);
+    this.myFrom.reset();
+    this.selectedCategory = "";
+    this.selectedJobType = "all"
+    this.globalSearch(this.cityName,this.selectedJobType,this.companyName,0);
+  }
 
 
 
