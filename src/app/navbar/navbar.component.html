@@ -65,43 +65,47 @@
               style="margin:5px 0px 0px 0px ;color: rgb(39, 39, 226);">Mark All As Read</p>
           </div>
           <li nz-menu-divider></li>
-          <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}">
 
-            <!-- INFINITE SCROLL -->
 
-            <div class="search-results" infiniteScroll [immediateCheck]="true"  [infiniteScrollDistance]="1" [infiniteScrollThrottle]="10"
-              (scrolled)="onScroll()">
+          <!-- INFINITE SCROLL -->
 
-              <div *ngFor="let notification of notifications" class="notificationItem"
-                [style.background-color]="notification.notified?'white':'#E5EAF2'"
-                (click)="readNotification(notification.jobId)"
-                style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
-                nz-menu-item>
-                <span style="flex: 1;">
-                  <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.candidateDp?'data:image/jpeg;base64,'+notification.candidateDp:
+          <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results"
+            [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1"
+            [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
+
+            <div *ngFor="let notification of notifications" class="notificationItem"
+              [style.background-color]="notification.notified?'white':'#E5EAF2'"
+              (click)="readNotification(notification.jobId)"
+              style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+              nz-menu-item>
+              <span style="flex: 1;">
+                <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.candidateDp?'data:image/jpeg;base64,'+notification.candidateDp:
                   '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
-                  </nz-avatar>
-                </span>
-                <div style="flex: 7;">
-                  <div style="display:flex;flex-direction: column;">
-                    <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                      <span style="font-weight: bold;">{{notification.candidate}} </span>
-                      applied for your
-                      <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
-                    </div>
-
-                    <p style="flex:1;font-size: 10px;">{{notification.date | myPipe}}</p>
+                </nz-avatar>
+              </span>
+              <div style="flex: 7;">
+                <div style="display:flex;flex-direction: column;">
+                  <div style="flex:1;white-space:pre-line;margin-top: 10px;">
+                    <span style="font-weight: bold;">{{notification.candidate}} </span>
+                    applied for your
+                    <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
                   </div>
+
+                  <p style="flex:1;font-size: 10px;">{{notification.date | myPipe}}</p>
                 </div>
               </div>
 
 
+
             </div>
-            <div class="row">
-              <div class="col-lg-12">
+            <div class="row" *ngIf="isLoader">
+
+              <div class="col-lg-12" style="height: 20px;
+              margin-bottom: 10px;">
+
                 <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader"
                   [fullScreen]="false">
-                
+
                 </ngx-spinner>
               </div>
             </div>
@@ -109,7 +113,7 @@
 
 
           <div style="height: 30px;text-align: center;line-height: 30px;">
-            <p class="underLine" style="color: rgb(41, 97, 209);">See All</p>
+            <!-- <p class="underLine" style="color: rgb(41, 97, 209);">See All</p> -->
           </div>
 
         </ul>
@@ -163,11 +167,3 @@
 
 
 </mdb-navbar>
-<!-- <button nz-popconfirm
-  nzPopconfirmTitle="Are you sure delete this task?"
-  (nzOnConfirm)="confirm()"
-  (nzOnCancel)="cancel()"
-  nzPopconfirmPlacement="topLeft"
-  nz-button>
-
-</button> -->

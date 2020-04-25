@@ -26,7 +26,7 @@ export class NavbarComponent implements OnInit {
   notificationsCount = 0;
   notificationOpen: any;
   pageNo = 0;
-
+  isLoader = false;
   totalElements = 1;
 
 
@@ -81,10 +81,12 @@ export class NavbarComponent implements OnInit {
   }
   readAllNotications() {
     if (this.companyId) {
+   
       this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
 
         if (res?.result) {
-          this.notifications = res.result
+          this.pageNo=0;
+          this.notifications = res.result.content
           this.getNotificationsCount(this.companyId);
         }
       })
@@ -93,6 +95,7 @@ export class NavbarComponent implements OnInit {
   onScroll() {
 
     if (this.totalElements > this.notifications.length) {
+      this.isLoader = true;
       this.spinner.show("navSpinner");
       this.getNotifications(this.companyId, ++this.pageNo);
     }
@@ -104,19 +107,24 @@ export class NavbarComponent implements OnInit {
   }
 
   getNotifications(companyId, page) {
-    
+
     this.service.getCompanyNotifications(companyId, page).subscribe((res) => {
+      this.isLoader = false;
       this.spinner.hide("navSpinner")
       this.notifications = this.notifications.concat(res.content)
       this.totalElements = res.totalElements;
       console.log(res)
-    },err=> this.spinner.hide("navSpinner"))
+    }, err => {
+      this.spinner.hide("navSpinner")
+      this.isLoader = false;
+    })
   }
   notificationOpened(isOpen) {
+    this.isLoader = true;
     this.spinner.show("navSpinner");
     this.pageNo = 0;
     this.notificationOpen = !this.notificationOpen;
-    this.notifications=[];
+    this.notifications = [];
     if (this.companyId) {
       this.getNotificationsCount(this.companyId);
       if (this.notificationOpen) {
