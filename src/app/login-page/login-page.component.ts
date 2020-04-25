@@ -97,7 +97,7 @@ export class LoginPageComponent implements OnInit {
               this.router.navigate(["/candidateProfile"]);
             }, 1000);
           }
-          else if (res.result.userType == "employer") {
+          else if (res.result.userType == "employer" || res.result.userType =="recruiter") {
             setTimeout(() => {
               this.router.navigate(["/companyProfile"]);
             }, 1000);

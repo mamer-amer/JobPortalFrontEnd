@@ -17,4 +17,7 @@ export class ErrorPageComponent implements OnInit {
     this.userType = sessionStorage.getItem('userType');
   }
 
+  clear(){
+    sessionStorage.clear();
+  }
 }

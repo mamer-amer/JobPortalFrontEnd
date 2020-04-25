@@ -31,7 +31,7 @@ export class CompanyProfileComponent implements OnInit {
     this.navbar.showNav();
     // this.spinner.show();
     this.checkUserId();
-    this.getEmployeeProfile();
+    this.getProfile();
     // this.getJobsPostedByEmployeeId();
   }
 
@@ -106,14 +106,8 @@ export class CompanyProfileComponent implements OnInit {
 
   }
 
-  getJobsPostedByEmployeeId() {
-    this.checkUserId();
-    this.service.getJobsByEmployeeId(this.userId).subscribe(res => {
-      console.table(res);
-    })
-  }
 
-  getEmployeeProfile(){
+  getProfile(){
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
       this.loadingText = "Getting Profile.."
       if(res.status==200 && res.result!=null){
@@ -122,6 +116,7 @@ export class CompanyProfileComponent implements OnInit {
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
+        this.logoChangeObservable.next();
 
       }
      

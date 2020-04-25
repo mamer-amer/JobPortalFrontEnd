@@ -198,8 +198,8 @@ export class ApplicantServiceService {
 
   //NOTIFICATION SERVICE CALLS
 
-  getCompanyNotifications(id,pageNo): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/notifications/" + id+"?page="+pageNo);
+  getCompanyNotifications(id, pageNo): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notifications/" + id + "?page=" + pageNo);
   }
 
   getCompanyNotificationsCount(id): Observable<any> {
