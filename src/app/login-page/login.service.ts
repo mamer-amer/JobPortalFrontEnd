@@ -23,6 +23,10 @@ export class LoginService {
     
   }
 
+  getInformation():Observable<any>{
+    return this.http.get(environment.baseUrl+"login/login_information");
+  }
+
 
 }
 

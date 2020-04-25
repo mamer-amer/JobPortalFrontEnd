@@ -187,10 +187,10 @@ export class AllJobsComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 0;
     this.page = 0;
-
+    this.selectedCategory = null;
     if(this.userType=="candidate"){
       this.service.getPaginatedJobs(p).subscribe((response) => {
-        this.selectedCategory = null;
+       
         if (response.totalElements > 0) {
           console.log(response)
           this.total = response.totalElements;

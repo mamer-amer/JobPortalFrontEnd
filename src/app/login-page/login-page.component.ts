@@ -11,17 +11,33 @@ import { Register } from '../register/Register';
 
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NgForm } from '@angular/forms';
+
+
+export interface information {
+  numberOfRegisteredCandidates?: any;
+  numberOfCompaniesRegistered?: any;
+  numberOfJobsAvailable?: any;
+  numOfRegisteredUser?: any;
+}
+
+
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
   styleUrls: ["./login-page.component.css"]
 })
+
+
+
+
+
 export class LoginPageComponent implements OnInit {
 
 
 
   @ViewChild('closebutton') closebutton;
   @ViewChild('myForm') myForm:NgForm;
+  siteInfo:information;
   isVisible = false;
   isOkLoading = false;
   errorVisible = false;
@@ -78,6 +94,7 @@ export class LoginPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLoginInformation();
     this.navbar.showNav();
     this.userTypes = [
       { value: 'employer', viewValue: 'Employer' },
@@ -94,9 +111,24 @@ export class LoginPageComponent implements OnInit {
       sessionStorage.clear();
       localStorage.clear();
     }
+
+    
     
   }
 
+  getLoginInformation(){
+    this.service.getInformation().subscribe(res=>{
+      if(res){
+
+        this.siteInfo = res;
+        // this.siteInfo.numOfRegisteredUser = res.numOfRegisteredUser;
+        // this.siteInfo.numberOfCompaniesRegistered = res.numberOfCompaniesRegistered;
+        // this.siteInfo.numberOfJobsAvailable = res.numberOfJobsAvailable;
+        // this.siteInfo.numberOfRegisteredCandidates = res.numberOfRegisteredCandidates;
+      }
+      
+    })
+  }
   
 
   showDeleteConfirm(): void {
@@ -129,7 +161,9 @@ export class LoginPageComponent implements OnInit {
       res => {
         
         if (res.status == 200) {
-          
+          this.status = false;
+          this.myForm.resetForm();
+          this.closebutton.nativeElement.click();
           this.toastService.info('Successfull', 'User authenticated')
           sessionStorage.setItem("userId", res.result.id);
           sessionStorage.setItem("token", res.result.token);
@@ -137,7 +171,7 @@ export class LoginPageComponent implements OnInit {
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
           this.service.sendId.next(res.result.id);
-          this.status = false;
+          
           
 
           if (res.result.userType === "ADMIN") {
@@ -186,13 +220,17 @@ export class LoginPageComponent implements OnInit {
      this.registerService.registerUser(this.registerObj).subscribe(d=>{
      
       if(d.status == 200){
-        
         this.toastService.info('Successfull','User successfully registered')
-        console.log(this.myForm.status);
-        this.myForm.resetForm();
         this.status = false;
-      
+        this.myForm.resetForm();
         this.closebutton.nativeElement.click();
+      
+        console.log(this.myForm.status);
+        
+      
+      
+       
+        this.getLoginInformation();
         
       }
       else{
@@ -214,3 +252,7 @@ export class LoginPageComponent implements OnInit {
     this.router.navigate([""])
   }
 }
+
+
+
+

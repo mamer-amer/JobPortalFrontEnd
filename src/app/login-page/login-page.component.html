@@ -66,32 +66,32 @@
         <div class="text-center"><img class="img-responsive"
             src="../../assets/images/1.jpg">
           <h2 class="text-green animation all"
-            id="counter1">100000</h2>
-          <h4 class="font-grey">Associates</h4>
+            id="counter1">{{siteInfo?siteInfo.numOfRegisteredUser:'0'}}</h2>
+          <h4 class="font-grey">Users</h4>
         </div>
       </div>
       <div class="col-md-3 col-6">
         <div class="text-center"><img class="img-responsive"
             src="../../assets/images/4.jpg">
           <h2 class="text-orange animation all"
-            id="counter2">300</h2>
-          <h4 class="font-grey">Clients</h4>
+            id="counter2">{{siteInfo?siteInfo.numberOfCompaniesRegistered:'0'}}</h2>
+          <h4 class="font-grey">Companies</h4>
         </div>
       </div>
       <div class="col-md-3 col-6">
         <div class="text-center"><img class="img-responsive"
             src="../../assets/images/2.jpg">
           <h2 class="text-blue animation all"
-            id="counter3">350</h2>
-          <h4 class="font-grey">Employees</h4>
+            id="counter3">{{siteInfo?siteInfo.numberOfJobsAvailable:'0'}}</h2>
+          <h4 class="font-grey">Jobs Available</h4>
         </div>
       </div>
       <div class="col-md-3 col-6">
         <div class="text-center"><img class="img-responsive"
             src="../../assets/images/3.jpg">
           <h2 class="text-yellow animation all"
-            id="counter4">26</h2>
-          <h4 class="font-grey">Years Of Service</h4>
+            id="counter4">{{siteInfo?siteInfo.numberOfRegisteredCandidates:'0'}}</h2>
+          <h4 class="font-grey">Registered Users</h4>
         </div>
       </div>
     </div>
