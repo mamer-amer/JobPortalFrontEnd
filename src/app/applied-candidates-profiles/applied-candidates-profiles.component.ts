@@ -18,34 +18,36 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
   editField: string;
   userType = sessionStorage.getItem('userType');
   jobId: any;
-  constructor(public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private router: Router, private nav: NavbarService) { }
+  constructor(private _router: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private router: Router, private nav: NavbarService) { }
   dataSource: any;
 
   ngOnInit(): void {
     this.nav.showNav()
+
     this.getParams();
-    this.getAllProfiles(this.jobId);
+
+
 
   }
 
 
 
-back(){
-  window.history.go(-1);
-}
+  back() {
+    window.history.go(-1);
+  }
 
   getAllProfiles(id) {
-
+    this.candidatesArrays = [];
     this.service.getAppliedCandidatesProfile(id).subscribe(res => {
       console.log(res);
       res.result.map(d => {
         this.candidatesArrays.push({
           candId: d.id,
-          userId :d.user.id,
-          name:d.user.name,
-          email:d.user.email,
+          userId: d.user.id,
+          name: d.user.name,
+          email: d.user.email,
           field: d.field,
-          profileActive: d.user.profileActive==true?"Active":"Inactive",
+          profileActive: d.user.profileActive == true ? "Active" : "Inactive",
           presentationLetter: d.presentationLetter,
           cv: d.cv,
           dp: d.dp,
@@ -63,26 +65,26 @@ back(){
   //   const filterValue = (event.target as HTMLInputElement).value;
   //  this.candidatesArrays =  this.candidatesArrays.filter(d=>{
   //    return d==filterValue.toLowerCase();
-     
+
   //  })
-  
+
 
   // }
 
   getParams() {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
       this.jobId = params.get('id');
-      console.log(params);
+      this.getAllProfiles(this.jobId);
 
     });
 
   }
 
-  gotoViewProfile(id:any){
-   
+  gotoViewProfile(id: any) {
+
     this.service.passObject(this.candidatesArrays[id]);
-   let userId =  this.candidatesArrays[id]['userId']
-   let candId  = this.candidatesArrays[id]['candId'];
+    let userId = this.candidatesArrays[id]['userId']
+    let candId = this.candidatesArrays[id]['candId'];
     this.router.navigate(['/viewprofile'], { queryParams: { "candId": candId, "userId": userId } })
   }
 

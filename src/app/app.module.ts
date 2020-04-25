@@ -77,7 +77,7 @@ import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer'
 // import {AgmCoreModule} from '@agm/core'
 import {SafePipeModule } from 'safe-pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 @NgModule({
   declarations: [
@@ -163,7 +163,7 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
       progressAnimation: 'decreasing',
       closeButton: true
     }),
-
+    InfiniteScrollModule
     // MatGridListModule
   ],
   providers: [
