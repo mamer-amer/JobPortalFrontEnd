@@ -1,4 +1,6 @@
-.navbar { background-color: #e91e63; } 
+.navbar {
+    height: 65px !important;
+}
 h6{
     font-weight: bold;
     font-size: 1.12rem !important;
@@ -22,4 +24,44 @@ sub{
 }
 .userInfo{
     padding-right: 16px;
+}
+
+
+nz-badge {
+    margin-right: 40px;
+    margin-top: 7px;
+   
+    
+  }
+
+  .head-example {
+    width: 35px;
+    height: 35px;
+    border-radius: 4px;
+    background: #eee;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+.notification-close-class{
+    color: rgb(12, 12, 12) !important;
+   
+    font-size: 25px;
+    margin:7px 10px 0px 6px;
+}
+
+.notification-open-class{
+  
+    color: white !important;
+    font-size: 25px;
+    margin:7px 10px 0px 6px;
+}
+
+.underLine:hover{
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.notificationItem:hover{
+background-color: rgb(219, 217, 217) !important;
 }

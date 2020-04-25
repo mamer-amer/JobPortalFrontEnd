@@ -17,41 +17,41 @@ export class ApplicantServiceService {
   private sourceObject = new Subject();
   getObject = this.sourceObject.asObservable();
 
-  constructor(private http: HttpClient, private _location: Location,private router:Router,private toastService:ToastrService) { }
-   url:any = environment.baseUrl;
+  constructor(private http: HttpClient, private _location: Location, private router: Router, private toastService: ToastrService) { }
+  url: any = environment.baseUrl;
 
 
-  passObject(obj:any) {
+  passObject(obj: any) {
     this.sourceObject.next(obj);
   }
 
-   logout(){
+  logout() {
     sessionStorage.clear();
     localStorage.clear();
-    
-     this.router.navigate(['']);
+
+    this.router.navigate(['']);
   }
 
-  saveUserForm(adduserObj:any):Observable<any>{
-  return this.http.post(this.url+"token/user",adduserObj)
-  }
-
- 
-
-  
-
-  getUserByEmail(email):Observable<any>{
-    let userId=sessionStorage.getItem("userId");
-    return this.http.get(this.url+"token/user/"+userId);
-  }
-  getUserById(id:any):Observable<any>{
-    return this.http.get(this.url+"token/user/"+id);
+  saveUserForm(adduserObj: any): Observable<any> {
+    return this.http.post(this.url + "token/user", adduserObj)
   }
 
 
 
-  postCandidateProfile(id,obj:any):Observable<any>{
-    return this.http.post(this.url+"api/cp/"+id,obj);
+
+
+  getUserByEmail(email): Observable<any> {
+    let userId = sessionStorage.getItem("userId");
+    return this.http.get(this.url + "token/user/" + userId);
+  }
+  getUserById(id: any): Observable<any> {
+    return this.http.get(this.url + "token/user/" + id);
+  }
+
+
+
+  postCandidateProfile(id, obj: any): Observable<any> {
+    return this.http.post(this.url + "api/cp/" + id, obj);
   }
 
   registerUser(registerObj: any): Observable<any> {
@@ -60,71 +60,71 @@ export class ApplicantServiceService {
 
 
 
-  getCurrentProfileUserStauts(userId:any):Observable<any>{
-    if(sessionStorage.getItem('userType')=="candidate"){
+  getCurrentProfileUserStauts(userId: any): Observable<any> {
+    if (sessionStorage.getItem('userType') == "candidate") {
       return this.http.get(this.url + "api/cp/" + userId);
     }
-    else{
+    else if (sessionStorage.getItem('userType') == "employer") {
       return this.http.get(this.url + "api/companyprofile/userId/" + userId);
 
     }
- 
+
   }
-  getAllJobs():Observable<any>{
+  getAllJobs(): Observable<any> {
     return this.http.get(this.url + "api/job/all");
-   
+
   }
 
-  getCandidateProfileForView(userId: any,candId:any): Observable<any> {
-    return this.http.get(this.url+"api/cp/complete?userId="+userId+"&candidateId="+candId);
+  getCandidateProfileForView(userId: any, candId: any): Observable<any> {
+    return this.http.get(this.url + "api/cp/complete?userId=" + userId + "&candidateId=" + candId);
   }
 
-  getPaginatedJobs(page):Observable<any>{
-    return this.http.get(this.url+"api/job/paginatedjobs?page="+page);
+  getPaginatedJobs(page): Observable<any> {
+    return this.http.get(this.url + "api/job/paginatedjobs?page=" + page);
   }
 
   getJobsByCompany(page): Observable<any> {
-    return this.http.get(this.url + "api/job/myJobs/?page="+page);
+    return this.http.get(this.url + "api/job/myJobs/?page=" + page);
   }
 
-  getPaginatedJobsByCategory(category,page):Observable<any>{
-    category = category.replace(/&/g,'_and_');
-    return this.http.get(this.url+"api/job/jobsbycategory?category="+category+"&page="+page);
+  getPaginatedJobsByCategory(category, page): Observable<any> {
+    category = category.replace(/&/g, '_and_');
+    return this.http.get(this.url + "api/job/jobsbycategory?category=" + category + "&page=" + page);
   }
 
   postAJob(jobObj: any): Observable<any> {
     return this.http.post(this.url + "api/job/", jobObj);
   }
 
-  getJobById(id):Observable<any>{
-    return this.http.get(this.url+"api/job/?id="+id);
+  getJobById(id): Observable<any> {
+    return this.http.get(this.url + "api/job/?id=" + id);
   }
 
-  getJobCompany(id):Observable<any>{
-    return this.http.get(this.url+"api/job/company?id="+id);
-  }
-
-
-  searchJobWithRespectToField(field:any):Observable<any>{
-    return this.http.get(this.url + "api/job/"+ field);
+  getJobCompany(id): Observable<any> {
+    return this.http.get(this.url + "api/job/company?id=" + id);
   }
 
 
-
-  postCompanyProfile(userId:any,companyProfile:any):Observable<any>{
-    return this.http.post(this.url +"api/companyprofile/"+userId,companyProfile)
+  searchJobWithRespectToField(field: any): Observable<any> {
+    return this.http.get(this.url + "api/job/" + field);
   }
 
-  getCompanyProfile(companyId:any):Observable<any>{
-    return this.http.get(this.url+"api/companyprofile/"+companyId);
+
+
+  postCompanyProfile(userId: any, companyProfile: any): Observable<any> {
+    return this.http.post(this.url + "api/companyprofile/" + userId, companyProfile)
   }
 
-  getJobsByEmployeeId(id:any):Observable<any>{
-    return this.http.get(this.url + "api/job/myJobs/"+id);
+  getCompanyProfile(companyId: any): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/" + companyId);
+  }
+
+  getJobsByEmployeeId(id: any): Observable<any> {
+    return this.http.get(this.url + "api/job/myJobs/" + id);
 
   }
-  applyJob(obj:any):Observable<any>{
-    return this.http.post(this.url + "api/job/applyJob",obj);
+  applyJob(obj: any): Observable<any> {
+    return this.http.post(this.url + "api/job/applyJob", obj);
 
   }
 
@@ -148,53 +148,71 @@ export class ApplicantServiceService {
     this.toastService.warning(message, title);
   }
 
-  getReviewsById(id):Observable<any>{
-    return this.http.get(this.url + "api/review/averageRating?companyId="+id);
+  getReviewsById(id): Observable<any> {
+    return this.http.get(this.url + "api/review/averageRating?companyId=" + id);
   }
 
-  isAlreadyApplied(canId,jobId):Observable<any>{
-    return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId +"&jobId="+jobId);
+  isAlreadyApplied(canId, jobId): Observable<any> {
+    return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId + "&jobId=" + jobId);
   }
 
-  isAlreadyCommentedOnCompanyProfile(obj:any):Observable<any>{
-    return this.http.post(this.url + "api/review/comment",obj);
+  isAlreadyCommentedOnCompanyProfile(obj: any): Observable<any> {
+    return this.http.post(this.url + "api/review/comment", obj);
   }
 
-  getAllJobsByCityName(city,page):Observable<any>{
+  getAllJobsByCityName(city, page): Observable<any> {
     return this.http.get(this.url + "api/job/searchbycity?city=" + city + "&page=" + page);
 
   }
 
-  getCountOfCandidates(jobId:any):Observable<any>{
-    return this.http.get(this.url + "api/job/candidatescount/"+jobId);
+  getCountOfCandidates(jobId: any): Observable<any> {
+    return this.http.get(this.url + "api/job/candidatescount/" + jobId);
   }
-  getAppliedCandidatesProfile(jobId:any):Observable<any>{
-    return this.http.get(this.url + "api/job/candidateprofiles/"+jobId);
-  }
-
-
-  globalJobSearch(city,type,company,page):Observable<any>
-  {
-    return this.http.get(this.url +`api/job/specifications?city=${city}&type=${type}&company=${company}&page=${page}`);
+  getAppliedCandidatesProfile(jobId: any): Observable<any> {
+    return this.http.get(this.url + "api/job/candidateprofiles/" + jobId);
   }
 
 
-  deleteJob(id:any,page:any):Observable<any>{
-    return this.http.delete(this.url+"api/job/delete/"+id+"/page?page="+parseInt(page));
+  globalJobSearch(city, type, company, page): Observable<any> {
+    return this.http.get(this.url + `api/job/specifications?city=${city}&type=${type}&company=${company}&page=${page}`);
   }
 
-  postReviewAgainstCandidate(obj:any):Observable<any>{
-    return this.http.post(this.url +"api/review/reivewAgainstCandidate",obj)
+
+  deleteJob(id: any, page: any): Observable<any> {
+    return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
   }
 
-  updateJob(id:any,jobObj:any):Observable<any>{
-    return this.http.put(this.url +"api/job/update/"+id,jobObj);
+  postReviewAgainstCandidate(obj: any): Observable<any> {
+    return this.http.post(this.url + "api/review/reivewAgainstCandidate", obj)
+  }
+
+  updateJob(id: any, jobObj: any): Observable<any> {
+    return this.http.put(this.url + "api/job/update/" + id, jobObj);
   }
 
   //recruiter
 
-  getRecruiterProfile(id):Observable<any>{
-    return this.http.get(this.url+"api/recruiter")
+  getRecruiterProfile(id): Observable<any> {
+    return this.http.get(this.url + "api/recruiter")
   }
- 
+
+  //NOTIFICATION SERVICE CALLS
+
+  getCompanyNotifications(id, pageNo): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notifications/" + id + "?page=" + pageNo);
+  }
+
+  getCompanyNotificationsCount(id): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notification_count/" + id);
+  }
+
+  markAllNoticationsAsRead(id): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notifications_read/" + id);
+  }
+
+  markAnotificationAsRead(companyId, jobId): Observable<any> {
+    return this.http.get(this.url + "api/companyprofile/notification_marked?companyId="
+      + companyId + "&jobId=" + jobId)
+  }
+
 }

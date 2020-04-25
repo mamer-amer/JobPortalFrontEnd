@@ -144,6 +144,7 @@ export class JobDetailsComponent implements OnInit {
 
 
   getCompanyRating(id: any): void {
+    console.log(id)
     this.service.getReviewsById(id).subscribe(res => {
       
       this.rating = res.result;
