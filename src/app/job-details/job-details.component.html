@@ -80,7 +80,7 @@
     <div class="row">
 
       <div class="col-lg-5"
-        style="height: 510px; overflow-y: scroll;">
+        style="height: 510px; overflow-y: auto;">
 
         <!-- //COMPANIES OTHER JOBS -->
         <div class="row">
@@ -168,13 +168,7 @@
 
               <div style="display: flex;justify-content: flex-end;">
 
-                <!-- <button *ngIf="alreadyCommented==false"
-                  type="button"
-                  data-toggle="modal"
-                  data-target="#myModal2"
-                  (click)="showDialog()"
-                  style="border-radius:30px;margin:5px;font-size: 12px;"
-                  class="btn btn-success ">Comment</button> -->
+           
 
                 <button type="button"
                   [disabled]="true"
@@ -206,10 +200,10 @@
         </mat-card>
 
         <mat-card
-          style="background-color: rgb(250, 249, 249); border-radius: 0px;margin-bottom:10px;height:365px;overflow-y: scroll;">
+          style="background-color: rgb(250, 249, 249); border-radius: 0px;margin-bottom:10px;height:365px;overflow-y: auto;">
           <h3 style="font-weight:500;">Job details</h3>
           <p style="font-weight: 600;margin-bottom:3px;">Salary</p>
-          <p style="color:rgb(129, 126, 126);">{{jobObj.salary }}$</p>
+          <p style="color:rgb(129, 126, 126);">{{jobObj.salary}}</p>
           <p style="font-weight: 600;margin-bottom:3px;">Job Type</p>
           <p style="color:rgb(129, 126, 126);">{{jobObj.type}}</p>
           <hr />

@@ -135,3 +135,7 @@ input:focus{
   border:0px;
   
 }
+
+::ng-deep .ant-rate-star{
+  font-size: 16px !important;
+}

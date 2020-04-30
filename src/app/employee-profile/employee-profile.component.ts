@@ -34,12 +34,20 @@ export class EmployeeProfileComponent implements OnInit {
   map: Mapboxgl.Map;
   marker: Mapboxgl.Marker;
   convertedDate: any;
-  countries: Array<any> = [];
+
   cities: Array<any> = [];
   provinces: Array<any> = [];
   label: String;
+  countries: Array<Object> = [];
+  salaryRange: Array<string> = [
+    "10,000$ - 20,000$",
+    "20,000$ - 30,000$",
+    "30,000$ - 40,000$",
+    "50,000$ - above",
+    "Confidential"
+  ];
 
-  jobTypes: Array<string> = ["Freelance","Full-time", "Part-time", "Internship", "Temporary"];
+  jobTypes: Array<string> = ["Freelance", "Full-time", "Part-time", "Internship", "Temporary"];
 
   fields: any[] = [
     { value: 'Business & Finance', viewValue: 'Business & Finance' },
@@ -84,15 +92,12 @@ export class EmployeeProfileComponent implements OnInit {
         })
     })
 
-    
+
 
     if (this.catchParams() != undefined) {
       this.label = "EDIT A JOB"
       this.getJobByParamsJobId(this.jobId);
     }
-
-
-
     else {
       this.label = "POST A JOB"
       this.getCurrentLocationOnPageLoad();
@@ -243,15 +248,31 @@ export class EmployeeProfileComponent implements OnInit {
 
   getCountries(): void {
 
-    this.countries = csc.getAllCountries();
+    this.countries = [
+      {
+        id: "38",
+        name: "Canada",
+        phonecode: "1",
+        sortname: "CA"
+      },
+      {
+        id: "231",
+        name: "United States",
+        phonecode: "1",
+        sortname: "US",
+      }
+    ]
+
   }
   countryChange(countryObj): void {
     if (countryObj.value) {
 
       this.provinces = csc.getStatesOfCountry(countryObj.value.id)
+      this.cities=null
     }
     else {
       this.provinces = null;
+      this.cities=null
     }
   }
   provinceChange(provinceObj): void {
@@ -294,11 +315,10 @@ export class EmployeeProfileComponent implements OnInit {
     this.service.getJobById(id).subscribe((res) => {
       const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
-
-      let countryObj = csc.getAllCountries().find(c => c.name == country);
-      let stateObj = csc.getStatesOfCountry(countryObj.id).find(s => s.name == province);
+      let countryObj = this.countries.find(c => c["name"] == country);
+      let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);
       let cityObj = csc.getCitiesOfState(stateObj.id).find(cit => cit.name == city)
-      this.provinces = csc.getStatesOfCountry(countryObj.id);
+      this.provinces = csc.getStatesOfCountry(countryObj["id"]);
       this.cities = csc.getCitiesOfState(stateObj.id);
 
       this.contactForm.control.get("country").setValue(countryObj);
