@@ -23,7 +23,7 @@ import { NzModalService } from 'ng-zorro-antd';
 })
 export class AllJobsComponent implements OnInit {
 
-  @ViewChild('myFrom') myFrom:NgForm
+  @ViewChild('myFrom') myFrom: NgForm
   /** Constants used to fill up our data base. */
   selectedJobType = "all";
   // pageChange=new EventEmitter();
@@ -41,8 +41,6 @@ export class AllJobsComponent implements OnInit {
 
   options: string[] = [];
   filteredPlaces: Array<string> = [];
-
-
 
 
 
@@ -158,23 +156,23 @@ export class AllJobsComponent implements OnInit {
   pageChange(p): void {
 
 
-    if (this.selectedCategory != null && this.userType=="candidate") {
+    if (this.selectedCategory != null && this.userType == "candidate") {
       this.getJobsByCategory(this.selectedCategory, p - 1);
     }
 
-    else if (this.userType == "candidate" && this.selectedCategory == null && (this.cityName!=null || this.selectedJobType!=null || this.companyName!=null)) {
+    else if (this.userType == "candidate" && this.selectedCategory == null && (this.cityName != null || this.selectedJobType != null || this.companyName != null)) {
       this.globalSearch(this.cityName, this.selectedJobType, this.companyName, p - 1);
     }
-  
+
 
 
     else if (this.userType != "candidate" && this.selectedCategory == null) {
       this.getJobsByCompany(p - 1);
     }
-    else if(this.userType!="candidate" && this.selectedCategory!=null){
-      this.getJobsByCategory(this.selectedCategory,p-1);
+    else if (this.userType != "candidate" && this.selectedCategory != null) {
+      this.getJobsByCategory(this.selectedCategory, p - 1);
     }
-  
+
   }
 
 
@@ -188,7 +186,7 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
 
-    if(this.userType=="candidate"){
+    if (this.userType == "candidate") {
       this.service.getPaginatedJobs(p).subscribe((response) => {
         this.selectedCategory = null;
         if (response.totalElements > 0) {
@@ -210,10 +208,10 @@ export class AllJobsComponent implements OnInit {
         }, 2000)
       }
     }
-    else{
+    else {
       this.getJobsByCompany(0);
     }
-   
+
   }
 
   getJobsByCategory(cat, p): void {
@@ -225,7 +223,7 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
     this.service.getPaginatedJobsByCategory(cat, p).subscribe((res) => {
-
+      console.log(res,"==========paginated")
       if (res.totalElements > 0) {
         this.allJobs = res.content;
         this.total = res.totalElements;
@@ -238,17 +236,17 @@ export class AllJobsComponent implements OnInit {
         this.page = res.pageable.pageNumber + 1;
         this.total = res.totalElements;
 
-          setTimeout(() => {
-            this.empty = true;
-          }, 2000)
-        
+        setTimeout(() => {
+          this.empty = true;
+        }, 2000)
+
       }
       console.log(this.empty)
 
-    }),error=>{
-      setTimeout(()=>{
+    }), error => {
+      setTimeout(() => {
         this.empty = true;
-      },2000)
+      }, 2000)
     }
   }
 
@@ -262,10 +260,9 @@ export class AllJobsComponent implements OnInit {
   }
 
 
-  routeToJobDetailsComponent(id): void {
-    this.router.navigate(['/job/' + id])
-  }
-
+  routeToJobDetailsComponent=(id)=> this.router.navigate(['/job/' + id]);
+  
+  routeToCompanyProfile=(id)=>this.router.navigate(['companyProfileDetails/'+id]);
 
 
 
@@ -338,6 +335,7 @@ export class AllJobsComponent implements OnInit {
     this.page = 0;
     this.service.getJobsByCompany(p).subscribe(response => {
 
+      console.log(response,"======jobs by company")
       if (response.totalElements > 0) {
 
         this.total = response.totalElements;
@@ -363,7 +361,7 @@ export class AllJobsComponent implements OnInit {
     this.selectedCategory = null;
 
     this.service.globalJobSearch(city, type, company, pageNo).subscribe(response => {
-      console.log("this is what you want", response)
+      console.log("global search jobs", response)
       if (response.totalElements > 0) {
         console.log(response)
         this.total = response.totalElements;
@@ -377,7 +375,7 @@ export class AllJobsComponent implements OnInit {
         this.total = response.totalElements;
         this.empty = true;
       }
-    }),error => {
+    }), error => {
       setTimeout(() => {
         this.empty = true;
       }, 2000)
@@ -390,7 +388,9 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
     this.service.getAllJobsByCityName(city, page).pipe().subscribe(res => {
+      console.log(res,"=======city")
       if (res.totalElements > 0) {
+       
         this.allJobs = res.content;
         this.total = res.totalElements;
         this.page = page + 1;
@@ -441,12 +441,12 @@ export class AllJobsComponent implements OnInit {
   }
 
 
-  clearForm(){
+  clearForm() {
     console.log(this.myFrom.valid);
     this.myFrom.reset();
     this.selectedCategory = "";
     this.selectedJobType = "all"
-    this.globalSearch(this.cityName,this.selectedJobType,this.companyName,0);
+    this.globalSearch(this.cityName, this.selectedJobType, this.companyName, 0);
   }
 
 

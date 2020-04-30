@@ -16,11 +16,12 @@
           left: 22%;
           top: 18px;
           color: rgb(121, 118, 118);">search</mat-icon>
-      <input style="outline: none;border: none;" required [class.mat-elevation-z4]="true" name="location" class="search" matInput [formControl]="myControl"
-        [matAutocomplete]="auto" placeholder="Search">
+      <input style="outline: none;border: none;" required [class.mat-elevation-z4]="true" name="location" class="search"
+        matInput [formControl]="myControl" [matAutocomplete]="auto" placeholder="Search">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option style="font-size: 12px !important;" *ngFor="let selectedPlace of filteredPlaces"
-          [value]="selectedPlace.place_name" (onSelectionChange)="onEnter($event,selectedPlace)" (click)="onPlaceSelect(selectedPlace)">
+          [value]="selectedPlace.place_name" (onSelectionChange)="onEnter($event,selectedPlace)"
+          (click)="onPlaceSelect(selectedPlace)">
           {{selectedPlace.place_name}}
         </mat-option>
       </mat-autocomplete>
@@ -41,13 +42,8 @@
     <div class="form-group" style="margin-left:10px;">
       <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
         company</label>
-      <input type="text"
-        name="company"
-        style="width: 100%;"
-        class="form-control"
-        [(ngModel)]="companyName"
-        id="exampleFormControlInput1"
-        placeholder="Enter the company name">
+      <input type="text" name="company" style="width: 100%;" class="form-control" [(ngModel)]="companyName"
+        id="exampleFormControlInput1" placeholder="Enter the company name">
 
     </div>
     <div class="form-group" style="margin-left:10px;">
@@ -68,8 +64,8 @@
         (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
     </div>
     <div class="form-group" style="margin:25px 0px 0px 0px;">
-      <button type="button" style="height:38px;line-height: 10px;"
-        (click)="clearForm()" class="btn btn-danger">Clear</button>
+      <button type="button" style="height:38px;line-height: 10px;" (click)="clearForm()"
+        class="btn btn-danger">Clear</button>
     </div>
 
   </form>
@@ -82,7 +78,8 @@
     <div class="col-lg-3">
       <mat-card style="border-radius: 0px;margin-bottom:10px;">
         <h2>Categories</h2>
-        <span>Selected Category : <h5 style="color:#4284f4;font-size: 1.05rem !important">{{selectedCategory}}</h5></span>
+        <span>Selected Category : <h5 style="color:#4284f4;font-size: 1.05rem !important">{{selectedCategory}}</h5>
+        </span>
         <hr />
         <p class="categories" (click)="getPaginatedJobs(0)">All</p>
         <p class="categories" (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
@@ -124,58 +121,57 @@
 
 
             <mat-card
-              style="height: 155px;background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+              style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
 
               <div style="flex:4;">
-                <h3 (click)="routeToJobDetailsComponent(job.id)" style="cursor:pointer;font-weight:500; color: #489ceb;margin: 0px;">{{job.title}}</h3>
+                <div style="display: flex;">
+                  <div style="flex:9;">
+                    <h3
+                      style="margin:0px 0px 5px 0px; color: #489ceb;">
+                     <span  (click)="routeToJobDetailsComponent(job.id)" style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span></h3>
+                    <h6 style="font-weight:400;margin: 0px;">{{job.category}} - <span
+                        style="color:rgb(129, 126, 126);">City: {{job.city}}</span>
+                    </h6>
+                    <p style="margin-bottom: 0px">Company :
+                      <b>{{job.companyProfile?job.companyProfile.name:job.name}}</b>
+                    </p>
 
-                <h4 style="font-weight:500;margin: 0px;">{{job.category}} - <span
-                    style="color:rgb(129, 126, 126);">City: {{job.city}}</span>
-                  <!-- icons span starts here -->
-                  <span class="options" *ngIf="userType!='candidate'" style="float:right">
+                    <p style="margin-bottom:5px;">Description :
+                      {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
+                    <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
 
-                    <!-- <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
-                      (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
-                      style='font-size:20px;cursor: pointer;'>
+                  </div>
+                  <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
+                    <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)"  [nzSize]="64" style="display: block;flex: 2;margin-bottom: 5px;" nzIcon="user"
+                      [nzSrc]="'data:image/jpeg;base64,'+job.companyProfile.logo">
+                    </nz-avatar>
 
-                    </i> -->
-                    <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
-                      [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-
-                    <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
-                      (click)="showDeleteConfirm(job.id,i,page)" alt="Delete Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-
-                  </span>
-
-
-                  <!-- ELSE block -->
-                  <!--only show this to candidate  -->
-                  <!-- <span class="options" *ngIf="userType=='candidate'" style="float:right;">
-                    <i class='fa fa-eye edit_delete view' nz-tooltip nzTooltipTitle="View Job"
-                      (click)="routeToJobDetailsComponent(job.id)" alt="View Job"
-                      style='font-size:20px;cursor: pointer;'>
-
-                    </i>
-                  </span> -->
+                    <nz-rate style="flex: 1;height: 5px;" [ngModel]="job.companyProfile.avgRating" [nzAllowHalf]="true" [nzDisabled]="true" [nzTooltips]="tooltips">
+                    </nz-rate>
+                    <div style="flex: 1;">
+                      <!-- icons span starts here -->
+                      <span class="options" *ngIf="userType!='candidate'" style="float:right">
 
 
+                        <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
+                          [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
+                          style='font-size:20px;cursor: pointer;'>
 
-                  <!-- icons spans finish here -->
-                </h4>
-                <p
-                  style="margin-bottom: 0px">Company : <b>{{job.companyProfile?job.companyProfile.name:job.name}}</b></p>
+                        </i>
 
-                <!-- <p *ngIf="userType=='candidate'"
-                  style="margin-bottom: 0px">Company : <b>{{job?job.name:''}}</b></p> -->
-                <p style="margin-bottom:5px;">Description : 
-                  {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
-                <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
+                        <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
+                          (click)="showDeleteConfirm(job.id,i,page)" alt="Delete Job"
+                          style='font-size:20px;cursor: pointer;'>
+
+                        </i>
+
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+
+
 
               </div>
 
@@ -208,16 +204,12 @@
         </div>
       </div>
     </div>
-</div>
-    <ngx-spinner bdOpacity=1
-      bdColor="rgba(200, 216, 215, 0.25)"
-      size="medium"
-      color="rgba(12,11,11,0.85)"
-      type="ball-clip-rotate-pulse"
-      [fullScreen]="true">
-      <p style="color: white">Loading..</p>
-    </ngx-spinner>
+  </div>
+  <ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+    type="ball-clip-rotate-pulse" [fullScreen]="true">
+    <p style="color: white">Loading..</p>
+  </ngx-spinner>
 
-    <!-- Fooorter -->
+  <!-- Fooorter -->
 
-    <!-- <app-footer></app-footer>  -->
+  <!-- <app-footer></app-footer>  -->

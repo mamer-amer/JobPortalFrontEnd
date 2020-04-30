@@ -94,6 +94,7 @@ export class NavbarComponent implements OnInit {
   }
   onScroll() {
 
+    console.log("total elements",this.totalElements)
     if (this.totalElements > this.notifications.length) {
       this.isLoader = true;
       this.spinner.show("navSpinner");
