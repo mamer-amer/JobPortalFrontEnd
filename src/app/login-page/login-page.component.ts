@@ -5,6 +5,7 @@ import { NzMessageService, NzModalService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
 import { MDBModalRef, MDBModalService } from 'angular-bootstrap-md';
 import { Subject } from 'rxjs';
+import {environment} from '../../environments/environment'
 @Component({
   selector: "app-login-page",
   templateUrl: "./login-page.component.html",
@@ -17,17 +18,17 @@ export class LoginPageComponent implements OnInit {
   showLoading = false;
   status = false;
   basicModal:MDBModalRef;
-
+  captchaKey:string;
+  isCaptcha=false;
   
 
-  constructor(private toastService: ToastrService, private router: Router, private service: LoginService,private modalService:NzModalService) {}
+  constructor(private toastService: ToastrService, private router: Router, private service: LoginService,private modalService:NzModalService) {
+    this.captchaKey=environment.captchaKey;
+  }
 
   ngOnInit(): void {
     if(sessionStorage.length>0){
-      // window.history.go(-1);
       this.router.navigate(['/allJobs'])
-      // this.showModal();
-      // this.showDeleteConfirm();
     }
     else{
       sessionStorage.clear();
@@ -54,8 +55,11 @@ export class LoginPageComponent implements OnInit {
     });
   }
   
-
-  
+  resolved(captchaResponse: string) {
+    console.log(`Resolved captcha with response: ${captchaResponse}`);
+    if(captchaResponse)
+    this.isCaptcha=true;
+}
 
 
 

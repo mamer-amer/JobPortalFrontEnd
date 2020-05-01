@@ -1,52 +1,38 @@
 <router-outlet></router-outlet>
 <div class="bg-img">
 
-  <form action="/action_page.php"
-    
-    class="container">
+  <form #myForm="ngForm" (ngSubmit)="check(email.value, password.value)" class="container" style="height: 510px;">
     <div class="row">
-      <div class="col-lg-10 offset-lg-2"
-        style="margin-top: 5px">
-        <img src="../../assets/1622452.png"
-          height="43"
-          width="170"
-          style="padding:inherit" />
+      <div class="col-lg-10 offset-lg-2" style="margin-top: 5px">
+        <img src="../../assets/1622452.png" height="43" width="170" style="padding:inherit" />
       </div>
     </div>
     <br>
     <div style="margin-left: 12%;">
-      Register yourself <a style="color: steelblue;"
-        (click)="routeToRegister()">Register now.</a>
+      Register yourself <a style="color: steelblue;" (click)="routeToRegister()">Register now.</a>
     </div>
     <br>
 
     <label for="email"><b>Email</b></label>
-    <input type="text"
-      #email
-      placeholder="Enter Email"
-      name="email"
-      required>
+    <input type="text" #email placeholder="Enter Email" name="email" required>
 
     <label for="psw"><b>Password</b></label>
-    <input type="password"
-      #password
-      placeholder="Enter Password"
-      name="psw"
-      required>
+    <input type="password" #password placeholder="Enter Password" name="psw" style="margin-bottom: 0px;" required>
+    <!-- <br>
+    <br> -->
+
+    <!-- CAPTCHAAA -->
+    `<re-captcha (resolved)="resolved($event)" [siteKey]="captchaKey"></re-captcha>
     <br>
-    <br>
+
     <!-- <button type="submit" class="btn">Login</button> -->
-    <button type="submit"
-      mat-stroked-button
-      style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 5%;"
-      (click)="check(email.value, password.value)">
-      <span *ngIf="status"
-        class="spinner-border spinner-border-sm"></span>
+    <button type="submit" mat-stroked-button [disabled]="myForm.invalid ||  !isCaptcha"
+      style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 5%;">
+      <span *ngIf="status" class="spinner-border spinner-border-sm"></span>
 
       <b>Login</b>
     </button>
-    <button type="submit"
-      mat-stroked-button
+    <button type="click" mat-stroked-button
       style="color: whitesmoke; background-color: black;font-weight: lighter;margin-left: 2%;"
       (click)="routeToRegister()">
       <b>Register</b>
@@ -57,11 +43,7 @@
 
 
 
-<ngx-spinner bdOpacity=1
-  bdColor="rgba(200, 216, 215, 0.25)"
-  size="medium"
-  color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse" [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>

@@ -130,7 +130,7 @@
                       style="margin:0px 0px 5px 0px; color: #489ceb;">
                      <span  (click)="routeToJobDetailsComponent(job.id)" style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span></h3>
                     <h6 style="font-weight:400;margin: 0px;">{{job.category}} - <span
-                        style="color:rgb(129, 126, 126);">City: {{job.city}}</span>
+                        style="color:rgb(129, 126, 126);"> {{job.city}}</span>
                     </h6>
                     <p style="margin-bottom: 0px">Company :
                       <b>{{job.companyProfile?job.companyProfile.name:job.name}}</b>

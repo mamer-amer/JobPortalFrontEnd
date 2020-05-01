@@ -79,7 +79,7 @@ import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer'
 import {SafePipeModule } from 'safe-pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
-
+import { RecaptchaModule } from 'ng-recaptcha';
 @NgModule({
   declarations: [
     AppComponent,
@@ -164,7 +164,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
       progressAnimation: 'decreasing',
       closeButton: true
     }),
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    RecaptchaModule
     // MatGridListModule
   ],
   providers: [

@@ -132,7 +132,7 @@
               <h3 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h3>
               <span style="display:inline-flex">
 
-                <p style="margin:4px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
+                <p style="margin:4px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.companyProfile.name | titlecase }}</p>
                 &nbsp;&nbsp;
                    <nz-rate [ngModel]="rating"
                      [nzAllowHalf]="true"
@@ -141,7 +141,7 @@
                    </nz-rate>
 
               </span>
-              <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);">City : {{jobObj.city}} </p>
+              <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);"> {{jobObj.city}} </p>
               <p style="margin:0px 0px 0px 10px;color:rgb(129, 126, 126);"
                 *ngIf="userType!='candidate'">Candidates Applied : {{numOfCandidates}}</p>
               <p *ngIf="userType=='candidate'"
