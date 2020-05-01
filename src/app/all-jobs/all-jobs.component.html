@@ -64,8 +64,8 @@
         (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
     </div>
     <div class="form-group" style="margin:25px 0px 0px 0px;">
-      <button type="button" style="height:38px;line-height: 10px;background-color:#000000 !important;color: white;" (click)="clearForm()"
-        class="btn">Clear</button>
+      <button type="button" style="height:38px;line-height: 10px;background-color:#000000 !important;color: white;"
+        (click)="clearForm()" class="btn">Clear</button>
     </div>
 
   </form>
@@ -126,46 +126,51 @@
               <div style="flex:4;">
                 <div style="display: flex;">
                   <div style="flex:9;">
-                    <h3
-                      style="margin:0px 0px 5px 0px; color: #489ceb;">
-                     <span  (click)="routeToJobDetailsComponent(job.id)" style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span></h3>
-                    <h6 style="font-weight:400;margin: 0px;">{{job.category}} - <span
-                        style="color:rgb(129, 126, 126);"> {{job.city}}</span>
-                    </h6>
-                    <p style="margin-bottom: 0px">Company :
-                      <b>{{job.companyProfile?job.companyProfile.name:job.name}}</b>
-                    </p>
+                    <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
+                      <span (click)="routeToJobDetailsComponent(job.id)"
+                        style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span>
+                    </h3>
+                    <span class="options" *ngIf="userType!='candidate'" style="margin-left: 5px;">
 
-                    <p style="margin-bottom:5px;">Description :
-                      {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p>
+
+                      <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
+                        [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
+                        style='font-size:20px;cursor: pointer;'>
+
+                      </i>
+
+                      <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
+                        (click)="showDeleteConfirm(job.id,i,page)" alt="Delete Job"
+                        style='font-size:20px;cursor: pointer;'>
+
+                      </i>
+
+                    </span>
+
+                    <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{job.category}} - <span style="color:rgb(129, 126, 126);">
+                        {{job.city}}</span>
+                    </h6>
+                  
+
+                    <!-- <p style="margin-bottom:5px;">Description :
+                      {{job.description.length > 200 ?job.description.slice(0,200)+'...':job.description}}.</p> -->
                     <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
 
                   </div>
                   <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                    <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)"  [nzSize]="64" style="display: block;flex: 2;margin-bottom: 5px;" nzIcon="user"
+                    <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)" [nzSize]="64"
+                      style="display: block;flex: 2;margin-bottom: 5px;" nzIcon="user"
                       [nzSrc]="'data:image/jpeg;base64,'+job.companyProfile.logo">
                     </nz-avatar>
 
-                    <nz-rate style="flex: 1;height: 5px;" [ngModel]="job.companyProfile.avgRating" [nzAllowHalf]="true" [nzDisabled]="true" [nzTooltips]="tooltips">
+                    <nz-rate style="flex: 1;height: 5px;" [ngModel]="job.companyProfile.avgRating" [nzAllowHalf]="true"
+                      [nzDisabled]="true" [nzTooltips]="tooltips">
                     </nz-rate>
                     <div style="flex: 1;">
                       <!-- icons span starts here -->
-                      <span class="options" *ngIf="userType!='candidate'" style="float:right">
-
-
-                        <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
-                          [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
-                          style='font-size:20px;cursor: pointer;'>
-
-                        </i>
-
-                        <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
-                          (click)="showDeleteConfirm(job.id,i,page)" alt="Delete Job"
-                          style='font-size:20px;cursor: pointer;'>
-
-                        </i>
-
-                      </span>
+                      <p style="font-size: 15px;
+                      margin-bottom: 0px;
+                      font-weight: 400;">{{job.companyProfile.name | titlecase}}</p>
                     </div>
                   </div>
                 </div>
