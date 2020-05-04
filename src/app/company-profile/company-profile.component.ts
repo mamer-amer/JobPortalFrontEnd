@@ -19,6 +19,10 @@ export class CompanyProfileComponent implements OnInit {
   loadingText= "loading..";
   logoChangeObservable=new Subject<string>();
   logoMessage=this.logoChangeObservable.asObservable();
+  legalCompanyNameObserable = new Subject<string>();
+  legalCompanyName = this.legalCompanyNameObserable.asObservable();
+ 
+  
 
 
   companyProfileObj:CompanyProfile = new CompanyProfile();
@@ -41,9 +45,10 @@ export class CompanyProfileComponent implements OnInit {
       if(res){
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyId', res.result.id);
-
+        sessionStorage.setItem('companyName',this.companyProfileObj.name);
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
-        this.logoChangeObservable.next();
+        this.legalCompanyNameObserable.next();
+        this.logoChangeObservable.next();   
       
         this.toastService.info('Successfull','Company Profile Posted')
       }
@@ -112,10 +117,13 @@ export class CompanyProfileComponent implements OnInit {
       this.loadingText = "Getting Profile.."
       if(res.status==200 && res.result!=null){
         this.companyProfileObj.id = sessionStorage.setItem('companyId',res.result.id)
-        
+      
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
+        sessionStorage.setItem('companyName', this.companyProfileObj.name);
+        this.legalCompanyNameObserable.next();
+        
         this.logoChangeObservable.next();
 
       }

@@ -11,6 +11,7 @@ export class LoginService {
 
   sendId = new Subject<string>();
   loggedInUserId = this.sendId.asObservable();
+
   
   checkUserandPass(name: string, pwd: string):Observable <any> {
     let user = {

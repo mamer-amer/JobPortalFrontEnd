@@ -28,6 +28,7 @@ export class NavbarComponent implements OnInit {
   pageNo = 0;
   isLoader = false;
   totalElements = 1;
+  legalCompanyName:any = "";
 
 
 
@@ -39,8 +40,13 @@ export class NavbarComponent implements OnInit {
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
       console.log("This is company id", this.companyId)
+    });
+
+    this.companyProf.legalCompanyNameObserable.subscribe(()=>{
+      this.legalCompanyName = sessionStorage.getItem('companyName');
     })
   }
+
 
   ngOnInit(): void {
 
