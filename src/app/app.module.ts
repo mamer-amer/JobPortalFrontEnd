@@ -80,6 +80,7 @@ import {SafePipeModule } from 'safe-pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RecaptchaModule } from 'ng-recaptcha';
+import { ImageCropperModule } from 'ngx-image-cropper';
 @NgModule({
   declarations: [
     AppComponent,
@@ -104,6 +105,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
   imports: [
     MDBBootstrapModule.forRoot(),
     ConfirmDialogModule,
+    ImageCropperModule,
     ReactiveFormsModule,
     ToastrModule,
     NzUploadModule,

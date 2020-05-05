@@ -14,7 +14,28 @@
 label[_ngcontent-xet-c379] {
   background: white !important;
 }
+.options{
+  padding:0px 35px 0px 41px
+}
+/* 
+image-cropper {
+  height: 50vh;
+} */
 
+.fa-cross{
+  float:left;
+  padding: 10px;
+  color:white;
+}
+
+
+.modal-title{
+  color:white;
+}
+.modal-header{
+  background-color: black !important;
+  color:white !important;
+}
 
 /* * {
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
