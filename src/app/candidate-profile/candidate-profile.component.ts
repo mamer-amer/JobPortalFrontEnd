@@ -70,7 +70,8 @@ export class CandidateProfileComponent implements OnInit {
 
 
   candidateObj: Candidate = new Candidate();
-
+  zoomvalue:any=50;
+  checkZoomInOrOut=this.zoomvalue;
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -184,6 +185,18 @@ export class CandidateProfileComponent implements OnInit {
       ...this.transform,
       scale: this.scale
     };
+  }
+
+  zoom(){
+   if(this.zoomvalue>this.checkZoomInOrOut){
+     this.checkZoomInOrOut = this.zoomvalue
+     this.zoomIn();
+   }
+   else if(this.zoomvalue<this.checkZoomInOrOut){
+     this.checkZoomInOrOut = this.zoomvalue
+     this.zoomOut();
+   }
+    console.log(this.transform)
   }
 
   toggleContainWithinAspectRatio() {

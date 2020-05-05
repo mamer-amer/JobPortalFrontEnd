@@ -77,11 +77,20 @@
               </image-cropper>
               <br />
               <div class="row">
-                <div class="col-lg-4 offset-5">
-                  <i (click)="zoomIn()"
+                <div class="col-lg-5 offset-4">
+                    <input type="range"
+                      min="1"
+                      max="100"
+                      (change)="zoom()"
+                      value="50"
+                      [(ngModel)]="zoomvalue"
+                      class="slider"
+                      >
+
+                  <!-- <i (click)="zoomIn()"
                     class="fa fa-plus"></i>
                   <i (click)="zoomOut()"
-                    class="fa fa-minus"></i>
+                    class="fa fa-minus"></i> -->
                 </div>
 
               </div>
