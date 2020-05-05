@@ -28,6 +28,18 @@ image-cropper {
   color:white;
 }
 
+.fa-plus,
+.fa-minus{
+      padding: 14px;
+      background-color: lightgray;
+      cursor:pointer;
+}
+/* 
+.fa-plus,
+.fa-minu:hover {
+  background-color: #80808024;
+} */
+
 
 .modal-title{
   color:white;

@@ -79,3 +79,36 @@ label {
   }
 
 }
+
+.fa-cross {
+  float: left;
+  padding: 10px;
+  color: white;
+}
+
+.fa-plus,
+.fa-minus {
+  padding: 14px;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+/* 
+.fa-plus,
+.fa-minu:hover {
+  background-color: #80808024;
+} */
+
+
+
+.options {
+  padding: 0px 35px 0px 41px
+}
+.modal-title {
+  color: white;
+}
+
+.modal-header {
+  background-color: black !important;
+  color: white !important;
+}

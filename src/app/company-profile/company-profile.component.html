@@ -25,13 +25,13 @@
 
                 <div class="col-lg-6 col-md-6 offset-lg-1 offset-md-1" style="float:right;">
                   <i class="fa fa-rotate-left options"
-                    (click)="rotateLeft()"></i>
+                    (click)="rotateLeft()" nz-tooltip nzTooltipTitle="rotateLeft"></i>
                   <i class="fa fa-rotate-right options"
-                    (click)="rotateRight()"></i>
+                    (click)="rotateRight()" nz-tooltip nzTooltipTitle="rotateRight"></i>
                   <i class="fa fa-arrow-right options"
-                    (click)="flipHorizontal()"></i>
+                    (click)="flipHorizontal()" nz-tooltip nzTooltipTitle="flip Horizontal"></i>
                   <i class="fa fa-arrow-up options"
-                    (click)="flipVertical()"></i>
+                    (click)="flipVertical()" nz-tooltip nzTooltipTitle="flip Vertical"></i>
 
                 </div>
 
@@ -63,6 +63,15 @@
                 (cropperReady)="cropperReady($event)"
                 (loadImageFailed)="loadImageFailed()">
               </image-cropper>
+              <br/>
+              <div class="row">
+                <div class="col-lg-4 offset-5">
+                  <i (click)="zoomIn()" class="fa fa-plus"></i>
+                  <i (click)="zoomOut()"
+                    class="fa fa-minus"></i>
+                </div>
+                 
+              </div>
 
 
 
