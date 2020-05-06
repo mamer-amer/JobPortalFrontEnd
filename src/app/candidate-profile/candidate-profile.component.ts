@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Candidate } from './candidate';
 import { Location } from '@angular/common';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
@@ -11,6 +11,7 @@ import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
 import { Subject } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { ImageTransform, Dimensions, ImageCroppedEvent } from 'ngx-image-cropper';
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
@@ -69,6 +70,18 @@ export class CandidateProfileComponent implements OnInit {
 
 
   candidateObj: Candidate = new Candidate();
+  zoomvalue:any=50;
+  checkZoomInOrOut=this.zoomvalue;
+
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  canvasRotation = 0;
+  rotation = 0;
+  scale = 1;
+  showCropper = false;
+  containWithinAspectRatio = false;
+  transform: ImageTransform = {};
+  @ViewChild('openModal', { static: true }) openModal: ElementRef
 
   constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
 
@@ -100,6 +113,143 @@ export class CandidateProfileComponent implements OnInit {
   goBack() {
     this._location.back();
   }
+
+
+
+  imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+  }
+
+  cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+  }
+
+  loadImageFailed() {
+    console.log('Load failed');
+  }
+
+  rotateLeft() {
+    this.canvasRotation--;
+    this.flipAfterRotate();
+  }
+
+  rotateRight() {
+    this.canvasRotation++;
+    this.flipAfterRotate();
+  }
+
+  private flipAfterRotate() {
+    const flippedH = this.transform.flipH;
+    const flippedV = this.transform.flipV;
+    this.transform = {
+      ...this.transform,
+      flipH: flippedV,
+      flipV: flippedH
+    };
+  }
+
+
+  flipHorizontal() {
+    this.transform = {
+      ...this.transform,
+      flipH: !this.transform.flipH
+    };
+  }
+
+  flipVertical() {
+    this.transform = {
+      ...this.transform,
+      flipV: !this.transform.flipV
+    };
+  }
+
+  resetImage() {
+    this.scale = 1;
+    this.rotation = 0;
+    this.canvasRotation = 0;
+    this.transform = {};
+  }
+
+  zoomOut() {
+    this.scale -= .1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale
+    };
+  }
+
+  zoomIn() {
+    this.scale += .1;
+    this.transform = {
+      ...this.transform,
+      scale: this.scale
+    };
+  }
+
+  zoom(){
+   if(this.zoomvalue>this.checkZoomInOrOut){
+     this.checkZoomInOrOut = this.zoomvalue
+     this.zoomIn();
+   }
+   else if(this.zoomvalue<this.checkZoomInOrOut){
+     this.checkZoomInOrOut = this.zoomvalue
+     this.zoomOut();
+   }
+    console.log(this.transform)
+  }
+
+  toggleContainWithinAspectRatio() {
+    this.containWithinAspectRatio = !this.containWithinAspectRatio;
+  }
+
+  updateRotation() {
+    this.transform = {
+      ...this.transform,
+      rotate: this.rotation
+    };
+  }
+
+
+
+
+  fileChangeEvent(event: any): void {
+    this.openModal.nativeElement.click();
+    this.imageChangedEvent = event;
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64.replace(/^data:image\/[a-z]+;base64,/, "");
+
+
+  }
+
+
+
+
+  updateCroppedImage() {
+    sessionStorage.removeItem('dp');
+    this.candidateObj.dp = this.croppedImage;
+    sessionStorage.setItem('dp', this.candidateObj.dp);
+    this.logoChangeObservable.next();
+    // console.log(event, base64ToFile(event.base64));
+    // base64 to blob file
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -155,7 +305,8 @@ export class CandidateProfileComponent implements OnInit {
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
-      reader.onload = this._handleReaderImageLoaded.bind(this);
+      this.fileChangeEvent(event);
+      // reader.onload = this._handleReaderImageLoaded.bind(this);
       this.candidateObj.imageContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);

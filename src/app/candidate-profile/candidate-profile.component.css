@@ -79,3 +79,63 @@ label {
   }
 
 }
+
+.fa-cross {
+  float: left;
+  padding: 10px;
+  color: white;
+}
+
+.fa-plus,
+.fa-minus {
+  padding: 14px;
+  background-color: lightgray;
+  cursor: pointer;
+}
+
+/* 
+.fa-plus,
+.fa-minu:hover {
+  background-color: #80808024;
+} */
+
+
+
+.options {
+  padding: 0px 35px 0px 41px
+}
+.modal-title {
+  color: white;
+}
+
+.modal-header {
+  background-color: black !important;
+  color: white !important;
+}
+
+.slider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 10px;
+  border-radius: 5px;
+  background: #d3d3d3;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider:hover {
+  opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 17px;
+  height: 18px;
+  border-radius: 50%;
+  background: lightseagreen;
+  cursor: pointer;
+}
+
