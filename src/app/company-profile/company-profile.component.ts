@@ -42,7 +42,7 @@ export class CompanyProfileComponent implements OnInit {
   showCropper = false;
   containWithinAspectRatio = false;
   transform: ImageTransform = {};
-  @ViewChild('openModal', { static: true }) openModal: ElementRef
+  @ViewChild('openModal', { static: true }) openModal: ElementRef;
 
 
 
