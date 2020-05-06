@@ -42,7 +42,9 @@ export class NavbarComponent implements OnInit {
       console.log("This is company id", this.companyId)
     });
 
+    this.legalCompanyName = sessionStorage.getItem('companyName');
     this.companyProf.legalCompanyNameObserable.subscribe(()=>{
+
       this.legalCompanyName = sessionStorage.getItem('companyName');
     })
   }

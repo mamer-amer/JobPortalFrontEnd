@@ -70,7 +70,7 @@ export class CandidateProfileComponent implements OnInit {
 
 
   candidateObj: Candidate = new Candidate();
-  zoomvalue:any=50;
+  zoomvalue:any=1;
   checkZoomInOrOut=this.zoomvalue;
 
   imageChangedEvent: any = '';
@@ -125,44 +125,9 @@ export class CandidateProfileComponent implements OnInit {
     console.log('Cropper ready', sourceImageDimensions);
   }
 
-  loadImageFailed() {
-    console.log('Load failed');
-  }
 
-  rotateLeft() {
-    this.canvasRotation--;
-    this.flipAfterRotate();
-  }
-
-  rotateRight() {
-    this.canvasRotation++;
-    this.flipAfterRotate();
-  }
-
-  private flipAfterRotate() {
-    const flippedH = this.transform.flipH;
-    const flippedV = this.transform.flipV;
-    this.transform = {
-      ...this.transform,
-      flipH: flippedV,
-      flipV: flippedH
-    };
-  }
-
-
-  flipHorizontal() {
-    this.transform = {
-      ...this.transform,
-      flipH: !this.transform.flipH
-    };
-  }
-
-  flipVertical() {
-    this.transform = {
-      ...this.transform,
-      flipV: !this.transform.flipV
-    };
-  }
+ 
+ 
 
   resetImage() {
     this.scale = 1;
@@ -171,33 +136,18 @@ export class CandidateProfileComponent implements OnInit {
     this.transform = {};
   }
 
-  zoomOut() {
-    this.scale -= .1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
+ 
 
-  zoomIn() {
-    this.scale += .1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
+ 
+    zoom(a) {
 
-  zoom(){
-   if(this.zoomvalue>this.checkZoomInOrOut){
-     this.checkZoomInOrOut = this.zoomvalue
-     this.zoomIn();
-   }
-   else if(this.zoomvalue<this.checkZoomInOrOut){
-     this.checkZoomInOrOut = this.zoomvalue
-     this.zoomOut();
-   }
-    console.log(this.transform)
-  }
+      this.zoomvalue = a;
+      this.transform = {
+        ...this.transform,
+        scale: this.zoomvalue
+      };
+    }
+ 
 
   toggleContainWithinAspectRatio() {
     this.containWithinAspectRatio = !this.containWithinAspectRatio;

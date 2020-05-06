@@ -6,7 +6,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { HttpErrorResponse, HttpEventType } from '@angular/common/http';
 
 import { NavbarService } from '../navbar.service';
-import {NavbarComponent} from '../navbar/navbar.component'
+import { NavbarComponent } from '../navbar/navbar.component'
 import { Subject } from 'rxjs';
 import { LoginService } from '../login-page/login.service';
 import { ImageTransform, ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx-image-cropper';
@@ -18,20 +18,20 @@ import { ImageTransform, ImageCroppedEvent, base64ToFile, Dimensions } from 'ngx
 })
 export class CompanyProfileComponent implements OnInit {
 
-  loadingText= "loading..";
-  logoChangeObservable=new Subject<string>();
-  logoMessage=this.logoChangeObservable.asObservable();
+  loadingText = "loading..";
+  logoChangeObservable = new Subject<string>();
+  logoMessage = this.logoChangeObservable.asObservable();
   legalCompanyNameObserable = new Subject<string>();
   legalCompanyName = this.legalCompanyNameObserable.asObservable();
- 
-  
 
 
-  companyProfileObj:CompanyProfile = new CompanyProfile();
-  userId:any;
 
 
-  zoomvalue: any = 50;
+  companyProfileObj: CompanyProfile = new CompanyProfile();
+  userId: any;
+
+
+  zoomvalue: any = 1;
   checkZoomInOrOut = this.zoomvalue;
 
   imageChangedEvent: any = '';
@@ -53,8 +53,8 @@ export class CompanyProfileComponent implements OnInit {
 
 
 
-  constructor(public service:ApplicantServiceService,private toastService:ToastrService,private spinner:NgxSpinnerService,private loginService:LoginService,
-    private navbar:NavbarService) { 
+  constructor(public service: ApplicantServiceService, private toastService: ToastrService, private spinner: NgxSpinnerService, private loginService: LoginService,
+    private navbar: NavbarService) {
   }
 
   ngOnInit() {
@@ -65,20 +65,20 @@ export class CompanyProfileComponent implements OnInit {
     // this.getJobsPostedByEmployeeId();
   }
 
-  submitCompanyProfile(){
-   console.log(this.companyProfileObj)
-    this.service.postCompanyProfile(this.userId,this.companyProfileObj).subscribe(res=>{
-      if(res){
+  submitCompanyProfile() {
+    console.log(this.companyProfileObj)
+    this.service.postCompanyProfile(this.userId, this.companyProfileObj).subscribe(res => {
+      if (res) {
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyId', res.result.id);
-        sessionStorage.setItem('companyName',this.companyProfileObj.name);
+        sessionStorage.setItem('companyName', this.companyProfileObj.name);
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.legalCompanyNameObserable.next();
-        this.logoChangeObservable.next();   
-      
-        this.toastService.info('Successfull','Company Profile Posted')
+        this.logoChangeObservable.next();
+
+        this.toastService.info('Successfull', 'Company Profile Posted')
       }
-      else{
+      else {
         this.toastService.error('Unsuccessfull', 'Company Profile Failed')
 
       }
@@ -90,7 +90,7 @@ export class CompanyProfileComponent implements OnInit {
 
 
 
- 
+
 
 
   imageLoaded() {
@@ -106,40 +106,12 @@ export class CompanyProfileComponent implements OnInit {
     console.log('Load failed');
   }
 
-  rotateLeft() {
-    this.canvasRotation--;
-    this.flipAfterRotate();
-  }
-
-  rotateRight() {
-    this.canvasRotation++;
-    this.flipAfterRotate();
-  }
-
-  private flipAfterRotate() {
-    const flippedH = this.transform.flipH;
-    const flippedV = this.transform.flipV;
-    this.transform = {
-      ...this.transform,
-      flipH: flippedV,
-      flipV: flippedH
-    };
-  }
+  
 
 
-  flipHorizontal() {
-    this.transform = {
-      ...this.transform,
-      flipH: !this.transform.flipH
-    };
-  }
+  
 
-  flipVertical() {
-    this.transform = {
-      ...this.transform,
-      flipV: !this.transform.flipV
-    };
-  }
+
 
   resetImage() {
     this.scale = 1;
@@ -148,33 +120,16 @@ export class CompanyProfileComponent implements OnInit {
     this.transform = {};
   }
 
-  zoomOut() {
-    this.scale -= .1;
+
+
+
+  zoom(a) {
+
+    this.zoomvalue = a;
     this.transform = {
       ...this.transform,
-      scale: this.scale
+      scale: this.zoomvalue
     };
-  }
-
-  zoomIn() {
-    this.scale += .1;
-    this.transform = {
-      ...this.transform,
-      scale: this.scale
-    };
-  }
-
-
-  zoom() {
-    if (this.zoomvalue > this.checkZoomInOrOut) {
-      this.checkZoomInOrOut = this.zoomvalue
-      this.zoomIn();
-    }
-    else if (this.zoomvalue < this.checkZoomInOrOut) {
-      this.checkZoomInOrOut = this.zoomvalue
-      this.zoomOut();
-    }
-    console.log(this.transform)
   }
 
   toggleContainWithinAspectRatio() {
@@ -204,45 +159,46 @@ export class CompanyProfileComponent implements OnInit {
 
 
   fileChangeEvent(event: any): void {
+    this.zoomvalue=1;
     this.openModal.nativeElement.click();
     this.imageChangedEvent = event;
   }
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64.replace(/^data:image\/[a-z]+;base64,/, "");
-    
+    console.log(event, "=======")
 
   }
 
 
 
 
-updateCroppedImage(){
-  this.companyProfileObj.logo = this.croppedImage;
-  sessionStorage.removeItem('dp');
-  sessionStorage.setItem('dp', this.companyProfileObj.logo);
-  this.logoChangeObservable.next();
-  // console.log(event, base64ToFile(event.base64));
-  // base64 to blob file
-}  
+  updateCroppedImage() {
+    this.companyProfileObj.logo = this.croppedImage;
+    sessionStorage.removeItem('dp');
+    sessionStorage.setItem('dp', this.companyProfileObj.logo);
+    this.logoChangeObservable.next();
+    // console.log(event, base64ToFile(event.base64));
+    // base64 to blob file
+  }
 
 
 
 
   _handleReaderImageLoaded(readerEvt) {
-    
+
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
-  
+
     this.companyProfileObj.logo = base64textString;
     sessionStorage.removeItem('dp');
-    sessionStorage.setItem('dp',this.companyProfileObj.logo);
+    sessionStorage.setItem('dp', this.companyProfileObj.logo);
     this.logoChangeObservable.next();
 
   }
 
   onImageChange(event) {
-    
+
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
       let file = event.target.files[0];
@@ -250,7 +206,7 @@ updateCroppedImage(){
       this.fileChangeEvent(event);
       this.companyProfileObj.logoContentType = file.type;
       reader.readAsBinaryString(file);
-      
+
 
     }
   }
@@ -283,33 +239,33 @@ updateCroppedImage(){
   }
 
 
-  getProfile(){
-    this.service.getCurrentProfileUserStauts(this.userId).subscribe(res=>{
+  getProfile() {
+    this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
       this.loadingText = "Getting Profile.."
-      if(res.status==200 && res.result!=null){
-        this.companyProfileObj.id = sessionStorage.setItem('companyId',res.result.id)
-      
+      if (res.status == 200 && res.result != null) {
+        this.companyProfileObj.id = sessionStorage.setItem('companyId', res.result.id)
+
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
         this.legalCompanyNameObserable.next();
-        
+
         this.logoChangeObservable.next();
 
       }
-     
-      
-   
-     
-    }),error=>{
+
+
+
+
+    }), error => {
       // this.spinner.hide();
-      
+
     }
   }
 
- 
 
-  
+
+
 
 }

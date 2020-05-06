@@ -1,123 +1,63 @@
 <app-navbar></app-navbar>
 <br>
-<input type="button"
-  #openModal
-  [hidden]="true"
-  data-toggle="modal"
-  data-target="#myCropImageModal">
+<input type="button" #openModal [hidden]="true" data-toggle="modal" data-target="#myCropImageModal">
 <!-- Modal -->
 <div class="container">
-  <div class="row"
-    style="width:100%">
+  <div class="row" style="width:100%">
     <div class="col-lg-12 col-md-12">
-      <div class="modal fade"
-        id="myCropImageModal"
-        role="dialog">
+      <div class="modal fade" id="myCropImageModal" role="dialog">
 
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="row"
-                style="width: 100%">
+              <div class="row" style="width: 100%">
                 <div class="col-lg-5 col-md-5">
                   <h4 class="modal-title">Resize your image</h4>
                 </div>
 
 
-                <div class="col-lg-6 col-md-6 offset-lg-1 offset-md-1"
-                  style="float:right;">
-                  <i class="fa fa-rotate-left options"
-                    (click)="rotateLeft()"
-                    nz-tooltip
-                    nzTooltipTitle="rotateLeft"></i>
-                  <i class="fa fa-rotate-right options"
-                    (click)="rotateRight()"
-                    nz-tooltip
-                    nzTooltipTitle="rotateRight"></i>
-                  <i class="fa fa-arrow-right options"
-                    (click)="flipHorizontal()"
-                    nz-tooltip
-                    nzTooltipTitle="flip Horizontal"></i>
-                  <i class="fa fa-arrow-up options"
-                    (click)="flipVertical()"
-                    nz-tooltip
-                    nzTooltipTitle="flip Vertical"></i>
-
-                </div>
-
-
 
 
 
               </div>
 
             </div>
-            <div class="modal-body">
+            <div style="height:350px;" class="modal-body">
 
-              <image-cropper [imageChangedEvent]="imageChangedEvent"
-                [maintainAspectRatio]="true"
-                [containWithinAspectRatio]="containWithinAspectRatio"
-                [aspectRatio]="1/ 1"
-                [resizeToWidth]="100"
-                backgroundColor="lightgray"
-                [resizeToHeight]="100"
-                [cropperMinWidth]="100"
-                [onlyScaleDown]="true"
-                [roundCropper]="true"
-                [canvasRotation]="canvasRotation"
-                [transform]="transform"
-                [alignImage]="'center'"
-                [style.display]="showCropper ? null : 'none'"
-                (imageCropped)="imageCropped($event)"
-                (imageLoaded)="imageLoaded()"
-                (cropperReady)="cropperReady($event)"
+              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1/1" [disabled]="true"
+                [resizeToWidth]="100" backgroundColor="lightgray" [resizeToHeight]="100" [cropperMinWidth]="100"
+                [roundCropper]="true" [canvasRotation]="canvasRotation" [transform]="transform" [alignImage]="'center'"
+                [style.display]="showCropper ? null : 'none'" [imageQuality]="100" (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
                 (loadImageFailed)="loadImageFailed()">
               </image-cropper>
-              <br />
+
               <div class="row">
 
                 <div class="col-lg-5 offset-4">
-                  <input type="range"
-                    min="1"
-                    max="100"
-                    (change)="zoom()"
-                    value="50"
-                    [(ngModel)]="zoomvalue"
-                    class="slider">
-
-                  <!-- <i (click)="zoomIn()"
-                    class="fa fa-plus"></i>
-                  <i (click)="zoomOut()"
-                    class="fa fa-minus"></i> -->
-
-                  <!-- <i (click)="zoomIn()" class="fa fa-plus"></i>
-                  <i (click)="zoomOut()"
-                    class="fa fa-minus"></i> -->
+              
+                  <nz-slider [nzMin]="1" (ngModelChange)="zoom($event)" [nzMax]="10" [nzStep]="0.5"
+                    [(ngModel)]="zoomvalue"></nz-slider>
+                
                 </div>
 
               </div>
 
 
 
-              <!-- 
-              <div class="row">
-                <div class="col-*">
-                  
-                  <i class="fa fa-plus"></i>
-                  <i class="fa fa-minus"></i>
-                  
-                </div>
-              </div> -->
+            
 
             </div>
-            <div class="modal-footer">
-              <button type="button"
-                class="btn btn-dark"
-                (click)="updateCroppedImage()"
-                data-dismiss="modal">Save</button>
-              <button type="button"
-                class="btn btn-default"
-                data-dismiss="modal">Close</button>
+            <div class="modal-footer" style="margin-top:20px;">
+              <button type="button" class="btn btn-dark" style="    width: 80px;
+              font-size: 10px;
+              height: 30px;
+              padding: 0px;" (click)="updateCroppedImage()" data-dismiss="modal">Save</button>
+              <button type="button" style="    width: 80px;
+              font-size: 10px;
+              height: 30px;
+              padding: 0px;" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
 
           </div>
@@ -152,25 +92,21 @@
 
 
           <mat-card-header>
-            <div mat-card-avatar
-              class="example-header-image"></div>
+            <div mat-card-avatar class="example-header-image"></div>
             <mat-card-title>Company Profile</mat-card-title>
           </mat-card-header>
 
-          <a class="viewProfileLink"
-            [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your profile</a>
+          <a class="viewProfileLink" [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your
+            profile</a>
 
           <!-- image row -->
           <div class="row">
             <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
               <img class="companyLogo"
                 [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
-                alt="Avatar"
-                class="avatar" />
+                alt="Avatar" class="avatar" />
               <label style="cursor:pointer">
-                <input type="file"
-                  id="imgFile"
-                  (change)="onImageChange($event)" />
+                <input type="file" id="imgFile" (change)="onImageChange($event)" />
               </label>
             </div>
           </div>
@@ -185,12 +121,8 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Legal Company Name</mat-label> -->
-                <input style="width: 100%;"
-                  matInput
-                  [(ngModel)]="companyProfileObj.name"
-                  placeholder="Legal Company Name"
-                  name="name"
-                  required />
+                <input style="width: 100%;" matInput [(ngModel)]="companyProfileObj.name"
+                  placeholder="Legal Company Name" name="name" required />
               </mat-form-field>
             </div>
           </div>
@@ -198,12 +130,8 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Corporate Address</mat-label> -->
-                <input style="width: 100%;"
-                  matInput
-                  placeholder="Corporate Address"
-                  [(ngModel)]="companyProfileObj.corporateAddress"
-                  name="corporateAddress"
-                  required />
+                <input style="width: 100%;" matInput placeholder="Corporate Address"
+                  [(ngModel)]="companyProfileObj.corporateAddress" name="corporateAddress" required />
               </mat-form-field>
             </div>
           </div>
@@ -211,12 +139,8 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Billing Address</mat-label> -->
-                <input style="width: 100%;"
-                  matInput
-                  placeholder="Billing Address"
-                  [(ngModel)]="companyProfileObj.billingAddress"
-                  name="billingAddress"
-                  required />
+                <input style="width: 100%;" matInput placeholder="Billing Address"
+                  [(ngModel)]="companyProfileObj.billingAddress" name="billingAddress" required />
               </mat-form-field>
 
             </div>
@@ -225,12 +149,8 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Contact Name</mat-label> -->
-                <input style="width: 100%;"
-                  matInput
-                  placeholder="Contact Name"
-                  [(ngModel)]="companyProfileObj.contactName"
-                  name="contactName"
-                  required />
+                <input style="width: 100%;" matInput placeholder="Contact Name"
+                  [(ngModel)]="companyProfileObj.contactName" name="contactName" required />
               </mat-form-field>
             </div>
           </div>
@@ -238,22 +158,15 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Contact Title</mat-label> -->
-                <input style="width: 100%;"
-                  matInput
-                  placeholder="Contact Title"
-                  [(ngModel)]="companyProfileObj.contactTitle"
-                  name="contactTitle"
-                  required />
+                <input style="width: 100%;" matInput placeholder="Contact Title"
+                  [(ngModel)]="companyProfileObj.contactTitle" name="contactTitle" required />
               </mat-form-field>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
-              <button mat-raised-button
-                [disabled]="myForm.invalid"
-                style="background-color:black;color:white"
-                color="primary"
-                (click)="submitCompanyProfile()">Submit</button>
+              <button mat-raised-button [disabled]="myForm.invalid" style="background-color:black;color:white"
+                color="primary" (click)="submitCompanyProfile()">Submit</button>
             </div>
           </div>
 
@@ -265,12 +178,8 @@
 
 </div>
 
-<ngx-spinner bdOpacity=1
-  bdColor="rgba(200, 216, 215, 0.25)"
-  size="medium"
-  color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse" [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>
 <!-- Fooorter -->
