@@ -153,13 +153,6 @@ export class CandidateProfileComponent implements OnInit {
     this.containWithinAspectRatio = !this.containWithinAspectRatio;
   }
 
-  updateRotation() {
-    this.transform = {
-      ...this.transform,
-      rotate: this.rotation
-    };
-  }
-
 
 
 
