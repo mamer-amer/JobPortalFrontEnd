@@ -45,7 +45,7 @@ export class AllJobsComponent implements OnInit {
   filteredPlaces: Array<string> = [];
   longitude: number;
   latitude: number;
-  zoom: number = 10;
+  zoom: number = 15;
   address: string;
   private geoCoder;
 
@@ -255,7 +255,7 @@ export class AllJobsComponent implements OnInit {
       navigator.geolocation.getCurrentPosition((position) => {
         this.latitude = position.coords.latitude;
         this.longitude = position.coords.longitude;
-        this.zoom = 8;
+       
         this.getAddress(this.latitude, this.longitude);
       });
     }
@@ -266,7 +266,7 @@ export class AllJobsComponent implements OnInit {
       console.log(status);
       if (status === 'OK') {
         if (results[0]) {
-          this.zoom = 12;
+         
           this.address = results[0].formatted_address;
         } else {
           window.alert('No results found');
@@ -298,10 +298,11 @@ export class AllJobsComponent implements OnInit {
               return;
             }
 
+            console.log("places")
             //set latitude, longitude and zoom
             this.latitude = place.geometry.location.lat();
             this.longitude = place.geometry.location.lng();
-            this.zoom = 12;
+            
             console.log("helo")
           });
         });

@@ -1,37 +1,26 @@
 <app-navbar></app-navbar>
 
-<br>
-<br>
 
-
-
-
-
-<div class="container">
-  <mat-card style="border-radius: 0px;height:400px;">
+<div class="container-fluid" style="padding:0px;">
+  <div style="border-radius: 0px;height:450px;">
     <div style="position: relative;">
       <mat-icon matPrefix style="position: absolute;
           z-index: 4000;
           font-size: 22px;
           left: 22%;
-          top: 18px;
+          top: 35px;
           color: rgb(121, 118, 118);">search</mat-icon>
-      <input style="outline: none;border: none;" required [class.mat-elevation-z4]="true" name="location" class="search"
+      <input style="outline: none;border: none;margin-top: 15px;" required [class.mat-elevation-z4]="true" name="location" class="search"
         matInput #search placeholder="Search">
-      <!-- <mat-autocomplete #auto="matAutocomplete">
-        <mat-option style="font-size: 12px !important;" *ngFor="let selectedPlace of filteredPlaces"
-          [value]="selectedPlace.place_name" (onSelectionChange)="onEnter($event,selectedPlace)"
-          (click)="onPlaceSelect(selectedPlace)">
-          {{selectedPlace.place_name}}
-        </mat-option>
-      </mat-autocomplete> -->
-      <agm-map style="height:370px;" [latitude]="latitude" [longitude]="longitude">
+     
+      <agm-map style="height:450px;" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fullscreenControl]="true">
         <agm-marker *ngFor="let job of allJobs; let i = index" [latitude]="job.latitude" [longitude]="job.longitude">
         </agm-marker>
       </agm-map>
     </div>
-  </mat-card>
-
+  </div>
+</div>
+<div class="container">
   <hr />
   <form class="row" *ngIf="userType=='candidate'" #myFrom="ngForm">
 
