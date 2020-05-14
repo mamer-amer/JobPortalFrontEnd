@@ -14,7 +14,16 @@
         matInput #search placeholder="Search">
      
       <agm-map style="height:450px;" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fullscreenControl]="true">
-        <agm-marker *ngFor="let job of allJobs; let i = index" [latitude]="job.latitude" [longitude]="job.longitude">
+        <agm-marker *ngFor="let job of allJobs; let i = index"  (mouseOver)="onMouseOver(infoWindow, $event)" 
+        (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="routeToJobDetailsComponent(job.id)" [latitude]="job.latitude" [longitude]="job.longitude">
+          <agm-info-window [disableAutoPan]="false" #infoWindow>
+
+            <div>
+                {{job.title}}
+              
+            </div>
+
+        </agm-info-window>
         </agm-marker>
       </agm-map>
     </div>
