@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, EventEmitter, ElementRef, NgZone } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
@@ -14,6 +14,7 @@ import { FormControl, NgForm } from '@angular/forms';
 import { MapboxService } from '../Services/mapbox.service';
 import { NzModalService } from 'ng-zorro-antd';
 // import { NavbarService } from 'angular-bootstrap-md';
+import { MapsAPILoader, MouseEvent } from '@agm/core';
 
 
 @Component({
@@ -21,6 +22,7 @@ import { NzModalService } from 'ng-zorro-antd';
   templateUrl: './all-jobs.component.html',
   styleUrls: ['./all-jobs.component.css']
 })
+
 export class AllJobsComponent implements OnInit {
 
   @ViewChild('myFrom') myFrom: NgForm
@@ -41,11 +43,18 @@ export class AllJobsComponent implements OnInit {
 
   options: string[] = [];
   filteredPlaces: Array<string> = [];
+  longitude: number;
+  latitude: number;
+  zoom: number = 15;
+  address: string;
+  private geoCoder;
+
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
 
 
-
-
-  constructor(private mapboxService: MapboxService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService, private toastService: ToastrService, private modalService: NzModalService) {
+  constructor(private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone, private mapboxService: MapboxService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, public navService: NavbarService, private toastService: ToastrService, private modalService: NzModalService) {
 
 
     // this.date = moment((new Date()), "YYYYMMDD").fromNow();
@@ -82,11 +91,6 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  onEnter(e, place) {
-    if (e.source.selected)
-      this.onPlaceSelect(place)
-  }
-
   goBack() {
     this._location.back();
   }
@@ -94,8 +98,7 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  map: Mapboxgl.Map;
-  marker: Mapboxgl.Marker;
+
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   value = 3;
   // -1 from page because we are getting default 0 page number data from db so page 2 in frontEnd is 1 in backend
@@ -105,17 +108,6 @@ export class AllJobsComponent implements OnInit {
     this.userType = sessionStorage.getItem('userType');
 
 
-    this.myControl.valueChanges.subscribe((value) => {
-
-      this.filteredPlaces = []
-      if (value)
-        this.mapboxService.getGeoLocations(value).subscribe((res) => {
-          res.features.map((places) => {
-            this.filteredPlaces.push(places)
-
-          })
-        })
-    })
 
     if (this.userType == "candidate") {
       this.globalSearch(this.cityName, this.selectedJobType, this.companyName, 0);
@@ -125,7 +117,7 @@ export class AllJobsComponent implements OnInit {
     }
 
     this.loadMap()
-      .then(() => this.showMarkersOnMap())
+    // .then(() => this.showMarkersOnMap())
 
 
 
@@ -135,23 +127,6 @@ export class AllJobsComponent implements OnInit {
 
 
 
-  onPlaceSelect(v) {
-    this.selectedPlace = v;
-    // console.log(this.selectedPlace)
-
-    this.map.flyTo({
-      center: [
-        v.center[0],
-        v.center[1]
-      ],
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
-    });
-
-
-
-
-
-  }
 
   pageChange(p): void {
 
@@ -223,7 +198,7 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
     this.service.getPaginatedJobsByCategory(cat, p).subscribe((res) => {
-      console.log(res,"==========paginated")
+
       if (res.totalElements > 0) {
         this.allJobs = res.content;
         this.total = res.totalElements;
@@ -253,57 +228,85 @@ export class AllJobsComponent implements OnInit {
   showMarkersOnMap(): void {
     this.service.getAllJobs().subscribe(res => {
 
-      res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title, element.id));
+      // res.forEach(element => this.createMarker(element.longitude, element.latitude, element.title, element.id));
     })
 
 
   }
 
 
-  routeToJobDetailsComponent=(id)=> this.router.navigate(['/job/' + id]);
-  
-  routeToCompanyProfile=(id)=>this.router.navigate(['companyProfileDetails/'+id]);
+  routeToJobDetailsComponent = (id) => this.router.navigate(['/job/' + id]);
 
-
-
-  createMarker(long, lat, title, id) {
-
-
-    var popup = new Mapboxgl.Popup({ offset: 40 })
-      .setHTML('<div><p class="capatalize" style="margin:5px;color:#464646;font-style:italic;font-weight:bold">' + title + '</p><div>');
-    var marker = new Mapboxgl.Marker({})
-      .setLngLat([long, lat])
-      .setPopup(popup)
-      .addTo(this.map);
-    marker.getElement().addEventListener('dblclick', () => {
-      console.log(marker.getLngLat())
-      this.routeToJobDetailsComponent(id);
-
-    })
+  routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
 
 
 
 
+
+
+
+
+
+
+
+
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+       
+        this.getAddress(this.latitude, this.longitude);
+      });
+    }
   }
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      console.log(results);
+      console.log(status);
+      if (status === 'OK') {
+        if (results[0]) {
+         
+          this.address = results[0].formatted_address;
+        } else {
+          console.log('No results found');
+        }
+      } else {
+       console.log('Geocoder failed due to: ' + status);
+      }
 
-
-
-
-
-
+    });
+  }
   loadMap(): Promise<any> {
 
     return new Promise((resolve, reject) => {
-      this.getCurrentPosition().then(pos => {
 
-        Mapboxgl.accessToken = environment.mapboxKey;
-        this.map = new Mapboxgl.Map({
-          container: 'myMap', // container id
-          style: 'mapbox://styles/mapbox/streets-v11',
-          center: [pos.lng, pos.lat], // starting position
-          zoom: 13// starting zoom
+
+
+      this.mapsAPILoader.load().then(() => {
+        this.setCurrentLocation();
+        this.geoCoder = new google.maps.Geocoder;
+
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+
+            console.log("places")
+            //set latitude, longitude and zoom
+            this.latitude = place.geometry.location.lat();
+            this.longitude = place.geometry.location.lng();
+            
+            console.log("helo")
+          });
         });
-        this.map.addControl(new Mapboxgl.FullscreenControl());
+
         resolve();
       })
     })
@@ -311,7 +314,13 @@ export class AllJobsComponent implements OnInit {
   }
 
 
+  onMouseOver(infoWindow, $event: MouseEvent) {
+    infoWindow.open();
+}
 
+onMouseOut(infoWindow, $event: MouseEvent) {
+    infoWindow.close();
+}
   getCurrentPosition(): Promise<any> {
     return new Promise((resolve, reject) => {
 
@@ -335,7 +344,7 @@ export class AllJobsComponent implements OnInit {
     this.page = 0;
     this.service.getJobsByCompany(p).subscribe(response => {
 
-      console.log(response,"======jobs by company")
+      console.log(response, "======jobs by company")
       if (response.totalElements > 0) {
 
         this.total = response.totalElements;
@@ -388,9 +397,9 @@ export class AllJobsComponent implements OnInit {
     this.itemsPerPage = 0;
     this.page = 0;
     this.service.getAllJobsByCityName(city, page).pipe().subscribe(res => {
-      console.log(res,"=======city")
+      console.log(res, "=======city")
       if (res.totalElements > 0) {
-       
+
         this.allJobs = res.content;
         this.total = res.totalElements;
         this.page = page + 1;

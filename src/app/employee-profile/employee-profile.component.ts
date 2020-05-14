@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import * as Mapboxgl from 'mapbox-gl';
 import { Job } from '../Job'
@@ -15,6 +15,7 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { MapboxService } from '../Services/mapbox.service'
+import { MapsAPILoader } from '@agm/core';
 @Component({
   selector: 'app-employee-profile',
   templateUrl: './employee-profile.component.html',
@@ -25,16 +26,16 @@ export class EmployeeProfileComponent implements OnInit {
   @ViewChild('myform') contactForm: NgForm;
   myControl = new FormControl();
   options: string[] = [];
-  filteredPlaces: Array<string> = [];
-  selectedPlace;
 
+  @ViewChild('search')
+  public searchElementRef: ElementRef;
 
   jobObj: Job;
   selectedField;
-  map: Mapboxgl.Map;
-  marker: Mapboxgl.Marker;
+  address: string;
+  private geoCoder;
   convertedDate: any;
-
+  zoom: number = 15;
   cities: Array<any> = [];
   provinces: Array<any> = [];
   label: String;
@@ -71,7 +72,8 @@ export class EmployeeProfileComponent implements OnInit {
   jobId: any = undefined;
 
 
-  constructor(private mapboxService: MapboxService, private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
+  constructor(private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone, private mapboxService: MapboxService, private jobService: JobService, public service: ApplicantServiceService, private message: NzMessageService, private toastService: ToastrService, private router: Router, private navbar: NavbarService, private activatedRoute: ActivatedRoute) { }
 
 
 
@@ -80,17 +82,7 @@ export class EmployeeProfileComponent implements OnInit {
     this.navbar.showNav();
     this.getCountries();
 
-    this.myControl.valueChanges.subscribe((value) => {
 
-      this.filteredPlaces = []
-      if (value)
-        this.mapboxService.getGeoLocations(value).subscribe((res) => {
-          res.features.map((places) => {
-            this.filteredPlaces.push(places)
-
-          })
-        })
-    })
 
 
 
@@ -101,35 +93,49 @@ export class EmployeeProfileComponent implements OnInit {
     else {
       this.label = "POST A JOB"
       this.getCurrentLocationOnPageLoad();
+      this.loadMap()
 
     }
   }
 
 
-  onPlaceSelect(v) {
-    this.selectedPlace = v;
-    this.map.flyTo({
-      center: [
-        v.center[0],
-        v.center[1]
-      ],
-      essential: true // this animation is considered essential with respect to prefers-reduced-motion
+
+
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.jobObj.latitude = position.coords.latitude;
+        this.jobObj.longitude = position.coords.longitude;
+
+        this.getAddress(this.jobObj.latitude, this.jobObj.longitude);
+      });
+    }
+  }
+  getAddress(latitude, longitude) {
+    this.geoCoder.geocode({ 'location': { lat: latitude, lng: longitude } }, (results, status) => {
+      console.log(results);
+      console.log(status);
+      if (status === 'OK') {
+        if (results[0]) {
+
+          this.address = results[0].formatted_address;
+        } else {
+          window.alert('No results found');
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status);
+      }
+
     });
-
-    this.marker.setLngLat([v.center[0], v.center[1]])
-    this.jobObj.longitude = v.center[0];
-    this.jobObj.latitude = v.center[1];
-
-
   }
 
 
   getCurrentLocationOnPageLoad() {
     this.getPosition().then(pos => {
 
-      this.createMap(pos.lng, pos.lat)
+      this.jobObj.longitude = pos.lng;
+      this.jobObj.latitude = pos.lat;
 
-      this.createMarker(pos.lng, pos.lat)
 
     });
   }
@@ -144,27 +150,44 @@ export class EmployeeProfileComponent implements OnInit {
 
   }
 
-  createMarker(long, lat) {
 
-    this.jobObj.latitude = lat;
-    this.jobObj.longitude = long;
 
-    this.marker = new Mapboxgl.Marker({
-      draggable: true
-    })
-      .setLngLat([long, lat])
-      .addTo(this.map);
+  loadMap(): Promise<any> {
 
-    this.marker.on("drag", (e) => {
-      let { lng, lat } = e.target.getLngLat();
-      this.jobObj.latitude = lat;
-      this.jobObj.longitude = lng;
+    return new Promise((resolve, reject) => {
 
+
+
+      this.mapsAPILoader.load().then(() => {
+        if(!this.catchParams)
+        this.setCurrentLocation();
+        this.geoCoder = new google.maps.Geocoder;
+
+        let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
+        autocomplete.addListener("place_changed", () => {
+          this.ngZone.run(() => {
+            //get the place result
+            let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+            //verify result
+            if (place.geometry === undefined || place.geometry === null) {
+              return;
+            }
+
+
+            //set latitude, longitude and zoom
+            this.jobObj.latitude = place.geometry.location.lat();
+            this.jobObj.longitude = place.geometry.location.lng();
+
+            console.log("helo")
+          });
+        });
+
+        resolve();
+      })
     })
 
   }
-
-
 
 
 
@@ -208,8 +231,7 @@ export class EmployeeProfileComponent implements OnInit {
         console.log(res)
         if (res.status == 200) {
           formTemplate.reset();
-          this.selectedPlace = [];
-          this.filteredPlaces = [];
+
           setTimeout(() => this.router.navigate(['allJobs']), 1000)
           this.toastService.info('Successfull', 'Job Posted Successfully');
         }
@@ -268,11 +290,11 @@ export class EmployeeProfileComponent implements OnInit {
     if (countryObj.value) {
 
       this.provinces = csc.getStatesOfCountry(countryObj.value.id)
-      this.cities=null
+      this.cities = null
     }
     else {
       this.provinces = null;
-      this.cities=null
+      this.cities = null
     }
   }
   provinceChange(provinceObj): void {
@@ -320,28 +342,20 @@ export class EmployeeProfileComponent implements OnInit {
       let cityObj = csc.getCitiesOfState(stateObj.id).find(cit => cit.name == city)
       this.provinces = csc.getStatesOfCountry(countryObj["id"]);
       this.cities = csc.getCitiesOfState(stateObj.id);
-
+      this.jobObj.latitude = latitude;
+      this.jobObj.longitude = longitude;
       this.contactForm.control.get("country").setValue(countryObj);
       this.contactForm.control.get("province").setValue(stateObj);
       this.contactForm.control.get("city").setValue(cityObj);
       this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
       this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
-      this.createMap(longitude, latitude);
-      this.createMarker(longitude, latitude);
+      this.loadMap()
+
     });
   }
 
 
-  createMap(lng, lat) {
 
-    Mapboxgl.accessToken = environment.mapboxKey;
-    this.map = new Mapboxgl.Map({
-      container: 'myMap', // container id
-      style: 'mapbox://styles/mapbox/streets-v11',
-      center: [lng, lat], // starting position
-      zoom: 12// starting zoom
-    });
-  }
 
 
 

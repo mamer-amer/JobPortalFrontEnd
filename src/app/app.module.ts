@@ -74,13 +74,14 @@ import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NgxDocViewerModule } from 'ngx-doc-viewer'
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {NgxExtendedPdfViewerModule} from 'ngx-extended-pdf-viewer'
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer'
 // import {AgmCoreModule} from '@agm/core'
-import {SafePipeModule } from 'safe-pipe'
+import { SafePipeModule } from 'safe-pipe'
 import { NzModalModule } from 'ng-zorro-antd/modal';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +110,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     ReactiveFormsModule,
     ToastrModule,
     NzUploadModule,
-    SafePipeModule ,
+    SafePipeModule,
     CommonModule,
     BrowserModule,
     AppRoutingModule,
@@ -167,8 +168,11 @@ import { ImageCropperModule } from 'ngx-image-cropper';
       closeButton: true
     }),
     InfiniteScrollModule,
-    RecaptchaModule
-    // MatGridListModule
+    RecaptchaModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
+      libraries: ['places']
+    })
   ],
   providers: [
 

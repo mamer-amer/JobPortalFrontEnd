@@ -147,15 +147,11 @@
                 top: 18px;
                 color: rgb(121, 118, 118);">search</mat-icon>
               <input required [class.mat-elevation-z4]="true" name="location" class="search" matInput
-                [formControl]="myControl" [matAutocomplete]="auto" placeholder="Search">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option style="font-size: 12px !important;" *ngFor="let selectedPlace of filteredPlaces"
-                  [value]="selectedPlace.place_name" (click)="onPlaceSelect(selectedPlace)">
-                  {{selectedPlace.place_name}}
-                </mat-option>
-              </mat-autocomplete>
-              <div id="myMap">
-              </div>
+                 placeholder="Search" #search>
+                <agm-map style="height:450px;" [latitude]="jobObj.latitude" [longitude]="jobObj.longitude" [zoom]="zoom" [fullscreenControl]="true">
+                  <agm-marker  [latitude]="jobObj.latitude" [longitude]="jobObj.longitude">
+                  </agm-marker>
+                </agm-map>
 
             </div>
 
