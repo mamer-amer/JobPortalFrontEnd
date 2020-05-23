@@ -26,26 +26,7 @@
                 </div>
 
 
-                <div class="col-lg-6 col-md-6 offset-lg-1 offset-md-1"
-                  style="float:right;">
-                  <i class="fa fa-rotate-left options"
-                    (click)="rotateLeft()"
-                    nz-tooltip
-                    nzTooltipTitle="rotateLeft"></i>
-                  <i class="fa fa-rotate-right options"
-                    (click)="rotateRight()"
-                    nz-tooltip
-                    nzTooltipTitle="rotateRight"></i>
-                  <i class="fa fa-arrow-right options"
-                    (click)="flipHorizontal()"
-                    nz-tooltip
-                    nzTooltipTitle="flip Horizontal"></i>
-                  <i class="fa fa-arrow-up options"
-                    (click)="flipVertical()"
-                    nz-tooltip
-                    nzTooltipTitle="flip Vertical"></i>
-
-                </div>
+              
 
 
 
@@ -54,57 +35,30 @@
               </div>
 
             </div>
-            <div class="modal-body">
+            <div style="height:350px;" class="modal-body">
 
-              <image-cropper [imageChangedEvent]="imageChangedEvent"
-                [maintainAspectRatio]="true"
-                [containWithinAspectRatio]="containWithinAspectRatio"
-                [aspectRatio]="1/ 1"
-                [resizeToWidth]="100"
-                backgroundColor="lightgray"
-                [resizeToHeight]="100"
-                [onlyScaleDown]="true"
-                [roundCropper]="true"
-                [canvasRotation]="canvasRotation"
-                [transform]="transform"
-                [alignImage]="'center'"
-                [style.display]="showCropper ? null : 'none'"
-                (imageCropped)="imageCropped($event)"
-                (imageLoaded)="imageLoaded()"
-                (cropperReady)="cropperReady($event)"
-                (loadImageFailed)="loadImageFailed()">
+              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
+                [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1/1" 
+                [resizeToWidth]="100" backgroundColor="lightgray" [resizeToHeight]="100" [cropperMinWidth]="100"
+                [roundCropper]="true" [canvasRotation]="canvasRotation" [transform]="transform" [alignImage]="'center'"
+                [style.display]="showCropper ? null : 'none'" [imageQuality]="100" (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)">
               </image-cropper>
-              <br />
-              <div class="row">
-                <div class="col-lg-5 offset-4">
-                    <input type="range"
-                      min="1"
-                      max="100"
-                      (change)="zoom()"
-                      value="50"
-                      [(ngModel)]="zoomvalue"
-                      class="slider"
-                      >
 
-                  <!-- <i (click)="zoomIn()"
-                    class="fa fa-plus"></i>
-                  <i (click)="zoomOut()"
-                    class="fa fa-minus"></i> -->
+              <div class="row">
+
+                <div class="col-lg-5 offset-4">
+              
+                  <nz-slider [nzMin]="1" (ngModelChange)="zoom($event)" [nzMax]="10" [nzStep]="0.5"
+                    [(ngModel)]="zoomvalue"></nz-slider>
+                
                 </div>
 
               </div>
 
 
 
-              <!-- 
-              <div class="row">
-                <div class="col-*">
-                  
-                  <i class="fa fa-plus"></i>
-                  <i class="fa fa-minus"></i>
-                  
-                </div>
-              </div> -->
+            
 
             </div>
             <div class="modal-footer">
