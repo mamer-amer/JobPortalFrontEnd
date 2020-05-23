@@ -124,8 +124,11 @@
       <div class="userInfo" *ngIf="userType=='candidate'">
         <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
       </div>
-      <div class="userInfo" *ngIf="userType!='candidate'">
+      <div class="userInfo" *ngIf="userType=='employer'">
         <h6>{{legalCompanyName}}<br><sub>{{userType | titlecase }}</sub></h6>
+      </div>
+      <div class="userInfo" *ngIf="userType=='recruiter'">
+        <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
       </div>
 
       <li class="nav-item avatar dropdown" *ngIf="userType!='candidate'" dropdown>
