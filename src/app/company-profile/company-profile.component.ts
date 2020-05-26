@@ -43,6 +43,16 @@ export class CompanyProfileComponent implements OnInit {
   containWithinAspectRatio = false;
   transform: ImageTransform = {};
   @ViewChild('openModal', { static: true }) openModal: ElementRef;
+  showUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    hidePreviewIconInNonImage: true
+  };
+  previewImage: string | undefined = '';
+  previewVisible = false;
+  certificate: any;
+  contentType: string;
+
 
 
 
@@ -106,7 +116,7 @@ export class CompanyProfileComponent implements OnInit {
     console.log('Load failed');
   }
 
-
+  
 
 
 
@@ -171,7 +181,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   onFileChange1(event) {
-
+    
     let reader = new FileReader();
 
     try {
@@ -236,7 +246,7 @@ export class CompanyProfileComponent implements OnInit {
     //console.log(btoa(binaryString));
     this.companyProfileObj.certificate = base64textString;
 
-    // this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
+    this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
 
   }
 
@@ -336,6 +346,8 @@ export class CompanyProfileComponent implements OnInit {
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
+        this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
+        this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
         this.legalCompanyNameObserable.next();
 
         this.logoChangeObservable.next();
@@ -350,6 +362,62 @@ export class CompanyProfileComponent implements OnInit {
 
     }
   }
+
+  downloadFile() {
+
+    const extension = this.companyProfileObj['resumeContentType'];
+    const source = this.value;
+    const downloadLink = document.createElement("a");
+    const fileName = this.companyProfileObj.name + "." + extension;
+    downloadLink.href = source;
+    downloadLink.download = fileName;
+    downloadLink.target = "_blank"
+    downloadLink.click();
+
+  }
+
+ 
+
+  isVisible = false;
+  value: string;
+
+
+  showModal(): void {
+    this.isVisible = true;
+    this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
+    this.value = this.resume;
+    this.contentType = this.companyProfileObj['resumeContentType'];
+
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
+  isVisibleCertificate = false;
+
+  showModalCertificate(): void {
+    this.isVisible = true;
+    this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
+    this.value = this.certificate;
+    this.contentType = this.companyProfileObj['certificateContentType'];
+  }
+
+  // handleOkCertificate(): void {
+  //   console.log('Button ok clicked!');
+  //   this.isVisible = false;
+  // }
+
+  // handleCancelCertificate(): void {
+  //   console.log('Button cancel clicked!');
+  //   this.isVisible = false;
+  // }
 
 
 

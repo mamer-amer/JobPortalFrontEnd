@@ -29,3 +29,24 @@ sub{
   /* background-color: yellow !important; */
 }
 
+.modal-title {
+  color: white;
+}
+
+.modal-header {
+  background-color: black !important;
+  color: white !important;
+}
+
+
+
+.btn,
+.fileButton {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 13px;
+}
+

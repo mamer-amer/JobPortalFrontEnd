@@ -24,16 +24,16 @@
 
 
         <hr />
-        <div class="row" style="width:100%">
+        <div class="row"
+          style="width:100%">
           <div class="col-lg-8">
-            
+
             <h3 style="display: inline;">{{companyProfile.name | uppercase }} </h3>
           </div>
 
           <div class="col-lg-4">
             <span style="display:inline">
-              <nz-rate 
-                [disabled]="true"
+              <nz-rate [disabled]="true"
                 [ngModel]="avgRating"
                 [nzTooltips]="tooltips"></nz-rate>
               <small style="color:lightgray"> Rating ({{avgRating | number:'1.0-1'}}/5)</small>
@@ -42,20 +42,23 @@
 
         </div>
 
+       
+
+
 
         <div class="container"
+          *ngIf="userType=='recruiter';else notrecruiter"
           style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
           <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
 
-            <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span style="color: gray;font-weight: normal;">
+            <h4 style="flex: 1;color: rgb(0, 0, 0);">Name: <span style="color: gray;font-weight: normal;">
                 {{companyProfile.contactName}}</span></h4>
 
-            <h4 style="flex: 1;color: black">Contact Title: <span style="color: gray;font-weight: normal;">
-                {{companyProfile.contactTitle}} </span></h4>
-
-
+            <!-- <h4 style="flex: 1;color: black">Contact Title: <span style="color: gray;font-weight: normal;">
+                {{companyProfile.contactTitle}} </span></h4> -->
 
           </div>
+
           <div style="display: flex;justify-content: center;align-items: center;">
             <h4 style="flex: 1;color: black;">Corporate Address: <span style="color: gray;font-weight: normal;">
                 {{companyProfile.corporateAddress}} </span></h4>
@@ -63,7 +66,44 @@
             <h4 style="flex: 1;color: black;">Billing Address: <span style="color: gray;font-weight: normal;">
                 {{companyProfile.billingAddress}} </span></h4>
           </div>
+
+          <div style="display: flex;justify-content: center;align-items: center;">
+            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1"
+              class="btn btn-primary"
+              (click)="showModal()">
+              <i class="fa fa-eye"
+                aria-hidden="true">View Resume</i>
+            </button>
+            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1"
+              class="btn btn-primary"
+              (click)="showModalCertificate()">
+              <i class="fa fa-eye"
+                aria-hidden="true">View Certificate</i>
+            </button>
+          </div>
         </div>
+         <ng-template #notrecruiter>
+           <div class="container"
+             style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
+             <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
+
+               <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span style="color: gray;font-weight: normal;">
+                   {{companyProfile.contactName}}</span></h4>
+
+               <h4 style="flex: 1;color: black">Contact Title: <span style="color: gray;font-weight: normal;">
+                   {{companyProfile.contactTitle}} </span></h4>
+
+             </div>
+
+             <div style="display: flex;justify-content: center;align-items: center;">
+               <h4 style="flex: 1;color: black;">Corporate Address: <span style="color: gray;font-weight: normal;">
+                   {{companyProfile.corporateAddress}} </span></h4>
+
+               <h4 style="flex: 1;color: black;">Billing Address: <span style="color: gray;font-weight: normal;">
+                   {{companyProfile.billingAddress}} </span></h4>
+             </div>
+           </div>
+         </ng-template>
       </mat-card>
     </div>
   </div>
@@ -80,7 +120,8 @@
 
         <div *ngFor="let candidate of companyReviewRating">
 
-          <div *ngIf="userType!='candidate'" class="card-header border-0 font-weight-bold d-flex justify-content-between">
+          <div *ngIf="userType!='candidate'"
+            class="card-header border-0 font-weight-bold d-flex justify-content-between">
 
             <ul style="margin-left: auto"
               class="list-unstyled list-inline mb-0">
@@ -127,46 +168,93 @@
     </div>
   </div>
 
- <!-- write your review here as an employee or recuiter -->
- <div class="row" *ngIf="userType=='candidate'">
-   <div class="col-lg-12"
-     *ngIf="!reviewBtn">
-     <div id="review"
-       class="card-header border-0 font-weight-bold reviewHeader">Leave a review
-       <span style="float:right;text-align: center"
-         class="ratingSectionSpan">
+  <!-- write your review here as an employee or recuiter -->
+  <div class="row"
+    *ngIf="userType=='candidate'">
+    <div class="col-lg-12"
+      *ngIf="!reviewBtn">
+      <div id="review"
+        class="card-header border-0 font-weight-bold reviewHeader">Leave a review
+        <span style="float:right;text-align: center"
+          class="ratingSectionSpan">
 
-         <p style="display: inline-block">Rate {{companyProfile?companyProfile.name:''}}</p>
-         &nbsp;
-         <nz-rate [(ngModel)]="rating"
-           [nzTooltips]="tooltips"></nz-rate>
-
-
-       </span>
-     </div>
+          <p style="display: inline-block">Rate {{companyProfile?companyProfile.name:''}}</p>
+          &nbsp;
+          <nz-rate [(ngModel)]="rating"
+            [nzTooltips]="tooltips"></nz-rate>
 
 
-     <div class="d-md-flex flex-md-fill px-1"
-       style="width: 100%">
-       <div class="md-form w-100">
-         <textarea class="form-control md-textarea pt-0"
-           id="exampleFormControlTextarea1"
-           rows="3"
-           #review
-           placeholder="Write something here..."></textarea>
-       </div>
-     </div>
-     <div class="text-center">
-       <button (click)="postReview(review.value)"
-         class="btn btn-default btn-rounded btn-md"
-         style="background-color: black !important">Submit</button>
-     </div>
-   </div>
- </div>
+        </span>
+      </div>
+
+
+      <div class="d-md-flex flex-md-fill px-1"
+        style="width: 100%">
+        <div class="md-form w-100">
+          <textarea class="form-control md-textarea pt-0"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            #review
+            placeholder="Write something here..."></textarea>
+        </div>
+      </div>
+      <div class="text-center">
+        <button (click)="postReview(review.value)"
+          class="btn btn-default btn-rounded btn-md"
+          style="background-color: black !important">Submit</button>
+      </div>
+    </div>
+  </div>
 
 
 </div>
 <br>
+
+
+
+
+
+<!-- //MODAL -->
+<nz-modal nzWidth="60%"
+  [nzStyle]="{ top: '20px' }"
+  [nzBodyStyle]="{'height':'95vh'}"
+  style="overflow:hidden"
+  [(nzVisible)]="isVisible"
+  [nzFooter]="null"
+  [nzClosable]="false"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk()">
+
+  <!-- <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(cv)" width="100%" height="400" frameBorder="0"></iframe> -->
+  <ngx-doc-viewer *ngIf="contentType!='doc'"
+    [url]="value"
+    [viewer]="contentType==='pdf' ? 'pdf' : 'mammoth'"
+    [ngStyle]="contentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
+  </ngx-doc-viewer>
+
+  <div *ngIf="contentType=='doc'"
+    style="height:200px;display: flex;justify-content: center;align-items: center;">
+    <p>Preview not available</p>
+  </div>
+  <button (click)="downloadFile()"
+    class="btn"
+    style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
+    Download</button>
+  <button (click)="handleCancel()"
+    class="btn"
+    style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
+</nz-modal>
+
+<br>
+
+
+
+
+
+
+
+
+
 <ngx-spinner bdOpacity=1
   bdColor="rgba(200, 216, 215, 0.25)"
   size="medium"
