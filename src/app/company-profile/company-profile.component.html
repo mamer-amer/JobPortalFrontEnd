@@ -165,6 +165,27 @@
           </div>
           <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
+             <input class="btn"
+               accept=".pdf,.docx,.doc"
+               type="file"
+               name="myfile"
+               id="imgFile"
+               (change)="onFileChange($event)" />
+               
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
+              <input class="btn"
+                accept=".pdf,.docx,.doc"
+                type="file"
+                name="myfile"
+                id="imgFile"
+                (change)="onFileChange($event)" />
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 col-lg-12 col-sm-12">
               <button mat-raised-button [disabled]="myForm.invalid" style="background-color:black;color:white"
                 color="primary" (click)="submitCompanyProfile()">Submit</button>
             </div>

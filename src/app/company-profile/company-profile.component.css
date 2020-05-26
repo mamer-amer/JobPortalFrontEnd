@@ -11,6 +11,24 @@
   font-size: 12px !important;
 }
 
+img {
+  cursor: pointer;
+}
+
+#imgFile {
+  display: none;
+}
+
+.btn,
+.fileButton {
+  background-color: black;
+  border: none;
+  color: white;
+  padding: 10px 30px;
+  cursor: pointer;
+  font-size: 13px;
+}
+
 label[_ngcontent-xet-c379] {
   background: white !important;
 }
