@@ -23,14 +23,14 @@ export class CompanyProfileComponent implements OnInit {
   logoMessage = this.logoChangeObservable.asObservable();
   legalCompanyNameObserable = new Subject<string>();
   legalCompanyName = this.legalCompanyNameObserable.asObservable();
-
+  userType = sessionStorage.getItem('userType')
 
 
 
   companyProfileObj: CompanyProfile = new CompanyProfile();
   userId: any;
 
-
+  resume: any;
   zoomvalue: any = 1;
   checkZoomInOrOut = this.zoomvalue;
 
@@ -61,7 +61,7 @@ export class CompanyProfileComponent implements OnInit {
     this.navbar.showNav();
     // this.spinner.show();
     this.checkUserId();
-    this.getProfile();
+
     // this.getJobsPostedByEmployeeId();
   }
 
@@ -106,10 +106,10 @@ export class CompanyProfileComponent implements OnInit {
     console.log('Load failed');
   }
 
-  
 
 
-  
+
+
 
 
 
@@ -159,7 +159,7 @@ export class CompanyProfileComponent implements OnInit {
 
 
   fileChangeEvent(event: any): void {
-    this.zoomvalue=1;
+    this.zoomvalue = 1;
     this.openModal.nativeElement.click();
     this.imageChangedEvent = event;
   }
@@ -170,6 +170,92 @@ export class CompanyProfileComponent implements OnInit {
 
   }
 
+  onFileChange1(event) {
+
+    let reader = new FileReader();
+
+    try {
+      if (event.target.files && event.target.files.length > 0) {
+        let file = event.target.files[0];
+        if (this.fileExtensionAllowed(file.name)) {
+          this.companyProfileObj.resumeContentType = this.getFileExtension(file.name)
+
+          reader.onload = this._handleReaderLoaded_1.bind(this);
+
+
+          reader.readAsBinaryString(file);
+        }
+        else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
+
+
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+  onFileChange2(event) {
+
+    let reader = new FileReader();
+
+    try {
+      if (event.target.files && event.target.files.length > 0) {
+        let file = event.target.files[0];
+        if (this.fileExtensionAllowed(file.name)) {
+          this.companyProfileObj.certificateContentType = this.getFileExtension(file.name)
+
+          reader.onload = this._handleReaderLoaded_2.bind(this);
+
+
+          reader.readAsBinaryString(file);
+        }
+        else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
+
+
+      }
+    }
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+
+
+  _handleReaderLoaded_1(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    let base64textString = btoa(binaryString);
+    //console.log(btoa(binaryString));
+    this.companyProfileObj.resume = base64textString;
+
+    this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
+
+  }
+  _handleReaderLoaded_2(readerEvt) {
+    var binaryString = readerEvt.target.result;
+    let base64textString = btoa(binaryString);
+    //console.log(btoa(binaryString));
+    this.companyProfileObj.certificate = base64textString;
+
+    // this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
+
+  }
+
+  getFileExtension = (filename) => filename.split('.').pop();
+
+  fileExtensionAllowed(filename) {
+
+
+    let extensionsAllowed = {
+      "doc": true,
+      "docx": true,
+      "pdf": true
+    }
+    let ext = this.getFileExtension(filename)
+
+
+
+    return extensionsAllowed[ext];
+  }
 
 
 
@@ -234,6 +320,7 @@ export class CompanyProfileComponent implements OnInit {
     const id = sessionStorage.getItem('userId');
     if (id != null) {
       this.userId = id;
+      this.getProfile();
     }
 
   }

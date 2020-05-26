@@ -1,16 +1,24 @@
 <app-navbar></app-navbar>
 <br>
-<input type="button" #openModal [hidden]="true" data-toggle="modal" data-target="#myCropImageModal">
+<input type="button"
+  #openModal
+  [hidden]="true"
+  data-toggle="modal"
+  data-target="#myCropImageModal">
 <!-- Modal -->
 <div class="container">
-  <div class="row" style="width:100%">
+  <div class="row"
+    style="width:100%">
     <div class="col-lg-12 col-md-12">
-      <div class="modal fade" id="myCropImageModal" role="dialog">
+      <div class="modal fade"
+        id="myCropImageModal"
+        role="dialog">
 
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <div class="row" style="width: 100%">
+              <div class="row"
+                style="width: 100%">
                 <div class="col-lg-5 col-md-5">
                   <h4 class="modal-title">Resize your image</h4>
                 </div>
@@ -22,42 +30,65 @@
               </div>
 
             </div>
-            <div style="height:350px;" class="modal-body">
+            <div style="height:350px;"
+              class="modal-body">
 
-              <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1/1" 
-                [resizeToWidth]="100" backgroundColor="lightgray" [resizeToHeight]="100" [cropperMinWidth]="100"
-                [roundCropper]="true" [canvasRotation]="canvasRotation" [transform]="transform" [alignImage]="'center'"
-                [style.display]="showCropper ? null : 'none'" [imageQuality]="100" (imageCropped)="imageCropped($event)"
-                (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
+              <image-cropper [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [containWithinAspectRatio]="containWithinAspectRatio"
+                [aspectRatio]="1/1"
+                [resizeToWidth]="100"
+                backgroundColor="lightgray"
+                [resizeToHeight]="100"
+                [cropperMinWidth]="100"
+                [roundCropper]="true"
+                [canvasRotation]="canvasRotation"
+                [transform]="transform"
+                [alignImage]="'center'"
+                [style.display]="showCropper ? null : 'none'"
+                [imageQuality]="100"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady($event)"
                 (loadImageFailed)="loadImageFailed()">
               </image-cropper>
 
               <div class="row">
 
                 <div class="col-lg-5 offset-4">
-              
-                  <nz-slider [nzMin]="1" (ngModelChange)="zoom($event)" [nzMax]="10" [nzStep]="0.5"
+
+                  <nz-slider [nzMin]="1"
+                    (ngModelChange)="zoom($event)"
+                    [nzMax]="10"
+                    [nzStep]="0.5"
                     [(ngModel)]="zoomvalue"></nz-slider>
-                
+
                 </div>
 
               </div>
 
 
 
-            
+
 
             </div>
-            <div class="modal-footer" style="margin-top:20px;">
-              <button type="button" class="btn btn-dark" style="    width: 80px;
+            <div class="modal-footer"
+              style="margin-top:20px;">
+              <button type="button"
+                class="btn btn-dark"
+                style="    width: 80px;
               font-size: 10px;
               height: 30px;
-              padding: 0px;" (click)="updateCroppedImage()" data-dismiss="modal">Save</button>
-              <button type="button" style="    width: 80px;
+              padding: 0px;"
+                (click)="updateCroppedImage()"
+                data-dismiss="modal">Save</button>
+              <button type="button"
+                style="    width: 80px;
               font-size: 10px;
               height: 30px;
-              padding: 0px;" class="btn btn-default" data-dismiss="modal">Close</button>
+              padding: 0px;"
+                class="btn btn-default"
+                data-dismiss="modal">Close</button>
             </div>
 
           </div>
@@ -92,11 +123,13 @@
 
 
           <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
+            <div mat-card-avatar
+              class="example-header-image"></div>
             <mat-card-title>Company Profile</mat-card-title>
           </mat-card-header>
 
-          <a class="viewProfileLink" [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your
+          <a class="viewProfileLink"
+            [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your
             profile</a>
 
           <!-- image row -->
@@ -104,9 +137,12 @@
             <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
               <img class="companyLogo"
                 [src]="companyProfileObj.logo!=null?'data:image/jpeg;base64,'+companyProfileObj.logo:'../../assets/user.png'"
-                alt="Avatar" class="avatar" />
+                alt="Avatar"
+                class="avatar" />
               <label style="cursor:pointer">
-                <input type="file" id="imgFile" (change)="onImageChange($event)" />
+                <input type="file"
+                  id="imgFile"
+                  (change)="onImageChange($event)" />
               </label>
             </div>
           </div>
@@ -121,8 +157,11 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Legal Company Name</mat-label> -->
-                <input style="width: 100%;" matInput [(ngModel)]="companyProfileObj.name"
-                  placeholder="Legal Company Name" name="name" required />
+                <input style="width: 100%;"
+                  matInput
+                  [(ngModel)]="companyProfileObj.name"
+                  placeholder="Legal Company Name"
+                  name="name" />
               </mat-form-field>
             </div>
           </div>
@@ -130,8 +169,12 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Corporate Address</mat-label> -->
-                <input style="width: 100%;" matInput placeholder="Corporate Address"
-                  [(ngModel)]="companyProfileObj.corporateAddress" name="corporateAddress" required />
+                <input style="width: 100%;"
+                  matInput
+                  placeholder="Corporate Address"
+                  [(ngModel)]="companyProfileObj.corporateAddress"
+                  name="corporateAddress"
+                  required />
               </mat-form-field>
             </div>
           </div>
@@ -139,8 +182,12 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Billing Address</mat-label> -->
-                <input style="width: 100%;" matInput placeholder="Billing Address"
-                  [(ngModel)]="companyProfileObj.billingAddress" name="billingAddress" required />
+                <input style="width: 100%;"
+                  matInput
+                  placeholder="Billing Address"
+                  [(ngModel)]="companyProfileObj.billingAddress"
+                  name="billingAddress"
+                  required />
               </mat-form-field>
 
             </div>
@@ -149,8 +196,12 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Contact Name</mat-label> -->
-                <input style="width: 100%;" matInput placeholder="Contact Name"
-                  [(ngModel)]="companyProfileObj.contactName" name="contactName" required />
+                <input style="width: 100%;"
+                  matInput
+                  placeholder="Contact Name"
+                  [(ngModel)]="companyProfileObj.contactName"
+                  name="contactName"
+                  required />
               </mat-form-field>
             </div>
           </div>
@@ -158,36 +209,51 @@
             <div class="col-md-12 col-lg-12 col-sm-12">
               <mat-form-field class="example-full-width">
                 <!-- <mat-label>Contact Title</mat-label> -->
-                <input style="width: 100%;" matInput placeholder="Contact Title"
-                  [(ngModel)]="companyProfileObj.contactTitle" name="contactTitle" required />
+                <input style="width: 100%;"
+                  matInput
+                  placeholder="Contact Title"
+                  [(ngModel)]="companyProfileObj.contactTitle"
+                  name="contactTitle"
+                  required />
               </mat-form-field>
             </div>
           </div>
-          <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-             <input class="btn"
-               accept=".pdf,.docx,.doc"
-               type="file"
-               name="myfile"
-               id="imgFile"
-               (change)="onFileChange($event)" />
-               
+          <div class="recruiter"
+            *ngIf="userType=='recruiter'">
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>Upload resume
+                  <input class="btn"
+                    accept=".pdf,.docx,.doc"
+                    type="file"
+                    name="myfile"
+                    id="imgFile"
+                    (change)="onFileChange1($event)" />
+                </label>
+
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 col-lg-12 col-sm-12">
+                <label>Upload Certificate
+                  <input class="btn"
+                    accept=".pdf,.docx,.doc"
+                    type="file"
+                    name="myfile"
+                    id="imgFile"
+                    (change)="onFileChange2($event)" />
+                </label>
+              </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-12 col-lg-12 col-sm-12">
-              <input class="btn"
-                accept=".pdf,.docx,.doc"
-                type="file"
-                name="myfile"
-                id="imgFile"
-                (change)="onFileChange($event)" />
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12 col-lg-12 col-sm-12">
-              <button mat-raised-button [disabled]="myForm.invalid" style="background-color:black;color:white"
-                color="primary" (click)="submitCompanyProfile()">Submit</button>
+              <button mat-raised-button
+                [disabled]="myForm.invalid"
+                style="background-color:black;color:white"
+                color="primary"
+                (click)="submitCompanyProfile()">Submit</button>
             </div>
           </div>
 
@@ -199,8 +265,12 @@
 
 </div>
 
-<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse" [fullScreen]="true">
+<ngx-spinner bdOpacity=1
+  bdColor="rgba(200, 216, 215, 0.25)"
+  size="medium"
+  color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>
 <!-- Fooorter -->

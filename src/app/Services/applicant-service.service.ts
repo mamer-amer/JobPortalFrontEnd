@@ -64,7 +64,7 @@ export class ApplicantServiceService {
     if (sessionStorage.getItem('userType') == "candidate") {
       return this.http.get(this.url + "api/cp/" + userId);
     }
-    else if (sessionStorage.getItem('userType') == "employer") {
+    else if (sessionStorage.getItem('userType') != "candidate") {
       return this.http.get(this.url + "api/companyprofile/userId/" + userId);
 
     }

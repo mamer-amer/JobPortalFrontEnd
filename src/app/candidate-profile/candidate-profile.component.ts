@@ -5,7 +5,7 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import { NzMessageService } from 'ng-zorro-antd';
+// import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
@@ -40,10 +40,10 @@ export class CandidateProfileComponent implements OnInit {
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
   color: any = false;
-  exportAsConfig: ExportAsConfig = {
-    type: 'pdf', // the type you want to download
-    elementId: 'myTableElementId', // the id of html/table element
-  }
+  // exportAsConfig: ExportAsConfig = {
+  //   type: 'pdf', // the type you want to download
+  //   elementId: 'myTableElementId', // the id of html/table element
+  // }
 
 
 
@@ -83,7 +83,7 @@ export class CandidateProfileComponent implements OnInit {
   transform: ImageTransform = {};
   @ViewChild('openModal', { static: true }) openModal: ElementRef
 
-  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
+  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private toastService: ToastrService, public nav: NavbarService) { }
 
 
   ngOnInit(): void {
