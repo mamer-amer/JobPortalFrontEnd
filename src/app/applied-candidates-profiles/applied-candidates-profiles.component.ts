@@ -39,20 +39,16 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
   getAllProfiles(id) {
     this.candidatesArrays = [];
     this.service.getAppliedCandidatesProfile(id).subscribe(res => {
-      console.log(res);
+      console.log(res,"==========");
       res.result.map(d => {
         this.candidatesArrays.push({
           candId: d.id,
-          userId: d.user.id,
-          name: d.user.name,
-          email: d.user.email,
-          field: d.field,
-          profileActive: d.user.profileActive == true ? "Active" : "Inactive",
-          presentationLetter: d.presentationLetter,
-          cv: d.cv,
-          dp: d.dp,
-          imageContentType: d.imageContentType,
-          resumeContentType: d.resumeContentType,
+          userId: d.id,
+          name: d.name,
+          email: d.email,
+         
+          profileActive: d.profileActive == true ? "Active" : "Inactive",
+
 
         });
       });

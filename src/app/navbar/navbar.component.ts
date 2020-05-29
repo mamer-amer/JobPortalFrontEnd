@@ -81,8 +81,8 @@ export class NavbarComponent implements OnInit {
 
   readNotification(jobId) {
 
-    if (jobId && this.companyId)
-      this.service.markAnotificationAsRead(this.companyId, jobId).subscribe(() => {
+    if (jobId && this.userId)
+      this.service.markAnotificationAsRead(this.userId, jobId).subscribe(() => {
         this.router.navigate(['appliedcandidates/' + jobId])
 
       })
@@ -90,12 +90,12 @@ export class NavbarComponent implements OnInit {
   readAllNotications() {
     if (this.companyId) {
    
-      this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
+      this.service.markAllNoticationsAsRead(this.userId).subscribe((res) => {
 
         if (res?.result) {
           this.pageNo=0;
           this.notifications = res.result.content
-          this.getNotificationsCount(this.companyId);
+          this.getNotificationsCount(this.userId);
         }
       })
     }
@@ -110,14 +110,18 @@ export class NavbarComponent implements OnInit {
     }
   }
   getNotificationsCount(companyId) {
+
+   
     this.service.getCompanyNotificationsCount(companyId).subscribe((count) => {
-      this.notificationsCount = count;
+   
+     this.noticationsCountValue=count;
+     
     })
   }
 
-  getNotifications(companyId, page) {
+  getNotifications(userId, page) {
 
-    this.service.getCompanyNotifications(companyId, page).subscribe((res) => {
+    this.service.getCompanyNotifications(userId, page).subscribe((res) => {
       this.isLoader = false;
       this.spinner.hide("navSpinner")
       this.notifications = this.notifications.concat(res.content)
@@ -134,12 +138,21 @@ export class NavbarComponent implements OnInit {
     this.pageNo = 0;
     this.notificationOpen = !this.notificationOpen;
     this.notifications = [];
-    if (this.companyId) {
-      this.getNotificationsCount(this.companyId);
+    if (this.userId) {
+      this.getNotificationsCount(this.userId);
       if (this.notificationOpen) {
-        this.getNotifications(this.companyId, this.pageNo)
+        this.getNotifications(this.userId, this.pageNo)
       }
     }
   }
 
+
+  
+  get noticationsCountValue(){
+    return this.notificationsCount;
+  }
+   
+  set noticationsCountValue(count){
+    this.notificationsCount=count; 
+  }
 }

@@ -58,9 +58,10 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkUserId();
     this.navbar.showNav();
     // this.spinner.show();
-    this.checkUserId();
+   
     this.getProfile();
     // this.getJobsPostedByEmployeeId();
   }
@@ -232,6 +233,7 @@ export class CompanyProfileComponent implements OnInit {
 
   checkUserId() {
     const id = sessionStorage.getItem('userId');
+    console.log("sessssssssion id   " ,id)
     if (id != null) {
       this.userId = id;
     }

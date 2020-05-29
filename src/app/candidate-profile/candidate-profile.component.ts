@@ -40,10 +40,10 @@ export class CandidateProfileComponent implements OnInit {
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
   color: any = false;
-  exportAsConfig: ExportAsConfig = {
-    type: 'pdf', // the type you want to download
-    elementId: 'myTableElementId', // the id of html/table element
-  }
+  // exportAsConfig: ExportAsConfig = {
+  //   type: 'pdf', // the type you want to download
+  //   elementId: 'myTableElementId', // the id of html/table element
+  // }
 
 
 

@@ -59,10 +59,11 @@ export class JobDetailsComponent implements OnInit {
   getJobById(id): void {
 
     this.service.getJobById(id).subscribe((res) => {
+      console.log(res,"----------------")
       this.jobObj = res.result;
       // console.log(this.jobObj)
       this.jobId = res.result.id;
-      this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
+      this.companyId = res.result.jobPoster.companyProfile ? res.result.jobPoster.companyProfile.id : null;
       this.getCompanyRating(this.companyId);
       // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview(undefined);
@@ -112,7 +113,7 @@ export class JobDetailsComponent implements OnInit {
       
       if(res.status==200){
       this.toastService.info('Successful', 'Successfully applied to the job!')
-        this.companyId = res.result?res.result.companyProfile.id:0;
+        this.companyId = res.result?res.result.jobPoster.companyProfile.id:0;
         this.getCompanyRating(this.companyId);
         this.alreadyCommented = true;
       }

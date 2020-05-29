@@ -8,10 +8,12 @@ export  class JobDetails {
     category: String;
     type: String;
     date:any;
-    companyProfile = {
+    jobPoster = {
+        companyProfile:{
         name : "",
         corporateAddress: "",
         logo: "",
         logoContentType: ""
+        }
     }
 }
