@@ -129,6 +129,7 @@
           </mat-card-header>
 
           <a class="viewProfileLink"
+           [queryParams]="{'type':'companyProfile'}"
             [routerLink]="['/companyProfileDetails',companyProfileObj.id]">View your
             profile</a>
 

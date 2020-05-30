@@ -10,6 +10,7 @@ import { LoginService } from '../login-page/login.service';
 import { Router } from '@angular/router'
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+import { RecruiterProfileComponent } from '../recruiter-profile/recruiter-profile.component';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -32,15 +33,19 @@ export class NavbarComponent implements OnInit {
 
 
 
-  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService,private recruiterProf:RecruiterProfileComponent) {
+    
     this.notificationOpen = false;
     this.companyProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
+    this.recruiterProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
 
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
       console.log("This is company id", this.companyId)
     });
+
+    
 
     this.legalCompanyName = sessionStorage.getItem('companyName');
     this.companyProf.legalCompanyNameObserable.subscribe(()=>{
@@ -92,7 +97,7 @@ export class NavbarComponent implements OnInit {
    
       this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
 
-        if (res?.result) {
+        if (res.result) {
           this.pageNo=0;
           this.notifications = res.result.content
           this.getNotificationsCount(this.companyId);

@@ -58,7 +58,7 @@ export class JobDetailsComponent implements OnInit {
 
   getJobById(id): void {
 
-    this.service.getJobById(id).subscribe((res) => {
+      this.service.getJobById(id).subscribe((res) => {
       this.jobObj = res.result;
       // console.log(this.jobObj)
       this.jobId = res.result.id;

@@ -157,8 +157,26 @@
 
           </mat-card>
         </div>
+        <br>
+        <div class="row" *ngIf="userType=='recruiter'">
+          <div class="col-lg-4 offset-lg-2">
+          
+         <mat-checkbox [(ngModel)]="publicPost"
+          [disabled]="privatePost"
+         ><b>Public post</b>
+        </mat-checkbox>
+          </div>
+         <div class="col-lg-4 offset-lg-2">
+          <mat-checkbox 
+          [(ngModel)]="privatePost"
+          [disabled]="publicPost"
+          ><b>Confidential post</b>
+        </mat-checkbox>
+         
+          </div>
+        </div>
         <div class="col-lg-10 offset-lg-1" style="margin-top:10px;">
-          <button [disabled]="myform.invalid" type="submit" (click)="submitJob(myform.value,myform);"
+          <button [disabled]="myform.invalid"  type="submit" (click)="submitJob(myform.value,myform);"
             style="width: 100%;" mat-raised-button color="primary">Post
             Job</button>
         </div>

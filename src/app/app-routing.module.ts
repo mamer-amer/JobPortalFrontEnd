@@ -12,6 +12,7 @@ import { CompanyProfileDetailsComponent } from './company-profile-details/compan
 import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
 import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
 import { AuthGuard } from './auth.guard'
+import { RecruiterProfileComponent } from './recruiter-profile/recruiter-profile.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -48,6 +49,12 @@ const routes: Routes = [
   {
     path: 'companyProfileDetails/:id',
     component: CompanyProfileDetailsComponent,
+    canActivate: [AuthGuard],
+    data: { "candidate": true, "employer": true, "recruiter": true }
+  },
+  {
+    path: 'recruiterProfile/:userId',
+    component: RecruiterProfileComponent,
     canActivate: [AuthGuard],
     data: { "candidate": true, "employer": true, "recruiter": true }
   },

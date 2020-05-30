@@ -82,6 +82,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AgmCoreModule } from '@agm/core';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/compiler';
+import { RecruiterProfileComponent } from './recruiter-profile/recruiter-profile.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -89,6 +91,7 @@ import { AgmCoreModule } from '@agm/core';
     RegisterComponent,
     CandidateProfileComponent,
     EmployeeProfileComponent,
+   
     AllJobsComponent,
     CompanyProfileComponent,
     JobDetailsComponent,
@@ -98,6 +101,7 @@ import { AgmCoreModule } from '@agm/core';
     AppliedCandidatesProfilesComponent,
     ViewCandidateProfileComponent,
     NavbarComponent,
+    RecruiterProfileComponent,
     LoaderComponent,
     MomentPipe,
 
@@ -186,7 +190,8 @@ import { AgmCoreModule } from '@agm/core';
     { provide: NZ_I18N, useValue: en_US },
     ConfirmationService,
     CandidateProfileComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    RecruiterProfileComponent
 
   ],
   bootstrap: [AppComponent]

@@ -1,11 +1,15 @@
 
-
 export default class RecruiterProfile {
-
+    id?: any;
     name: string;
-    email: string;
-    pastExperience: string;
-    certifications: string;
-    dp: any;
-    videoPresentation: any;
+    corporateAddress: string;
+    billingAddress: string;
+    contactName: string;
+    contactTitle: string;
+    logo: string;
+    logoContentType: string;
+    resume: string;
+    resumeContentType: string;
+    certificate: string;
+    certificateContentType: string;
 }

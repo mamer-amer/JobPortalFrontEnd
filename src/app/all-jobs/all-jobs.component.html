@@ -1,29 +1,46 @@
 <app-navbar></app-navbar>
 
 
-<div class="container-fluid" style="padding:0px;">
+<div class="container-fluid"
+  style="padding:0px;">
   <div style="border-radius: 0px;height:450px;">
     <div style="position: relative;">
-      <mat-icon matPrefix style="position: absolute;
+      <mat-icon matPrefix
+        style="position: absolute;
           z-index: 4000;
           font-size: 22px;
           left: 22%;
           top: 35px;
           color: rgb(121, 118, 118);">search</mat-icon>
-      <input style="outline: none;border: none;margin-top: 15px;" required [class.mat-elevation-z4]="true" name="location" class="search"
-        matInput #search placeholder="Search">
-     
-      <agm-map style="height:450px;" [latitude]="latitude" [longitude]="longitude" [zoom]="zoom" [fullscreenControl]="true">
-        <agm-marker *ngFor="let job of allJobs; let i = index"  (mouseOver)="onMouseOver(infoWindow, $event)" 
-        (mouseOut)="onMouseOut(infoWindow, $event)" (markerClick)="routeToJobDetailsComponent(job.id)" [latitude]="job.latitude" [longitude]="job.longitude">
-          <agm-info-window [disableAutoPan]="false" #infoWindow>
+      <input style="outline: none;border: none;margin-top: 15px;"
+        required
+        [class.mat-elevation-z4]="true"
+        name="location"
+        class="search"
+        matInput
+        #search
+        placeholder="Search">
+
+      <agm-map style="height:450px;"
+        [latitude]="latitude"
+        [longitude]="longitude"
+        [zoom]="zoom"
+        [fullscreenControl]="true">
+        <agm-marker *ngFor="let job of allJobs; let i = index"
+          (mouseOver)="onMouseOver(infoWindow, $event)"
+          (mouseOut)="onMouseOut(infoWindow, $event)"
+          (markerClick)="routeToJobDetailsComponent(job.id)"
+          [latitude]="job.latitude"
+          [longitude]="job.longitude">
+          <agm-info-window [disableAutoPan]="false"
+            #infoWindow>
 
             <div>
-                {{job.title}}
-              
+              {{job.title}}
+
             </div>
 
-        </agm-info-window>
+          </agm-info-window>
         </agm-marker>
       </agm-map>
     </div>
@@ -31,42 +48,74 @@
 </div>
 <div class="container">
   <hr />
-  <form class="row" *ngIf="userType=='candidate'" #myFrom="ngForm">
+  <form class="row"
+    *ngIf="userType=='candidate'"
+    #myFrom="ngForm">
 
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+    <div class="form-group"
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
+        for="exampleFormControlInput1">Search by
         city</label>
-      <input type="text" name="city" class="form-control" [(ngModel)]="cityName" id="exampleFormControlInput1"
+      <input type="text"
+        name="city"
+        class="form-control"
+        [(ngModel)]="cityName"
+        id="exampleFormControlInput1"
         placeholder="Enter the city name">
 
     </div>
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+    <div class="form-group"
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
+        for="exampleFormControlInput1">Search by
         company</label>
-      <input type="text" name="company" style="width: 100%;" class="form-control" [(ngModel)]="companyName"
-        id="exampleFormControlInput1" placeholder="Enter the company name">
+      <input type="text"
+        name="company"
+        style="width: 100%;"
+        class="form-control"
+        [(ngModel)]="companyName"
+        id="exampleFormControlInput1"
+        placeholder="Enter the company name">
 
     </div>
-    <div class="form-group" style="margin-left:10px;">
-      <label style="color: #0069D9;background: transparent;margin: 0px;" for="exampleFormControlInput1">Search by
+    <div class="form-group"
+      style="margin-left:10px;">
+      <label style="color: #0069D9;background: transparent;margin: 0px;"
+        for="exampleFormControlInput1">Search by
         job-type</label>
-      <nz-select nzShowSearch nzPlaceHolder="Select job-type" name="type" [(ngModel)]="selectedJobType">
-        <nz-option nzLabel="All" nzValue="all"></nz-option>
-        <nz-option nzLabel="Full-time" nzValue="Full-Time"></nz-option>
-        <nz-option nzLabel="Part-time" nzValue="Part-Time"></nz-option>
-        <nz-option nzLabel="Freelance" nzValue="Freelance"></nz-option>
-        <nz-option nzLabel="Internship" nzValue="Internship"></nz-option>
-        <nz-option nzLabel="Temporary" nzValue="Temporary"></nz-option>
+      <nz-select nzShowSearch
+        nzPlaceHolder="Select job-type"
+        name="type"
+        [(ngModel)]="selectedJobType">
+        <nz-option nzLabel="All"
+          nzValue="all"></nz-option>
+        <nz-option nzLabel="Full-time"
+          nzValue="Full-Time"></nz-option>
+        <nz-option nzLabel="Part-time"
+          nzValue="Part-Time"></nz-option>
+        <nz-option nzLabel="Freelance"
+          nzValue="Freelance"></nz-option>
+        <nz-option nzLabel="Internship"
+          nzValue="Internship"></nz-option>
+        <nz-option nzLabel="Temporary"
+          nzValue="Temporary"></nz-option>
       </nz-select>
 
     </div>
-    <div class="form-group" style="margin:25px 0px 0px 0px;">
-      <button type="button" style="height:38px;line-height: 10px;"
-        (click)="globalSearch(cityName,selectedJobType,companyName,0)" class="btn btn-primary">Search</button>
+    <div class="form-group"
+      style="margin:25px 0px 0px 0px;">
+      <button type="button"
+        style="height:38px;line-height: 10px;"
+        (click)="globalSearch(cityName,selectedJobType,companyName,0)"
+        class="btn btn-primary">Search</button>
     </div>
-    <div class="form-group" style="margin:25px 0px 0px 0px;">
-      <button type="button" style="height:38px;line-height: 10px;background-color:#000000 !important;color: white;"
-        (click)="clearForm()" class="btn">Clear</button>
+    <div class="form-group"
+      style="margin:25px 0px 0px 0px;">
+      <button type="button"
+        style="height:38px;line-height: 10px;background-color:#000000 !important;color: white;"
+        (click)="clearForm()"
+        class="btn">Clear</button>
     </div>
 
   </form>
@@ -82,43 +131,64 @@
         <span>Selected Category : <h5 style="color:#4284f4;font-size: 1.05rem !important">{{selectedCategory}}</h5>
         </span>
         <hr />
-        <p class="categories" (click)="getPaginatedJobs(0)">All</p>
-        <p class="categories" (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
-        <p class="categories" (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
-        <p class="categories" (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
-        <p class="categories" (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
+        <p class="categories"
+          (click)="getPaginatedJobs(0)">All</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Business & Finance',0)">Business & Finance</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Computers & Technology',0)">Computers & Technology</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Contruction Trades',0)">Contruction Trades</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Education, Teaching & Training',0)">Education, Teaching &
           Training</p>
-        <p class="categories" (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
+        <p class="categories"
+          (click)="getJobsByCategory('Engineering & Engineering Technicians',0)">Engineering &
           Engineering Technicians</p>
-        <p class="categories" (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry
+        <p class="categories"
+          (click)="getJobsByCategory('Fishing, Farming & Forestry',0)">Fishing, Farming & Forestry
         </p>
-        <p class="categories" (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
+        <p class="categories"
+          (click)="getJobsByCategory('Legal, Criminal Justice & Law Enforcement',0)">Legal, Criminal
           Justice & Law Enforcement</p>
 
-        <p class="categories" (click)="getJobsByCategory('Management',0)">Management</p>
-        <p class="categories" (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications
+        <p class="categories"
+          (click)="getJobsByCategory('Management',0)">Management</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Media Communications & Broadcasting',0)">Media Communications
           &
           Broadcasting</p>
-        <p class="categories" (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
-        <p class="categories" (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration
+        <p class="categories"
+          (click)="getJobsByCategory('Military & Armed Forces',0)">Military & Armed Forces</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Office Administration & Management',0)">Office Administration
           &
           Management</p>
-        <p class="categories" (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
-        <p class="categories" (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
+        <p class="categories"
+          (click)="getJobsByCategory('Production & Manufacturing',0)">Production & Manufacturing</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Installation, Repair & Maintenance',0)">Installation, Repair &
           Maintenance</p>
-        <p class="categories" (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
-        <p class="categories" (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
-        <p class="categories" (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Sales & Marketing',0)">Sales & Marketing</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Social & Life Sciences',0)">Social & Life Sciences</p>
+        <p class="categories"
+          (click)="getJobsByCategory('Transportation & Moving',0)">Transportation & Moving</p>
       </mat-card>
     </div>
     <div class="col-lg-9">
       <div class="row">
 
-        <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
+        <nz-skeleton *ngIf="!empty"
+          [nzActive]="true"
+          [nzParagraph]="{ rows: 6 }"
+          [nzLoading]="!allJobs.length">
 
           <div
             *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
-            class="col-lg-12" style="margin-bottom:10px;">
+            class="col-lg-12"
+            style="margin-bottom:10px;">
 
 
             <mat-card
@@ -131,17 +201,26 @@
                       <span (click)="routeToJobDetailsComponent(job.id)"
                         style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span>
                     </h3>
-                    <span class="options" *ngIf="userType!='candidate'" style="margin-left: 5px;">
+                    <span class="options"
+                      *ngIf="userType!='candidate'"
+                      style="margin-left: 5px;">
 
 
-                      <i class='fa fa-pencil edit_delete' nz-tooltip nzTooltipTitle="Edit Job"
-                        [routerLink]="['/employee/postjob']" [queryParams]="{ 'jobId': job.id}" alt="Edit Job"
+                      <i class='fa fa-pencil edit_delete'
+                        nz-tooltip
+                        nzTooltipTitle="Edit Job"
+                        [routerLink]="['/employee/postjob']"
+                        [queryParams]="{ 'jobId': job.id}"
+                        alt="Edit Job"
                         style='font-size:20px;cursor: pointer;'>
 
                       </i>
 
-                      <i class='fa fa-trash edit_delete' nz-tooltip nzTooltipTitle="Delete Job"
-                        (click)="showDeleteConfirm(job.id,i,page)" alt="Delete Job"
+                      <i class='fa fa-trash edit_delete'
+                        nz-tooltip
+                        nzTooltipTitle="Delete Job"
+                        (click)="showDeleteConfirm(job.id,i,page)"
+                        alt="Delete Job"
                         style='font-size:20px;cursor: pointer;'>
 
                       </i>
@@ -159,26 +238,96 @@
                     <p style="color: rgb(146, 144, 144);;">{{job.date | myPipe}}</p>
 
                   </div>
-                  <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                    <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)" [nzSize]="64"
-                      style="display: block;flex: 2;margin-bottom: 5px;" nzIcon="user"
-                      [nzSrc]="'data:image/jpeg;base64,'+job.companyProfile.logo">
-                    </nz-avatar>
+                  <div *ngIf="userType!='recruiter'">
 
-                    <nz-rate style="flex: 1;height: 5px;" [ngModel]="job.companyProfile.avgRating" [nzAllowHalf]="true"
-                      [nzDisabled]="true" [nzTooltips]="tooltips">
-                    </nz-rate>
-                    <div style="flex: 1;">
-                      <!-- icons span starts here -->
-                      <p style="font-size: 15px;
+                    <div *ngIf="job.companyProfile!=null">
+                      <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
+                        <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)"
+                           [queryParams]="{'type':'companyProfile'}"
+                          [nzSize]="64"
+                          style="display: block;flex: 2;margin-bottom: 5px;"
+                          nzIcon="user"
+                          [nzSrc]="'data:image/jpeg;base64,'+job.companyProfile.logo">
+                        </nz-avatar>
+
+                        <nz-rate style="flex: 1;height: 5px;"
+                          [ngModel]="job.companyProfile.avgRating"
+                          [nzAllowHalf]="true"
+                          [nzDisabled]="true"
+                          [nzTooltips]="tooltips">
+                        </nz-rate>
+                        <div style="flex: 1;">
+                          <!-- icons span starts here -->
+                          <p style="font-size: 15px;
                       margin-bottom: 0px;
                       font-weight: 400;">{{job.companyProfile.name | titlecase}}</p>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div *ngIf="job.companyProfile==null">
+                      <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
+                        <nz-avatar (click)="routerToRecruiterProfileDetails(job.user.id)"
+                          [queryParams]="{'type':'recruiterProfile'}"
+                          [nzSize]="64"
+                          style="display: block;flex: 2;margin-bottom: 5px;"
+                          nzIcon="user"
+                          [nzSrc]="job.user.recruiterProfile!=null?'data:image/jpeg;base64,'+job.user.recruiterProfile.logo:'../../assets/user.png'">
+                        </nz-avatar>
+
+                        <nz-rate style="flex: 1;height: 5px;"
+                          [ngModel]="job.user.recruiterProfile?job.user.recruiterProfile.avgRating:'0'"
+                          [nzAllowHalf]="true"
+                          [nzDisabled]="true"
+                          [nzTooltips]="tooltips">
+                        </nz-rate>
+                        <div style="flex: 1;">
+                          <!-- icons span starts here -->
+                          <p style="font-size: 15px;
+                      margin-bottom: 0px;
+                      font-weight: 400;">{{job.user.name?job.user.name:job.user.recruiterProfile.name | titlecase}}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
+                  <div *ngIf="userType=='recruiter'">
+                     <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
+                       <nz-avatar (click)="routerToRecruiterProfileDetails(job.user.id)"
+                         [nzSize]="64"
+                         style="display: block;flex: 2;margin-bottom: 5px;"
+                         nzIcon="user"
+                         [nzSrc]="job.user.recruiterProfile!=null?'data:image/jpeg;base64,'+job.user.recruiterProfile.logo:'../../assets/user.png'">
+                       </nz-avatar>
+
+                       <nz-rate style="flex: 1;height: 5px;"
+                         [ngModel]="job.user.recruiterProfile?job.user.recruiterProfile.avgRating:'0'"
+                         [nzAllowHalf]="true"
+                         [nzDisabled]="true"
+                         [nzTooltips]="tooltips">
+                       </nz-rate>
+                       <div style="flex: 1;">
+                         <!-- icons span starts here -->
+                         <p style="font-size: 15px;
+                      margin-bottom: 0px;
+                      font-weight: 400;">{{job.user.name?job.user.name:job.user.recruiterProfile.name | titlecase}}</p>
+                       </div>
+                     </div>
+                    
+
+
+                  </div>
+
+
                 </div>
 
 
-
+                <div *ngIf="userType=='recruiter'"
+                  style="flex:1;justify-content: flex-start;align-content: center;flex-direction:column">
+                  <b>
+                    <p>Permission : {{job.jobPostPermission?'Public':'Confidential'}}</p>
+                  </b>
+                </div>
 
               </div>
 
@@ -189,7 +338,8 @@
           </div>
         </nz-skeleton>
 
-        <div class="row" style="width:100%">
+        <div class="row"
+          style="width:100%">
 
           <div class="col-lg-6 offset-lg-3 col-sm-7 offset-sm-4">
             <div *ngIf="empty">
@@ -199,11 +349,16 @@
           </div>
 
           <!-- //PAGINATION -->
-          <div class="col-lg-12" style="margin:10px 0px 30px 0px;">
+          <div class="col-lg-12"
+            style="margin:10px 0px 30px 0px;">
 
             <div class="has-text-centered">
-              <pagination-controls (pageChange)="pageChange($event)" directionLinks="true" responsive="true"
-                previousLabel="Previous" nextLabel="Next" screenReaderCurrentLabel="You're on page">
+              <pagination-controls (pageChange)="pageChange($event)"
+                directionLinks="true"
+                responsive="true"
+                previousLabel="Previous"
+                nextLabel="Next"
+                screenReaderCurrentLabel="You're on page">
               </pagination-controls>
 
             </div>
@@ -212,8 +367,12 @@
       </div>
     </div>
   </div>
-  <ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
-    type="ball-clip-rotate-pulse" [fullScreen]="true">
+  <ngx-spinner bdOpacity=1
+    bdColor="rgba(200, 216, 215, 0.25)"
+    size="medium"
+    color="rgba(12,11,11,0.85)"
+    type="ball-clip-rotate-pulse"
+    [fullScreen]="true">
     <p style="color: white">Loading..</p>
   </ngx-spinner>
 

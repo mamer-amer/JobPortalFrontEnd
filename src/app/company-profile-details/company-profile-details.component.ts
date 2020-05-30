@@ -3,6 +3,8 @@ import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute } from '@angular/router'
 import {CompanyProfile} from '../company-profile/companyProfile'
 import { NavbarService } from '../navbar.service';
+import RecruiterProfile from '../recruiter-profile/RecruiterProfile';
+import { type } from 'os';
 
 @Component({
   selector: 'app-company-profile-details',
@@ -16,12 +18,13 @@ export class CompanyProfileDetailsComponent implements OnInit {
   companyReviewRating:Array<any>=[];
   companyDetails:Object;
   companyProfile:CompanyProfile;
+  recruiterProfile:RecruiterProfile;
   avgRating:number=0;
   comments:any=0;
   rating:any=0;
   userType=sessionStorage.getItem('userType');
   userId = sessionStorage.getItem('userId');
-  
+  recruiterUserId:any;
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   showUploadList = {
@@ -34,7 +37,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   certificate: any;
   resume:any;
   contentType: string;
-
+  type:any;
 
 
   constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private navbar:NavbarService) {
@@ -45,10 +48,17 @@ export class CompanyProfileDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
     this.navbar.showNav();
+    this.activatedRoute.queryParamMap.subscribe((params) => {
+      this.type = params.get("type");
+    });
+    if(this.type=="companyPorfile"){
+      this.companyId = this.activatedRoute.snapshot.params.id;
+      this.getCompanyProfileDetails(this.companyId);
+    }
+    else if(this.type="recruiterProfile"){
+      this.recruiterUserId = this.activatedRoute.snapshot.params.id;
+    }
     
-    this.companyId = this.activatedRoute.snapshot.params.id;
-
-    this.getCompanyProfileDetails(this.companyId);
     
   }
 
@@ -57,14 +67,19 @@ export class CompanyProfileDetailsComponent implements OnInit {
       console.log(res)
       this.avgRating=res.avgRating;
       this.companyProfile=res.companyProfile;
-      this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
-      this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       this.companyReviewRating=res.companyReviewRatingDTOList;
       this.comments = this.companyReviewRating.length;
       this.reviewBtn = res.alreadyCommented;
       console.log(this.companyReviewRating);
     })
     
+  }
+
+
+  getRecruiterProfileDetails(){
+    //1- complete recruiterProfile
+    // 2-Avg rating;
+    // 3-All candidates with reviews and ratings 
   }
 
   getMIMEtype(extn) {

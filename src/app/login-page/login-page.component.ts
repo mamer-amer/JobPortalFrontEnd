@@ -101,9 +101,14 @@ export class LoginPageComponent implements OnInit {
               this.router.navigate(["/candidateProfile"]);
             }, 1000);
           }
-          else if (res.result.userType == "employer" || res.result.userType =="recruiter") {
+          else if (res.result.userType == "employer") {
             setTimeout(() => {
               this.router.navigate(["/companyProfile"]);
+            }, 1000);
+          }
+          else if (res.result.userType == "recruiter") {
+            setTimeout(() => {
+              this.router.navigate(["/recruiterProfile/"+res.result.id]);
             }, 1000);
           }
         }

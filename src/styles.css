@@ -320,6 +320,10 @@ nz-badge {
   vertical-align: middle;
 }
 
+nz-select{
+  width: 100% !important; 
+}
+
 
 
 .navbar {

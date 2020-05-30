@@ -39,7 +39,10 @@ export class EmployeeProfileComponent implements OnInit {
   cities: Array<any> = [];
   provinces: Array<any> = [];
   label: String;
+  publicPost = false;
+  privatePost = false;
   countries: Array<Object> = [];
+  userType=sessionStorage.getItem('userType');
   salaryRange: Array<string> = [
     "10,000$ - 20,000$",
     "20,000$ - 30,000$",
@@ -205,6 +208,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.category = myForm.category;
     this.jobObj.address = myForm.address;
     this.jobObj.type = myForm.type;
+    
+    // this.jobObj.jobPostPermission = this.publicPost==true?this.publicPost:this.privatePost;
 
     if (this.catchParams() != undefined) {
 
@@ -335,7 +340,7 @@ export class EmployeeProfileComponent implements OnInit {
   getJobByParamsJobId(id: any) {
 
     this.service.getJobById(id).subscribe((res) => {
-      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type,jobPostPermission } = res.result;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
       let countryObj = this.countries.find(c => c["name"] == country);
       let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);
@@ -349,6 +354,10 @@ export class EmployeeProfileComponent implements OnInit {
       this.contactForm.control.get("city").setValue(cityObj);
       this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
       this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
+      if(jobPostPermission==true)this.publicPost = true;
+      else{
+        this.privatePost = true;
+      }
       this.loadMap()
 
     });
