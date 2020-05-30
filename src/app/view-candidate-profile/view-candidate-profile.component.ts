@@ -53,7 +53,9 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
   getCandidateProfile(userId, candidateId) {
     this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
+      console.log(d,"========ddd")
       const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
+      console.log(candidateProfile,"===========profile")
       const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
       this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
       this.reviewBtn = alreadyGivenReview;

@@ -42,10 +42,10 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
       console.log(res,"==========");
       res.result.map(d => {
         this.candidatesArrays.push({
-          candId: d.id,
           userId: d.id,
           name: d.name,
           email: d.email,
+          candidateId:d.candidateProfile.id,
          
           profileActive: d.profileActive == true ? "Active" : "Inactive",
 
@@ -76,12 +76,14 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
 
   }
 
-  gotoViewProfile(id: any) {
+  gotoViewProfile(index,uid,cpid) {
 
-    this.service.passObject(this.candidatesArrays[id]);
-    let userId = this.candidatesArrays[id]['userId']
-    let candId = this.candidatesArrays[id]['candId'];
-    this.router.navigate(['/viewprofile'], { queryParams: { "candId": candId, "userId": userId } })
+    this.service.passObject(this.candidatesArrays[index]);
+
+    // console.log(cpid,"-========")
+   
+    this.router.navigate(['/viewprofile'], { queryParams: { "candId": cpid, "userId": uid } })
+    // console.log(uId,"       ",)
   }
 
 }
