@@ -13,6 +13,9 @@ export class Job {
     province:String;
     category:String;
     type:String;
+    jobPosterId=0;
+    candidateProfileList= [];
+
 
 
 }

@@ -80,6 +80,9 @@ export class ApplicantServiceService {
   getCandidateProfileForView(userId: any, candId: any): Observable<any> {
     return this.http.get(this.url + "api/cp/complete?userId=" + userId + "&candidateId=" + candId);
   }
+  getCompleteRecruiterProfile(userId: any): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/allDetails/"+userId);
+  }
 
   getPaginatedJobs(page): Observable<any> {
     return this.http.get(this.url + "api/job/paginatedjobs?page=" + page);

@@ -50,8 +50,8 @@ export class CompanyProfileComponent implements OnInit {
   };
   previewImage: string | undefined = '';
   previewVisible = false;
-  certificate: any;
-  contentType: string;
+  // certificate: any;
+  // contentType: string;
 
 
 
@@ -180,95 +180,7 @@ export class CompanyProfileComponent implements OnInit {
 
   }
 
-  onFileChange1(event) {
-    
-    let reader = new FileReader();
-
-    try {
-      if (event.target.files && event.target.files.length > 0) {
-        let file = event.target.files[0];
-        if (this.fileExtensionAllowed(file.name)) {
-          this.companyProfileObj.resumeContentType = this.getFileExtension(file.name)
-
-          reader.onload = this._handleReaderLoaded_1.bind(this);
-
-
-          reader.readAsBinaryString(file);
-        }
-        else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
-
-
-      }
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-  onFileChange2(event) {
-
-    let reader = new FileReader();
-
-    try {
-      if (event.target.files && event.target.files.length > 0) {
-        let file = event.target.files[0];
-        if (this.fileExtensionAllowed(file.name)) {
-          this.companyProfileObj.certificateContentType = this.getFileExtension(file.name)
-
-          reader.onload = this._handleReaderLoaded_2.bind(this);
-
-
-          reader.readAsBinaryString(file);
-        }
-        else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
-
-
-      }
-    }
-    catch (error) {
-      console.log(error);
-    }
-  }
-
-
-
-  _handleReaderLoaded_1(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    let base64textString = btoa(binaryString);
-    //console.log(btoa(binaryString));
-    this.companyProfileObj.resume = base64textString;
-
-    this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
-
-  }
-  _handleReaderLoaded_2(readerEvt) {
-    var binaryString = readerEvt.target.result;
-    let base64textString = btoa(binaryString);
-    //console.log(btoa(binaryString));
-    this.companyProfileObj.certificate = base64textString;
-
-    this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
-
-  }
-
-  getFileExtension = (filename) => filename.split('.').pop();
-
-  fileExtensionAllowed(filename) {
-
-
-    let extensionsAllowed = {
-      "doc": true,
-      "docx": true,
-      "pdf": true
-    }
-    let ext = this.getFileExtension(filename)
-
-
-
-    return extensionsAllowed[ext];
-  }
-
-
-
+  
   updateCroppedImage() {
     this.companyProfileObj.logo = this.croppedImage;
     sessionStorage.removeItem('dp');
@@ -307,25 +219,7 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
-  getMIMEtype(extn) {
-    let ext = extn.toLowerCase();
-    let MIMETypes = {
-      'text/plain': 'txt',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
-      'application/msword': 'doc',
-      'application/pdf': 'pdf',
-      'image/jpeg': 'jpg',
-      'image/bmp': 'bmp',
-      'image/png': 'png',
-      'application/vnd.ms-excel': 'xls',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
-      'application/rtf': 'rtf',
-      'application/vnd.ms-powerpoint': 'ppt',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx'
-    }
-    return MIMETypes[ext];
-  }
-
+ 
   checkUserId() {
     const id = sessionStorage.getItem('userId');
     if (id != null) {
@@ -346,8 +240,7 @@ export class CompanyProfileComponent implements OnInit {
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
-        this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
-        this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
+        
         this.legalCompanyNameObserable.next();
 
         this.logoChangeObservable.next();
@@ -363,18 +256,8 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
-  downloadFile() {
-
-    const extension = this.companyProfileObj['resumeContentType'];
-    const source = this.value;
-    const downloadLink = document.createElement("a");
-    const fileName = this.companyProfileObj.name + "." + extension;
-    downloadLink.href = source;
-    downloadLink.download = fileName;
-    downloadLink.target = "_blank"
-    downloadLink.click();
-
-  }
+ 
+  // }
 
  
 
@@ -382,42 +265,7 @@ export class CompanyProfileComponent implements OnInit {
   value: string;
 
 
-  showModal(): void {
-    this.isVisible = true;
-    this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
-    this.value = this.resume;
-    this.contentType = this.companyProfileObj['resumeContentType'];
-
-  }
-
-  handleOk(): void {
-    console.log('Button ok clicked!');
-    this.isVisible = false;
-  }
-
-  handleCancel(): void {
-    console.log('Button cancel clicked!');
-    this.isVisible = false;
-  }
-
-  isVisibleCertificate = false;
-
-  showModalCertificate(): void {
-    this.isVisible = true;
-    this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
-    this.value = this.certificate;
-    this.contentType = this.companyProfileObj['certificateContentType'];
-  }
-
-  // handleOkCertificate(): void {
-  //   console.log('Button ok clicked!');
-  //   this.isVisible = false;
-  // }
-
-  // handleCancelCertificate(): void {
-  //   console.log('Button cancel clicked!');
-  //   this.isVisible = false;
-  // }
+ 
 
 
 

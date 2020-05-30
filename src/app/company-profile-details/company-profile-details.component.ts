@@ -38,6 +38,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   resume:any;
   contentType: string;
   type:any;
+  logo: string;
 
 
   constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private navbar:NavbarService) {
@@ -46,17 +47,18 @@ export class CompanyProfileDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.userType = sessionStorage.getItem('userType');
     this.navbar.showNav();
+    this.userType = sessionStorage.getItem('userType');
     this.activatedRoute.queryParamMap.subscribe((params) => {
       this.type = params.get("type");
     });
-    if(this.type=="companyPorfile"){
+    if(this.type=="companyProfile"){
       this.companyId = this.activatedRoute.snapshot.params.id;
       this.getCompanyProfileDetails(this.companyId);
     }
     else if(this.type="recruiterProfile"){
       this.recruiterUserId = this.activatedRoute.snapshot.params.id;
+      this.getRecruiterProfileDetails(this.recruiterUserId);
     }
     
     
@@ -76,14 +78,40 @@ export class CompanyProfileDetailsComponent implements OnInit {
   }
 
 
-  getRecruiterProfileDetails(){
+  getRecruiterProfileDetails(id:any){
     //1- complete recruiterProfile
     // 2-Avg rating;
     // 3-All candidates with reviews and ratings 
+
+    this.service.getCompleteRecruiterProfile(id).subscribe(res=>{
+      if(res.status==200){
+        console.log("Recruiter response al",res)
+        if(res.result.userProfile.recruiterProfile!=null){
+          this.recruiterProfile = res.result.userProfile.recruiterProfile;
+          this.logo = this.recruiterProfile.logo;
+        }
+        else{
+
+          this.recruiterProfile = res.result.userProfile;
+        }
+
+
+        this.companyReviewRating = res.result.companyReviewRatingDTOList;
+        this.comments = this.companyReviewRating ? this.companyReviewRating.length:0
+        this.reviewBtn = res.result.alreadyCommented;
+
+
+        this.avgRating = this.recruiterProfile['avgRating'];
+        this.resume = "data:" + this.getMIMEtype(this.recruiterProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
+
+        this.certificate = "data:" + this.getMIMEtype(this.recruiterProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
+
+      }
+    })
   }
 
   getMIMEtype(extn) {
-    let ext = extn.toLowerCase();
+    let ext = extn;
     let MIMETypes = {
       'text/plain': 'txt',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -118,6 +146,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       // this.avgRating = res.result?res.result
       if(res.status==200){
         this.companyReviewRating = res.result?res.result:this.companyReviewRating;
+        
        this.avgRating = res.result ? res.rating : this.avgRating;
        this.comments = this.companyReviewRating.length;
        this.reviewBtn = true;
@@ -134,7 +163,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
     const extension = this.contentType;
     const source = this.value;
     const downloadLink = document.createElement("a");
-    const fileName = this.companyProfile.name + "." + extension;
+    const fileName = this.recruiterProfile.name + "." + extension;
     downloadLink.href = source;
     downloadLink.download = fileName;
     downloadLink.target = "_blank"
@@ -150,9 +179,9 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   showModal(): void {
     this.isVisible = true;
-    this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
+    this.resume = "data:" + this.getMIMEtype(this.recruiterProfile['resumeContentType']) + ";base64," + encodeURI(this.recruiterProfile["resume"])
     this.value = this.resume;
-    this.contentType = this.companyProfile['resumeContentType'];
+    this.contentType = this.recruiterProfile['resumeContentType'];
 
   }
 
@@ -170,9 +199,9 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   showModalCertificate(): void {
     this.isVisible = true;
-    this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
+    this.certificate = "data:" + this.getMIMEtype(this.recruiterProfile['certificateContentType']) + ";base64," + encodeURI(this.recruiterProfile["certificate"])
     this.value = this.certificate;
-    this.contentType = this.companyProfile['certificateContentType'];
+    this.contentType = this.recruiterProfile['certificateContentType'];
   }
 
  

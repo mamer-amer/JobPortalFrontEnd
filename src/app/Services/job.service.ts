@@ -16,4 +16,7 @@ export class JobService {
    public postJob(obj:Object):Observable<any>{
      return this.http.post(environment.baseUrl+"api/job/",obj)
    }
+   public postRecruiterJob(obj:Object):Observable<any>{
+     return this.http.post(environment.baseUrl+"api/recruiter/post/job",obj)
+   }
 }

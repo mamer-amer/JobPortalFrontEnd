@@ -39,10 +39,11 @@ export class EmployeeProfileComponent implements OnInit {
   cities: Array<any> = [];
   provinces: Array<any> = [];
   label: String;
-  publicPost = false;
+  publicPost = true;
   privatePost = false;
   countries: Array<Object> = [];
   userType=sessionStorage.getItem('userType');
+  userId = sessionStorage.getItem('userId');
   salaryRange: Array<string> = [
     "10,000$ - 20,000$",
     "20,000$ - 30,000$",
@@ -232,25 +233,49 @@ export class EmployeeProfileComponent implements OnInit {
 
     else {
 
-      this.jobService.postJob(this.jobObj).subscribe((res) => {
-        console.log(res)
-        if (res.status == 200) {
-          formTemplate.reset();
 
-          setTimeout(() => this.router.navigate(['allJobs']), 1000)
-          this.toastService.info('Successfull', 'Job Posted Successfully');
-        }
-        else {
+      if(this.publicPost==true && this.privatePost==false){
+        this.jobService.postJob(this.jobObj).subscribe((res) => {
+          console.log(res)
+          if (res.status == 200) {
+            formTemplate.reset();
+
+            setTimeout(() => this.router.navigate(['allJobs']), 1000)
+            this.toastService.info('Successfull', 'Job Posted Successfully');
+          }
+          else {
+            this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+          }
+
+        }, err => {
           this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-        }
+          console.log(err)
 
-      }, err => {
-        this.toastService.error('Unsucessfull', 'Job can not be posted');
+        })
+      }
+      else if(this.publicPost==false && this.privatePost==true){
+        this.jobService.postRecruiterJob(this.jobObj).subscribe(res=>{
+          if (res.status == 200) {
+            formTemplate.reset();
 
-        console.log(err)
+            setTimeout(() => this.router.navigate(['allJobs']), 1000)
+            this.toastService.info('Successfull', 'Job Posted Successfully');
+          }
+          else {
+            this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-      })
+          }
+
+        }, err => {
+          this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+          console.log(err)
+
+        })
+      }
+      
 
     }
 

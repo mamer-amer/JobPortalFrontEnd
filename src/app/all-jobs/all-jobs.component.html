@@ -179,6 +179,20 @@
     </div>
     <div class="col-lg-9">
       <div class="row">
+          <div *ngIf="userType=='recruiter'" style="display: flex;flex:1;flex-direction: row;align-itme
+          :flex-start">
+        <!-- <mat-tab-group mat-align-tabs="center">
+          <mat-tab label="Public jobs">
+
+
+          </mat-tab>
+          <mat-tab label="Private jobs">
+
+
+          </mat-tab>
+        
+        </mat-tab-group> -->
+          </div>
 
         <nz-skeleton *ngIf="!empty"
           [nzActive]="true"
@@ -242,8 +256,9 @@
 
                     <div *ngIf="job.companyProfile!=null">
                       <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                        <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)"
-                           [queryParams]="{'type':'companyProfile'}"
+                        <nz-avatar 
+                          [routerLink]="['/companyProfileDetails',job.companyProfile.id]"
+                          [queryParams]="{'type':'companyProfile'}"
                           [nzSize]="64"
                           style="display: block;flex: 2;margin-bottom: 5px;"
                           nzIcon="user"
@@ -268,7 +283,7 @@
 
                     <div *ngIf="job.companyProfile==null">
                       <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                        <nz-avatar (click)="routerToRecruiterProfileDetails(job.user.id)"
+                        <nz-avatar [routerLink]="['/companyProfileDetails', +job.user.id]"
                           [queryParams]="{'type':'recruiterProfile'}"
                           [nzSize]="64"
                           style="display: block;flex: 2;margin-bottom: 5px;"
@@ -292,28 +307,28 @@
                     </div>
                   </div>
                   <div *ngIf="userType=='recruiter'">
-                     <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                       <nz-avatar (click)="routerToRecruiterProfileDetails(job.user.id)"
-                         [nzSize]="64"
-                         style="display: block;flex: 2;margin-bottom: 5px;"
-                         nzIcon="user"
-                         [nzSrc]="job.user.recruiterProfile!=null?'data:image/jpeg;base64,'+job.user.recruiterProfile.logo:'../../assets/user.png'">
-                       </nz-avatar>
+                    <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
+                      <nz-avatar (click)="routerToRecruiterProfileDetails(job.user.id)"
+                        [nzSize]="64"
+                        style="display: block;flex: 2;margin-bottom: 5px;"
+                        nzIcon="user"
+                        [nzSrc]="job.user.recruiterProfile!=null?'data:image/jpeg;base64,'+job.user.recruiterProfile.logo:'../../assets/user.png'">
+                      </nz-avatar>
 
-                       <nz-rate style="flex: 1;height: 5px;"
-                         [ngModel]="job.user.recruiterProfile?job.user.recruiterProfile.avgRating:'0'"
-                         [nzAllowHalf]="true"
-                         [nzDisabled]="true"
-                         [nzTooltips]="tooltips">
-                       </nz-rate>
-                       <div style="flex: 1;">
-                         <!-- icons span starts here -->
-                         <p style="font-size: 15px;
+                      <nz-rate style="flex: 1;height: 5px;"
+                        [ngModel]="job.user.recruiterProfile?job.user.recruiterProfile.avgRating:'0'"
+                        [nzAllowHalf]="true"
+                        [nzDisabled]="true"
+                        [nzTooltips]="tooltips">
+                      </nz-rate>
+                      <div style="flex: 1;">
+                        <!-- icons span starts here -->
+                        <p style="font-size: 15px;
                       margin-bottom: 0px;
                       font-weight: 400;">{{job.user.name?job.user.name:job.user.recruiterProfile.name | titlecase}}</p>
-                       </div>
-                     </div>
-                    
+                      </div>
+                    </div>
+
 
 
                   </div>

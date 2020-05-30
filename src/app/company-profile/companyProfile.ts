@@ -7,9 +7,7 @@ export class CompanyProfile{
     contactTitle:string;
     logo:string;
     logoContentType:string;
-    resume:string;
-    resumeContentType:string;
-    certificate:string;
-    certificateContentType:string;
+    jobList:null;
+    
 
 }
