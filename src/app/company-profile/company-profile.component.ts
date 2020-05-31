@@ -308,7 +308,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   getMIMEtype(extn) {
-    let ext = extn.toLowerCase();
+    let ext = extn;
     let MIMETypes = {
       'text/plain': 'txt',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',

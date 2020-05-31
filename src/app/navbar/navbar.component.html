@@ -41,7 +41,7 @@
 
 
     <ul  class="navbar-nav ml-auto nav-flex-icons">
-      <a *ngIf="userType=='employer'" (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
+      <a *ngIf="userType!='candidate'" (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
         [nzDropdownMenu]="menu">
         <div>
           <nz-badge

@@ -39,7 +39,11 @@ export class EmployeeProfileComponent implements OnInit {
   cities: Array<any> = [];
   provinces: Array<any> = [];
   label: String;
+  publicPost = true;
+  privatePost = false;
   countries: Array<Object> = [];
+  userType = sessionStorage.getItem('userType');
+  userId = sessionStorage.getItem('userId');
   salaryRange: Array<string> = [
     "10,000$ - 20,000$",
     "20,000$ - 30,000$",
@@ -159,8 +163,8 @@ export class EmployeeProfileComponent implements OnInit {
 
 
       this.mapsAPILoader.load().then(() => {
-        if(!this.catchParams)
-        this.setCurrentLocation();
+        if (!this.catchParams)
+          this.setCurrentLocation();
         this.geoCoder = new google.maps.Geocoder;
 
         let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement);
@@ -206,6 +210,8 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj.address = myForm.address;
     this.jobObj.type = myForm.type;
 
+    // this.jobObj.jobPostPermission = this.publicPost==true?this.publicPost:this.privatePost;
+
     if (this.catchParams() != undefined) {
 
       this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
@@ -227,25 +233,49 @@ export class EmployeeProfileComponent implements OnInit {
 
     else {
 
-      this.jobService.postJob(this.jobObj).subscribe((res) => {
-        console.log(res)
-        if (res.status == 200) {
-          formTemplate.reset();
 
-          setTimeout(() => this.router.navigate(['allJobs']), 1000)
-          this.toastService.info('Successfull', 'Job Posted Successfully');
-        }
-        else {
+      if (this.publicPost == true && this.privatePost == false) {
+        this.jobService.postJob(this.jobObj).subscribe((res) => {
+          console.log(res)
+          if (res.status == 200) {
+            formTemplate.reset();
+
+            setTimeout(() => this.router.navigate(['allJobs']), 1000)
+            this.toastService.info('Successfull', 'Job Posted Successfully');
+          }
+          else {
+            this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+          }
+
+        }, err => {
           this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-        }
+          console.log(err)
 
-      }, err => {
-        this.toastService.error('Unsucessfull', 'Job can not be posted');
+        })
+      }
+      else if (this.publicPost == false && this.privatePost == true) {
+        this.jobService.postRecruiterJob(this.jobObj).subscribe(res => {
+          if (res.status == 200) {
+            formTemplate.reset();
 
-        console.log(err)
+            setTimeout(() => this.router.navigate(['allJobs']), 1000)
+            this.toastService.info('Successfull', 'Job Posted Successfully');
+          }
+          else {
+            this.toastService.error('Unsucessfull', 'Job can not be posted');
 
-      })
+          }
+
+        }, err => {
+          this.toastService.error('Unsucessfull', 'Job can not be posted');
+
+          console.log(err)
+
+        })
+      }
+
 
     }
 
@@ -335,7 +365,7 @@ export class EmployeeProfileComponent implements OnInit {
   getJobByParamsJobId(id: any) {
 
     this.service.getJobById(id).subscribe((res) => {
-      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type, jobPostPermission } = res.result;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
       let countryObj = this.countries.find(c => c["name"] == country);
       let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);
@@ -349,6 +379,10 @@ export class EmployeeProfileComponent implements OnInit {
       this.contactForm.control.get("city").setValue(cityObj);
       this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
       this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
+      if (jobPostPermission == true) this.publicPost = true;
+      else {
+        this.privatePost = true;
+      }
       this.loadMap()
 
     });
