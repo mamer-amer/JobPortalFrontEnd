@@ -86,10 +86,17 @@ export class ApplicantServiceService {
   getJobsByCompany(page): Observable<any> {
     return this.http.get(this.url + "api/job/myJobs/?page=" + page);
   }
+  getJobsByCompanyPrivate(page,id:any): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/get/job/"+id+"?page=" + page);
+  }
 
   getPaginatedJobsByCategory(category, page): Observable<any> {
     category = category.replace(/&/g, '_and_');
     return this.http.get(this.url + "api/job/jobsbycategory?category=" + category + "&page=" + page);
+  }
+  getPaginatedJobsByCategoryPrivate(category, page): Observable<any> {
+    category = category.replace(/&/g, '_and_');
+    return this.http.get(this.url + "api/recruiter/jobsbycategory?category=" + category + "&page=" + page);
   }
 
   postAJob(jobObj: any): Observable<any> {
@@ -97,7 +104,19 @@ export class ApplicantServiceService {
   }
 
   getJobById(id): Observable<any> {
-    return this.http.get(this.url + "api/job/?id=" + id);
+  
+      return this.http.get(this.url + "api/job/?id=" + id);
+    
+  
+  }
+  getJobByIdInGeneral(id,type:string): Observable<any> {
+    if(type=="public"){
+
+      return this.http.get(this.url + "api/job/?id=" + id);
+    }
+    else {
+      return this.http.get(this.url +"api/recruiter/get/"+id)
+    }
   }
 
   getJobCompany(id): Observable<any> {
@@ -171,6 +190,9 @@ export class ApplicantServiceService {
   getAppliedCandidatesProfile(jobId: any): Observable<any> {
     return this.http.get(this.url + "api/job/candidateprofiles/" + jobId);
   }
+  getSearchCandidatesProfile(value:string): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/search?search=" + value);
+  }
 
 
   globalJobSearch(city, type, company, page): Observable<any> {
@@ -178,8 +200,16 @@ export class ApplicantServiceService {
   }
 
 
-  deleteJob(id: any, page: any): Observable<any> {
-    return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
+  deleteJob(id: any, page: any,type:any): Observable<any> {
+
+    if(type==false){
+return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
+    }
+
+    return this.http.delete(this.url + "api/recruiter/delete/" + id + "/page?page=" + parseInt(page));
+
+
+    
   }
 
   postReviewAgainstCandidate(obj: any): Observable<any> {

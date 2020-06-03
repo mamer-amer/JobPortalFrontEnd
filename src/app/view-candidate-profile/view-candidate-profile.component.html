@@ -31,12 +31,12 @@
 
           <!-- Social ioncs -->
           <div class="row"
-            *ngIf="!reviewBtn && userType!='candidate'">
+            *ngIf="userType=='recruiter'">
             <div class="col-lg-12 col-md-12 col-sm-12">
               <a><button style="width:100%"
                   class="btn"
-                  (click)="goToReviewSection()"
-                  mdbWavesEffect>Write Review
+                  (click)="referJob()"
+                  mdbWavesEffect>Refer
                   <i class="fa fa-reply"
                     aria-hidden="true"></i>
                 </button>
@@ -234,6 +234,106 @@
 </nz-modal>
 
 
+
+
+
+
+<div class="row col-lg-7" style="width:100%;">
+<nz-modal [(nzVisible)]="show"
+  nzTitle="All JOBS"
+  style="width:100%"
+  (nzOnCancel)="cancel()"
+ 
+  
+  [nzOkLoading]="isOkLoading">
+
+  <nz-skeleton *ngIf="!empty"
+    [nzActive]="true"
+    [nzParagraph]="{ rows: 6 }"
+    [nzLoading]="!allJobs.length">
+
+    <div
+    style="overflow-y: scroll"
+    style="margin-bottom: 10px"
+
+      *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
+      class="col-lg-12"
+      >
+
+
+      <mat-card
+        style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+
+        <div style="flex:4;">
+          <div style="display: flex;">
+            <div style="flex:9;">
+              <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
+                <span
+                  style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span>
+              </h3>
+             
+
+              <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{job.category}} - <span
+                  style="color:rgb(129, 126, 126);">
+                  {{job.city}}</span>
+              </h6>
+
+
+              <p style="color: rgb(146, 144, 144);margin-left: 0px !important">{{job.date | myPipe}}</p>
+
+            </div>
+           
+          </div>
+
+               <mat-checkbox (click)="save(job.id,candidateObj.id)">
+                 <b>Refer this job</b>
+               </mat-checkbox>
+
+
+        </div>
+        <br/>
+       
+
+
+        <!-- if no jobs found  -->
+
+      </mat-card>
+    </div>
+  </nz-skeleton>
+    <div class="col-lg-12"
+      style="margin:10px 0px 30px 0px;">
+
+      <div class="has-text-centered">
+        <pagination-controls (pageChange)="pageChange($event)"
+          directionLinks="true"
+          responsive="true"
+          previousLabel="Previous"
+          nextLabel="Next"
+          screenReaderCurrentLabel="You're on page">
+        </pagination-controls>
+
+      </div>
+    </div>
+
+  </nz-modal>
+ 
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <ngx-spinner bdOpacity=1
   bdColor="rgba(200, 216, 215, 0.25)"
   size="medium"
@@ -243,4 +343,13 @@
   <p style="color: white">Loading..</p>
 </ngx-spinner>
 
-<app-footer></app-footer>
+<br><br>
+
+<div class="footer"
+  style="  height: 50px;
+  margin-top: -50px;">
+  <app-footer>
+
+  </app-footer>
+</div>
+

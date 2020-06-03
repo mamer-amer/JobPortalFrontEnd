@@ -1,0 +1,61 @@
+/* company profile card styling */
+.row{
+    width: 100% !important; 
+}
+
+p{
+    margin-left: 0px !important;
+}
+
+.company-img{
+    width: 100%;
+}
+
+.companyDetails{
+        display: flex;
+        flex: 1;
+        align-items: flex-start;
+        flex-direction: row;
+        flex-wrap: wrap;
+        /* align-items: end; */
+        
+}
+
+h6{
+    /* margin-bottom:.95em !important; */
+    color:black !important;
+    margin-bottom: 0px !important;
+}
+
+h4,h5,h6{
+    margin-bottom: 0px !important;
+    color:black !important;
+}
+
+.mg-bt-25{
+    padding-bottom: 23px !important
+}
+
+
+/* Important part */
+nz-modal {
+  overflow-y: initial !important
+}
+
+
+
+.candidateProfile-card{
+    background-color: #8c8c8c1c !important;
+}
+
+.ant-modal{
+    width:48% !important;
+    overflow-y: auto;
+}
+
+/* .mat-card{
+        
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0.12);
+
+} */
+

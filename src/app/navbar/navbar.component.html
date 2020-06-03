@@ -21,6 +21,9 @@
       </li>
 
 
+     
+
+
     </ul>
 
 
@@ -35,12 +38,30 @@
             class="sr-only">(current)</span></a>
       </li>
 
+      
+
     </ul>
     <!-- Links -->
 
 
 
+
     <ul  class="navbar-nav ml-auto nav-flex-icons">
+
+        <div class="search-container">
+          <form>
+            <input type="text"
+              placeholder="Search.."
+              #name 
+              ngModel
+              name="search">
+            <button type="submit"
+              [routerLink]="['/allcandidates']"
+              [queryParams]="{'search':name.value}"
+            ><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+
       <a *ngIf="userType!='candidate'" (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
         [nzDropdownMenu]="menu">
         <div>

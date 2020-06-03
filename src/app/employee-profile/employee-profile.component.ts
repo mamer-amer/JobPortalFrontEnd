@@ -74,6 +74,7 @@ export class EmployeeProfileComponent implements OnInit {
 
   ];
   jobId: any = undefined;
+  type:string;
 
 
   constructor(private mapsAPILoader: MapsAPILoader,
@@ -85,7 +86,9 @@ export class EmployeeProfileComponent implements OnInit {
     this.jobObj = new Job();
     this.navbar.showNav();
     this.getCountries();
-
+    this.activatedRoute.queryParamMap.subscribe(value=>{
+      this.type = value.get('type');
+    })
 
 
 
@@ -363,9 +366,10 @@ export class EmployeeProfileComponent implements OnInit {
   }
 
   getJobByParamsJobId(id: any) {
-
-    this.service.getJobById(id).subscribe((res) => {
-      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type, jobPostPermission } = res.result;
+    
+    
+    this.service.getJobByIdInGeneral(id,this.type).subscribe((res) => {
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
       let countryObj = this.countries.find(c => c["name"] == country);
       let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);
@@ -379,9 +383,15 @@ export class EmployeeProfileComponent implements OnInit {
       this.contactForm.control.get("city").setValue(cityObj);
       this.contactForm.control.get('publishFrom').setValue(new Date(publishFrom));
       this.contactForm.control.get('publishTo').setValue(new Date(publishTo));
-      if (jobPostPermission == true) this.publicPost = true;
-      else {
-        this.privatePost = true;
+      if(this.type=="public"){
+        this.publicPost = true;
+         this.privatePost = false;
+
+      }
+        
+      else{
+          this.privatePost = true;
+          this.publicPost  = false;
       }
       this.loadMap()
 

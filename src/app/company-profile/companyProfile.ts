@@ -11,5 +11,6 @@ export class CompanyProfile{
     resumeContentType:string;
     certificate:string;
     certificateContentType:string;
+    avgRating?:number=0;
 
 }

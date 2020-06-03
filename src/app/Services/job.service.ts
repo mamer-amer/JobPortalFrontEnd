@@ -19,4 +19,17 @@ export class JobService {
   public postRecruiterJob(obj: Object): Observable<any> {
     return this.http.post(environment.baseUrl + "api/recruiter/post/job", obj)
   }
+  public referJob(obj: Object): Observable<any> {
+    return this.http.post(environment.baseUrl + "api/recruiter/referJobToCandidate", obj)
+  }
+  public applyOnPrivateJob(obj: Object): Observable<any> {
+    return this.http.post(environment.baseUrl + "api/recruiter/apply", obj)
+  }
+
+  public getJobDetailsForRecruiter(jobId:any){
+    return this.http.get(environment.baseUrl + "api/recruiter/privateJobAllDetails/"+jobId)
+  }
+  public getJobDetailsForCandidate(jobId:any){
+    return this.http.get(environment.baseUrl + "api/recruiter/privateJobDetailForCandidate/"+jobId)
+  }
 }

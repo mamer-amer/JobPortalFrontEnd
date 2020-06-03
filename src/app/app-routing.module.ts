@@ -12,6 +12,8 @@ import { CompanyProfileDetailsComponent } from './company-profile-details/compan
 import { AppliedCandidatesProfilesComponent } from './applied-candidates-profiles/applied-candidates-profiles.component';
 import { ViewCandidateProfileComponent } from './view-candidate-profile/view-candidate-profile.component';
 import { AuthGuard } from './auth.guard'
+import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
+import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -46,6 +48,12 @@ const routes: Routes = [
     data: { "employer": true, "candidate": true, "recruiter": true }
   },
   {
+    path: "privatejob/:id",
+    component: ViewPrivateJobComponent,
+    canActivate: [AuthGuard],
+    data: {"recruiter": true }
+  },
+  {
     path: 'companyProfileDetails/:id',
     component: CompanyProfileDetailsComponent,
     canActivate: [AuthGuard],
@@ -53,6 +61,8 @@ const routes: Routes = [
   },
   { path: "appliedcandidates/:id", component: AppliedCandidatesProfilesComponent },
   { path: "viewprofile", component: ViewCandidateProfileComponent},
+  { path: "allcandidates", component: SearchForCandidatesComponent },
+
 
   { path: '**', component: ErrorPageComponent }
 ];

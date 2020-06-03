@@ -22,6 +22,7 @@ import { ConfirmationService } from 'primeng/api';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 import { MatIconModule } from '@angular/material/icon';
@@ -82,6 +83,8 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AgmCoreModule } from '@agm/core';
+import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
+import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,6 +103,8 @@ import { AgmCoreModule } from '@agm/core';
     NavbarComponent,
     LoaderComponent,
     MomentPipe,
+    ViewPrivateJobComponent,
+    SearchForCandidatesComponent,
 
 
   ],
@@ -155,6 +160,7 @@ import { AgmCoreModule } from '@agm/core';
     NzResultModule,
     NzAvatarModule,
     NzBadgeModule,
+    NzTabsModule,
     NgxMaterialTimepickerModule,
     NgxDocViewerModule,
     NgxExtendedPdfViewerModule,
