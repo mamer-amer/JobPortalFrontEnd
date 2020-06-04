@@ -107,8 +107,10 @@
               <div style="flex: 7;">
                 <div style="display:flex;flex-direction: column;">
                   <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                    <span style="font-weight: bold;">{{notification.candidate}} </span>
+                    <span *ngIf="userType!='candidate'" style="font-weight: bold;">{{notification.candidate}} </span>
                     applied for your
+                    <span *ngIf="userType!=='candidate'" style="font-weight: bold;">{{notification.candidate}} </span>
+                    invited you for 
                     <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
                   </div>
 
