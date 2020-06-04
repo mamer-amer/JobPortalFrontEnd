@@ -108,7 +108,27 @@ sub {
   font-size: 9px;
 }
 
+.previous{
+  background-color: azure;
+  color:black
+}
+
+.next{
+background-color: azure;
+color:black
+}
+.none{
+background-color: white;
+}
+
 mat-card{
   padding: 18px !important;
+}
+
+
+.pagination {
+  text-decoration: none;
+  display: inline-block;
+  padding: 13px 16px;
 }
 

@@ -26,12 +26,14 @@ export class ViewCandidateProfileComponent implements OnInit {
   userType: any;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   total: any;
-  page: any;
+  page: number = 0;
   itemsPerPage: any;
   allJobs: any = [];
   empty: boolean;
   companyId = sessionStorage.getItem('companyId');
   referJobDto: { "companyId": any; "jobId": any; "candidateId": any; };
+  previous: boolean = false;
+  next: boolean = false;
 
 
 
@@ -42,6 +44,8 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.userType = sessionStorage.getItem('userType');
+    
+    
 
     this.nav.showNav();
     this.getParams();
@@ -169,15 +173,37 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
 
-  pageChange(p): void {
+  // pageChange(p): void {
+  //   this.allJobs = []
+  //   this.total = 0;
+  //   this.itemsPerPage = 0;
+  //   this.page = 0;
+   
+
+  //     this.getRecruiterJobs(p-1);
+  
+
+  // }
+
+  pageChange(value:string): void {
     this.allJobs = []
     this.total = 0;
     this.itemsPerPage = 0;
-    this.page = 0;
-   
 
-      this.getRecruiterJobs(p-1);
-  
+    if(value=="next"){
+      this.page = this.page + 1
+      this.next = true;
+      this.previous = false;
+    }
+    else if(value=="previous" && this.page>0){
+      this.page = this.page - 1;
+      this.previous = true
+      this.next = false;
+    }
+
+
+    this.getRecruiterJobThatAreNotReffered(this.page);
+
 
   }
 
@@ -190,17 +216,43 @@ export class ViewCandidateProfileComponent implements OnInit {
       if (response.totalElements > 0) {
 
         this.total = response.totalElements;
-        this.page = p + 1;
+        // this.page = p + 1;
         this.itemsPerPage = response.size;
         this.allJobs = response.content
         this.empty = false;
       }
       else {
-        this.page = response.pageable.pageNumber + 1;
+        // this.page = response.pageable.pageNumber + 1;
         this.total = response.totalElements;
         this.empty = true;
+        setTimeout(function () {
+          this.empty = false;
+        }, 1000)
       }
     });
+  }
+
+
+  getRecruiterJobThatAreNotReffered(p){
+    this.service.getNotRefferdJobs(this.candidateId,this.companyId,p).subscribe(response=>{
+    
+      if (response.result!=null) {
+
+        // this.total = response.totalElements;
+        // this.page = p;
+        this.itemsPerPage = 5;
+        this.allJobs = response.result
+        this.empty = false;
+      }
+      else {
+        // this.page = 1;
+        // this.total = response.totalElements;
+        this.empty = true;
+        setTimeout(function(){
+            this.empty = true;
+        },1000)
+      }
+    })
   }
 
 
@@ -209,7 +261,8 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   referJob(){
     this.show = true;
-    this.getRecruiterJobs(0);
+    // this.getRecruiterJobs(0);
+    this.getRecruiterJobThatAreNotReffered(0);
 
 
   }
@@ -236,7 +289,8 @@ export class ViewCandidateProfileComponent implements OnInit {
           
          
           this.isOkLoading = false;
-          this.toastService.success('Successfull');
+          this.toastService.info('Successfull');
+          this.show = false;
           
         
 

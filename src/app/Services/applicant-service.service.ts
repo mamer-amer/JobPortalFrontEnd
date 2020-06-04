@@ -174,6 +174,9 @@ export class ApplicantServiceService {
   isAlreadyApplied(canId, jobId): Observable<any> {
     return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId + "&jobId=" + jobId);
   }
+  getNotRefferdJobs(canId, companyId,pageNo): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/notReferedJobs?candId=" + canId + "&companyId=" + companyId+"&page="+pageNo);
+  }
 
   isAlreadyCommentedOnCompanyProfile(obj: any): Observable<any> {
     return this.http.post(this.url + "api/review/comment", obj);

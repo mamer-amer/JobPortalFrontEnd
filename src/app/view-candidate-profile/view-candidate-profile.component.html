@@ -255,7 +255,7 @@
     nzTitle="All JOBS"
     style="width:100%"
     (nzOnCancel)="cancel()"
-    (nzOnOk)="show==false"
+    (nzOnOk)="cancel()"
     [nzOkLoading]="isOkLoading">
 
     <nz-skeleton *ngIf="!empty"
@@ -304,20 +304,42 @@
 
           <!-- if no jobs found  -->
 
+
+
         </mat-card>
       </div>
     </nz-skeleton>
-    <div class="col-lg-12"
-      style="margin:10px 0px 30px 0px;">
 
-      <div class="has-text-centered">
-        <pagination-controls (pageChange)="pageChange($event)"
+    <div *ngIf="!allJobs.length">
+      <p><b style="color:red">No confidentional job available</b></p>
+    </div>
+
+
+    <div class="col-lg-12">
+
+      <div class="has-text-centered row">
+
+        <div class="col-lg-3 offset-lg-3"
+          [ngClass]="previous==true?'previous':'none'">
+          <a (click)="pageChange('previous')"
+              
+            class="previous round pagination"><b>Previous</b></a>
+        </div>
+        <div class="col-lg-3"
+          [ngClass]="previous==true?'next':'none'">
+          <a  (click)="pageChange('next')"
+          
+            class="previous round pagination"><b>Next</b></a>
+        </div>
+
+
+        <!-- <pagination-controls (pageChange)="pageChange($event)"
           directionLinks="true"
           responsive="true"
           previousLabel="Previous"
           nextLabel="Next"
           screenReaderCurrentLabel="You're on page">
-        </pagination-controls>
+        </pagination-controls> -->
 
       </div>
     </div>
@@ -325,12 +347,6 @@
   </nz-modal>
 
 </div>
-
-
-
-
-
-
 
 
 
