@@ -171,4 +171,9 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  logout(){
+    this.service.logout();
+    
+  }
+
 }

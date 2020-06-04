@@ -32,6 +32,7 @@ export class ApplicantServiceService {
     localStorage.clear();
 
     this.router.navigate(['']);
+    
   }
 
   saveUserForm(adduserObj: any): Observable<any> {
