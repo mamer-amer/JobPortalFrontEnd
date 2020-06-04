@@ -295,9 +295,11 @@ export class CandidateProfileComponent implements OnInit {
 
         if (res != null) {
           //the profile is already present
+          
           this.candidateObj.name = sessionStorage.getItem('username');
           this.candidateObj.email = sessionStorage.getItem('email');
           if (res.result != null) {
+            let id = sessionStorage.setItem('candidateId', res.result.id)
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;

@@ -20,6 +20,8 @@ export class ApplicantServiceService {
   constructor(private http: HttpClient, private _location: Location, private router: Router, private toastService: ToastrService) { }
   url: any = environment.baseUrl;
 
+  userType=sessionStorage.getItem('userType');
+
 
   passObject(obj: any) {
     this.sourceObject.next(obj);
@@ -232,20 +234,40 @@ return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + pars
   //NOTIFICATION SERVICE CALLS
 
   getCompanyNotifications(id, pageNo): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/notifications/" + id + "?page=" + pageNo);
+    if(this.userType!="candidate"){
+      return this.http.get(this.url + "api/companyprofile/notifications/" + id + "?page=" + pageNo);
+ 
+    }
+    return this.http.get(this.url + "api/cp/notifications/" + id + "?page=" + pageNo);
   }
 
   getCompanyNotificationsCount(id): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/notification_count/" + id);
+    
+    if(this.userType!="candidate"){
+
+      return this.http.get(this.url + "api/companyprofile/notification_count/" + id);
+    }
+    else{
+      return this.http.get(this.url + "api/cp/notification_count/" + id);
+    }
   }
 
   markAllNoticationsAsRead(id): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/notifications_read/" + id);
+    if(this.userType!="candidate"){
+      return this.http.get(this.url + "api/companyprofile/notifications_read/" + id);
+    }
+    return this.http.get(this.url + "api/cp/notifications_read/" + id);
+ 
   }
 
-  markAnotificationAsRead(companyId, jobId): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/notification_marked?companyId="
-      + companyId + "&jobId=" + jobId)
+  markAnotificationAsRead(id, jobId): Observable<any> {
+    if (this.userType != "candidate") {
+      return this.http.get(this.url + "api/companyprofile/notification_marked?companyId="
+        + id + "&jobId=" + jobId)
+    }
+    return this.http.get(this.url + "api/cp/notification_marked?candidateId="
+      + id + "&jobId=" + jobId)
+   
   }
 
 }

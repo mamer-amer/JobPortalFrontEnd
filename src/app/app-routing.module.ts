@@ -51,7 +51,7 @@ const routes: Routes = [
     path: "privatejob/:id",
     component: ViewPrivateJobComponent,
     canActivate: [AuthGuard],
-    data: {"recruiter": true }
+    data: {"recruiter": true,"candidate":true }
   },
   {
     path: 'companyProfileDetails/:id',

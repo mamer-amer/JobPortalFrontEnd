@@ -27,6 +27,7 @@ export class ViewPrivateJobComponent implements OnInit {
   publishTo: string;
   referJobDto:any;
   candidateProfiles: any[] = [];
+ candidateId =sessionStorage.getItem('candidateId');
 
 
   constructor(private toastService: ToastrService, private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private navbar: NavbarService,private jobService:JobService) {
@@ -52,6 +53,11 @@ export class ViewPrivateJobComponent implements OnInit {
           let date = new Date(this.recruiterJobs.publishTo);
           this.publishTo = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
           this.applied = res['already'] == null ? false : res['already'];
+          this.referJobDto = {
+            "companyId":this.companyProfile.id,
+            "jobId": this.recruiterJobs['id'],
+            "candidateId":this.candidateId
+          }
          
 
         }  

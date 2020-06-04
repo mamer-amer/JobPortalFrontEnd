@@ -21,6 +21,15 @@ p{
         
 }
 
+.applied-class{
+    background-color:gray; 
+}
+
+.not-applied-class{
+    background-color: #0b51c5;
+    
+}
+
 h6{
     /* margin-bottom:.95em !important; */
     color:black !important;

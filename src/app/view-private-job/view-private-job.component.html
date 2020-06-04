@@ -145,8 +145,10 @@
             style="display: flex; justify-content: flex-end;">
             <button type="button"
               (click)="applyOnJob()"
+              [disabled]="applied"
+              [ngClass]="applied ==true ?'applied-class':'not-applied-class'"
               style="border-radius:30px;font-size: 12px;"
-              class="btn btn-primary">{{applied!=true?'Apply' : 'Applied'}}
+              class="btn">{{applied!=true?'Apply' : 'Applied'}}
             </button>
           </div>
         </mat-card-actions>

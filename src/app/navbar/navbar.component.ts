@@ -23,6 +23,7 @@ export class NavbarComponent implements OnInit {
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
   companyId: any = sessionStorage.getItem('companyId');
+  candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
   notificationOpen: any;
   pageNo = 0;
@@ -54,10 +55,15 @@ export class NavbarComponent implements OnInit {
 
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
+    this.companyId = sessionStorage.getItem('companyId');
+    this.candidateId = sessionStorage.getItem('candidateId');
 
     this.userImage = sessionStorage.getItem('dp');
-    if (this.companyId) {
+    if (this.companyId && this.userType!="candidate") {
       this.getNotificationsCount(this.companyId);
+    }
+    else if(this.candidateId && this.userType=="candidate"){
+      this.getNotificationsCount(this.candidateId);
     }
   }
 
@@ -81,14 +87,19 @@ export class NavbarComponent implements OnInit {
 
   readNotification(jobId) {
 
-    if (jobId && this.companyId)
+
+    if (jobId && this.companyId && this.userType!="candidate")
       this.service.markAnotificationAsRead(this.companyId, jobId).subscribe(() => {
         this.router.navigate(['appliedcandidates/' + jobId])
-
       })
+      else{
+      this.service.markAnotificationAsRead(this.candidateId, jobId).subscribe(() => {
+        this.router.navigate(['privatejob/' + jobId])
+      })
+      }
   }
   readAllNotications() {
-    if (this.companyId) {
+    if (this.companyId && this.userType!="candidate") {
    
       this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
 
@@ -96,6 +107,17 @@ export class NavbarComponent implements OnInit {
           this.pageNo=0;
           this.notifications = res.result.content
           this.getNotificationsCount(this.companyId);
+        }
+      })
+    }
+
+    else{
+      this.service.markAllNoticationsAsRead(this.candidateId).subscribe((res) => {
+
+        if (res ?.result) {
+          this.pageNo = 0;
+          this.notifications = res.result.content
+          this.getNotificationsCount(this.candidateId);
         }
       })
     }
@@ -109,15 +131,15 @@ export class NavbarComponent implements OnInit {
       this.getNotifications(this.companyId, ++this.pageNo);
     }
   }
-  getNotificationsCount(companyId) {
-    this.service.getCompanyNotificationsCount(companyId).subscribe((count) => {
+  getNotificationsCount(id) {
+    this.service.getCompanyNotificationsCount(id).subscribe((count) => {
       this.notificationsCount = count;
     })
   }
 
-  getNotifications(companyId, page) {
+  getNotifications(id, page) {
 
-    this.service.getCompanyNotifications(companyId, page).subscribe((res) => {
+    this.service.getCompanyNotifications(id, page).subscribe((res) => {
       this.isLoader = false;
       this.spinner.hide("navSpinner")
       this.notifications = this.notifications.concat(res.content)
@@ -128,16 +150,23 @@ export class NavbarComponent implements OnInit {
       this.isLoader = false;
     })
   }
+
   notificationOpened(isOpen) {
     this.isLoader = true;
     this.spinner.show("navSpinner");
     this.pageNo = 0;
     this.notificationOpen = !this.notificationOpen;
     this.notifications = [];
-    if (this.companyId) {
+    if (this.companyId && this.userType!="candidate") {
       this.getNotificationsCount(this.companyId);
       if (this.notificationOpen) {
         this.getNotifications(this.companyId, this.pageNo)
+      }
+    }
+    else{
+      this.getNotificationsCount(this.candidateId);
+      if (this.notificationOpen) {
+        this.getNotifications(this.candidateId, this.pageNo)
       }
     }
   }
