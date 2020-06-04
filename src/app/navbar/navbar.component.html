@@ -48,7 +48,7 @@
 
     <ul  class="navbar-nav ml-auto nav-flex-icons">
 
-        <div class="search-container">
+        <div class="search-container" *ngIf="userType!='candidate'">
           <form>
             <input type="text"
               placeholder="Search.."
