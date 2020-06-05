@@ -15,7 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
@@ -85,6 +85,7 @@ import { ImageCropperModule } from 'ngx-image-cropper';
 import { AgmCoreModule } from '@agm/core';
 import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
 import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -105,6 +106,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
     MomentPipe,
     ViewPrivateJobComponent,
     SearchForCandidatesComponent,
+    GlobalSearchComponent
 
 
   ],
@@ -181,7 +183,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
     })
   ],
   providers: [
-
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     NgxSpinnerService,
     MatDatepickerModule,
     {
@@ -192,6 +194,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
     { provide: NZ_I18N, useValue: en_US },
     ConfirmationService,
     CandidateProfileComponent,
+    NavbarComponent,
     CompanyProfileComponent
 
   ],

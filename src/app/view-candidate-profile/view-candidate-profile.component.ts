@@ -5,6 +5,7 @@ import { NavbarService } from '../navbar.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { JobService } from '../Services/job.service';
 import { ToastrService } from 'ngx-toastr';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-view-candidate-profile',
@@ -37,7 +38,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
 
-  public constructor(public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService,public nav: NavbarService, private jobService: JobService) {
+  public constructor(public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService,public nav: NavbarService, private jobService: JobService,private modalService:NzModalService) {
     this.candidateObj = new CadnidateWithReview();
   }
 
@@ -121,6 +122,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
 
+ 
 
   downloadFile() {
 
@@ -307,6 +309,29 @@ export class ViewCandidateProfileComponent implements OnInit {
       }
   
 
+  }
+
+
+  refer = false;
+
+
+  showReferConfirm(jobId,candId): void {
+    this.modalService.confirm({
+      nzTitle: 'Are you sure you want to refer this job?',
+      nzContent: '<b style="color: red;">Press Ok to refer</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOnOk: () => {
+        this.save(jobId,candId)
+        
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+        this.refer  = false;
+        console.log(this.refer);
+        // window.history.go(-1);
+      }
+    });
   }
 
   

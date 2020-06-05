@@ -78,6 +78,11 @@ export class ViewPrivateJobComponent implements OnInit {
           this.publishFrom = this.transform(this.recruiterJobs.publishFrom);
           let date = new Date(this.recruiterJobs.publishTo);
           this.publishTo = date.getDate()+'-'+date.getMonth()+'-'+date.getFullYear();
+          this.referJobDto = {
+            "companyId": this.companyProfile.id,
+            "jobId": this.recruiterJobs['id'],
+            "candidateId": this.candidateId
+          }
           
         
         
@@ -176,6 +181,18 @@ export class ViewPrivateJobComponent implements OnInit {
         this.applied = true;
         this.toastService.info('Successfull');
       }
+    })
+  }
+
+  undoRefer(candId){
+    this.referJobDto = {
+      "companyId": this.companyProfile.id,
+      "jobId": this.recruiterJobs['id'],
+      "candidateId": candId
+    }
+    this.jobService.undoReferToCandidate(this.referJobDto['jobId'],candId).subscribe(res=>{
+      this.allCandidatesReferedOrNotList = res['result']['allCandidatesReferedOrNotList'];
+      
     })
   }
 

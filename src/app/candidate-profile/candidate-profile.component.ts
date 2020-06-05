@@ -12,6 +12,7 @@ import { NavbarService } from '../navbar.service';
 import { Subject } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ImageTransform, Dimensions, ImageCroppedEvent } from 'ngx-image-cropper';
+import { NavbarComponent } from '../navbar/navbar.component';
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
@@ -44,7 +45,7 @@ export class CandidateProfileComponent implements OnInit {
   //   type: 'pdf', // the type you want to download
   //   elementId: 'myTableElementId', // the id of html/table element
   // }
-
+  candidateId:any;
 
 
   fields: any[] = [
@@ -299,11 +300,10 @@ export class CandidateProfileComponent implements OnInit {
           this.candidateObj.name = sessionStorage.getItem('username');
           this.candidateObj.email = sessionStorage.getItem('email');
           if (res.result != null) {
-            let id = sessionStorage.setItem('candidateId', res.result.id)
+            this.candidateId = sessionStorage.setItem('candidateId', res.result.id)
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
-
             this.candidateObj.field = res.result.field;
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
@@ -315,6 +315,8 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.resumeContentType = res.result.resumeContentType;
            
             this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+
+            
            
 
           }
@@ -371,6 +373,7 @@ export class CandidateProfileComponent implements OnInit {
       'pdf': 'application/pdf',
       "doc":"doc"
     }
+    console.log(MIMETypes[ext]);
     return MIMETypes[ext];
   }
 

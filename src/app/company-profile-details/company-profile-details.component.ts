@@ -68,22 +68,23 @@ export class CompanyProfileDetailsComponent implements OnInit {
   }
 
   getMIMEtype(extn) {
-    let ext = extn
+    let ext = extn;
     let MIMETypes = {
-      'text/plain': 'txt',
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
-      'application/msword': 'doc',
-      'application/pdf': 'pdf',
-      'image/jpeg': 'jpg',
-      'image/bmp': 'bmp',
-      'image/png': 'png',
-      'application/vnd.ms-excel': 'xls',
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': 'xlsx',
-      'application/rtf': 'rtf',
-      'application/vnd.ms-powerpoint': 'ppt',
-      'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx'
+      'text/plain': "txt",
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': "docx",
+      'application/msword': "doc",
+      'application/pdf': "pdf",
+      'image/jpeg': "jpg",
+      'image/bmp': "bmp",
+      'image/png': "png",
+      'application/vnd.ms-excel': "xls",
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': "xlsx",
+      'application/rtf': "rtf",
+      'application/vnd.ms-powerpoint': "ppt",
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': "pptx"
     }
-    return MIMETypes[ext];
+    console.log(MIMETypes['application/' + ext])
+    return 'application/' + MIMETypes['application/' + ext]
   }
 
 

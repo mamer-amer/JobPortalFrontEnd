@@ -166,7 +166,7 @@
 <nz-modal [(nzVisible)]="isVisible"
   nzTitle="All Candidates"
   (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()"
+  (nzOnOk)="handleCancel()"
   style="overflow-y: scroll"
   [nzOkLoading]="isOkLoading">
 
@@ -189,16 +189,20 @@
               <h5>
                 {{candidateProfile.name}}</h5>
             </a>
-            <p>{{candidateProfile.presentationLetter.length>100?
+            <p style="margin-bottom: 0px">{{candidateProfile.presentationLetter.length>100?
             candidateProfile.presentationLetter.slice(0,100)+'...'
             :candidateProfile.presentationLetter
           }}
             </p>
-            <mat-checkbox [ngModel]="candidateProfile.referedDate?true:false"
+            <!-- <mat-checkbox [ngModel]="candidateProfile.referedDate?true:false"
               (click)="referCandidatesList(candidateProfile.candidate_id)"
               [disabled]="candidateProfile.referedDate!=null?true:false">
               <b>{{candidateProfile.referedDate!=null?"Already refered":"Refer"}}</b>
-            </mat-checkbox>
+            </mat-checkbox> -->
+            <i class="fa fa-undo"
+              style="cursor: pointer"
+              (click)="undoRefer(candidateProfile.candidate_id)"
+              aria-hidden="true"> &nbsp;Undo refer</i>
           </div>
 
         </div>

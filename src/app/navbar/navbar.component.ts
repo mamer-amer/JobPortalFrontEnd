@@ -61,10 +61,35 @@ export class NavbarComponent implements OnInit {
     this.userImage = sessionStorage.getItem('dp');
     if (this.companyId && this.userType!="candidate") {
       this.getNotificationsCount(this.companyId);
+      this.callAfterOneSecond(this.companyId);
+      
     }
     else if(this.candidateId && this.userType=="candidate"){
       this.getNotificationsCount(this.candidateId);
+      this.callAfterOneSecond(this.candidateId);
     }
+
+
+  }
+
+  // ngAfterViewInit(){
+  //    if (this.companyId && this.userType!="candidate") {
+  //     this.getNotificationsCount(this.companyId);
+      
+  //   }
+  //   else if(this.candidateId && this.userType=="candidate"){
+  //     this.getNotificationsCount(this.candidateId);
+      
+  //   }
+
+    
+
+  // }
+
+  callAfterOneSecond(id){
+    setTimeout(() => {
+      this.getNotificationsCount(id);
+    }, 2000);
   }
 
 

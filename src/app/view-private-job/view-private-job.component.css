@@ -22,11 +22,12 @@ p{
 }
 
 .applied-class{
-    background-color:gray; 
+    background-color:gray;
 }
 
 .not-applied-class{
-    background-color: #0b51c5;
+    background-color: black;
+    color:white;
     
 }
 

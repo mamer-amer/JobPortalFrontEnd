@@ -1,0 +1,13 @@
+.searchList:hover{
+    background-color: rgb(219, 217, 217) !important;
+
+}
+
+.img-thumbnail {
+  padding: 0px !important;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 50% !important;
+  max-width: 100%;
+  height: auto;
+}
