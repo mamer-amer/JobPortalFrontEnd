@@ -20,6 +20,11 @@
         <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
       </li>
 
+      <li class="nav-item">
+        <app-global-search></app-global-search>
+      </li>
+      
+
 
      
 
@@ -48,19 +53,6 @@
 
     <ul  class="navbar-nav ml-auto nav-flex-icons">
 
-        <div class="search-container" *ngIf="userType!='candidate'">
-          <form>
-            <input type="text"
-              placeholder="Search.."
-              #name 
-              ngModel
-              name="search">
-            <button type="submit"
-              [routerLink]="['/allcandidates']"
-              [queryParams]="{'search':name.value}"
-            ><i class="fa fa-search"></i></button>
-          </form>
-        </div>
 
       <a  (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
         [nzDropdownMenu]="menu">

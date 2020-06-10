@@ -13,6 +13,7 @@ import { Subject } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ImageTransform, Dimensions, ImageCroppedEvent } from 'ngx-image-cropper';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { LoginService } from '../login-page/login.service';
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
@@ -34,6 +35,10 @@ export class CandidateProfileComponent implements OnInit {
   };
   previewImage: string | undefined = '';
   previewVisible = false;
+
+  setCandidateId = new Subject<string>();
+  getCandidateId = this.setCandidateId.asObservable();
+
 
 
 
@@ -84,7 +89,7 @@ export class CandidateProfileComponent implements OnInit {
   transform: ImageTransform = {};
   @ViewChild('openModal', { static: true }) openModal: ElementRef
 
-  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private toastService: ToastrService, public nav: NavbarService) { }
+  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private toastService: ToastrService, public nav: NavbarService,private loginService:LoginService) { }
 
 
   ngOnInit(): void {
@@ -301,6 +306,7 @@ export class CandidateProfileComponent implements OnInit {
           this.candidateObj.email = sessionStorage.getItem('email');
           if (res.result != null) {
             this.candidateId = sessionStorage.setItem('candidateId', res.result.id)
+            
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
@@ -315,6 +321,7 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.resumeContentType = res.result.resumeContentType;
            
             this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+            this.setCandidateId.next(this.candidateId);
 
             
            

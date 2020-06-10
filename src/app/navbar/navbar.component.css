@@ -10,7 +10,9 @@ h6{
 
     /* padding-top:10px */
 }
-
+.navbar-collapse,.collapse{
+  background-color: black !important;
+}
 
 /* small{
     margin-bottom: -0.301em !important;

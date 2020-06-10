@@ -86,6 +86,7 @@ import { AgmCoreModule } from '@agm/core';
 import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
 import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,6 +124,7 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
+    NzAutocompleteModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     NzPopconfirmModule,
@@ -195,7 +197,8 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
     ConfirmationService,
     CandidateProfileComponent,
     NavbarComponent,
-    CompanyProfileComponent
+    CompanyProfileComponent,
+    GlobalSearchComponent
 
   ],
   bootstrap: [AppComponent]

@@ -34,14 +34,26 @@ export class NavbarComponent implements OnInit {
 
 
   constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
+
+
     this.notificationOpen = false;
     this.companyProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
+
+
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
+
 
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
-      console.log("This is company id", this.companyId)
+      this.getNotificationsCount(this.companyId);
     });
+
+    this.candP.getCandidateId.subscribe(value=>{
+      this.candidateId = value ? value : sessionStorage.getItem('candidateId');
+      this.getNotificationsCount(this.candidateId);
+    });
+
+
 
     this.legalCompanyName = sessionStorage.getItem('companyName');
     this.companyProf.legalCompanyNameObserable.subscribe(()=>{
@@ -50,6 +62,8 @@ export class NavbarComponent implements OnInit {
     })
   }
 
+
+  // this.companyProf
 
   ngOnInit(): void {
 
@@ -61,41 +75,17 @@ export class NavbarComponent implements OnInit {
     this.userImage = sessionStorage.getItem('dp');
     if (this.companyId && this.userType!="candidate") {
       this.getNotificationsCount(this.companyId);
-      this.callAfterOneSecond(this.companyId);
       
     }
+
     else if(this.candidateId && this.userType=="candidate"){
       this.getNotificationsCount(this.candidateId);
-      this.callAfterOneSecond(this.candidateId);
     }
 
 
   }
 
-  // ngAfterViewInit(){
-  //    if (this.companyId && this.userType!="candidate") {
-  //     this.getNotificationsCount(this.companyId);
-      
-  //   }
-  //   else if(this.candidateId && this.userType=="candidate"){
-  //     this.getNotificationsCount(this.candidateId);
-      
-  //   }
 
-    
-
-  // }
-
-  callAfterOneSecond(id){
-    setTimeout(() => {
-      this.getNotificationsCount(id);
-    }, 2000);
-  }
-
-
-  getImage() {
-
-  }
   cancel(): void {
     this.nzMessageService.info('click cancel');
   }

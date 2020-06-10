@@ -1,7 +1,4 @@
-.searchList:hover{
-    background-color: rgb(219, 217, 217) !important;
 
-}
 
 .img-thumbnail {
   padding: 0px !important;
@@ -10,4 +7,11 @@
   border-radius: 50% !important;
   max-width: 100%;
   height: auto;
+} 
+
+
+input{
+  padding: 6px;
+  margin-left: 4%;
+  width:340px  !important;
 }
