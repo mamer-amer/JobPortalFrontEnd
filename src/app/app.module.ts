@@ -15,13 +15,14 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
-import { CommonModule, registerLocaleData } from '@angular/common';
+import { CommonModule, registerLocaleData, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 
 
 import { MatIconModule } from '@angular/material/icon';
@@ -82,6 +83,10 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { AgmCoreModule } from '@agm/core';
+import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
+import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
+import { GlobalSearchComponent } from './global-search/global-search.component';
+import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 @NgModule({
   declarations: [
     AppComponent,
@@ -100,6 +105,9 @@ import { AgmCoreModule } from '@agm/core';
     NavbarComponent,
     LoaderComponent,
     MomentPipe,
+    ViewPrivateJobComponent,
+    SearchForCandidatesComponent,
+    GlobalSearchComponent
 
 
   ],
@@ -116,6 +124,7 @@ import { AgmCoreModule } from '@agm/core';
     AppRoutingModule,
     BrowserAnimationsModule,
     MatInputModule,
+    NzAutocompleteModule,
     MatAutocompleteModule,
     MatDatepickerModule,
     NzPopconfirmModule,
@@ -155,6 +164,7 @@ import { AgmCoreModule } from '@agm/core';
     NzResultModule,
     NzAvatarModule,
     NzBadgeModule,
+    NzTabsModule,
     NgxMaterialTimepickerModule,
     NgxDocViewerModule,
     NgxExtendedPdfViewerModule,
@@ -175,7 +185,7 @@ import { AgmCoreModule } from '@agm/core';
     })
   ],
   providers: [
-
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
     NgxSpinnerService,
     MatDatepickerModule,
     {
@@ -186,7 +196,9 @@ import { AgmCoreModule } from '@agm/core';
     { provide: NZ_I18N, useValue: en_US },
     ConfirmationService,
     CandidateProfileComponent,
-    CompanyProfileComponent
+    NavbarComponent,
+    CompanyProfileComponent,
+    GlobalSearchComponent
 
   ],
   bootstrap: [AppComponent]

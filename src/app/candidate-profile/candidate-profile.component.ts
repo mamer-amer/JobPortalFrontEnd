@@ -5,13 +5,15 @@ import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { isNumber } from 'util';
 import { ExportAsConfig, ExportAsService } from 'ngx-export-as';
-import { NzMessageService } from 'ng-zorro-antd';
+// import { NzMessageService } from 'ng-zorro-antd';
 import { ToastrService } from 'ngx-toastr';
 import { UploadFile } from 'ng-zorro-antd/upload';
 import { NavbarService } from '../navbar.service';
 import { Subject } from 'rxjs';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { ImageTransform, Dimensions, ImageCroppedEvent } from 'ngx-image-cropper';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { LoginService } from '../login-page/login.service';
 @Component({
   selector: 'app-candidate-profile',
   templateUrl: './candidate-profile.component.html',
@@ -34,17 +36,21 @@ export class CandidateProfileComponent implements OnInit {
   previewImage: string | undefined = '';
   previewVisible = false;
 
+  setCandidateId = new Subject<string>();
+  getCandidateId = this.setCandidateId.asObservable();
+
+
 
 
   userId;
   labelText = "Upload your Resume";
   allJobsbtn: any = false;
   color: any = false;
-  exportAsConfig: ExportAsConfig = {
-    type: 'pdf', // the type you want to download
-    elementId: 'myTableElementId', // the id of html/table element
-  }
-
+  // exportAsConfig: ExportAsConfig = {
+  //   type: 'pdf', // the type you want to download
+  //   elementId: 'myTableElementId', // the id of html/table element
+  // }
+  candidateId:any;
 
 
   fields: any[] = [
@@ -83,7 +89,7 @@ export class CandidateProfileComponent implements OnInit {
   transform: ImageTransform = {};
   @ViewChild('openModal', { static: true }) openModal: ElementRef
 
-  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private message: NzMessageService, private toastService: ToastrService, public nav: NavbarService, private msg: NzMessageService) { }
+  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private toastService: ToastrService, public nav: NavbarService,private loginService:LoginService) { }
 
 
   ngOnInit(): void {
@@ -295,13 +301,15 @@ export class CandidateProfileComponent implements OnInit {
 
         if (res != null) {
           //the profile is already present
+          
           this.candidateObj.name = sessionStorage.getItem('username');
           this.candidateObj.email = sessionStorage.getItem('email');
           if (res.result != null) {
+            this.candidateId = sessionStorage.setItem('candidateId', res.result.id)
+            
             this.labelText = "Change your resume"
             this.color = true;
             this.allJobsbtn = true;
-
             this.candidateObj.field = res.result.field;
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
@@ -313,6 +321,9 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.resumeContentType = res.result.resumeContentType;
            
             this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+            this.setCandidateId.next(this.candidateId);
+
+            
            
 
           }
@@ -351,7 +362,7 @@ export class CandidateProfileComponent implements OnInit {
 
 
   getMIMEtype(extn) {
-    let ext = extn.toLowerCase();
+    let ext = extn
     let MIMETypes = {
       'text/plain': 'txt',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document': 'docx',
@@ -369,6 +380,7 @@ export class CandidateProfileComponent implements OnInit {
       'pdf': 'application/pdf',
       "doc":"doc"
     }
+    console.log(MIMETypes[ext]);
     return MIMETypes[ext];
   }
 

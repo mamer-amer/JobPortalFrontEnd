@@ -48,9 +48,12 @@ export class AllJobsComponent implements OnInit {
   zoom: number = 15;
   address: string;
   private geoCoder;
+  companyId = sessionStorage.getItem("companyId");
+  tabs = [1, 2];
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
+  privateJobs = false;
 
 
   constructor(private mapsAPILoader: MapsAPILoader,
@@ -144,7 +147,14 @@ export class AllJobsComponent implements OnInit {
     else if (this.userType != "candidate" && this.selectedCategory == null) {
       this.getJobsByCompany(p - 1);
     }
-    else if (this.userType != "candidate" && this.selectedCategory != null) {
+
+    else if (this.userType != "candidate" && this.selectedCategory == null && this.privateJobs==true) {
+      this.getJobsByCompany(p - 1);
+    }
+    else if (this.userType != "candidate" && this.selectedCategory != null && this.privateJobs==false) {
+      this.getJobsByCategory(this.selectedCategory, p - 1);
+    }
+    else if (this.userType != "candidate" && this.selectedCategory != null && this.privateJobs==true) {
       this.getJobsByCategory(this.selectedCategory, p - 1);
     }
 
@@ -160,10 +170,10 @@ export class AllJobsComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 0;
     this.page = 0;
+    this.selectedCategory = null;
 
     if (this.userType == "candidate") {
       this.service.getPaginatedJobs(p).subscribe((response) => {
-        this.selectedCategory = null;
         if (response.totalElements > 0) {
           console.log(response)
           this.total = response.totalElements;
@@ -197,32 +207,63 @@ export class AllJobsComponent implements OnInit {
     this.total = 0;
     this.itemsPerPage = 0;
     this.page = 0;
-    this.service.getPaginatedJobsByCategory(cat, p).subscribe((res) => {
+    if(this.privateJobs==true){
+      this.service.getPaginatedJobsByCategoryPrivate(cat, p).subscribe((res) => {
 
-      if (res.totalElements > 0) {
-        this.allJobs = res.content;
-        this.total = res.totalElements;
-        this.page = res.pageable.pageNumber + 1;
-        this.itemsPerPage = res.size;
-        this.empty = false;
+        if (res.totalElements > 0) {
+          this.allJobs = res.content;
+          this.total = res.totalElements;
+          this.page = res.pageable.pageNumber + 1;
+          this.itemsPerPage = res.size;
+          this.empty = false;
 
-      }
-      else {
-        this.page = res.pageable.pageNumber + 1;
-        this.total = res.totalElements;
+        }
+        else {
+          this.page = res.pageable.pageNumber + 1;
+          this.total = res.totalElements;
 
+          setTimeout(() => {
+            this.empty = true;
+          }, 2000)
+
+        }
+        console.log(this.empty)
+
+      }), error => {
         setTimeout(() => {
           this.empty = true;
         }, 2000)
-
       }
-      console.log(this.empty)
-
-    }), error => {
-      setTimeout(() => {
-        this.empty = true;
-      }, 2000)
     }
+    else{
+      this.service.getPaginatedJobsByCategory(cat, p).subscribe((res) => {
+
+        if (res.totalElements > 0) {
+          this.allJobs = res.content;
+          this.total = res.totalElements;
+          this.page = res.pageable.pageNumber + 1;
+          this.itemsPerPage = res.size;
+          this.empty = false;
+
+        }
+        else {
+          this.page = res.pageable.pageNumber + 1;
+          this.total = res.totalElements;
+
+          setTimeout(() => {
+            this.empty = true;
+          }, 2000)
+
+        }
+        console.log(this.empty)
+
+      }), error => {
+        setTimeout(() => {
+          this.empty = true;
+        }, 2000)
+      }
+    }
+   
   }
 
   showMarkersOnMap(): void {
@@ -235,7 +276,10 @@ export class AllJobsComponent implements OnInit {
   }
 
 
-  routeToJobDetailsComponent = (id) => this.router.navigate(['/job/' + id]);
+  routeToJobDetailsComponent = (id) =>{
+    this.privateJobs == false ? this.router.navigate(['/job/' + id]) : this.router.navigate(['/privatejob/'+id]);
+  } 
+    
 
   routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
 
@@ -342,23 +386,48 @@ onMouseOut(infoWindow, $event: MouseEvent) {
     this.total = 0;
     this.itemsPerPage = 0;
     this.page = 0;
-    this.service.getJobsByCompany(p).subscribe(response => {
+    // check for public or private jobs
 
-      console.log(response, "======jobs by company")
-      if (response.totalElements > 0) {
+    if(this.privateJobs==true){
+        // show private jobs else 
+      this.service.getJobsByCompanyPrivate(p,this.companyId).subscribe(response => {
 
-        this.total = response.totalElements;
-        this.page = p + 1;
-        this.itemsPerPage = response.size;
-        this.allJobs = response.content
-        this.empty = false;
-      }
-      else {
-        this.page = response.pageable.pageNumber + 1;
-        this.total = response.totalElements;
-        this.empty = true;
-      }
-    })
+        console.log(response, "======jobs by company")
+        if (response.totalElements > 0) {
+
+          this.total = response.totalElements;
+          this.page = p + 1;
+          this.itemsPerPage = response.size;
+          this.allJobs = response.content
+          this.empty = false;
+        }
+        else {
+          this.page = response.pageable.pageNumber + 1;
+          this.total = response.totalElements;
+          this.empty = true;
+        }
+      });
+    }
+    else{
+      this.service.getJobsByCompany(p).subscribe(response => {
+
+        console.log(response, "======jobs by company")
+        if (response.totalElements > 0) {
+
+          this.total = response.totalElements;
+          this.page = p + 1;
+          this.itemsPerPage = response.size;
+          this.allJobs = response.content
+          this.empty = false;
+        }
+        else {
+          this.page = response.pageable.pageNumber + 1;
+          this.total = response.totalElements;
+          this.empty = true;
+        }
+      });
+    }
+   
   }
 
 
@@ -419,7 +488,7 @@ onMouseOut(infoWindow, $event: MouseEvent) {
   deleteJob(id: any, index: any, page: any) {
 
     console.log("This job is going to be delete", this.allJobs[index]);
-    this.service.deleteJob(id, page - 1).subscribe(res => {
+    this.service.deleteJob(id, page - 1,this.privateJobs).subscribe(res => {
       if (res.status == 200) {
         this.toastService.info('Deleted')
         //  this.allJobs.slice(index,1);

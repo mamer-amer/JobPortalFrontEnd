@@ -3,6 +3,9 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
+import { JobService } from '../Services/job.service';
+import { ToastrService } from 'ngx-toastr';
+import { NzModalService } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-view-candidate-profile',
@@ -23,16 +26,27 @@ export class ViewCandidateProfileComponent implements OnInit {
   rating: any = 0;
   userType: any;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+  total: any;
+  page: number = 0;
+  itemsPerPage: any;
+  allJobs: any = [];
+  empty: boolean;
+  companyId = sessionStorage.getItem('companyId');
+  referJobDto: { "companyId": any; "jobId": any; "candidateId": any; };
+  previous: boolean = false;
+  next: boolean = false;
 
 
 
-  public constructor(public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, public nav: NavbarService) {
+  public constructor(public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService,public nav: NavbarService, private jobService: JobService,private modalService:NzModalService) {
     this.candidateObj = new CadnidateWithReview();
   }
 
   ngOnInit(): void {
 
     this.userType = sessionStorage.getItem('userType');
+    
+    
 
     this.nav.showNav();
     this.getParams();
@@ -108,6 +122,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
 
+ 
 
   downloadFile() {
 
@@ -157,8 +172,170 @@ export class ViewCandidateProfileComponent implements OnInit {
     console.log('Button cancel clicked!');
     this.isVisible = false;
   }
-}
 
+
+
+  // pageChange(p): void {
+  //   this.allJobs = []
+  //   this.total = 0;
+  //   this.itemsPerPage = 0;
+  //   this.page = 0;
+   
+
+  //     this.getRecruiterJobs(p-1);
+  
+
+  // }
+
+  pageChange(value:string): void {
+    this.allJobs = []
+    this.total = 0;
+    this.itemsPerPage = 0;
+
+    if(value=="next"){
+      this.page = this.page + 1
+      this.next = true;
+      this.previous = false;
+    }
+    else if(value=="previous" && this.page>0){
+      this.page = this.page - 1;
+      this.previous = true
+      this.next = false;
+    }
+
+
+    this.getRecruiterJobThatAreNotReffered(this.page);
+
+
+  }
+
+
+  getRecruiterJobs(p) {
+   
+    this.service.getJobsByCompanyPrivate(p, this.companyId).subscribe(response => {
+
+      console.log(response, "======jobs by company")
+      if (response.totalElements > 0) {
+
+        this.total = response.totalElements;
+        // this.page = p + 1;
+        this.itemsPerPage = response.size;
+        this.allJobs = response.content
+        this.empty = false;
+      }
+      else {
+        // this.page = response.pageable.pageNumber + 1;
+        this.total = response.totalElements;
+        this.empty = true;
+        setTimeout(function () {
+          this.empty = false;
+        }, 1000)
+      }
+    });
+  }
+
+
+  getRecruiterJobThatAreNotReffered(p){
+    this.service.getNotRefferdJobs(this.candidateId,this.companyId,p).subscribe(response=>{
+    
+      if (response.result!=null) {
+
+        // this.total = response.totalElements;
+        // this.page = p;
+        this.itemsPerPage = 5;
+        this.allJobs = response.result
+        this.empty = false;
+      }
+      else {
+        // this.page = 1;
+        // this.total = response.totalElements;
+        this.empty = true;
+        setTimeout(function(){
+            this.empty = true;
+        },1000)
+      }
+    })
+  }
+
+
+  show = false;
+  isOkLoading = false;
+
+  referJob(){
+    this.show = true;
+    // this.getRecruiterJobs(0);
+    this.getRecruiterJobThatAreNotReffered(0);
+
+
+  }
+
+  cancel(){
+      this.show = false;
+      this.isOkLoading = false;
+  }
+
+  save(jobId:any,candId:any){
+
+    this.referJobDto = {
+      "companyId": this.companyId,
+      "jobId":jobId,
+      "candidateId":candId
+    }
+
+    console.log(this.referJobDto)
+  
+      this.isOkLoading = true;
+      this.jobService.referJob(this.referJobDto).subscribe(res => {
+        console.log(res);
+        if (res.status == 200) {
+          
+         
+          this.isOkLoading = false;
+          this.toastService.info('Successfull');
+          this.show = false;
+          
+        
+
+        }
+        else {
+          this.toastService.error("Error", 'Failed to refer a job')
+          this.isOkLoading = false;
+
+        }
+
+      }), error => {
+        this.toastService.error("Error", 'Failed to refer a job')
+        this.isOkLoading = false;
+      }
+  
+
+  }
+
+
+  refer = false;
+
+
+  showReferConfirm(jobId,candId): void {
+    this.modalService.confirm({
+      nzTitle: 'Are you sure you want to refer this job?',
+      nzContent: '<b style="color: red;">Press Ok to refer</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'primary',
+      nzOnOk: () => {
+        this.save(jobId,candId)
+        
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+        this.refer  = false;
+        console.log(this.refer);
+        // window.history.go(-1);
+      }
+    });
+  }
+
+  
+}
 class CadnidateWithReview {
   id?: any;
   field?: any;

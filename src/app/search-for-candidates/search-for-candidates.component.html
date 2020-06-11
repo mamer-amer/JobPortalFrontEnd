@@ -1,0 +1,92 @@
+<app-navbar></app-navbar>
+
+<br>
+<br>
+<br>
+
+<div class="container" style="min-height:100%">
+    <div class="row">
+        <h3>Results for <span style="color:lightslategray">'{{searchValue}}'</span></h3>
+    </div>
+   
+      <div class="card">
+        <h3 class="card-header text-center font-weight-bold text-uppercase py-4">List of Candidates</h3>
+        <div class="card-body">
+          <div id="table"
+            class="table-editable">
+
+
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+              <tr class="headings">
+                <th class="text-center">S.no</th>
+                <th class="text-center">Name</th>
+                <th class="text-center">Email</th>
+                <th class="text-center">Field</th>
+                <th class="text-center">Profile Status</th>
+                <!-- <th class="text-center">Presentation Letter</th> -->
+                <th class="text-center">Actions</th>
+
+
+              </tr>
+              <tr *ngFor="let profiles of candidatesArrays; let i = index">
+                <td>
+                  <span>{{i+1}}</span>
+                </td>
+                <td>
+                  <span>{{profiles.name}}</span>
+                </td>
+                <td>
+                  <span>{{profiles.email}}</span>
+                </td>
+                <td>
+                  <span>{{profiles.field}}</span>
+                </td>
+                <td>
+
+
+                  <span>{{profiles.profileActive}}</span>
+
+
+                </td>
+
+                <td>
+                  <span class="table-remove">
+                    <button type="button"
+                      mdbBtn
+                      color="info"
+                      rounded="true"
+                      size="sm"
+                      (click)="gotoViewProfile(i)"
+                      class="my-0">View Profile</button>
+                  </span>
+                </td>
+              </tr>
+              <tr *ngIf="!candidatesArrays.length">
+                <td colspan="6">
+                  <h6 style="text-align:center">0 results found for 
+                    <span style="color:red">{{searchValue}}</span></h6>
+                </td>
+                  
+              </tr>
+            </table>
+          </div>
+        </div>
+    
+      <!-- Editable table -->
+    </div>
+
+
+</div>
+
+
+
+
+<div class="footer"
+  style="  height: 50px;
+  margin-top: -50px;">
+  <app-footer>
+
+  </app-footer>
+</div>
+
+

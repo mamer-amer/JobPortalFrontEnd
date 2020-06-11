@@ -10721,7 +10721,7 @@ body.scrollable {
     margin-bottom: 1.5rem
 }
 
-.md-form input:not([type]),
+.md-form input:not([nzType]),
 .md-form input[type="text"]:not(.browser-default),
 .md-form input[type="password"]:not(.browser-default),
 .md-form input[type="email"]:not(.browser-default),
@@ -10750,7 +10750,7 @@ body.scrollable {
     transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
 }
 
-.md-form input:not([type]):focus:not([readonly]),
+.md-form input:not([nzType]):focus:not([readonly]),
 .md-form input[type="text"]:not(.browser-default):focus:not([readonly]),
 .md-form input[type="password"]:not(.browser-default):focus:not([readonly]),
 .md-form input[type="email"]:not(.browser-default):focus:not([readonly]),
@@ -10769,7 +10769,7 @@ body.scrollable {
     box-shadow: 0 1px 0 0 #4285f4
 }
 
-.md-form input:not([type]):focus:not([readonly])+label,
+.md-form input:not([nzType]):focus:not([readonly])+label,
 .md-form input[type="text"]:not(.browser-default):focus:not([readonly])+label,
 .md-form input[type="password"]:not(.browser-default):focus:not([readonly])+label,
 .md-form input[type="email"]:not(.browser-default):focus:not([readonly])+label,
@@ -10786,7 +10786,7 @@ body.scrollable {
     color: #4285f4
 }
 
-.md-form input:not([type])+label::after,
+.md-form input:not([nzType])+label::after,
 .md-form input[type="text"]:not(.browser-default)+label::after,
 .md-form input[type="password"]:not(.browser-default)+label::after,
 .md-form input[type="email"]:not(.browser-default)+label::after,
@@ -10809,8 +10809,8 @@ body.scrollable {
     transition: 0.2s opacity ease-out, 0.2s color ease-out
 }
 
-.md-form input:not([type]).valid,
-.md-form input:not([type]):focus.valid,
+.md-form input:not([nzType]).valid,
+.md-form input:not([nzType]):focus.valid,
 .md-form input[type="text"]:not(.browser-default).valid,
 .md-form input[type="text"]:not(.browser-default):focus.valid,
 .md-form input[type="password"]:not(.browser-default).valid,
@@ -10842,8 +10842,8 @@ body.scrollable {
     box-shadow: 0 1px 0 0 #00c851
 }
 
-.md-form input:not([type]).valid+label:after,
-.md-form input:not([type]):focus.valid+label:after,
+.md-form input:not([nzType]).valid+label:after,
+.md-form input:not([nzType]):focus.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).valid+label:after,
 .md-form input[type="text"]:not(.browser-default):focus.valid+label:after,
 .md-form input[type="password"]:not(.browser-default).valid+label:after,
@@ -10875,8 +10875,8 @@ body.scrollable {
     opacity: 1
 }
 
-.md-form input:not([type]).invalid,
-.md-form input:not([type]):focus.invalid,
+.md-form input:not([nzType]).invalid,
+.md-form input:not([nzType]):focus.invalid,
 .md-form input[type="text"]:not(.browser-default).invalid,
 .md-form input[type="text"]:not(.browser-default):focus.invalid,
 .md-form input[type="password"]:not(.browser-default).invalid,
@@ -10908,8 +10908,8 @@ body.scrollable {
     box-shadow: 0 1px 0 0 #f44336
 }
 
-.md-form input:not([type]).invalid+label:after,
-.md-form input:not([type]):focus.invalid+label:after,
+.md-form input:not([nzType]).invalid+label:after,
+.md-form input:not([nzType]):focus.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).invalid+label:after,
 .md-form input[type="text"]:not(.browser-default):focus.invalid+label:after,
 .md-form input[type="password"]:not(.browser-default).invalid+label:after,
@@ -10941,8 +10941,8 @@ body.scrollable {
     opacity: 1
 }
 
-.md-form input:not([type]).form-control.valid+label:after,
-.md-form input:not([type]).form-control:focus.valid+label:after,
+.md-form input:not([nzType]).form-control.valid+label:after,
+.md-form input:not([nzType]).form-control:focus.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control:focus.valid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control.valid+label:after,
@@ -10972,8 +10972,8 @@ body.scrollable {
     top: 4.1rem
 }
 
-.md-form input:not([type]).form-control.invalid+label:after,
-.md-form input:not([type]).form-control:focus.invalid+label:after,
+.md-form input:not([nzType]).form-control.invalid+label:after,
+.md-form input:not([nzType]).form-control:focus.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control:focus.invalid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control.invalid+label:after,
@@ -11003,8 +11003,8 @@ body.scrollable {
     top: 4rem
 }
 
-.md-form input:not([type]).form-control-lg.valid+label:after,
-.md-form input:not([type]).form-control-lg:focus.valid+label:after,
+.md-form input:not([nzType]).form-control-lg.valid+label:after,
+.md-form input:not([nzType]).form-control-lg:focus.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-lg.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-lg:focus.valid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control-lg.valid+label:after,
@@ -11034,8 +11034,8 @@ body.scrollable {
     top: 4.6rem
 }
 
-.md-form input:not([type]).form-control-lg.invalid+label:after,
-.md-form input:not([type]).form-control-lg:focus.invalid+label:after,
+.md-form input:not([nzType]).form-control-lg.invalid+label:after,
+.md-form input:not([nzType]).form-control-lg:focus.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-lg.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-lg:focus.invalid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control-lg.invalid+label:after,
@@ -11065,8 +11065,8 @@ body.scrollable {
     top: 4.6rem
 }
 
-.md-form input:not([type]).form-control-sm.valid+label:after,
-.md-form input:not([type]).form-control-sm:focus.valid+label:after,
+.md-form input:not([nzType]).form-control-sm.valid+label:after,
+.md-form input:not([nzType]).form-control-sm:focus.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-sm.valid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-sm:focus.valid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control-sm.valid+label:after,
@@ -11096,8 +11096,8 @@ body.scrollable {
     top: 3.7rem
 }
 
-.md-form input:not([type]).form-control-sm.invalid+label:after,
-.md-form input:not([type]).form-control-sm:focus.invalid+label:after,
+.md-form input:not([nzType]).form-control-sm.invalid+label:after,
+.md-form input:not([nzType]).form-control-sm:focus.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-sm.invalid+label:after,
 .md-form input[type="text"]:not(.browser-default).form-control-sm:focus.invalid+label:after,
 .md-form input[type="password"]:not(.browser-default).form-control-sm.invalid+label:after,
@@ -11134,7 +11134,7 @@ body.scrollable {
     transform-origin: 0 0
 }
 
-.md-form>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
+.md-form>input[nzType]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
 .md-form>input[type="time"]:not(.browser-default)+label {
     font-size: .8rem;
     -webkit-transform: translateY(-25px);
@@ -11608,7 +11608,7 @@ body.scrollable {
     left: 0
 }
 
-.md-form.md-outline>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
+.md-form.md-outline>input[nzType]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
 .md-form.md-outline>input[type="time"]:not(.browser-default)+label {
     left: 8px;
     padding-right: 5px;
@@ -11622,7 +11622,7 @@ body.scrollable {
     transform-origin: 0 0
 }
 
-.md-form.md-outline>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label.active,
+.md-form.md-outline>input[nzType]:-webkit-autofill:not(.browser-default):not([type="search"])+label.active,
 .md-form.md-outline>input[type="time"]:not(.browser-default)+label.active {
     -webkit-transform: translateY(-9px) scale(0.8);
     transform: translateY(-9px) scale(0.8);
@@ -11851,7 +11851,7 @@ body.scrollable {
     transform-origin: 0 0
 }
 
-.md-form.md-bg>input[type]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
+.md-form.md-bg>input[nzType]:-webkit-autofill:not(.browser-default):not([type="search"])+label,
 .md-form.md-bg>input[type="time"]:not(.browser-default)+label {
     font-size: .8rem;
     -webkit-transform: translateY(-12px);

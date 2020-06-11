@@ -4,8 +4,14 @@ export class CompanyProfile{
     corporateAddress:string;
     billingAddress:string;
     contactName:string;
-    contactTitle:string;
+    contactTitle:string=null;
     logo:string;
     logoContentType:string;
+    resume:string =null;
+    resumeContentType:string =null;
+    certificate:string =null;
+    certificateContentType:string = null;
+    avgRating?:number=0.0;
+    // jobList?:any = null;
 
 }

@@ -24,6 +24,17 @@ export class CompanyProfileDetailsComponent implements OnInit {
   
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
+  showUploadList = {
+    showPreviewIcon: true,
+    showRemoveIcon: true,
+    hidePreviewIconInNonImage: true
+  };
+  previewImage: string | undefined = '';
+  previewVisible = false;
+  certificate: any;
+  resume:any;
+  contentType: string;
+
 
 
   constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private navbar:NavbarService) {
@@ -32,7 +43,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
+    this.userType = sessionStorage.getItem('userType');
     this.navbar.showNav();
     
     this.companyId = this.activatedRoute.snapshot.params.id;
@@ -46,6 +57,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
       console.log(res)
       this.avgRating=res.avgRating;
       this.companyProfile=res.companyProfile;
+      this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
+      this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       this.companyReviewRating=res.companyReviewRatingDTOList;
       this.comments = this.companyReviewRating.length;
       this.reviewBtn = res.alreadyCommented;
@@ -53,6 +66,27 @@ export class CompanyProfileDetailsComponent implements OnInit {
     })
     
   }
+
+  getMIMEtype(extn) {
+    let ext = extn;
+    let MIMETypes = {
+      'text/plain': "txt",
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document': "docx",
+      'application/msword': "doc",
+      'application/pdf': "pdf",
+      'image/jpeg': "jpg",
+      'image/bmp': "bmp",
+      'image/png': "png",
+      'application/vnd.ms-excel': "xls",
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': "xlsx",
+      'application/rtf': "rtf",
+      'application/vnd.ms-powerpoint': "ppt",
+      'application/vnd.openxmlformats-officedocument.presentationml.presentation': "pptx"
+    }
+    console.log(MIMETypes['application/' + ext])
+    return 'application/' + MIMETypes['application/' + ext]
+  }
+
 
   postReview(review:string){
     // here wer are saving userId in canidateId because we dont have candidateId in this page
@@ -78,5 +112,58 @@ export class CompanyProfileDetailsComponent implements OnInit {
      
     });
   }
+
+
+
+  downloadFile() {
+
+    const extension = this.contentType;
+    const source = this.value;
+    const downloadLink = document.createElement("a");
+    const fileName = this.companyProfile.name + "." + extension;
+    downloadLink.href = source;
+    downloadLink.download = fileName;
+    downloadLink.target = "_blank"
+    downloadLink.click();
+
+  }
+
+
+
+  isVisible = false;
+  value: string;
+
+
+  showModal(): void {
+    this.isVisible = true;
+    this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
+    this.value = this.resume;
+    this.contentType = this.companyProfile['resumeContentType'];
+
+  }
+
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
+
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+
+  isVisibleCertificate = false;
+
+  showModalCertificate(): void {
+    this.isVisible = true;
+    this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
+    this.value = this.certificate;
+    this.contentType = this.companyProfile['certificateContentType'];
+  }
+
+ 
+
+
+
 
 }

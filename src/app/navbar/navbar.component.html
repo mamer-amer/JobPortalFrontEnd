@@ -20,6 +20,14 @@
         <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
       </li>
 
+      <li class="nav-item">
+        <app-global-search></app-global-search>
+      </li>
+      
+
+
+     
+
 
     </ul>
 
@@ -35,13 +43,18 @@
             class="sr-only">(current)</span></a>
       </li>
 
+      
+
     </ul>
     <!-- Links -->
 
 
 
+
     <ul  class="navbar-nav ml-auto nav-flex-icons">
-      <a *ngIf="userType=='employer'" (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
+
+
+      <a  (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
         [nzDropdownMenu]="menu">
         <div>
           <nz-badge
@@ -86,8 +99,13 @@
               <div style="flex: 7;">
                 <div style="display:flex;flex-direction: column;">
                   <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                    <span style="font-weight: bold;">{{notification.candidate}} </span>
-                    applied for your
+                    <span *ngIf="userType!='candidate'"
+                      style="font-weight: bold;">{{notification.candidate}} <span style="font-weight: normal !important">applied for your</span> </span>
+                    
+                    <span *ngIf="userType=='candidate'"
+                      style="font-weight: bold;">{{notification.candidate}} <span style="font-weight: normal !important">invited
+                        you for</span> </span>
+                    
                     <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
                   </div>
 
@@ -146,7 +164,7 @@
             Profile</a>
 
 
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
+          <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
         </div>
       </li>
 

@@ -1,0 +1,17 @@
+
+
+.img-thumbnail {
+  padding: 0px !important;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  border-radius: 50% !important;
+  max-width: 100%;
+  height: auto;
+} 
+
+
+input{
+  padding: 6px;
+  margin-left: 4%;
+  width:340px  !important;
+}

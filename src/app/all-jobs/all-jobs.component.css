@@ -23,6 +23,12 @@ mat-label {
   padding-right:13px;
 }
 
+.ant-tabs.ant-tabs-card {
+  width:100% !important;
+  text-align: center !important;
+}
+
+
 .options{
   font-size:18px;
   padding: 8px

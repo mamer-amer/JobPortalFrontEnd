@@ -10,7 +10,9 @@ h6{
 
     /* padding-top:10px */
 }
-
+.navbar-collapse,.collapse{
+  background-color: black !important;
+}
 
 /* small{
     margin-bottom: -0.301em !important;
@@ -25,6 +27,9 @@ sub{
 .userInfo{
     padding-right: 16px;
 }
+
+
+
 
 
 nz-badge {
@@ -64,4 +69,52 @@ nz-badge {
 
 .notificationItem:hover{
 background-color: rgb(219, 217, 217) !important;
+}
+
+
+ .search-container {
+  float: right;
+}
+
+ input[type=text] {
+  padding: 6px;
+  margin-top: 3px;
+  font-size: 17px;
+  border: none;
+}
+
+ .search-container button {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 3px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+}
+
+ .search-container button:hover {
+  background: #ccc;
+}
+
+@media screen and (max-width: 600px) {
+   .search-container {
+    float: none;
+  }
+
+   
+   input[type=text],
+   .search-container button {
+    float: none;
+    display: block;
+    text-align: left;
+    width: 100%;
+    margin: 0;
+    padding: 14px;
+  }
+
+   input[type=text] {
+    border: 1px solid #ccc;
+  }
 }

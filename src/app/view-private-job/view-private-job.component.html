@@ -1,0 +1,269 @@
+<app-navbar></app-navbar>
+<br>
+
+<div class="container"
+  style="min-height: 100%;">
+
+  <div class="row">
+    <div class="col-lg-offset-2 col-lg-12 col-sm-12">
+      <mat-card class="mat-card"
+        style="margin-top: 20px">
+
+        <div class="row">
+          <div class="col-sm-3 col-12"><img class="company-img"
+              [src]="companyProfile!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'">
+          </div>
+          <div class="col-sm-9 col-12">
+            <!---->
+            <h3 class="job-heading mg-tp-0">
+              {{companyProfile?companyProfile.name:'profile not completed'}}</h3>
+            <hr />
+            <br>
+            <span class="companyDetails">
+              <h6>Corporate Address </h6>
+              <p>
+                : &nbsp;
+                {{companyProfile?companyProfile.corporateAddress:'profile not completed'}}</p>
+            </span>
+
+            <span class="companyDetails">
+
+              <h6>Billing Address</h6>
+              <p>
+                : &nbsp; {{companyProfile?companyProfile.billingAddress:'profile not completed'}}
+              </p>
+            </span>
+
+            <span class="companyDetails">
+
+              <h6>Contact Address</h6>
+              <p>
+                : &nbsp; {{companyProfile?companyProfile.contactName:'profile not completed'}}</p>
+            </span>
+            <p style="color:black !important;font-weight: bold">Rating : <nz-rate style="flex: 1;height: 5px;"
+                [ngModel]="companyProfile?companyProfile.avgRating:'0'"
+                [nzAllowHalf]="true"
+                [nzDisabled]="true"
+                [nzTooltips]="tooltips">
+              </nz-rate>
+            </p>
+
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+
+  </div>
+
+  <!-- job details -->
+  <div class="row">
+    <div class="col-lg-offset-2 col-lg-12 col-sm-12">
+      <mat-card class="mat-card"
+        style="margin-top: 20px">
+
+        <div class="row">
+          <div class="col-lg-2 col-sm-12">
+
+            <h5>Job Details</h5>
+
+          </div>
+
+          <div class="col-md-3 col-lg-3 offset-lg-7 col-sm-12">
+
+            <div *ngIf="userType=='recruiter'">
+
+              <button type="button"
+                style="width: 100%;border-radius:30px;font-size: 12px;background-color:black;color:white"
+                (click)="showModal()"
+                class="btn btn">Show Refered Candidates
+              </button>
+
+            </div>
+          </div>
+
+
+        </div>
+
+        <hr />
+
+        <mat-card-content style="margin-bottom:0px;">
+          <div class="row mg-bt-25">
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Job Title</h6>
+              <p>{{recruiterJobs?recruiterJobs.title:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Category</h6>
+              <p>{{recruiterJobs?recruiterJobs.category:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Type</h6>
+              <p>{{recruiterJobs?recruiterJobs.type:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Salary Range</h6>
+              <p>{{recruiterJobs?recruiterJobs.salary:'No details'}}</p>
+
+            </div>
+          </div>
+          <div class="row mg-bt-25">
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>City</h6>
+              <p>{{recruiterJobs?recruiterJobs.city:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Province</h6>
+              <p>{{recruiterJobs?recruiterJobs.province:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Country</h6>
+              <p>{{recruiterJobs?recruiterJobs.country:'No details'}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Description</h6>
+              <p>{{recruiterJobs?recruiterJobs.description:'No details'}}</p>
+            </div>
+          </div>
+          <div class="row mg-bt-25">
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Posted date</h6>
+              <p>{{publishFrom}}</p>
+            </div>
+            <div class="col-lg-3 col-lg-offset-1">
+              <h6>Last date</h6>
+              <p>{{publishTo}}</p>
+            </div>
+
+          </div>
+        </mat-card-content>
+
+        <!-- action button -->
+        <mat-card-actions>
+
+          <div *ngIf="userType=='candidate'"
+            style="display: flex; justify-content: flex-end;">
+            <button type="button"
+              (click)="applyOnJob()"
+              [disabled]="applied"
+              [ngClass]="applied ==true ?'applied-class':'not-applied-class'"
+              style="border-radius:30px;font-size: 12px;"
+              class="btn">{{applied!=true?'Apply' : 'Applied'}}
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+
+
+  </div>
+
+
+
+</div>
+
+
+<nz-modal [(nzVisible)]="isVisible"
+  nzTitle="All Candidates"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleCancel()"
+  style="overflow-y: scroll"
+  [nzOkLoading]="isOkLoading">
+
+  <!--show all candidates in cards  -->
+  <div *ngIf="allCandidatesReferedOrNotList!=null">
+    <div *ngFor="let candidateProfile of allCandidatesReferedOrNotList;let i=index;">
+      <mat-card class="candidateProfile-card">
+        <div class="row">
+          <div class="col-lg-2">
+
+            <img style="width: 100%;border-radius: 50%"
+              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'../../assets/user.png'">
+
+
+          </div>
+
+          <div class="col-lg-10">
+            <a [routerLink]="['/viewprofile']"
+              [queryParams]="{'userId':candidateProfile.user_id,'candId':candidateProfile.candidate_id}">
+              <h5>
+                {{candidateProfile.name}}</h5>
+            </a>
+            <p style="margin-bottom: 0px">{{candidateProfile.presentationLetter.length>100?
+            candidateProfile.presentationLetter.slice(0,100)+'...'
+            :candidateProfile.presentationLetter
+          }}
+            </p>
+            <!-- <mat-checkbox [ngModel]="candidateProfile.referedDate?true:false"
+              (click)="referCandidatesList(candidateProfile.candidate_id)"
+              [disabled]="candidateProfile.referedDate!=null?true:false">
+              <b>{{candidateProfile.referedDate!=null?"Already refered":"Refer"}}</b>
+            </mat-checkbox> -->
+            <i class="fa fa-undo"
+              style="cursor: pointer"
+              (click)="undoRefer(candidateProfile.candidate_id)"
+              aria-hidden="true"> &nbsp;Undo refer</i>
+          </div>
+
+        </div>
+
+        <div  *ngIf="!allCandidatesReferedOrNotList">
+            <h6>No refered candidates</h6>
+        </div>
+      </mat-card>
+      <br>
+    </div>
+  </div>
+
+
+  <!--<div *ngIf="!allCandidatesReferedOrNotList.length">
+    <div *ngFor="let candidateProfile of candidateProfiles;let i=index;">
+      <mat-card class="candidateProfile-card">
+        <div class="row">
+          <div class="col-lg-2">
+
+            <img style="width: 100%;border-radius: 50%"
+              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'../../assets/user.png'">
+
+
+          </div>
+
+          <div class="col-lg-10">
+            <a [routerLink]="['/viewprofile']"
+              [queryParams]="{'userId':candidateProfile.user.id,'candId':candidateProfile.id}">
+              <h5>
+                {{candidateProfile.user.name}}</h5>
+            </a>
+            <small>{{candidateProfile.user.email}}</small>
+            <p>{{candidateProfile.presentationLetter.length>100?
+            candidateProfile.presentationLetter.slice(0,100)+'...'
+            :candidateProfile.presentationLetter
+          }}
+            </p>
+            <mat-checkbox (click)="referCandidatesList(candidateProfile.id)">
+              <b>Refer</b>
+            </mat-checkbox>
+          </div>
+
+        </div>
+      </mat-card>
+      <br>
+    </div>
+  </div>-->
+
+
+
+
+</nz-modal>
+
+<br>
+<br>
+<br>
+
+<div class="footer"
+  style="  height: 50px;
+  margin-top: -30px;">
+  <app-footer>
+
+  </app-footer>
+</div>
