@@ -13,7 +13,7 @@
 
           <img class="userImage"
             [src]="candidateObj?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
-            alt="Avatar" />
+            />
 
 
 
@@ -68,19 +68,19 @@
 
           <div class="row">
             <div class="col-lg-12">
-              <h5>Name :<span class="details">{{candidateObj?candidateObj.name:''}}</span> </h5>
+              <h5>Name :<span class="details">{{candidateObj?candidateObj.name:'Profile not completed'}}</span> </h5>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-lg-12">
-              <h5>Email : <span class="details">{{candidateObj?candidateObj.email:''}}</span> </h5>
+              <h5>Email : <span class="details">{{candidateObj?candidateObj.email:'Profile not completed'}}</span> </h5>
             </div>
           </div>
           <hr>
           <div class="row">
             <div class="col-lg-12">
-              <h5>Field : <span class="details">{{candidateObj?candidateObj.field:''}}</span> </h5>
+              <h5>Field : <span class="details">{{candidateObj?candidateObj.field:'Profile not completed'}}</span> </h5>
             </div>
           </div>
           <hr>
@@ -106,7 +106,7 @@
             (click)="showModal()">
             <a>
               <button class="btn"><i class="fa fa-download"></i> Preview Resume</button>
-              <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :''}}</span>
+              <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :'Profile not completed'}}</span>
             </a>
           </div>
         </mdb-card-body>

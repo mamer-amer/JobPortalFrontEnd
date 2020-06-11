@@ -22,7 +22,7 @@ export class GlobalSearchComponent implements OnInit {
     this.candidatesArrays = [];
     this.values = event;
     console.log(this.values);
-    if (this.values != null && this.values != "")
+    if (this.values != null && this.values != "" && this.values.length>2)
       this.getAllProfiles(this.values);
   }
 
@@ -30,22 +30,15 @@ export class GlobalSearchComponent implements OnInit {
     // this.candidatesArrays = [];
     this.service.getSearchCandidatesProfile(value).subscribe(res => {
       console.log(res);
-      let object = this.candidatesArrays.find(candidate => candidate.candId == res.result.id);
-      // if (object!=undefined){
-      //     this.candidatesArrays.splice(object.candId,0);
-      // }
-      // else{
+     
       this.candidatesArrays = [];
       res.result.map(d => {
         this.candidatesArrays.push({
-          candId: d.id,
-          userId: d.user.id,
-          name: d.user.name,
-          email: d.user.email,
-          dp: d.dp,
-          userType: d.user.userType
-
-
+          profileId: d.profileId?d.profileId:null,
+          userId: d.userId,
+          name: d.name,
+          dp: d.dp?d.dp:null,
+          userType: d.userType
         });
       });
       // }
@@ -57,11 +50,12 @@ export class GlobalSearchComponent implements OnInit {
 
   profileView(user) {
     console.log(user);
-    if (user.userType == "candidate") {
-      // let queryParams = {'userId':user.userId,'candId':user.candId}
-      this._router.navigate(['/viewprofile'], { queryParams: { "candId": user.candId, "userId": user.userId } })
+    if (user.userType == "candidate") {    
+      this._router.navigate(['/viewprofile'], { queryParams: { "candId": user.profileId?user.profileId:0, "userId": user.userId } })
     }
-    // this._router.navigate(['/companyProfileDetails/' + user.candId])
+    else {
+      this._router.navigate(['/companyProfileDetails/' + user.profileId])
+    }
   }
 
 }
