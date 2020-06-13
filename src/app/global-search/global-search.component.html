@@ -4,7 +4,7 @@
     (keyup)="search($event.target.value)"
     [nzAutocomplete]="auto" />
   <nz-autocomplete #auto>
-    <nz-auto-option *ngFor="let candidateObj of candidatesArrays"
+    <nz-auto-option style="z-index: 10000;" *ngFor="let candidateObj of candidatesArrays"
       [nzValue]="candidatesArrays" (click)="profileView(candidateObj)">
 
       <div class="col-md-12 searchList"

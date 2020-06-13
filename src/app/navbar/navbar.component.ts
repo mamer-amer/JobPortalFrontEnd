@@ -26,10 +26,12 @@ export class NavbarComponent implements OnInit {
   candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
   notificationOpen: any;
+  requestOpen=false;
   pageNo = 0;
   isLoader = false;
   totalElements = 1;
   legalCompanyName:any = "";
+  requests=[];
 
 
 
@@ -166,6 +168,8 @@ export class NavbarComponent implements OnInit {
     })
   }
 
+
+  
   notificationOpened(isOpen) {
     this.isLoader = true;
     this.spinner.show("navSpinner");
@@ -186,6 +190,19 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+
+  getRequests(userId){
+
+  }
+  requestOpened(isOpen){
+    this.isLoader=true;
+    this.spinner.show("navSpinner");
+    this.requestOpen=!this.requestOpen;
+    this.requests=[];
+
+    
+    this.getRequests(this.userId);
+  }
   logout(){
     this.service.logout();
     
