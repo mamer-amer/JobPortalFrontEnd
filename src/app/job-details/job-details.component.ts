@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, Renderer2, HostListener } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd } from '@angular/router';
 import { JobDetails } from '../job-details/JobDetails'
 import { Router } from '@angular/router'
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -32,13 +32,27 @@ export class JobDetailsComponent implements OnInit {
   btnApplied = false;
   rating2: any = 0;
   alreadyCommented = true;
-
+  mySubscription;
 
 
   constructor( private toastService: ToastrService,private route: Router, public service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private el: ElementRef, private renderer: Renderer2, private navbar: NavbarService) {
     this.jobObj = new JobDetails();
 
+    this.route.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
 
+    this.mySubscription = this.route.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.route.navigated = false;
+      }
+    });
+  }
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
   }
 
   ngOnInit(): void {

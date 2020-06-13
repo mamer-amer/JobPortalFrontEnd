@@ -43,7 +43,7 @@ export class NavbarComponent implements OnInit {
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
-
+    
 
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
@@ -192,12 +192,35 @@ export class NavbarComponent implements OnInit {
 
 
   getRequests(userId) {
+    this.spinner.show("navSpinner");
+    this.isLoader=true;
     this.service.getAllRequests(userId)
       .subscribe((res) => {
+        this.spinner.hide("navSpinner");
+        this.isLoader=false;
         this.requests = res;
         console.log(res)
       })
 
+  }
+
+  acceptRequest(id)
+  {
+    this.service.acceptRequest(this.userId,id,"user")
+    .subscribe((res)=>{
+  
+      this.spinner.hide("navSpinner")
+      this.isLoader=false;
+      this.getRequests(this.userId);
+    },err=>  this.spinner.hide("navSpinner"))
+  }
+  deleteRequest(id)
+  {
+    this.service.cancelFriendRequest(this.userId,id,"user")
+    .subscribe((res)=>{
+      console.log(res)
+      this.getRequests(this.userId);
+    })
   }
   requestOpened(isOpen) {
     this.isLoader = true;

@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service'
-import { ActivatedRoute } from '@angular/router'
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
 import { CompanyProfile } from '../company-profile/companyProfile'
 import { NavbarService } from '../navbar.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-company-profile-details',
@@ -36,12 +37,27 @@ export class CompanyProfileDetailsComponent implements OnInit {
   contentType: string;
   friendShipStatus: any;
 
-
-  constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
+  friendRequestsObservable = new Subject<string>();
+  mySubscription;
+  constructor(private router:Router,private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
     this.companyProfile = new CompanyProfile();
 
-  }
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
 
+    this.mySubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+      }
+    });
+  }
+  ngOnDestroy() {
+    if (this.mySubscription) {
+      this.mySubscription.unsubscribe();
+    }
+  }
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
     this.navbar.showNav();
@@ -179,14 +195,24 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.service.sendFriendRequest(this.userId, this.companyProfile.id, "employer")
       .subscribe((res) => {
         console.log(res)
+        this.friendRequestsObservable.next()
         this.getFriendshipStatus(this.userId, this.companyProfile.id)
       })
   }
 
+  acceptRequest(){
+    this.service.acceptRequest(this.userId, this.companyProfile.id, "employer")
+    .subscribe(()=>{
+      this.friendRequestsObservable.next()
+      this.getFriendshipStatus(this.userId, this.companyProfile.id)
+    })
+  }
+ 
   cancelRequest() {
     this.service.cancelFriendRequest(this.userId, this.companyProfile.id, "employer")
       .subscribe((res) => {
         console.log(res)
+        this.friendRequestsObservable.next()
         this.getFriendshipStatus(this.userId, this.companyProfile.id)
       })
   }

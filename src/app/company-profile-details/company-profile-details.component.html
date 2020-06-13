@@ -29,16 +29,49 @@
               width: 110px;
               height: 29px;">Add Friend</button>
 
-              <button *ngSwitchCase="'pending'" (click)="cancelRequest()" style="position: absolute;
+              <button *ngSwitchCase="'pending'" nz-button nz-dropdown [nzDropdownMenu]="pending"
+                [nzPlacement]="'bottomCenter'" style="position: absolute;
               bottom: 0px;
               right: 5%;
-              height: 29px;">Pending Request</button>
+              height: 31px;
+               background-color: #EBEDF0;
+              color: rgb(136, 122, 122) ">Pending Request</button>
 
-              <button *ngSwitchCase="'accepeted'" (click)="cancelRequest()" style="position: absolute;
+              <nz-dropdown-menu #pending="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                </ul>
+              </nz-dropdown-menu>
+
+              <button *ngSwitchCase="'accepted'" nz-button nz-dropdown [nzDropdownMenu]="friends"
+                [nzPlacement]="'bottomCenter'" [disabled]="true" style="position: absolute;
                 bottom: 0px;
                 right: 5%;
-                height: 29px;">Remove Friend</button>
+                height: 29px;
+                background-color: #EBEDF0;
+              color: rgb(136, 122, 122) 
+              ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
+              </button>
+              <nz-dropdown-menu #friends="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Unfriend</li>
+                </ul>
+              </nz-dropdown-menu>
 
+              <button *ngSwitchCase="'approval'" nz-button nz-dropdown [nzDropdownMenu]="approval"
+                [nzPlacement]="'bottomCenter'" (click)="acceptRequest()" [disabled]="true" style="position: absolute;
+              bottom: 0px;
+              right: 5%;
+              height: 29px;
+              background-color: #EBEDF0;
+            color: rgb(136, 122, 122) 
+            ">Accept Request
+              </button>
+              <nz-dropdown-menu #approval="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                </ul>
+              </nz-dropdown-menu>
 
 
             </div>

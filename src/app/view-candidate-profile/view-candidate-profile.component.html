@@ -26,10 +26,61 @@
             </div>
             <div class="col-lg-11 offset-lg-2 col-md-11 offset-md-1 col-sm-8 offset-sm-3">
             </div>
-            <button style="width: 90%;
-            margin-left: 5%;
-            margin-top: 18px;
-            height: 30px;">Add friend</button>
+          </div>
+          <div class="row" *ngIf="friendShipStatus!='same'">
+
+            <div [ngSwitch]="friendShipStatus" style="width: 100%;">
+              <button *ngSwitchCase="'notFriends'" (click)="addFriend()" style="
+               width: 70%;
+              margin-left: 15%;
+                height: 29px;">Add Friend</button>
+
+              <button *ngSwitchCase="'pending'" nz-button nz-dropdown [nzDropdownMenu]="pending"
+                [nzPlacement]="'bottomCenter'" style="
+                  width: 70%;
+              margin-left: 15%;
+                height: 31px;
+                 background-color: #EBEDF0;
+                color: rgb(136, 122, 122) ">Pending Request</button>
+
+              <nz-dropdown-menu #pending="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                </ul>
+              </nz-dropdown-menu>
+
+              <button *ngSwitchCase="'accepted'" nz-button nz-dropdown [nzDropdownMenu]="pending"
+                [nzPlacement]="'bottomCenter'" [disabled]="true" style="
+                  width: 70%;
+              margin-left: 15%;
+                  height: 29px;
+                  background-color: #EBEDF0;
+                color: rgb(136, 122, 122) 
+                ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
+              </button>
+              <nz-dropdown-menu #pending="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Unfriend</li>
+                </ul>
+              </nz-dropdown-menu>
+
+              <button *ngSwitchCase="'approval'" nz-button nz-dropdown [nzDropdownMenu]="approval"
+                [nzPlacement]="'bottomCenter'" (click)="acceptRequest()" [disabled]="true" style="
+                width: 70%;
+            margin-left: 15%;
+                height: 29px;
+                background-color: #EBEDF0;
+              color: rgb(136, 122, 122) 
+              "><i style="    vertical-align: unset;
+               font-size: 17px;"  nz-icon nzType="user-add" nzTheme="outline"></i>Accept Request
+              </button>
+              <nz-dropdown-menu #approval="nzDropdownMenu">
+                <ul nz-menu>
+                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                </ul>
+              </nz-dropdown-menu>
+
+            </div>
           </div>
 
 

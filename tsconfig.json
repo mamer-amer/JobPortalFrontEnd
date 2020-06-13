@@ -23,5 +23,6 @@
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,
     "disableTypeScriptVersionCheck": true,
+  
   }
 }
