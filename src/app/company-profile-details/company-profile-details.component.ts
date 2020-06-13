@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute } from '@angular/router'
-import {CompanyProfile} from '../company-profile/companyProfile'
+import { CompanyProfile } from '../company-profile/companyProfile'
 import { NavbarService } from '../navbar.service';
 
 @Component({
@@ -11,17 +11,17 @@ import { NavbarService } from '../navbar.service';
 })
 export class CompanyProfileDetailsComponent implements OnInit {
 
-  reviewBtn:any;
-  companyId:number;
-  companyReviewRating:Array<any>=[];
-  companyDetails:Object;
-  companyProfile:CompanyProfile;
-  avgRating:number=0;
-  comments:any=0;
-  rating:any=0;
-  userType=sessionStorage.getItem('userType');
+  reviewBtn: any;
+  companyId: number;
+  companyReviewRating: Array<any> = [];
+  companyDetails: Object;
+  companyProfile: CompanyProfile;
+  avgRating: number = 0;
+  comments: any = 0;
+  rating: any = 0;
+  userType = sessionStorage.getItem('userType');
   userId = sessionStorage.getItem('userId');
-  
+
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   showUploadList = {
@@ -32,39 +32,39 @@ export class CompanyProfileDetailsComponent implements OnInit {
   previewImage: string | undefined = '';
   previewVisible = false;
   certificate: any;
-  resume:any;
+  resume: any;
   contentType: string;
+  friendShipStatus: any;
 
 
+  constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
+    this.companyProfile = new CompanyProfile();
 
-  constructor(private service: ApplicantServiceService, private activatedRoute: ActivatedRoute,private navbar:NavbarService) {
-    this.companyProfile=new CompanyProfile();
-
-   }
+  }
 
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
     this.navbar.showNav();
-    
-    this.companyId = this.activatedRoute.snapshot.params.id;
 
+    this.companyId = this.activatedRoute.snapshot.params.id;
+    this.getFriendshipStatus(this.userId, this.companyId);
     this.getCompanyProfileDetails(this.companyId);
-    
+
   }
 
-  getCompanyProfileDetails(id):void{
+  getCompanyProfileDetails(id): void {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
-      this.avgRating=res.avgRating;
-      this.companyProfile=res.companyProfile;
+      this.avgRating = res.avgRating;
+      this.companyProfile = res.companyProfile;
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      this.companyReviewRating=res.companyReviewRatingDTOList;
+      this.companyReviewRating = res.companyReviewRatingDTOList;
       this.comments = this.companyReviewRating.length;
       this.reviewBtn = res.alreadyCommented;
       console.log(this.companyReviewRating);
     })
-    
+
   }
 
   getMIMEtype(extn) {
@@ -88,7 +88,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   }
 
 
-  postReview(review:string){
+  postReview(review: string) {
     // here wer are saving userId in canidateId because we dont have candidateId in this page
     let obj = {
       "candidateId": this.userId,
@@ -102,14 +102,14 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
     this.service.isAlreadyCommentedOnCompanyProfile(obj).subscribe((res) => {
       // this.avgRating = res.result?res.result
-      if(res.status==200){
-        this.companyReviewRating = res.result?res.result:this.companyReviewRating;
-       this.avgRating = res.result ? res.rating : this.avgRating;
-       this.comments = this.companyReviewRating.length;
-       this.reviewBtn = true;
+      if (res.status == 200) {
+        this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
+        this.avgRating = res.result ? res.rating : this.avgRating;
+        this.comments = this.companyReviewRating.length;
+        this.reviewBtn = true;
         console.log(res);
       }
-     
+
     });
   }
 
@@ -161,9 +161,34 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.contentType = this.companyProfile['certificateContentType'];
   }
 
- 
 
 
 
+
+  //FRIEND REQUEST
+
+  getFriendshipStatus(userId, friendId) {
+
+    this.service.getFriendshipStatus(userId, friendId, "employer").subscribe((res) => {
+      this.friendShipStatus = res;
+      console.log(res)
+    }, err => console.log(err))
+  }
+
+  addFriend() {
+    this.service.sendFriendRequest(this.userId, this.companyProfile.id, "employer")
+      .subscribe((res) => {
+        console.log(res)
+        this.getFriendshipStatus(this.userId, this.companyProfile.id)
+      })
+  }
+
+  cancelRequest() {
+    this.service.cancelFriendRequest(this.userId, this.companyProfile.id, "employer")
+      .subscribe((res) => {
+        console.log(res)
+        this.getFriendshipStatus(this.userId, this.companyProfile.id)
+      })
+  }
 
 }

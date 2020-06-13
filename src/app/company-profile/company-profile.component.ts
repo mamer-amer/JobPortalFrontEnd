@@ -72,6 +72,8 @@ export class CompanyProfileComponent implements OnInit {
     // this.spinner.show();
     this.checkUserId();
 
+  
+
     // this.getJobsPostedByEmployeeId();
   }
 
@@ -116,7 +118,7 @@ export class CompanyProfileComponent implements OnInit {
     console.log('Load failed');
   }
 
-  
+
 
 
 
@@ -181,7 +183,7 @@ export class CompanyProfileComponent implements OnInit {
   }
 
   onFileChange1(event) {
-    
+
     let reader = new FileReader();
 
     try {
@@ -323,8 +325,8 @@ export class CompanyProfileComponent implements OnInit {
       'application/vnd.ms-powerpoint': "ppt",
       'application/vnd.openxmlformats-officedocument.presentationml.presentation': "pptx"
     }
-    console.log(MIMETypes['application/'+ext])
-    return 'application/'+MIMETypes['application/' + ext]
+    console.log(MIMETypes['application/' + ext])
+    return 'application/' + MIMETypes['application/' + ext]
   }
 
   checkUserId() {
@@ -377,7 +379,7 @@ export class CompanyProfileComponent implements OnInit {
 
   }
 
- 
+
 
   isVisible = false;
   value: string;
@@ -409,6 +411,8 @@ export class CompanyProfileComponent implements OnInit {
     this.value = this.certificate;
     this.contentType = this.companyProfileObj['certificateContentType'];
   }
+
+
 
   // handleOkCertificate(): void {
   //   console.log('Button ok clicked!');

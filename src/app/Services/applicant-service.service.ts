@@ -271,4 +271,49 @@ return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + pars
    
   }
 
+  //requests
+
+  getFriendshipStatus(userId,friendId,type):Observable<any>{
+    let obj={
+      userId,
+      friendId,
+      type
+    }
+    return this.http.post(this.url+"api/get-friendship-status",obj);
+  }
+
+  sendFriendRequest(userId,friendId,type):Observable<any>{
+    let obj={
+      userId,
+      friendId,
+      type
+    }
+    return this.http.post(this.url+"api/send-request",obj); 
+  }
+
+  cancelFriendRequest(userId,friendId,type):Observable<any>{
+    let obj={
+      userId,
+      friendId,
+      type
+    }
+    return this.http.post(this.url+"api/cancel-request",obj);
+  }
+
+  getAllRequests(userId):Observable<any>{
+ 
+  
+    return this.http.get(this.url+"api/get-all-requests/"+userId);
+  }
+
+
+  acceptRequest(userId,friendId,type):Observable<any>{
+    let obj={
+      userId,
+      friendId,
+      type
+    }
+    return this.http.post(this.url+"api/accept-request",obj);
+  }
+
 }

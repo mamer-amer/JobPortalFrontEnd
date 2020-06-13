@@ -19,12 +19,29 @@
             [nzShape]="'square'" [nzSize]="100"
             [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'">
           </nz-avatar>
-          <div style="position: relative;" class="col">
-            <button style="    position: absolute;
-            bottom: 0px;
-            right: 5%;
-            width: 110px;
-            height: 29px;">Add Friend</button>
+
+          <div *ngIf="friendShipStatus!='same'" style="position: relative;" class="col">
+
+            <div [ngSwitch]="friendShipStatus">
+              <button *ngSwitchCase="'notFriends'" (click)="addFriend()" style="position: absolute;
+              bottom: 0px;
+              right: 5%;
+              width: 110px;
+              height: 29px;">Add Friend</button>
+
+              <button *ngSwitchCase="'pending'" (click)="cancelRequest()" style="position: absolute;
+              bottom: 0px;
+              right: 5%;
+              height: 29px;">Pending Request</button>
+
+              <button *ngSwitchCase="'accepeted'" (click)="cancelRequest()" style="position: absolute;
+                bottom: 0px;
+                right: 5%;
+                height: 29px;">Remove Friend</button>
+
+
+
+            </div>
           </div>
         </div>
         <hr />
