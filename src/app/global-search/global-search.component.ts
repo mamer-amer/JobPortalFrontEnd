@@ -48,7 +48,9 @@ export class GlobalSearchComponent implements OnInit {
     console.log(this.candidatesArrays)
   }
 
-  profileView(user) {
+  profileView(user,inp) {
+    inp.value="";
+    console.log(user,"==========")
     console.log(user);
     if (user.userType == "candidate") {    
       this._router.navigate(['/viewprofile'], { queryParams: { "candId": user.profileId?user.profileId:0, "userId": user.userId } })

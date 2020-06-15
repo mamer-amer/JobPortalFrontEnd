@@ -62,6 +62,22 @@ nz-badge {
     margin:7px 10px 0px 6px;
 }
 
+
+.request-close-class{
+  color: black;
+   
+  font-size: 25px;
+  margin:7px 10px 0px 6px;
+
+}
+.request-open-class{
+  color: white;
+   
+  font-size: 25px;
+  margin:7px 10px 0px 6px;
+
+}
+
 .underLine:hover{
     text-decoration: underline;
     cursor: pointer;

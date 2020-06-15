@@ -198,7 +198,9 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     CandidateProfileComponent,
     NavbarComponent,
     CompanyProfileComponent,
-    GlobalSearchComponent
+    GlobalSearchComponent,
+    ViewCandidateProfileComponent,
+    CompanyProfileDetailsComponent
 
   ],
   bootstrap: [AppComponent]
