@@ -87,6 +87,7 @@ import { ViewPrivateJobComponent } from './view-private-job/view-private-job.com
 import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
+import { ChatComponent } from './chat/chat.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -107,7 +108,8 @@ import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
     MomentPipe,
     ViewPrivateJobComponent,
     SearchForCandidatesComponent,
-    GlobalSearchComponent
+    GlobalSearchComponent,
+    ChatComponent
 
 
   ],

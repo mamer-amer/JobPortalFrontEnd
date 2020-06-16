@@ -5,5 +5,6 @@ export class Register{
 	password:String;
 	active:Boolean = true;
 	userType:String;
+	legalCompanyName:String;
 	
 }

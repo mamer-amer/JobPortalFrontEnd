@@ -87,16 +87,26 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
   getCandidateProfile(userId, candidateId) {
     this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
-      const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
-      const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
-      this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
-      this.reviewBtn = alreadyGivenReview;
-      this.companyDetailsWithReviews = companiesWithReviewDTOList
-      console.log(this.candidateObj, "==========")
-      this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
-      console.log(this.cv)
-    })
+
+      if (d.message =="profilenotcompleted"){
+        this.candidateObj = d.result;
+
+      }
+      else if (d.message =="Successfull"){
+        const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
+        const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
+        this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
+        this.reviewBtn = alreadyGivenReview;
+        this.companyDetailsWithReviews = companiesWithReviewDTOList
+        console.log(this.candidateObj, "==========")
+        this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
+        console.log(this.cv)
+      }
+     
+    });
   }
+
+
   goToReviewSection() {
     document.getElementById("review").scrollIntoView();
   }

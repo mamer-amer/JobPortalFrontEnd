@@ -107,7 +107,10 @@
                 alt="Avatar" class="avatar" />
               <br>
               <label style="cursor:pointer">
-                Select picture
+                <span *ngIf="userType=='recruiter';else employer">Select picture</span>
+                <ng-template #employer>
+                  <span>Company logo</span>
+                </ng-template>
                 <input type="file" id="imgFile" name="filename" (change)="onImageChange($event)" />
               </label>
             </div>

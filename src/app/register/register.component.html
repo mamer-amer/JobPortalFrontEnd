@@ -1,6 +1,5 @@
 <div class="bg-img">
-  <form
-    class="container">
+  <form class="container">
     <div class="row">
       <div class="col-lg-10 offset-lg-2"
         style="margin-top: 5px">
@@ -18,13 +17,13 @@
     </div>
     <br />
 
-     <label for="name"><b>Name</b></label>
-     <input type="text"
-       #name
-       placeholder="Enter Your Full Name"
-       [(ngModel)]="registerObj.name"
-       name="name"
-       required />
+    <label for="name"><b>Name</b></label>
+    <input type="text"
+      #name
+      placeholder="Enter Your Full Name"
+      [(ngModel)]="registerObj.name"
+      name="name"
+      required />
 
     <label for="email"><b>Email</b></label>
     <input type="text"
@@ -48,11 +47,12 @@
       [(ngModel)]="registerObj.password"
       name="psw"
       required />
-  
+
     <label for="userType"><b>User Type</b></label>
     <br />
     <nz-select nzShowSearch
       nzAllowClear
+      style="font-weight: bold"
       nzPlaceHolder="Select User type"
       [(ngModel)]="registerObj.userType"
       name="userType">
@@ -64,22 +64,38 @@
         nzValue="recruiter"></nz-option>
     </nz-select>
     <br>
-    <br>
+
+
+    <div *ngIf="registerObj.userType=='employer'">
+      <label for="legalCompanyName"><b>Legal Company Name</b></label>
+      <input type="text"
+        #legalCompanyName
+        placeholder="Enter legal Company Name"
+        [(ngModel)]="registerObj.legalCompanyName"
+        name="legalCompanyName"
+        required />
+      
+    </div>
+<br>
     <button type="submit"
       mat-stroked-button
       style="color: whitesmoke; background-color: black;font-weight: lighter;width:100%"
       (click)="registerUser()">
-       <span *ngIf="status"
-         class="spinner-border spinner-border-sm"></span>
+      <span *ngIf="status"
+        class="spinner-border spinner-border-sm"></span>
       Register
     </button>
-    
+
   </form>
 </div>
 
 
 
-<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse" [fullScreen]="true">
+<ngx-spinner bdOpacity=1
+  bdColor="rgba(200, 216, 215, 0.25)"
+  size="medium"
+  color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse"
+  [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>

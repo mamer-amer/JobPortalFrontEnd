@@ -15,6 +15,7 @@ import { AuthGuard } from './auth.guard'
 import { ViewPrivateJobComponent } from './view-private-job/view-private-job.component';
 import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
+import { ChatComponent } from './chat/chat.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -67,6 +68,7 @@ const routes: Routes = [
   { path: "appliedcandidates/:id", component: AppliedCandidatesProfilesComponent },
   { path: "viewprofile", component: ViewCandidateProfileComponent},
   { path: "allcandidates", component: SearchForCandidatesComponent },
+  { path: "chat", component: ChatComponent },
 
 
   { path: '**', component: ErrorPageComponent }

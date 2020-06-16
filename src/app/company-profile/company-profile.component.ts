@@ -342,17 +342,23 @@ export class CompanyProfileComponent implements OnInit {
   getProfile() {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
       this.loadingText = "Getting Profile.."
+      
       if (res.status == 200 && res.result != null) {
         this.companyProfileObj.id = sessionStorage.setItem('companyId', res.result.id)
-
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
+        if(this.userType=='employer'){
+          this.companyProfileObj.contactName = sessionStorage.getItem('username');
+        }
+        
+
+      
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
         this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
         this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
         this.legalCompanyNameObserable.next();
-
+        
         this.logoChangeObservable.next();
 
       }

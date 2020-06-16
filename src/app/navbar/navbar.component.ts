@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   companyId: any = sessionStorage.getItem('companyId');
   candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
+  messagesCount = 0;
   notificationOpen: any;
   requestOpen = false;
   pageNo = 0;
@@ -39,7 +40,8 @@ export class NavbarComponent implements OnInit {
 
 
     this.notificationOpen = false;
-    this.companyProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
+    this.companyProf.logoChangeObservable.subscribe(() => 
+    this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem('dp'):null);
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))

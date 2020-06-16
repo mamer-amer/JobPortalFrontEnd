@@ -4,8 +4,7 @@
 <br>
 
 
-
-
+<div class="pagebody">
 <div class="container">
   <div class="row">
     <!-- <div class="col-lg-1">
@@ -15,22 +14,33 @@
       <mat-card style="border-radius:0px;padding:20px">
 
         <div class="row">
-          <nz-avatar [class.mat-elevation-z2]="true" style="margin:20px 20px 0px 20px" nzIcon="user"
-            [nzShape]="'square'" [nzSize]="100"
+          <nz-avatar [class.mat-elevation-z2]="true"
+            style="margin:20px 20px 0px 20px"
+            nzIcon="user"
+            [nzShape]="'square'"
+            [nzSize]="100"
             [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'">
           </nz-avatar>
 
-          <div *ngIf="friendShipStatus!='same'" style="position: relative;" class="col">
+          <div *ngIf="friendShipStatus!='same'"
+            style="position: relative;"
+            class="col">
 
             <div [ngSwitch]="friendShipStatus">
-              <button *ngSwitchCase="'notFriends'" (click)="addFriend()" style="position: absolute;
+              <button *ngSwitchCase="'notFriends'"
+                (click)="addFriend()"
+                style="position: absolute;
               bottom: 0px;
               right: 5%;
               width: 110px;
               height: 29px;">Add Friend</button>
 
-              <button *ngSwitchCase="'pending'" nz-button nz-dropdown [nzDropdownMenu]="pending"
-                [nzPlacement]="'bottomCenter'" style="position: absolute;
+              <button *ngSwitchCase="'pending'"
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="pending"
+                [nzPlacement]="'bottomCenter'"
+                style="position: absolute;
               bottom: 0px;
               right: 5%;
               height: 31px;
@@ -39,27 +49,43 @@
 
               <nz-dropdown-menu #pending="nzDropdownMenu">
                 <ul nz-menu>
-                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                  <li (click)="cancelRequest()"
+                    nz-menu-item>Cancel Request</li>
                 </ul>
               </nz-dropdown-menu>
 
-              <button *ngSwitchCase="'accepted'" nz-button nz-dropdown [nzDropdownMenu]="friends"
-                [nzPlacement]="'bottomCenter'" [disabled]="true" style="position: absolute;
+              <button *ngSwitchCase="'accepted'"
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="friends"
+                [nzPlacement]="'bottomCenter'"
+                [disabled]="true"
+                style="position: absolute;
                 bottom: 0px;
                 right: 5%;
                 height: 29px;
                 background-color: #EBEDF0;
               color: rgb(136, 122, 122) 
-              ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
+              ">Friends <i nz-icon
+                  nzType="check"
+                  style="    vertical-align: text-top"
+                  nzTheme="outline"></i>
               </button>
               <nz-dropdown-menu #friends="nzDropdownMenu">
                 <ul nz-menu>
-                  <li (click)="cancelRequest()" nz-menu-item>Unfriend</li>
+                  <li (click)="cancelRequest()"
+                    nz-menu-item>Unfriend</li>
                 </ul>
               </nz-dropdown-menu>
 
-              <button *ngSwitchCase="'approval'" nz-button nz-dropdown [nzDropdownMenu]="approval"
-                [nzPlacement]="'bottomCenter'" (click)="acceptRequest()" [disabled]="true" style="position: absolute;
+              <button *ngSwitchCase="'approval'"
+                nz-button
+                nz-dropdown
+                [nzDropdownMenu]="approval"
+                [nzPlacement]="'bottomCenter'"
+                (click)="acceptRequest()"
+                [disabled]="true"
+                style="position: absolute;
               bottom: 0px;
               right: 5%;
               height: 29px;
@@ -69,7 +95,8 @@
               </button>
               <nz-dropdown-menu #approval="nzDropdownMenu">
                 <ul nz-menu>
-                  <li (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                  <li (click)="cancelRequest()"
+                    nz-menu-item>Cancel Request</li>
                 </ul>
               </nz-dropdown-menu>
 
@@ -78,7 +105,8 @@
           </div>
         </div>
         <hr />
-        <div class="row" style="width:100%">
+        <div class="row"
+          style="width:100%">
           <div class="col-lg-8">
 
             <h3 style="display: inline;">{{companyProfile.name | uppercase }} </h3>
@@ -86,7 +114,9 @@
 
           <div class="col-lg-4">
             <span style="display:inline">
-              <nz-rate [disabled]="true" [ngModel]="avgRating" [nzTooltips]="tooltips"></nz-rate>
+              <nz-rate [disabled]="true"
+                [ngModel]="avgRating"
+                [nzTooltips]="tooltips"></nz-rate>
               <small style="color:lightgray"> Rating ({{avgRating | number:'1.0-1'}}/5)</small>
             </span>
           </div>
@@ -97,7 +127,8 @@
 
 
 
-        <div class="container" *ngIf="userType=='recruiter';else notrecruiter"
+        <div class="container"
+          *ngIf="userType=='recruiter';else notrecruiter"
           style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
           <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
 
@@ -118,18 +149,23 @@
           </div>
 
           <div style="display: flex;justify-content: center;align-items: center;">
-            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1" class="btn btn-primary"
+            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1"
+              class="btn btn-primary"
               (click)="showModal()">
-              <i class="fa fa-eye" aria-hidden="true">View Resume</i>
+              <i class="fa fa-eye"
+                aria-hidden="true">View Resume</i>
             </button>
-            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1" class="btn btn-primary"
+            <button style="background-color:#123e87 !important;padding: 6px 30px;flex:1"
+              class="btn btn-primary"
               (click)="showModalCertificate()">
-              <i class="fa fa-eye" aria-hidden="true">View Certificate</i>
+              <i class="fa fa-eye"
+                aria-hidden="true">View Certificate</i>
             </button>
           </div>
         </div>
         <ng-template #notrecruiter>
-          <div class="container" style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
+          <div class="container"
+            style="border:1px solid rgb(218, 218, 218);padding:0px;text-align: center;">
             <div style="display: flex;justify-content: center;align-items: center;margin-top:10px;">
 
               <h4 style="flex: 1;color: rgb(0, 0, 0);">Contact Name: <span style="color: gray;font-weight: normal;">
@@ -168,9 +204,12 @@
           <div *ngIf="userType!='candidate'"
             class="card-header border-0 font-weight-bold d-flex justify-content-between">
 
-            <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
+            <ul style="margin-left: auto"
+              class="list-unstyled list-inline mb-0">
 
-              <li class="list-inline-item"><a href="" style="color:#1890ff !important" [routerLink]="['/viewprofile']"
+              <li class="list-inline-item"><a href=""
+                  style="color:#1890ff !important"
+                  [routerLink]="['/viewprofile']"
                   [queryParams]="{'candId':candidate.candidateId,'userId':candidate.userId}"
                   class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
                   profile</a></li>
@@ -179,14 +218,19 @@
           </div>
 
 
-          <div class="row" style="margin-top:6px !important">
+          <div class="row"
+            style="margin-top:6px !important">
             <div class="col-lg-12">
-              <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
+              <nz-avatar style="float: left"
+                nzIcon="user"
+                [nzSize]="64"
                 [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'"></nz-avatar>
               <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
                 {{candidate.name}}
                 <br>
-                <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating"
+                <nz-rate style="vertical-align: bottom"
+                  [disabled]="true"
+                  [ngModel]="candidate.rating"
                   [nzTooltips]="tooltips"></nz-rate>
               </p>
               <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
@@ -206,28 +250,38 @@
   </div>
 
   <!-- write your review here as an employee or recuiter -->
-  <div class="row" *ngIf="userType=='candidate'">
-    <div class="col-lg-12" *ngIf="!reviewBtn">
-      <div id="review" class="card-header border-0 font-weight-bold reviewHeader">Leave a review
-        <span style="float:right;text-align: center" class="ratingSectionSpan">
+  <div class="row"
+    *ngIf="userType=='candidate'">
+    <div class="col-lg-12"
+      *ngIf="!reviewBtn">
+      <div id="review"
+        class="card-header border-0 font-weight-bold reviewHeader">Leave a review
+        <span style="float:right;text-align: center"
+          class="ratingSectionSpan">
 
           <p style="display: inline-block">Rate {{companyProfile?companyProfile.name:''}}</p>
           &nbsp;
-          <nz-rate [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
+          <nz-rate [(ngModel)]="rating"
+            [nzTooltips]="tooltips"></nz-rate>
 
 
         </span>
       </div>
 
 
-      <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
+      <div class="d-md-flex flex-md-fill px-1"
+        style="width: 100%">
         <div class="md-form w-100">
-          <textarea class="form-control md-textarea pt-0" id="exampleFormControlTextarea1" rows="3" #review
+          <textarea class="form-control md-textarea pt-0"
+            id="exampleFormControlTextarea1"
+            rows="3"
+            #review
             placeholder="Write something here..."></textarea>
         </div>
       </div>
       <div class="text-center">
-        <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md"
+        <button (click)="postReview(review.value)"
+          class="btn btn-default btn-rounded btn-md"
           style="background-color: black !important">Submit</button>
       </div>
     </div>
@@ -236,6 +290,8 @@
 
 </div>
 <br>
+
+</div>
 
 
 
@@ -272,4 +328,12 @@
   type="ball-clip-rotate-pulse" [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>
-<app-footer></app-footer>
+
+
+<div class="footer"
+  style="  height: 50px;
+  margin-top: -50px;">
+  <app-footer>
+
+  </app-footer>
+</div>
