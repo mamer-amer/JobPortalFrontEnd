@@ -348,7 +348,7 @@ export class CompanyProfileComponent implements OnInit {
         this.loginService.sendId.next(sessionStorage.getItem('companyId'));
         this.companyProfileObj = res.result ? res.result : new CompanyProfile();
         if(this.userType=='employer'){
-          this.companyProfileObj.contactName = sessionStorage.getItem('username');
+          this.companyProfileObj.contactName = res.result.contactName;
         }
         
 
