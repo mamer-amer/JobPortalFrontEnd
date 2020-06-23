@@ -27,7 +27,8 @@
 
 
 
-        <div *ngFor="let friend of friends" (click)="gotoChatroom(friend.userId,friend)" class="friend-drawer friend-drawer--onhover">
+        <div *ngFor="let friend of friends" (click)="gotoChatroom(friend.userId,friend)"
+          class="friend-drawer friend-drawer--onhover">
           <img class="profile-image" [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'../../assets/user.png'"
             alt="">
           <div class="text">
@@ -62,13 +63,13 @@
       </div>
     </div>
 
-    <div class="col-md-8" style="height: 100vh">
+    <div *ngIf="friendProfile" class="col-md-8" style="height: 100vh">
       <div class="settings-tray">
         <div *ngIf="friendProfile" class="friend-drawer no-gutters friend-drawer--grey">
-          <img class="profile-image" [src]="friendProfile.dp?'data:image/jpeg;base64,'+friendProfile.dp:'../../assets/user.png'"
-            alt="">
-          <div class="text">
-            <h6>{{friendProfile.name}}</h6>
+          <img class="profile-image"
+            [src]="friendProfile.dp?'data:image/jpeg;base64,'+friendProfile.dp:'../../assets/user.png'" alt="">
+          <div style="padding-top: 10px;" class="text">
+            <h5>{{friendProfile.name}}</h5>
             <!-- <p class="text-muted">Layin' down the law since like before Christ...</p> -->
           </div>
           <span class="settings-tray--right" style="margin-left:40%">
@@ -79,68 +80,30 @@
           </span>
         </div>
       </div>
-      <div class="chat-panel chatbox">
-        <div class="row no-gutters">
-          <div class="col-md-3">
-            <div class="chat-bubble chat-bubble--left">
-              Hello dude!
+      <div style="height:77vh;overflow-y: scroll;" class="chat-panel chatbox">
+        <div *ngFor="let chat of chats" class="row no-gutters">
+          <div [ngClass]="chat.sender==userId?{'col-md-3':true,'offset-md-9':true}:{'col-md-3':true}" class="col-md-3">
+            <div
+              [ngClass]="chat.sender==userId?{'chat-bubble':true,'chat-bubble--right':true}:{'chat-bubble':true,'chat-bubble--left':true}">
+              {{chat.message}}
             </div>
           </div>
         </div>
-        <div class="row no-gutters">
-          <div class="col-md-3 offset-md-9">
-            <div class="chat-bubble chat-bubble--right">
-              Hello dude!
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="col-md-3 offset-md-9">
-            <div class="chat-bubble chat-bubble--right">
-              Hello dude!
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="col-md-3">
-            <div class="chat-bubble chat-bubble--left">
-              Hello dude!
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="col-md-3">
-            <div class="chat-bubble chat-bubble--left">
-              Hello dude!
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="col-md-3">
-            <div class="chat-bubble chat-bubble--left">
-              Hello dude!
-            </div>
-          </div>
-        </div>
-        <div class="row no-gutters">
-          <div class="col-md-3 offset-md-9">
-            <div class="chat-bubble chat-bubble--right">
-              Hello dude!
-            </div>
-          </div>
-        </div>
+
 
       </div>
 
     </div>
   </div>
-  <div class="row">
+  <div *ngIf="friendProfile" class="row">
     <div class="col-lg-8 col-md-8 col-sm-12 offset-lg-4">
       <div class="chat-box-tray">
         <!-- <i class="material-icons">sentiment_very_satisfied</i> -->
-        <input type="text" style="width: 88%" placeholder="Type your message here...">
+        <input required type="text" style="width: 88%;text-indent: 10px;" #message
+          placeholder="Type your message here...">
         <!-- <i class="material-icons">mic</i> -->
-        <i class="material-icons">send</i>
+        <i [ngStyle]="{cursor: 'pointer',color:'#74B9FF'}" (click)="sendMessage(message)"
+          class="material-icons">send</i>
       </div>
     </div>
   </div>

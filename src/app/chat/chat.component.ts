@@ -1,23 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import * as $ from 'jquery';
 import { NavbarService } from '../navbar.service';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavigationEnd, Router, Route, ActivatedRoute } from '@angular/router';
+import { environment } from '../../environments/environment'
+import * as Stomp from 'stompjs';
+import * as SockJS from 'sockjs-client';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ChatComponent implements OnInit {
 
+  private stompClient;
   container: HTMLElement;
   userId = sessionStorage.getItem("userId")
   friends = [];
   mySubscription;
   chats = []
   friendProfile: any;
+  chatroomId=2;
   constructor(private navService: NavbarService, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private router: Router) {
+    this.initializeWebSocketConnection();
   }
 
   ngOnInit(): void {
@@ -28,19 +35,35 @@ export class ChatComponent implements OnInit {
 
       let { chatroom } = params;
       if (chatroom) {
+        this.chatroomId = chatroom;
+        // this.openGlobalSocket();
         this.service.getAllChatroomChats(chatroom)
           .subscribe((res) => {
             console.log(res)
+            
             this.chats = res
           })
       }
       // this.initialiseState(); // reset and set based on new parameter this time
     });
 
+  }
 
-
-
-
+  initializeWebSocketConnection() {
+    const url = environment.baseUrl;
+    let ws = new SockJS(url + "ws");
+    this.stompClient = Stomp.over(ws);
+    let that = this;
+    this.stompClient.connect({}, function (frame) {
+     
+      that.openGlobalSocket()
+    });
+  }
+  openGlobalSocket() {
+    this.stompClient.subscribe(`/topic/chatroom/${this.chatroomId}`, (message) => {
+      console.log(JSON.parse(message.body), "   =========message")
+      this.chats.push(JSON.parse(message.body));
+    });
   }
 
 
@@ -48,13 +71,17 @@ export class ChatComponent implements OnInit {
     $(".chatbox").slideToggle();
   }
 
-
+  sendMessage(messageInput) {
+    
+     this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message:messageInput.value, userId: this.userId }));
+     messageInput.value="";
+  }
 
 
 
   gotoChatroom(id, friendProfile) {
     this.friendProfile = friendProfile;
-    console.log(this.friendProfile,"=======================")
+  
     this.service.initiateChat(this.userId, id)
       .subscribe((res) => {
         console.log(res)
@@ -81,28 +108,7 @@ export class ChatComponent implements OnInit {
 
 
 
-  getSelectUserChat() {
 
-  }
-
-  getAllChatsEverDone() {
-
-  }
-
-  callOnScroll() {
-
-  }
-
-
-  sendMessage() {
-
-  }
-
-
-
-  searchFriends() {
-
-  }
 
 
 

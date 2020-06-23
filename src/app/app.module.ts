@@ -88,6 +88,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { ChatComponent } from './chat/chat.component';
+
 @NgModule({
   declarations: [
     AppComponent,
