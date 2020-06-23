@@ -20,7 +20,7 @@ export class ApplicantServiceService {
   constructor(private http: HttpClient, private _location: Location, private router: Router, private toastService: ToastrService) { }
   url: any = environment.baseUrl;
 
-  userType=sessionStorage.getItem('userType');
+  userType = sessionStorage.getItem('userType');
 
 
   passObject(obj: any) {
@@ -32,7 +32,7 @@ export class ApplicantServiceService {
     localStorage.clear();
 
     this.router.navigate(['']);
-    
+
   }
 
   saveUserForm(adduserObj: any): Observable<any> {
@@ -89,8 +89,8 @@ export class ApplicantServiceService {
   getJobsByCompany(page): Observable<any> {
     return this.http.get(this.url + "api/job/myJobs/?page=" + page);
   }
-  getJobsByCompanyPrivate(page,id:any): Observable<any> {
-    return this.http.get(this.url + "api/recruiter/get/job/"+id+"?page=" + page);
+  getJobsByCompanyPrivate(page, id: any): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/get/job/" + id + "?page=" + page);
   }
 
   getPaginatedJobsByCategory(category, page): Observable<any> {
@@ -107,18 +107,18 @@ export class ApplicantServiceService {
   }
 
   getJobById(id): Observable<any> {
-  
-      return this.http.get(this.url + "api/job/?id=" + id);
-    
-  
+
+    return this.http.get(this.url + "api/job/?id=" + id);
+
+
   }
-  getJobByIdInGeneral(id,type:string): Observable<any> {
-    if(type=="public"){
+  getJobByIdInGeneral(id, type: string): Observable<any> {
+    if (type == "public") {
 
       return this.http.get(this.url + "api/job/?id=" + id);
     }
     else {
-      return this.http.get(this.url +"api/recruiter/get/"+id)
+      return this.http.get(this.url + "api/recruiter/get/" + id)
     }
   }
 
@@ -177,8 +177,8 @@ export class ApplicantServiceService {
   isAlreadyApplied(canId, jobId): Observable<any> {
     return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId + "&jobId=" + jobId);
   }
-  getNotRefferdJobs(canId, companyId,pageNo): Observable<any> {
-    return this.http.get(this.url + "api/recruiter/notReferedJobs?candId=" + canId + "&companyId=" + companyId+"&page="+pageNo);
+  getNotRefferdJobs(canId, companyId, pageNo): Observable<any> {
+    return this.http.get(this.url + "api/recruiter/notReferedJobs?candId=" + canId + "&companyId=" + companyId + "&page=" + pageNo);
   }
 
   isAlreadyCommentedOnCompanyProfile(obj: any): Observable<any> {
@@ -196,7 +196,7 @@ export class ApplicantServiceService {
   getAppliedCandidatesProfile(jobId: any): Observable<any> {
     return this.http.get(this.url + "api/job/candidateprofiles/" + jobId);
   }
-  getSearchCandidatesProfile(value:string): Observable<any> {
+  getSearchCandidatesProfile(value: string): Observable<any> {
     return this.http.get(this.url + "api/recruiter/search?search=" + value);
   }
 
@@ -206,16 +206,16 @@ export class ApplicantServiceService {
   }
 
 
-  deleteJob(id: any, page: any,type:any): Observable<any> {
+  deleteJob(id: any, page: any, type: any): Observable<any> {
 
-    if(type==false){
-return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
+    if (type == false) {
+      return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
     }
 
     return this.http.delete(this.url + "api/recruiter/delete/" + id + "/page?page=" + parseInt(page));
 
 
-    
+
   }
 
   postReviewAgainstCandidate(obj: any): Observable<any> {
@@ -235,30 +235,30 @@ return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + pars
   //NOTIFICATION SERVICE CALLS
 
   getCompanyNotifications(id, pageNo): Observable<any> {
-    if(this.userType!="candidate"){
+    if (this.userType != "candidate") {
       return this.http.get(this.url + "api/companyprofile/notifications/" + id + "?page=" + pageNo);
- 
+
     }
     return this.http.get(this.url + "api/cp/notifications/" + id + "?page=" + pageNo);
   }
 
   getCompanyNotificationsCount(id): Observable<any> {
-    
-    if(this.userType!="candidate"){
+
+    if (this.userType != "candidate") {
 
       return this.http.get(this.url + "api/companyprofile/notification_count/" + id);
     }
-    else{
+    else {
       return this.http.get(this.url + "api/cp/notification_count/" + id);
     }
   }
 
   markAllNoticationsAsRead(id): Observable<any> {
-    if(this.userType!="candidate"){
+    if (this.userType != "candidate") {
       return this.http.get(this.url + "api/companyprofile/notifications_read/" + id);
     }
     return this.http.get(this.url + "api/cp/notifications_read/" + id);
- 
+
   }
 
   markAnotificationAsRead(id, jobId): Observable<any> {
@@ -268,52 +268,67 @@ return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + pars
     }
     return this.http.get(this.url + "api/cp/notification_marked?candidateId="
       + id + "&jobId=" + jobId)
-   
+
   }
 
   //requests
 
-  getFriendshipStatus(userId,friendId,type):Observable<any>{
-    let obj={
+  getFriendshipStatus(userId, friendId, type): Observable<any> {
+    let obj = {
       userId,
       friendId,
       type
     }
-    return this.http.post(this.url+"api/get-friendship-status",obj);
+    return this.http.post(this.url + "api/get-friendship-status", obj);
   }
 
-  sendFriendRequest(userId,friendId,type):Observable<any>{
-    let obj={
+  sendFriendRequest(userId, friendId, type): Observable<any> {
+    let obj = {
       userId,
       friendId,
       type
     }
-    return this.http.post(this.url+"api/send-request",obj); 
+    return this.http.post(this.url + "api/send-request", obj);
   }
 
-  cancelFriendRequest(userId,friendId,type):Observable<any>{
-    let obj={
+  cancelFriendRequest(userId, friendId, type): Observable<any> {
+    let obj = {
       userId,
       friendId,
       type
     }
-    return this.http.post(this.url+"api/cancel-request",obj);
+    return this.http.post(this.url + "api/cancel-request", obj);
   }
 
-  getAllRequests(userId):Observable<any>{
- 
-  
-    return this.http.get(this.url+"api/get-all-requests/"+userId);
+  getAllRequests(userId): Observable<any> {
+
+
+    return this.http.get(this.url + "api/get-all-requests/" + userId);
   }
 
 
-  acceptRequest(userId,friendId,type):Observable<any>{
-    let obj={
+  acceptRequest(userId, friendId, type): Observable<any> {
+    let obj = {
       userId,
       friendId,
       type
     }
-    return this.http.post(this.url+"api/accept-request",obj);
+    return this.http.post(this.url + "api/accept-request", obj);
+  }
+
+  getAllFriends(id): Observable<any> {
+    return this.http.get(this.url + "api/get-all-friends/" + id);
+  }
+
+  //chat service\
+
+
+  initiateChat(user1, user2): Observable<any> {
+    return this.http.get(this.url + "api/initiate-chat?user1=" + user1 + "&user2=" + user2)
+  }
+
+  getAllChatroomChats(chatroomId):Observable<any>{
+    return this.http.get(this.url+"api/get-all-chats/"+chatroomId);
   }
 
 }
