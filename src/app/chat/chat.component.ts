@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import * as $ from 'jquery';
 import { NavbarService } from '../navbar.service';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
@@ -22,30 +22,33 @@ export class ChatComponent implements OnInit {
   mySubscription;
   chats = []
   friendProfile: any;
-  chatroomId=2;
+  chatroomId;
+  chatrooms = []
+  dp=sessionStorage.getItem("dp")
+  @ViewChild('scrollMe') private myScrollContainer: ElementRef;
   constructor(private navService: NavbarService, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private router: Router) {
+
+    this.activatedRoute.params.subscribe(params => {
+
+      console.log(params, "=======params")
+      let { chatroom } = params;
+      if (chatroom) {
+        this.chatroomId = chatroom;
+
+
+      }
+
+    });
     this.initializeWebSocketConnection();
+
   }
 
   ngOnInit(): void {
     this.navService.showNav();
-    this.getAllFriends(this.userId)
+    // this.getAllFriends(this.userId)
+    this.getAllChatrooms(this.userId);
+   
 
-    this.activatedRoute.params.subscribe(params => {
-
-      let { chatroom } = params;
-      if (chatroom) {
-        this.chatroomId = chatroom;
-        // this.openGlobalSocket();
-        this.service.getAllChatroomChats(chatroom)
-          .subscribe((res) => {
-            console.log(res)
-            
-            this.chats = res
-          })
-      }
-      // this.initialiseState(); // reset and set based on new parameter this time
-    });
 
   }
 
@@ -55,14 +58,26 @@ export class ChatComponent implements OnInit {
     this.stompClient = Stomp.over(ws);
     let that = this;
     this.stompClient.connect({}, function (frame) {
-     
+
       that.openGlobalSocket()
+      that.openReceiverSocket();
     });
   }
   openGlobalSocket() {
+    let that = this;
     this.stompClient.subscribe(`/topic/chatroom/${this.chatroomId}`, (message) => {
       console.log(JSON.parse(message.body), "   =========message")
       this.chats.push(JSON.parse(message.body));
+      this.scrollToBottom();
+      //  that.getAllChatrooms(that.userId)
+    });
+  }
+
+  openReceiverSocket() {
+    let that = this;
+    this.stompClient.subscribe(`/topic/chat/${this.userId}`, (message) => {
+      //  that.getAllFriends()
+      that.getAllChatrooms(that.userId)
     });
   }
 
@@ -72,23 +87,41 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage(messageInput) {
-    
-     this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message:messageInput.value, userId: this.userId }));
-     messageInput.value="";
+
+    this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: messageInput.value, userId: this.userId }));
+    messageInput.value = "";
   }
 
-
-
-  gotoChatroom(id, friendProfile) {
-    this.friendProfile = friendProfile;
-  
-    this.service.initiateChat(this.userId, id)
-      .subscribe((res) => {
-        console.log(res)
-        this.router.navigate(["chat/" + res])
+  getAllChatrooms(id) {
+    this.service.getAllChatrooms(id)
+      .subscribe((response) => {
+        console.log(response, "=========")
+        this.chatrooms = response;
       })
   }
 
+  gotoChatroom(id, friendProfile) {
+    this.chats = []
+    this.friendProfile = friendProfile;
+
+    this.service.initiateChat(this.userId, id)
+      .subscribe((res) => {
+        console.log(res)
+        this.getAllChats(res);
+        this.router.navigate(["chat/" + res])
+      })
+
+
+  }
+  getAllChats(chatroom) {
+    this.service.getAllChatroomChats(chatroom, this.friendProfile.userId)
+      .subscribe((res) => {
+        console.log(res)
+
+        this.chats = res
+        this.scrollToBottom();
+      })
+  }
   getAllFriends(id) {
     this.friends = [];
     this.service.getAllFriends(id)
@@ -107,9 +140,19 @@ export class ChatComponent implements OnInit {
 
 
 
+  refreshChatrooms() {
+    this.getAllChatrooms(this.userId);
+  }
 
+  ngAfterViewChecked() {        
+    this.scrollToBottom();        
+} 
 
-
+scrollToBottom(): void {
+    try {
+        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch(err) { }                 
+}
 
 
 }

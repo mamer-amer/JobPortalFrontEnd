@@ -327,8 +327,12 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/initiate-chat?user1=" + user1 + "&user2=" + user2)
   }
 
-  getAllChatroomChats(chatroomId):Observable<any>{
-    return this.http.get(this.url+"api/get-all-chats/"+chatroomId);
+  getAllChatroomChats(chatroomId,userId):Observable<any>{
+    return this.http.get(this.url+"api/get-all-chats/"+chatroomId+"/"+userId);
+  }
+
+  getAllChatrooms(userId):Observable<any>{
+    return this.http.get(this.url+"api/get-all-chatrooms/"+userId);
   }
 
 }
