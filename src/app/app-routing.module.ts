@@ -69,7 +69,7 @@ const routes: Routes = [
   { path: "viewprofile", component: ViewCandidateProfileComponent},
   { path: "allcandidates", component: SearchForCandidatesComponent },
   { path: "chat", component: ChatComponent },
-  { path: "chat/:chatroom", component: ChatComponent },
+  // { path: "chat/:chatroom", component: ChatComponent },
 
 
   { path: '**', component: ErrorPageComponent }

@@ -6,7 +6,7 @@ import { NavigationEnd, Router, Route, ActivatedRoute } from '@angular/router';
 import { environment } from '../../environments/environment'
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
-
+import * as moment from 'moment'
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -22,32 +22,38 @@ export class ChatComponent implements OnInit {
   mySubscription;
   chats = []
   friendProfile: any;
+  friendsTempArray = [];
   chatroomId;
   chatrooms = []
-  dp=sessionStorage.getItem("dp")
+  dp = sessionStorage.getItem("dp")
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  showFriends: boolean = false;
   constructor(private navService: NavbarService, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private router: Router) {
 
-    this.activatedRoute.params.subscribe(params => {
-
-      console.log(params, "=======params")
-      let { chatroom } = params;
-      if (chatroom) {
-        this.chatroomId = chatroom;
+    this.clearPosParam()
 
 
-      }
-
-    });
-    this.initializeWebSocketConnection();
 
   }
 
   ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe(params => {
+
+      console.log(params)
+
+      let { chatroom } = params;
+      if (chatroom) {
+        this.chatroomId = chatroom;
+
+        this.getAllChats(chatroom);
+      }
+      this.initializeWebSocketConnection();
+    });
     this.navService.showNav();
-    // this.getAllFriends(this.userId)
+    this.getAllFriends(this.userId)
     this.getAllChatrooms(this.userId);
-   
+
 
 
   }
@@ -69,14 +75,14 @@ export class ChatComponent implements OnInit {
       console.log(JSON.parse(message.body), "   =========message")
       this.chats.push(JSON.parse(message.body));
       this.scrollToBottom();
-      //  that.getAllChatrooms(that.userId)
+     
     });
   }
 
   openReceiverSocket() {
     let that = this;
     this.stompClient.subscribe(`/topic/chat/${this.userId}`, (message) => {
-      //  that.getAllFriends()
+    
       that.getAllChatrooms(that.userId)
     });
   }
@@ -100,15 +106,24 @@ export class ChatComponent implements OnInit {
       })
   }
 
-  gotoChatroom(id, friendProfile) {
-    this.chats = []
+  gotoChatroom(id, friendProfile, searchBox) {
+  
     this.friendProfile = friendProfile;
-
+    this.onFocusOut(searchBox);
     this.service.initiateChat(this.userId, id)
       .subscribe((res) => {
-        console.log(res)
-        this.getAllChats(res);
-        this.router.navigate(["chat/" + res])
+        if (res != this.chatroomId) {
+          this.chats = []
+          this.router.navigate(
+            [],
+            {
+              relativeTo: this.activatedRoute,
+              queryParams: { chatroom: res },
+              queryParamsHandling: 'merge'
+            });
+        }
+     
+       
       })
 
 
@@ -132,27 +147,59 @@ export class ChatComponent implements OnInit {
         response.forEach(element => {
           this.friends.push(element)
         });
+        this.friendsTempArray = this.friends;
         console.log(this.friends, "=====")
       })
 
 
   }
+  inputBoxChange(value) {
+    console.log(value)
 
-
+    if (value) {
+      this.friends = this.friendsTempArray;
+      this.friends = this.friends.filter((f) => {
+        return f.name.toLowerCase().startsWith(value.toLowerCase())
+      })
+    }
+    else {
+      this.friends = this.friendsTempArray;
+    }
+  }
+  onFocus() {
+    console.log("onFocus")
+    this.showFriends = true;
+  }
+  onFocusOut(search) {
+    console.log("onFocusOut")
+    search.value = ""
+    this.friends = this.friendsTempArray
+    this.showFriends = false;
+  }
 
   refreshChatrooms() {
     this.getAllChatrooms(this.userId);
   }
 
-  ngAfterViewChecked() {        
-    this.scrollToBottom();        
-} 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
 
-scrollToBottom(): void {
+  scrollToBottom(): void {
     try {
-        this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch(err) { }                 
-}
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
+  }
 
+  clearPosParam() {
+    this.router.navigate(
+      ['.'],
+      { relativeTo: this.activatedRoute }
+    );
+  }
+
+  relativeTime(date){
+    return moment(date).fromNow();
+  }
 
 }
