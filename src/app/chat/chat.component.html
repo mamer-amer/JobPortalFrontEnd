@@ -19,7 +19,7 @@
         <div class="search-box">
           <div class="input-wrapper">
             <i class="material-icons">search</i>
-            <input (focus)="onFocus()" (input)="inputBoxChange($event.target.value)" #search placeholder="Search here"
+            <input (focus)="onFocus()"   (input)="inputBoxChange($event.target.value)" #search placeholder="Search here"
               type="text">
           </div>
         </div>
@@ -47,11 +47,12 @@
             <img class="profile-image" [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'"
               alt="">
             <div class="text">
-              <h6   [ngStyle]="(chatroom.sender!=userId && !chatroom.seen)?{'color':'black'}:{}">{{chatroom.name}}</h6>
+              <h6   >{{chatroom.name}}</h6>
               <p class="text-muted">{{chatroom.message}}</p>
             </div>
             <span style="width: 30%;text-align: right;"
               class="time text-muted small">{{relativeTime(chatroom.date)}}</span>
+             <div *ngIf="(chatroom.sender!=userId && !chatroom.seen)" style="margin-top: 20px;">  <nz-badge nzStatus="processing" ></nz-badge></div>
           </div>
         </div>
         <!-- <div class="friend-drawer friend-drawer--onhover">
@@ -119,7 +120,7 @@
     <div class="col-lg-8 col-md-8 col-sm-12 offset-lg-4">
       <div class="chat-box-tray">
         <!-- <i class="material-icons">sentiment_very_satisfied</i> -->
-        <input required type="text" style="width: 88%;text-indent: 10px;" #message
+        <input required type="text" (keydown)="keyDownFunction($event)" style="width: 88%;text-indent: 10px;" #message
           placeholder="Type your message here...">
         <!-- <i class="material-icons">mic</i> -->
         <i [ngStyle]="{cursor: 'pointer',color:'#74B9FF'}" (click)="sendMessage(message)"

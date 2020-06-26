@@ -208,4 +208,12 @@ export class ChatComponent implements OnInit {
     return moment(date).fromNow();
   }
 
+  keyDownFunction(event) {
+    if (event.keyCode === 13) {
+      this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: event.target.value, userId: this.userId }));
+      event.target.value = "";
+      // rest of your code
+    }
+  }
+
 }
