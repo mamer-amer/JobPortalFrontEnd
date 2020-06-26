@@ -86,7 +86,8 @@
           </div>
 
           <div *ngFor="let request of requests" class="notificationItem" [style.background-color]="'#E5EAF2'"
-            style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+            style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;padding:
+            13px"
             nz-menu-item>
             <span style="flex: 1;">
               <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="request.dp?'data:image/jpeg;base64,'+request.dp:
@@ -105,8 +106,10 @@
                   background: #365899;
                   border-color: transparent;
                   color: white;">Confirm</button>
-                  <button (click)="deleteRequest(request.userId)"
-                  >Delete</button>
+                  <!-- (click)="deleteRequest(request.userId)" -->
+                 <button type="button"
+                    style="padding:0.5rem 0.6rem !important"
+                   class="btn btn-dark btn-sm" (click)="deleteRequest(request.userId)">Delete</button>
                 </div>
               </div>
 

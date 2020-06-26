@@ -12,6 +12,10 @@
   width: 100%;
 }
 
+ nz-select {
+   width: 180px
+ }
+
 mat-label {
   font-size: 1.1em;
 }
