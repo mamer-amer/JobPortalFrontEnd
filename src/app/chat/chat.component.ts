@@ -47,6 +47,7 @@ export class ChatComponent implements OnInit {
         this.chatroomId = chatroom;
 
         this.getAllChats(chatroom);
+     
       }
       this.initializeWebSocketConnection();
     });
@@ -114,6 +115,7 @@ export class ChatComponent implements OnInit {
       .subscribe((res) => {
         if (res != this.chatroomId) {
           this.chats = []
+         
           this.router.navigate(
             [],
             {
@@ -121,6 +123,9 @@ export class ChatComponent implements OnInit {
               queryParams: { chatroom: res },
               queryParamsHandling: 'merge'
             });
+        }
+        else {
+          this.getAllChats(this.chatroomId);
         }
      
        
@@ -134,6 +139,7 @@ export class ChatComponent implements OnInit {
         console.log(res)
 
         this.chats = res
+        this.getAllChatrooms(this.userId)
         this.scrollToBottom();
       })
   }

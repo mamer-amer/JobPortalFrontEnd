@@ -77,6 +77,7 @@ export class NavbarComponent implements OnInit {
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
+    console.log(this.userImage,"========")
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
 
@@ -198,10 +199,12 @@ export class NavbarComponent implements OnInit {
     this.isLoader=true;
     this.service.getAllRequests(userId)
       .subscribe((res) => {
-        this.spinner.hide("navSpinner");
-        this.isLoader=false;
+     
         this.requests = res;
         console.log(res)
+      },()=>{
+        this.spinner.hide("navSpinner");
+        this.isLoader=false;
       })
 
   }

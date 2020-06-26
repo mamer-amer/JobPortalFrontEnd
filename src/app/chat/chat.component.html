@@ -1,5 +1,5 @@
 <div (click)="onFocusOut(search)">
-<app-navbar></app-navbar>
+  <app-navbar></app-navbar>
 </div>
 
 
@@ -7,7 +7,7 @@
 <div>
   <div class="row no-gutters" style="border: 1px solid rgb(161, 158, 158);">
     <div class="col-md-4 border-right" style="height: 90vh">
-      <div class="settings-tray" (click)="onFocusOut(search)">
+      <div class="settings-tray" style="height: 65px;" (click)="onFocusOut(search)">
         <img class="profile-image" [src]="dp?'data:image/jpeg;base64,'+dp:'../../assets/user.png'" alt="Profile img">
         <span (click)="refreshChatrooms()" class="settings-tray--right">
           <i class="material-icons">cached</i>
@@ -19,7 +19,8 @@
         <div class="search-box">
           <div class="input-wrapper">
             <i class="material-icons">search</i>
-            <input (focus)="onFocus()" (input)="inputBoxChange($event.target.value)" #search  placeholder="Search here" type="text">
+            <input (focus)="onFocus()" (input)="inputBoxChange($event.target.value)" #search placeholder="Search here"
+              type="text">
           </div>
         </div>
 
@@ -39,15 +40,18 @@
         </div>
 
         <div *ngIf="!showFriends">
-          <div *ngFor="let chatroom of chatrooms" (click)="gotoChatroom(chatroom.userId,chatroom,search)"
-            class="friend-drawer friend-drawer--onhover">
+          <div *ngFor="let chatroom of chatrooms" class="friend-drawer friend-drawer--onhover"
+            [ngStyle]="(chatroom.sender!=userId && !chatroom.seen)?{'background-color':'#F2F2F2'}:{}"
+            (click)="gotoChatroom(chatroom.userId,chatroom,search)">
+
             <img class="profile-image" [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'"
               alt="">
             <div class="text">
-              <h6>{{chatroom.name}}</h6>
+              <h6   [ngStyle]="(chatroom.sender!=userId && !chatroom.seen)?{'color':'black'}:{}">{{chatroom.name}}</h6>
               <p class="text-muted">{{chatroom.message}}</p>
             </div>
-            <span style="width: 30%;text-align: right;" class="time text-muted small">{{relativeTime(chatroom.date)}}</span>
+            <span style="width: 30%;text-align: right;"
+              class="time text-muted small">{{relativeTime(chatroom.date)}}</span>
           </div>
         </div>
         <!-- <div class="friend-drawer friend-drawer--onhover">
@@ -76,9 +80,9 @@
     </div>
 
     <div (click)="onFocusOut(search)" class="col-md-8" style="height: 90vh">
-      <div  *ngIf="friendProfile">
+      <div *ngIf="friendProfile">
         <div class="settings-tray">
-          <div  class="friend-drawer no-gutters friend-drawer--grey">
+          <div class="friend-drawer no-gutters friend-drawer--grey">
             <img class="profile-image"
               [src]="friendProfile.dp?'data:image/jpeg;base64,'+friendProfile.dp:'../../assets/user.png'" alt="">
             <div style="padding-top: 10px;" class="text">
@@ -96,10 +100,10 @@
         <div #scrollMe [scrollTop]="scrollMe.scrollHeight" style="height:67vh;overflow-y: scroll;"
           class="chat-panel chatbox">
           <div *ngFor="let chat of chats" class="row no-gutters">
-            <div [ngClass]="chat.sender==userId?{'col-md-3':true,'offset-md-9':true}:{'col-md-3':true}"
+            <div [ngClass]="chat.sender!=userId?{'col-md-3':true,'offset-md-9':true}:{'col-md-3':true}"
               class="col-md-3">
               <div
-                [ngClass]="chat.sender==userId?{'chat-bubble':true,'chat-bubble--right':true}:{'chat-bubble':true,'chat-bubble--left':true}">
+                [ngClass]="chat.sender!=userId?{'chat-bubble':true,'chat-bubble--right':true}:{'chat-bubble':true,'chat-bubble--left':true}">
                 {{chat.message}}
               </div>
             </div>
