@@ -72,7 +72,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     this.catchParams().then((result) => {
       if (result) {
         this.getCandidateProfile(this.userId, this.candidateId);
-        this.getFriendshipStatus(this.id, this.candidateId);
+        this.getFriendshipStatus(this.id, this.userId);
       }
     }, (error) => {
       console.log(error);
