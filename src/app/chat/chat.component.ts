@@ -32,7 +32,16 @@ export class ChatComponent implements OnInit {
   messageSend: true;
   constructor(private navService: NavbarService, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private router: Router) {
 
+
+    // console.log(this.activatedRoute)
+    if(this.activatedRoute['snapshot'].queryParams['chatroom']){
+
+    console.log("cleareddddd")
     this.clearPosParam()
+    
+    }
+
+    console.log(this.dp)
 
 
 
@@ -90,9 +99,19 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  // ngOnDestroy(){
-  //   this.stompClient.unsubscribe();
-  // }
+  ngOnDestroy(){
+    if(this.stompClient)
+    {
+      console.log("unsubscribeddddd")
+   this.stompClient.unsubscribe()
+    }
+  }
+  _disconnect() {
+    if (this.stompClient !== null) {
+        this.stompClient.disconnect();
+    }
+    console.log("Disconnected");
+}
 
 
   setDefault() {

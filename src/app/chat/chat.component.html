@@ -13,7 +13,7 @@
         style="height: 65px;"
         (click)="onFocusOut(search)">
         <img class="profile-image"
-          [src]="dp?'data:image/jpeg;base64,'+dp:'../../assets/user.png'"
+          [src]="dp?'data:image/jpeg;base64,' + dp :'../../assets/user.png'"
           alt="Profile img">
         <span (click)="refreshChatrooms()"
           class="settings-tray--right">
@@ -125,7 +125,7 @@
         </div>
         <div #scrollMe
           [scrollTop]="scrollMe.scrollHeight"
-          style="height:72vh;overflow-y: scroll;overflow-x: hidden"
+          style="height:68vh;overflow-y: scroll;overflow-x: hidden"
           class="chat-panel chatbox">
           <div *ngFor="let chat of chats"
             class="row no-gutters">
@@ -147,14 +147,14 @@
   <div *ngIf="friendProfile"
     class="row">
     <div class="col-lg-8 col-md-8 col-sm-12 offset-lg-4">
-      <div class="chat-box-tray">
+      <div class="chat-box-tray" style="height: 40px;margin-bottom: 0px;">
         <!-- <i class="material-icons">sentiment_very_satisfied</i> -->
         <div class="newLines row col-md-11">
           <span 
             class="textarea"
             role="textbox" contenteditable
             (keydown)="keyDownFunction($event)"
-            style="max-width: 100%;text-indent: 10px"
+            style="max-width: 100%;text-indent: 10px;"
             #message
             [ngClass]="messageSend?'textarea[contenteditable]:empty::before':''"
             
