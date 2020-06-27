@@ -5,7 +5,7 @@ export class CompanyProfile{
     billingAddress:string;
     contactName:string;
     contactTitle:string=null;
-    logo:string;
+    logo: string ;
     logoContentType:string;
     resume:string =null;
     resumeContentType:string =null;

@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit {
   companyId: any = sessionStorage.getItem('companyId');
   candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
+  messagesCount = 0;
   notificationOpen: any;
   requestOpen = false;
   pageNo = 0;
@@ -32,6 +33,7 @@ export class NavbarComponent implements OnInit {
   totalElements = 1;
   legalCompanyName: any = "";
   requests = [];
+  
 
 
 
@@ -39,11 +41,12 @@ export class NavbarComponent implements OnInit {
 
 
     this.notificationOpen = false;
-    this.companyProf.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'));
+    this.companyProf.logoChangeObservable.subscribe(() =>
+      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null);
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
-    
+
 
     this.logingSerivce.loggedInUserId.subscribe(value => {
       this.companyId = value ? value : sessionStorage.getItem('companyId');
@@ -75,15 +78,15 @@ export class NavbarComponent implements OnInit {
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
+    console.log(this.userImage, "========")
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
 
     }
-
     else if (this.candidateId && this.userType == "candidate") {
       this.getNotificationsCount(this.candidateId);
     }
-
+    this.getAllMessagesCount();
 
   }
 
@@ -193,34 +196,34 @@ export class NavbarComponent implements OnInit {
 
   getRequests(userId) {
     this.spinner.show("navSpinner");
-    this.isLoader=true;
+    this.isLoader = true;
     this.service.getAllRequests(userId)
       .subscribe((res) => {
-        this.spinner.hide("navSpinner");
-        this.isLoader=false;
+
         this.requests = res;
         console.log(res)
+      }, () => {
+        this.spinner.hide("navSpinner");
+        this.isLoader = false;
       })
 
   }
 
-  acceptRequest(id)
-  {
-    this.service.acceptRequest(this.userId,id,"user")
-    .subscribe((res)=>{
-  
-      this.spinner.hide("navSpinner")
-      this.isLoader=false;
-      this.getRequests(this.userId);
-    },err=>  this.spinner.hide("navSpinner"))
+  acceptRequest(id) {
+    this.service.acceptRequest(this.userId, id, "user")
+      .subscribe((res) => {
+
+        this.spinner.hide("navSpinner")
+        this.isLoader = false;
+        this.getRequests(this.userId);
+      }, err => this.spinner.hide("navSpinner"))
   }
-  deleteRequest(id)
-  {
-    this.service.cancelFriendRequest(this.userId,id,"user")
-    .subscribe((res)=>{
-      console.log(res)
-      this.getRequests(this.userId);
-    })
+  deleteRequest(id) {
+    this.service.cancelFriendRequest(this.userId, id, "user")
+      .subscribe((res) => {
+        console.log(res)
+        this.getRequests(this.userId);
+      })
   }
   requestOpened(isOpen) {
     this.isLoader = true;
@@ -229,12 +232,20 @@ export class NavbarComponent implements OnInit {
     this.requests = [];
     this.getRequests(this.userId);
 
-console.log(this.userId)
+    console.log(this.userId)
     // this.getRequests(this.userId);
   }
   logout() {
     this.service.logout();
 
+  }
+
+  getAllMessagesCount() {
+    this.service.getChatCount(this.userId)
+      .subscribe((res) => {
+        console.log(res)
+        this.messagesCount=res;
+      })
   }
 
 }

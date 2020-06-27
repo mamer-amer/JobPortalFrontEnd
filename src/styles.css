@@ -10,6 +10,7 @@ body {
   width: 100% !important;
   background-color:#f2f2f282 !important;
   margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+  overflow-x: hidden !important;
 
   padding:0px !important
 }
