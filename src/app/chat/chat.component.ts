@@ -90,6 +90,10 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  ngOnDestroy(){
+    this.stompClient.unsubscribe();
+  }
+
 
   setDefault() {
     $(".chatbox").slideToggle();
