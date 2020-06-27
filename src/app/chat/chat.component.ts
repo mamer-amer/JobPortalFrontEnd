@@ -27,7 +27,9 @@ export class ChatComponent implements OnInit {
   chatrooms = []
   dp = sessionStorage.getItem("dp")
   @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+  scrollTop:number= null;
   showFriends: boolean = false;
+  messageSend: true;
   constructor(private navService: NavbarService, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private router: Router) {
 
     this.clearPosParam()
@@ -93,10 +95,15 @@ export class ChatComponent implements OnInit {
     $(".chatbox").slideToggle();
   }
 
+  writtenMessage:any;
   sendMessage(messageInput) {
-
-    this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: messageInput.value, userId: this.userId }));
-    messageInput.value = "";
+    if (messageInput.innerText.length>0){
+      
+      this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: messageInput.innerText, userId: this.userId }));
+      messageInput.innerText = "";
+      this.messageSend = true;
+    }
+   
   }
 
   getAllChatrooms(id) {
@@ -208,10 +215,13 @@ export class ChatComponent implements OnInit {
     return moment(date).fromNow();
   }
 
+ 
+
   keyDownFunction(event) {
-    if (event.keyCode === 13) {
-      this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: event.target.value, userId: this.userId }));
-      event.target.value = "";
+    if (event.keyCode === 13 && event.target.innerText.length>0) {
+      this.stompClient.send(`/app/chat/${this.friendProfile.userId}/${this.chatroomId}`, {}, JSON.stringify({ message: event.target.innerText, userId: this.userId }));
+      event.target.innerText = "";
+      this.messageSend = true;
       // rest of your code
     }
   }

@@ -18,6 +18,12 @@ body {
   border-radius: 40px;
 }
 
+.breakLine{
+  display: block;
+}
+.doNotbreakline{
+display: inline;
+}
 .settings-tray {
   background: #eee;
   padding: 10px 15px;
@@ -238,4 +244,31 @@ margin-top: -61px;
 /* Handle */
 ::-webkit-scrollbar-thumb {
   background: #888 !important;
+}
+
+.newLines{
+  max-width: 88%
+}
+
+.textarea {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  resize: none;
+  min-height: 20px;
+  line-height: 20px;
+}
+
+.textarea[contenteditable]:empty::before {
+  content: "Write your mesg";
+  color: gray;
+}
+
+
+
+
+
+
+[contenteditable] {
+  outline: 0px solid transparent !important;
 }
