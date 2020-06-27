@@ -90,9 +90,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(){
-    this.stompClient.unsubscribe();
-  }
+  // ngOnDestroy(){
+  //   this.stompClient.unsubscribe();
+  // }
 
 
   setDefault() {
