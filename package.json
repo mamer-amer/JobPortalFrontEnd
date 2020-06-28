@@ -55,6 +55,7 @@
     "rxjs": "~6.5.5",
     "safe-pipe": "^1.0.3",
     "save": "^2.4.0",
+    "simple-scrollbar": "^0.4.0",
     "stompjs": "^2.3.3",
     "time-ago-pipe": "^1.3.2",
     "tslib": "^2.0.0",
