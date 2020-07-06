@@ -2,6 +2,6 @@
 <app-loader></app-loader>
 
 <router-outlet></router-outlet>
-<div *ngIf="id"> 
+<div *ngIf="id && !hidePopup"> 
 <app-chat-pop-up-bottom></app-chat-pop-up-bottom>
 </div>

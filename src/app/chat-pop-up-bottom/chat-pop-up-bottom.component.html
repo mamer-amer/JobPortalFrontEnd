@@ -40,34 +40,34 @@ bottom:0%;">
 
 
 
-<div *ngFor="let messageBox of messageBoxes;let i=index"
-  [ngStyle]="i==0?{position: 'fixed', bottom:'0%',right:'0px'}:{position: 'fixed', bottom:'0%',right:'245px'}">
+<div *ngFor="let messageBox of messageBoxes;let i=index" [ngStyle]="styleArray[i]">
   <div class="message_box">
 
-    <div [ngClass]="{'message_header':true}" (click)="toggle(i)">
-      <img [src]="messageBox.dp?'data:image/jpeg;base64,'+messageBox.dp:'../../assets/user.png'" class="user_icon" />
-      <h3 class="username">{{messageBox.name}}</h3>
-      <i class="fa fa-times close" (click)="removeMessageBox(i)"></i>
+    <div [ngClass]="{'message_header':true}" (click)="toggle(i,messageBox.user)">
+      <img [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
+        class="user_icon" />
+      <h3 class="username">{{messageBox.user.name}}</h3>
+      <i class="fa fa-times close" (click)="removeMessageBox(i,messageBox.chatroomId)"></i>
     </div>
 
     <!-- Message box -->
 
     <div [class]="'message_content ' + 'mc'+i">
-      <div class="messages">
-        <div class="p1">
-          <img [src]="messageBox.dp?'data:image/jpeg;base64,'+messageBox.dp:'../../assets/user.png'"
+      <div class="messages" [attr.id]="messageBox.chatroomId">
+        <div *ngFor="let chat of messageBox.chats" [ngClass]="chat.sender!=id?'p1':'p2'" >
+          <img *ngIf="chat.sender!=id"
+            [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
             class="user_icon_small" />
-          <p>This message is from him</p>
+          <p style="word-break: break-all;">{{chat.message}}</p>
         </div>
-        <div class="p2">
-          <p>This is from ME</p>
-        </div>
-        <div class="new_messages p2"></div>
+
       </div>
 
       <div class="input_box">
-        <textarea class="message_input" placeholder="Type a message..."></textarea>
-        <i class="fa fa-location-arrow enter"></i>
+        <textarea #messageInput class="message_input" placeholder="Type a message..."></textarea>
+        <span (click)="sendMessage(messageInput,messageBox.user.userId,messageBox.chatroomId)">
+          <i class="fa fa-location-arrow enter"></i>
+        </span>
       </div>
 
     </div>
