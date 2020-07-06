@@ -1,11 +1,10 @@
-<div class="chat_box">
-  <div class="chat_header">
+<div class="chat_box" style=" position: fixed; 
+bottom:0%;">
+  <div class="chat_header" style="height: 38px;">
 
     <span>
-      <h3 class="chat_heading"
-        style="margin-bottom: -14px">Contacts</h3>
-      <i style="display:flex;justify-content:flex-end"
-        class="fa fa-circle"></i>
+      <h3 class="chat_heading" style="margin-bottom: -14px">Contacts</h3>
+      <!-- <i style="display:flex;justify-content:flex-end" class="fa fa-circle"></i> -->
     </span>
 
   </div>
@@ -15,50 +14,25 @@
 
 
 
-  <div class="chat_content"
-    data-simplebar>
+  <div class="chat_content" data-simplebar>
 
-    <div class="scroll" >
-      <div class="user">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon" />
-        <h3 class="username">Kamal Teja</h3>
-        <i class="fa fa-circle"></i>
+    <div class="scroll">
+      <div *ngFor="let chatroom of chatrooms" class="user" style="display: flex;margin-bottom: 10px;position: relative;"
+        (click)="newChatBox(chatroom)">
+
+        <img [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'" class="user_icon"
+          style="width: 36px;flex:1" />
+        <div style="flex:6;">
+          <div style="display:flex; flex-direction:column;margin-left: 10px;">
+            <h3 class="username">{{chatroom.name}}</h3>
+            <p style="color: white;font-size: 12px;">{{chatroom.message}}</p>
+          </div>
+          <div *ngIf="(chatroom.sender!=id && !chatroom.seen)" style="position: absolute;right: 0px;top: 12px;">
+            <nz-badge nzStatus="processing"></nz-badge>
+          </div>
+
+        </div>
       </div>
-      <br>
-      <div class="user">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon" />
-        <h3 class="username">Muhammad Amer</h3>
-        <i class="fa fa-circle"></i>
-      </div>
-      <br>
-      <div class="user">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon" />
-        <h3 class="username">Muhammad Ibrahim</h3>
-        <i class="fa fa-circle"></i>
-      </div>
-      <br>
-      <div class="user">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon" />
-        <h3 class="username">Wajeeha Javed</h3>
-        <i class="fa fa-circle"></i>
-      </div>
-      <br>
-      <div class="user">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon" />
-        <h3 class="username">Asad Ummu</h3>
-        <i class="fa fa-circle"></i>
-      </div>
-      <br>
     </div>
 
   </div>
@@ -66,36 +40,36 @@
 
 
 
+<div *ngFor="let messageBox of messageBoxes;let i=index"
+  [ngStyle]="i==0?{position: 'fixed', bottom:'0%',right:'0px'}:{position: 'fixed', bottom:'0%',right:'245px'}">
+  <div class="message_box">
 
-
-<!-- Message box -->
-<div class="message_box">
-  <div class="message_header">
-    <img
-      src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-      class="user_icon" />
-    <h3 class="username">Kamal Teja</h3>
-    <i class="fa fa-times close"></i>
-  </div>
-  <hr />
-  <div class="message_content">
-    <div class="messages">
-      <div class="p1">
-        <img
-          src="https://cdn4.vectorstock.com/i/1000x1000/84/68/hipster-man-in-glasses-avatar-profile-userpic-on-vector-8988468.jpg"
-          class="user_icon_small" />
-        <p>This message is from him</p>
-      </div>
-      <div class="p2">
-        <p>This is from ME</p>
-      </div>
-      <div class="new_messages p2"></div>
+    <div [ngClass]="{'message_header':true}" (click)="toggle(i)">
+      <img [src]="messageBox.dp?'data:image/jpeg;base64,'+messageBox.dp:'../../assets/user.png'" class="user_icon" />
+      <h3 class="username">{{messageBox.name}}</h3>
+      <i class="fa fa-times close" (click)="removeMessageBox(i)"></i>
     </div>
 
-    <div class="input_box">
-      <textarea class="message_input"
-        placeholder="Type a message..."></textarea>
-      <i class="fa fa-location-arrow enter"></i>
+    <!-- Message box -->
+
+    <div [class]="'message_content ' + 'mc'+i">
+      <div class="messages">
+        <div class="p1">
+          <img [src]="messageBox.dp?'data:image/jpeg;base64,'+messageBox.dp:'../../assets/user.png'"
+            class="user_icon_small" />
+          <p>This message is from him</p>
+        </div>
+        <div class="p2">
+          <p>This is from ME</p>
+        </div>
+        <div class="new_messages p2"></div>
+      </div>
+
+      <div class="input_box">
+        <textarea class="message_input" placeholder="Type a message..."></textarea>
+        <i class="fa fa-location-arrow enter"></i>
+      </div>
+
     </div>
   </div>
 </div>

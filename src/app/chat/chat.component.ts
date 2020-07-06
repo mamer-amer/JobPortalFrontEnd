@@ -36,12 +36,12 @@ export class ChatComponent implements OnInit {
     // console.log(this.activatedRoute)
     if(this.activatedRoute['snapshot'].queryParams['chatroom']){
 
-    console.log("cleareddddd")
+    
     this.clearPosParam()
     
     }
 
-    console.log(this.dp)
+  
 
 
 
