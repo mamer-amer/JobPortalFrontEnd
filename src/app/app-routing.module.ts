@@ -16,6 +16,7 @@ import { ViewPrivateJobComponent } from './view-private-job/view-private-job.com
 import { SearchForCandidatesComponent } from './search-for-candidates/search-for-candidates.component';
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { ChatComponent } from './chat/chat.component';
+import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -69,7 +70,7 @@ const routes: Routes = [
   { path: "viewprofile", component: ViewCandidateProfileComponent},
   { path: "allcandidates", component: SearchForCandidatesComponent },
   { path: "chat", component: ChatComponent },
-  // { path: "chat/:chatroom", component: ChatComponent },
+  { path: "popup", component: ChatPopUpBottomComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
 
 
   { path: '**', component: ErrorPageComponent }

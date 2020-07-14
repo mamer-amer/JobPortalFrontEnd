@@ -88,6 +88,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { ChatComponent } from './chat/chat.component';
+import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
 
 @NgModule({
   declarations: [
@@ -110,7 +111,8 @@ import { ChatComponent } from './chat/chat.component';
     ViewPrivateJobComponent,
     SearchForCandidatesComponent,
     GlobalSearchComponent,
-    ChatComponent
+    ChatComponent,
+    ChatPopUpBottomComponent
 
 
   ],

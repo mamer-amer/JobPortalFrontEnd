@@ -36,12 +36,12 @@ export class ChatComponent implements OnInit {
     // console.log(this.activatedRoute)
     if(this.activatedRoute['snapshot'].queryParams['chatroom']){
 
-    console.log("cleareddddd")
+    
     this.clearPosParam()
     
     }
 
-    console.log(this.dp)
+  
 
 
 
@@ -55,8 +55,9 @@ export class ChatComponent implements OnInit {
 
       let { chatroom } = params;
       if (chatroom) {
+        this.stompClient.unsubscribe(this.chatroomId);
         this.chatroomId = chatroom;
-
+       
         this.getAllChats(chatroom);
      
       }
@@ -88,7 +89,7 @@ export class ChatComponent implements OnInit {
       this.chats.push(JSON.parse(message.body));
       this.scrollToBottom();
      
-    });
+    },{id:this.chatroomId});
   }
 
   openReceiverSocket() {
@@ -106,12 +107,7 @@ export class ChatComponent implements OnInit {
    this.stompClient.unsubscribe()
     }
   }
-  _disconnect() {
-    if (this.stompClient !== null) {
-        this.stompClient.disconnect();
-    }
-    console.log("Disconnected");
-}
+ 
 
 
   setDefault() {
@@ -145,7 +141,7 @@ export class ChatComponent implements OnInit {
       .subscribe((res) => {
         if (res != this.chatroomId) {
           this.chats = []
-         
+         console.log("came here",res)
           this.router.navigate(
             [],
             {
