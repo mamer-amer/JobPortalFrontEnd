@@ -43,17 +43,20 @@ bottom:0%;">
 <div *ngFor="let messageBox of messageBoxes;let i=index" [ngStyle]="styleArray[i]">
   <div class="message_box">
 
-    <div [ngClass]="{'message_header':true}" (click)="toggle(i,messageBox.user)">
+    <div [ngClass]="{'message_header':true}" (click)="toggle(i,messageBox.user,messageBox.chatroomId)">
       <img [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
         class="user_icon" />
       <h3 class="username">{{messageBox.user.name}}</h3>
+      <div *ngIf="(messageBox.chats[messageBox.chats.length-1].sender!=id && !messageBox.chats[messageBox.chats.length-1].seen)" style="position: absolute;right: 38px;top: 8px;">
+        <nz-badge nzStatus="processing"></nz-badge>
+      </div>
       <i class="fa fa-times close" (click)="removeMessageBox(i,messageBox.chatroomId)"></i>
     </div>
 
     <!-- Message box -->
 
     <div [class]="'message_content ' + 'mc'+i">
-      <div class="messages" [attr.id]="messageBox.chatroomId">
+      <div [class]="'messages'" [id]="'chat'+messageBox.chatroomId" >
         <div *ngFor="let chat of messageBox.chats" [ngClass]="chat.sender!=id?'p1':'p2'" >
           <img *ngIf="chat.sender!=id"
             [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"

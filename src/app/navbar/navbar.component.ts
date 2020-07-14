@@ -195,13 +195,16 @@ export class NavbarComponent implements OnInit {
 
 
   getRequests(userId) {
-    this.spinner.show("navSpinner");
-    this.isLoader = true;
+    // this.spinner.show("navSpinner");
+    // this.isLoader = true;
     this.service.getAllRequests(userId)
       .subscribe((res) => {
 
         this.requests = res;
         console.log(res)
+        this.spinner.hide("navSpinner");
+        this.isLoader=false;
+        
       }, () => {
         this.spinner.hide("navSpinner");
         this.isLoader = false;

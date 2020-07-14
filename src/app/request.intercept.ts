@@ -22,7 +22,7 @@ export class NoopInterceptor implements HttpInterceptor {
   ) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    if(!req.url.includes("notification"))
+    if(!req.url.includes("notification") && !req.url.includes("chat"))
     this.spinner.show();
 
     if (sessionStorage.length > 0) {

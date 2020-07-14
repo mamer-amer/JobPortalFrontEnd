@@ -61,6 +61,8 @@ export class ChatPopUpBottomComponent implements OnInit {
       messageBox.chats.push(chat) 
       this.replaceArray(messageBox)
 
+      setTimeout(()=>this.scrollToBottom(chat.chatroomId),100)
+
 
     },{id:chatroomId});
   }
@@ -96,11 +98,14 @@ export class ChatPopUpBottomComponent implements OnInit {
         console.log(res)
       })
   }
-  toggle(i, friend) {
+  toggle(i, friend,chatroomId) {
     console.log(friend)
     // this.initiateChat(friend);
+    this.resetAllChats(chatroomId,friend.userId);
     $(`.mc${i}`).slideToggle("slow");
   }
+
+ 
   initiateChat(user) {
     this.service.initiateChat(this.id, user.userId)
       .subscribe((chatroomId) => {
@@ -108,7 +113,7 @@ export class ChatPopUpBottomComponent implements OnInit {
       })
   }
   getAllChats(chatroomId, user) {
-    this.service.getAllChatroomChats(chatroomId, this.id)
+    this.service.getAllChatroomChats(chatroomId,user.userId)
       .subscribe((res) => {
         console.log(res)
         this.chats = res
@@ -119,11 +124,47 @@ export class ChatPopUpBottomComponent implements OnInit {
           user,
           chatroomId
         })
+
+        setTimeout(()=>{
+          this.scrollToBottom(chatroomId)
+        },100)
    
+      
 
       })
   }
 
+  resetAllChats(chatroomId,friendId){
+    this.service.getAllChatroomChats(chatroomId,friendId)
+    .subscribe((res) => {
+      console.log(res)
+      this.chats = res
+
+      this.openGlobalSocket(chatroomId)
+     
+
+     this.messageBoxes=this.messageBoxes.map((mb)=>{
+      if(mb.chatroomId==chatroomId)
+      {
+        mb.chats=res;
+        return mb;
+      }
+      else return mb;
+     })
+ 
+
+    })
+  }
+
+  
+  ngOnDestroy(){
+    if(this.stompClient)
+    {
+      console.log("unsubscribeddddd")
+   this.stompClient.unsubscribe()
+    }
+  }
+ 
   contains(id) {
     return this.messageBoxes.find((mb) => mb.user.userId == id);
   }
@@ -141,14 +182,14 @@ export class ChatPopUpBottomComponent implements OnInit {
         return mb;
     })
   }
-  // ngAfterViewChecked() {
-  //   this.scrollToBottom();
-  // }
-  // scrollToBottom(): void {
-  //   try {
-  //     this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-  //   } catch (err) { }
-  // }
+
+  scrollToBottom(chatroomId){
+   
+   let messages = document.getElementById(`chat${chatroomId}`);
+   messages.scrollTop = messages.scrollHeight;
+   
+  }
+  
 }
 
 
