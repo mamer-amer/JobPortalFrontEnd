@@ -67,7 +67,7 @@ const routes: Routes = [
     component: GlobalSearchComponent
   },
   { path: "appliedcandidates/:id", component: AppliedCandidatesProfilesComponent },
-  { path: "viewprofile", component: ViewCandidateProfileComponent},
+  { path: "viewprofile/:id", component: ViewCandidateProfileComponent},
   { path: "allcandidates", component: SearchForCandidatesComponent },
   { path: "chat", component: ChatComponent },
   { path: "popup", component: ChatPopUpBottomComponent , data: { "candidate": true, "employer": true, "recruiter": true }},

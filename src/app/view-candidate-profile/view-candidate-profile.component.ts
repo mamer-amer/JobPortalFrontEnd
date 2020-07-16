@@ -38,11 +38,11 @@ export class ViewCandidateProfileComponent implements OnInit {
   next: boolean = false;
   friendShipStatus;
   id = sessionStorage.getItem("userId");
-  textReviewTab=true;
+  textReviewTab = true;
   friendRequestsObservable = new Subject<string>();
   mySubscription;
   videoReviewFile;
-  public constructor(private router: Router ,public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
+  public constructor(private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
     this.candidateObj = new CadnidateWithReview();
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -68,16 +68,21 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
     this.nav.showNav();
-    this.getParams();
-    this.catchParams().then((result) => {
-      if (result) {
-        console.log(result,"========candidae")
-        this.getCandidateProfile(this.userId, this.candidateId);
-      
-      }
-    }, (error) => {
-      console.log(error);
-    })
+    // this.getParams();
+    // this.catchParams().then((result) => {
+    //   if (result) {
+    //     console.log(result,"========candidae")
+    //     this.getCandidateProfile(this.userId, this.candidateId);
+
+    //   }
+    // }, (error) => {
+    //   console.log(error);
+    // })
+
+
+    this.userId = this.activatedRoute.snapshot.params.id;
+    if (this.userId)
+      this.getUser(this.userId)
 
 
   }
@@ -86,31 +91,49 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngAfterViewInit() {
 
   }
-  getCandidateProfile(userId, candidateId) {
-    this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
+  getUser(id) {
 
-      if (d.message =="profilenotcompleted"){
-        this.candidateObj = d.result;
-        console.log(d,"=======")
-        this.candidateId=this.candidateObj.id;
-        this.getFriendshipStatus(this.id, this.candidateId);
+    this.service.getUser(id)
+      .subscribe((res) => {
+        this.candidateObj.name = res.name;
+        this.candidateObj.email = res.email;
+        if (res.profile) {
+          this.candidateObj.field = res.profile.field;
+          this.candidateObj.presentationLetter = res.profile.presentationLetter;
+          this.candidateObj.dp = res.profile.dp;
+          this.candidateObj.dpContentType = res.profile.dpContentType;
+          this.candidateObj.resume = res.profile.resume;
+          this.candidateObj.resumeContentType = res.profile.resumeContentType;
+          this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"]);
+        }
 
-      }
-      else if (d.message =="Successfull"){
-        const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
-        const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
-        this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
-        this.reviewBtn = alreadyGivenReview;
-        this.companyDetailsWithReviews = companiesWithReviewDTOList
-        console.log(this.candidateObj, "==========")
-        this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
-        this.candidateId=d.result.candidateProfile.id;
-        console.log(d)
-        this.getFriendshipStatus(this.id, this.candidateId);
-      }
-     
-    });
+      })
   }
+  // getCandidateProfile(userId, candidateId) {
+  //   this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
+
+  //     if (d.message =="profilenotcompleted"){
+  //       this.candidateObj = d.result;
+  //       console.log(d,"=======")
+  //       this.candidateId=this.candidateObj.id;
+  //       this.getFriendshipStatus(this.id, this.candidateId);
+
+  //     }
+  //     else if (d.message =="Successfull"){
+  //       const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
+  //       const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
+  //       this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
+  //       this.reviewBtn = alreadyGivenReview;
+  //       this.companyDetailsWithReviews = companiesWithReviewDTOList
+  //       console.log(this.candidateObj, "==========")
+  //       this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
+  //       this.candidateId=d.result.candidateProfile.id;
+  //       console.log(d)
+  //       this.getFriendshipStatus(this.id, this.candidateId);
+  //     }
+
+  //   });
+  // }
 
 
   goToReviewSection() {
@@ -126,12 +149,12 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
 
-  getParams() {
-    this.activatedRoute.queryParamMap.subscribe((params) => {
-      this.userId = params.get('userId') != null ? params.get('userId') : 0;
-      this.candidateId = params.get('candId') != null ? params.get('candId') : 0;
-    });
-  }
+  // getParams() {
+  //   this.activatedRoute.queryParamMap.subscribe((params) => {
+  //     this.userId = params.get('userId') != null ? params.get('userId') : 0;
+  //     this.candidateId = params.get('candId') != null ? params.get('candId') : 0;
+  //   });
+  // }
 
 
 
@@ -174,12 +197,12 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   postReview(review) {
 
-    const formData=new FormData();
-    formData.append("candidateId",this.candidateId)
-    formData.append("review",review)
-    formData.append("rating",this.rating)
-    formData.append("ratedBy",sessionStorage.getItem('userType'))
-    formData.append("type","text")
+    const formData = new FormData();
+    formData.append("candidateId", this.candidateId)
+    formData.append("review", review)
+    formData.append("rating", this.rating)
+    formData.append("ratedBy", sessionStorage.getItem('userType'))
+    formData.append("type", "text")
 
 
 
@@ -215,14 +238,13 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   postVideoReview() {
 
-    if(this.videoReviewFile)
-    {
-      const formData=new FormData();
-      formData.append("candidateId",this.candidateId)
-      formData.append("video",this.videoReviewFile)
-      formData.append("rating",this.rating)
-      formData.append("type","video");
-      formData.append("ratedBy",sessionStorage.getItem("userType"))
+    if (this.videoReviewFile) {
+      const formData = new FormData();
+      formData.append("candidateId", this.candidateId)
+      formData.append("video", this.videoReviewFile)
+      formData.append("rating", this.rating)
+      formData.append("type", "video");
+      formData.append("ratedBy", sessionStorage.getItem("userType"))
       this.service.postReviewAgainstCandidate(formData).subscribe(res => {
         console.log("tHIS IS THE RESPONSE", res);
         if (res.status == 200) {
@@ -231,7 +253,7 @@ export class ViewCandidateProfileComponent implements OnInit {
           this.candidateObj.rating = res.rating ? res.rating : 0;
           this.reviewBtn = true;
         }
-  
+
       })
     }
   }
@@ -448,11 +470,11 @@ export class ViewCandidateProfileComponent implements OnInit {
 class CadnidateWithReview {
   id?: any;
   field?: any;
-  imageContentType?: any = "";
+  dpContentType?: any = "";
   resumeContentType?: any = "";
   presentationLetter?: any;
   dp?: any;
-  cv?: any;
+  resume?: any;
   userId?: any;
   name?: any;
   email?: any;

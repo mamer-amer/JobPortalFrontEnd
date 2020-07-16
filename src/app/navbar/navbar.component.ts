@@ -251,4 +251,12 @@ export class NavbarComponent implements OnInit {
       })
   }
 
+
+  routeToMyCandidateProfile(){
+    if(this.userId)
+    this.router.navigate([`viewprofile/${this.userId}`])
+  }
+  routeToMyCompanyProfile(){
+    
+  }
 }

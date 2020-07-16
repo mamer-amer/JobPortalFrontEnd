@@ -176,7 +176,7 @@
             <div class="col-lg-5 col-md-6 col-sm-12">
 
 
-              <div *ngIf="candidateObj.cv">
+              <div *ngIf="candidateObj.resume">
                 <a>
                   <button (click)="showModal()" class="btn" style="width:100%"><i class="fa fa-download"></i> Preview
                     Resume</button>
@@ -222,7 +222,7 @@
   (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 
   <!-- <iframe  [src]="sanitizer.bypassSecurityTrustResourceUrl(cv)" width="100%" height="400" frameBorder="0"></iframe> -->
-  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="cv"
+  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="resume"
     [viewer]="candidateObj.resumeContentType==='pdf' ? 'pdf' : 'mammoth'"
     [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
   </ngx-doc-viewer>

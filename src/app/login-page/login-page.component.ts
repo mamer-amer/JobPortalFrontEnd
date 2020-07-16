@@ -83,6 +83,7 @@ export class LoginPageComponent implements OnInit {
 
           this.toastService.info('Successfull', 'User authenticated')
 
+          console.log(res)
           sessionStorage.setItem("token", res.result.token);
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
