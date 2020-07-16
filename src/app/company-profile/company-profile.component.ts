@@ -53,16 +53,6 @@ export class CompanyProfileComponent implements OnInit {
   certificate: any;
   contentType: string;
 
-
-
-
-
-
-
-
-
-
-
   constructor(public service: ApplicantServiceService, private toastService: ToastrService, private spinner: NgxSpinnerService, private loginService: LoginService,
     private navbar: NavbarService) {
   }
@@ -81,10 +71,10 @@ export class CompanyProfileComponent implements OnInit {
     console.log(this.companyProfileObj)
     this.service.postCompanyProfile(this.userId, this.companyProfileObj).subscribe(res => {
       if (res) {
-        sessionStorage.setItem('dp', this.companyProfileObj.logo);
+        sessionStorage.setItem('dp', this.companyProfileObj.dp);
         sessionStorage.setItem('companyId', res.result.id);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
-        this.loginService.sendId.next(sessionStorage.getItem('companyId'));
+
         this.legalCompanyNameObserable.next();
         this.logoChangeObservable.next();
 
@@ -272,9 +262,9 @@ export class CompanyProfileComponent implements OnInit {
 
 
   updateCroppedImage() {
-    this.companyProfileObj.logo = this.croppedImage;
+    this.companyProfileObj.dp = this.croppedImage;
     sessionStorage.removeItem('dp');
-    sessionStorage.setItem('dp', this.companyProfileObj.logo);
+    sessionStorage.setItem('dp', this.companyProfileObj.dp);
     this.logoChangeObservable.next();
     // console.log(event, base64ToFile(event.base64));
     // base64 to blob file
@@ -288,9 +278,9 @@ export class CompanyProfileComponent implements OnInit {
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
 
-    this.companyProfileObj.logo = base64textString;
+    this.companyProfileObj.dp = base64textString;
     sessionStorage.removeItem('dp');
-    sessionStorage.setItem('dp', this.companyProfileObj.logo);
+    sessionStorage.setItem('dp', this.companyProfileObj.dp);
     this.logoChangeObservable.next();
 
   }
@@ -302,7 +292,7 @@ export class CompanyProfileComponent implements OnInit {
       let file = event.target.files[0];
       // reader.onload = this._handleReaderImageLoaded.bind(this);
       this.fileChangeEvent(event);
-      this.companyProfileObj.logoContentType = file.type;
+      this.companyProfileObj.dpContentType = file.type;
       reader.readAsBinaryString(file);
 
 
@@ -342,23 +332,17 @@ export class CompanyProfileComponent implements OnInit {
   getProfile() {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
       this.loadingText = "Getting Profile.."
-      
-      if (res.status == 200 && res.result != null) {
-        this.companyProfileObj.id = sessionStorage.setItem('companyId', res.result.id)
-        this.loginService.sendId.next(sessionStorage.getItem('companyId'));
-        this.companyProfileObj = res.result ? res.result : new CompanyProfile();
-        if(this.userType=='employer'){
-          this.companyProfileObj.contactName = res.result.contactName;
-        }
-        
 
+      console.log(res);
       
-        sessionStorage.setItem('dp', this.companyProfileObj.logo);
-        sessionStorage.setItem('companyName', this.companyProfileObj.name);
+      if (res) {
+        this.companyProfileObj = res.profile ? res.profile : new CompanyProfile();
+        if(this.userType=='employer'){
+          this.companyProfileObj.contactName = res.profile.contactName;
+        }
         this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
         this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])
         this.legalCompanyNameObserable.next();
-        
         this.logoChangeObservable.next();
 
       }

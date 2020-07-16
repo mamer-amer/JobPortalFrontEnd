@@ -5,8 +5,8 @@ export class CompanyProfile{
     billingAddress:string;
     contactName:string;
     contactTitle:string=null;
-    logo: string ;
-    logoContentType:string;
+    dp: string ;
+    dpContentType:string;
     resume:string =null;
     resumeContentType:string =null;
     certificate:string =null;

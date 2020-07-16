@@ -68,7 +68,7 @@ export class ApplicantServiceService {
       return this.http.get(this.url + "api/cp/" + userId);
     }
     else if (sessionStorage.getItem('userType') != "candidate") {
-      return this.http.get(this.url + "api/companyprofile/userId/" + userId);
+      return this.http.get(this.url + "token/" + userId);
 
     }
 
@@ -134,7 +134,7 @@ export class ApplicantServiceService {
 
 
   postCompanyProfile(userId: any, companyProfile: any): Observable<any> {
-    return this.http.post(this.url + "api/companyprofile/" + userId, companyProfile)
+    return this.http.post(this.url + "api/companyprofile/"+userId, companyProfile)
   }
 
   getCompanyProfile(companyId: any): Observable<any> {
