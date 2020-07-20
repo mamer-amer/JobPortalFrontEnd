@@ -264,15 +264,15 @@
 
                   </div>
                   <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                    <nz-avatar (click)="routeToCompanyProfile(job.companyProfile.id)"
+                    <nz-avatar (click)="routeToCompanyProfile(job.user.profile.id)"
                       [nzSize]="64"
                       style="display: block;flex: 2;margin-bottom: 5px;"
                       nzIcon="user"
-                      [nzSrc]="'data:image/jpeg;base64,'+job.companyProfile.logo">
+                      [nzSrc]="'data:image/jpeg;base64,'+job.user.profile.dp">
                     </nz-avatar>
 
                     <nz-rate style="flex: 1;height: 5px;"
-                      [ngModel]="job.companyProfile.avgRating"
+                      [ngModel]="job.user.profile.avgRating"
                       [nzAllowHalf]="true"
                       [nzDisabled]="true"
                       [nzTooltips]="tooltips">
@@ -281,7 +281,7 @@
                       <!-- icons span starts here -->
                       <p style="font-size: 15px;
                       margin-bottom: 0px;
-                      font-weight: 400;">{{job.companyProfile.name | titlecase}}</p>
+                      font-weight: 400;">{{job.user.profile.name | titlecase}}</p>
                     </div>
                   </div>
                 </div>

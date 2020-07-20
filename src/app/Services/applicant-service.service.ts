@@ -21,6 +21,7 @@ export class ApplicantServiceService {
   url: any = environment.baseUrl;
 
   userType = sessionStorage.getItem('userType');
+  userId = sessionStorage.getItem('userId');
 
 
   passObject(obj: any) {
@@ -87,9 +88,9 @@ export class ApplicantServiceService {
   }
 
   getJobsByCompany(page): Observable<any> {
-    return this.http.get(this.url + "api/job/myJobs/?page=" + page);
+    return this.http.get(this.url + "api/job/myJobs/"+this.userId+"?page="+ page);
   }
-  getJobsByCompanyPrivate(page, id: any): Observable<any> {
+  getJobsByCompanyPrivate(page: any,id): Observable<any> {
     return this.http.get(this.url + "api/recruiter/get/job/" + id + "?page=" + page);
   }
 

@@ -257,6 +257,6 @@ export class NavbarComponent implements OnInit {
     this.router.navigate([`viewprofile/${this.userId}`])
   }
   routeToMyCompanyProfile(){
-    
+    this.router.navigate(['companyProfileDetails/',this.userId])
   }
 }

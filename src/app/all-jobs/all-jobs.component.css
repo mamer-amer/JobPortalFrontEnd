@@ -23,6 +23,10 @@ mat-label {
   padding-right:13px;
 }
 
+nz-rate{
+  background: #6c757d4d !important;
+}
+
 .ant-tabs.ant-tabs-card {
   width:100% !important;
   text-align: center !important;

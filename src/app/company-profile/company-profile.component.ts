@@ -340,6 +340,7 @@ export class CompanyProfileComponent implements OnInit {
         if(this.userType=='employer'){
           this.companyProfileObj.contactName = res.profile.contactName;
           sessionStorage.setItem('dp', this.companyProfileObj.dp);
+          sessionStorage.setItem('companyName', this.companyProfileObj.name);
         }
         this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
         this.resume = "data:" + this.getMIMEtype(this.companyProfileObj['resumeContentType']) + ";base64," + encodeURI(this.companyProfileObj["resume"])

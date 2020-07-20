@@ -390,7 +390,7 @@ onMouseOut(infoWindow, $event: MouseEvent) {
 
     if(this.privateJobs==true){
         // show private jobs else 
-      this.service.getJobsByCompanyPrivate(p,this.companyId).subscribe(response => {
+      this.service.getJobsByCompanyPrivate(p,1).subscribe(response => {
 
         console.log(response, "======jobs by company")
         if (response.totalElements > 0) {
