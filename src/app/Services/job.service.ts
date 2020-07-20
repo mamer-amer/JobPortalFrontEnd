@@ -9,12 +9,14 @@ import { environment } from '../../environments/environment';
 })
 export class JobService {
 
+
+  userId = sessionStorage.getItem('userId');
   constructor(private http:HttpClient) {
 
    }
 
   public postJob(obj: Object): Observable<any> {
-    return this.http.post(environment.baseUrl + "api/job/", obj)
+    return this.http.post(environment.baseUrl + "api/job/"+this.userId, obj)
   }
   public postRecruiterJob(obj: Object): Observable<any> {
     return this.http.post(environment.baseUrl + "api/recruiter/post/job", obj)
