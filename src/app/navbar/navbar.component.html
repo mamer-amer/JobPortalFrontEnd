@@ -266,7 +266,7 @@
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
 
           <a class="dropdown-item waves-light" mdbWavesEffect
-            [routerLink]="['/companyProfileDetails/',companyId?companyId:'0']" href="#">View Profile</a>
+          (click)="routeToMyCompanyProfile()" href="#">View Profile</a>
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfile']" href="#">Edit
             Profile</a>
 
@@ -284,7 +284,7 @@
             ></a>
         <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/viewprofile']"
-            [queryParams]="{'userId':0,'candId':0}" href="#">My Profile</a>
+          (click)="routeToMyCandidateProfile()" href="#">My Profile</a>
 
           <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/candidateProfile']" href="#">Edit
             Profile</a>

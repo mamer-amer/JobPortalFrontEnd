@@ -339,4 +339,11 @@ export class ApplicantServiceService {
   getChatCount(userId):Observable<any>{
     return this.http.get(this.url+"api/get-chat-count/"+userId)
   }
+
+
+  //USER
+
+  getUser(userId):Observable<any>{
+    return this.http.get(this.url+"token/"+userId)
+  }
 }

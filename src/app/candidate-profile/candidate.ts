@@ -3,10 +3,10 @@ export class Candidate{
     email:String;
     field:String;
     presentationLetter:String;
-    cv:any;
+    resume:any;
     dp:any
     resumeContentType:any;
-    imageContentType:any;
+    dpContentType:any;
 }
 
 export interface ViewCandidateObject{

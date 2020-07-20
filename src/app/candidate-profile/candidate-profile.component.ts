@@ -27,7 +27,7 @@ export class CandidateProfileComponent implements OnInit {
 
 
 
-  cv;
+  resume;
   showUploadList = {
     showPreviewIcon: true,
     showRemoveIcon: true,
@@ -50,7 +50,7 @@ export class CandidateProfileComponent implements OnInit {
   //   type: 'pdf', // the type you want to download
   //   elementId: 'myTableElementId', // the id of html/table element
   // }
-  candidateId:any;
+  candidateId: any;
 
 
   fields: any[] = [
@@ -76,8 +76,8 @@ export class CandidateProfileComponent implements OnInit {
 
 
   candidateObj: Candidate = new Candidate();
-  zoomvalue:any=1;
-  checkZoomInOrOut=this.zoomvalue;
+  zoomvalue: any = 1;
+  checkZoomInOrOut = this.zoomvalue;
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
@@ -89,13 +89,13 @@ export class CandidateProfileComponent implements OnInit {
   transform: ImageTransform = {};
   @ViewChild('openModal', { static: true }) openModal: ElementRef
 
-  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute,private toastService: ToastrService, public nav: NavbarService,private loginService:LoginService) { }
+  constructor(public sanitizer: DomSanitizer, private exportAsService: ExportAsService, private _location: Location, public service: ApplicantServiceService, private router: Router, private activateRoute: ActivatedRoute, private toastService: ToastrService, public nav: NavbarService, private loginService: LoginService) { }
 
 
   ngOnInit(): void {
     this.nav.showNav();
     this.checkUserStauts();
-    
+
 
 
   }
@@ -107,7 +107,7 @@ export class CandidateProfileComponent implements OnInit {
 
 
   formValidation() {
-    if (this.candidateObj.name && this.candidateObj.email && this.candidateObj.field && this.candidateObj.cv && this.candidateObj.presentationLetter && this.candidateObj.dp) {
+    if (this.candidateObj.name && this.candidateObj.email && this.candidateObj.field && this.candidateObj.resume && this.candidateObj.presentationLetter && this.candidateObj.dp) {
       return false;
     }
     else {
@@ -132,8 +132,8 @@ export class CandidateProfileComponent implements OnInit {
   }
 
 
- 
- 
+
+
 
   resetImage() {
     this.scale = 1;
@@ -142,18 +142,18 @@ export class CandidateProfileComponent implements OnInit {
     this.transform = {};
   }
 
- 
 
- 
-    zoom(a) {
 
-      this.zoomvalue = a;
-      this.transform = {
-        ...this.transform,
-        scale: this.zoomvalue
-      };
-    }
- 
+
+  zoom(a) {
+
+    this.zoomvalue = a;
+    this.transform = {
+      ...this.transform,
+      scale: this.zoomvalue
+    };
+  }
+
 
   toggleContainWithinAspectRatio() {
     this.containWithinAspectRatio = !this.containWithinAspectRatio;
@@ -206,9 +206,9 @@ export class CandidateProfileComponent implements OnInit {
     var binaryString = readerEvt.target.result;
     let base64textString = btoa(binaryString);
     //console.log(btoa(binaryString));
-    this.candidateObj.cv = base64textString;
-    
-    this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+    this.candidateObj.resume = base64textString;
+
+    this.resume = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"])
 
   }
 
@@ -234,10 +234,10 @@ export class CandidateProfileComponent implements OnInit {
         let file = event.target.files[0];
         if (this.fileExtensionAllowed(file.name)) {
           this.candidateObj.resumeContentType = this.getFileExtension(file.name)
-        
+
           reader.onload = this._handleReaderLoaded.bind(this);
-         
-          
+
+
           reader.readAsBinaryString(file);
         }
         else this.toastService.error('Unsuccessful', 'Candidate Profile failed');
@@ -256,11 +256,11 @@ export class CandidateProfileComponent implements OnInit {
       let file = event.target.files[0];
       this.fileChangeEvent(event);
       // reader.onload = this._handleReaderImageLoaded.bind(this);
-      this.candidateObj.imageContentType = file.type
+      this.candidateObj.dpContentType = file.type
       //console.log("1"+this.appFormObj.resumeContentType)
       reader.readAsBinaryString(file);
 
-  
+
 
     }
   }
@@ -274,7 +274,7 @@ export class CandidateProfileComponent implements OnInit {
     this.service.postCandidateProfile(this.userId, this.candidateObj).subscribe(res => {
 
       if (res.status == 200) {
-        
+
         console.log("This is candidate response", res)
         this.toastService.info('Sucessful', 'Candidate profile posted!')
         this.allJobsbtn = true;
@@ -293,50 +293,70 @@ export class CandidateProfileComponent implements OnInit {
 
 
   checkUserStauts() {
+
+
     this.userId = sessionStorage.getItem("userId");
-    if (this.userId != null) {
-      //get the status of user
+    this.service.getUser(this.userId).subscribe((res) => {
+      console.log(res)
+      this.candidateObj.name = res.name
+      this.candidateObj.email = res.email
+      if (res.profile) {
 
-      this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
+        this.candidateObj.field = res.profile.field;
+        this.candidateObj.presentationLetter = res.profile.presentationLetter;
+        this.candidateObj.resume = res.profile.resume;
+        this.candidateObj.dp = res.profile.dp;
+        this.candidateObj.dpContentType = res.profile.dpContentType;
+        this.candidateObj.resumeContentType = res.profile.resumeContentType;
+        this.resume = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"])
+        sessionStorage.setItem('dp', this.candidateObj.dp);
+      }
+     
 
-        if (res != null) {
-          //the profile is already present
-          
-          this.candidateObj.name = sessionStorage.getItem('username');
-          this.candidateObj.email = sessionStorage.getItem('email');
-          if (res.result != null) {
-            this.candidateId = sessionStorage.setItem('candidateId', res.result.id)
-            
-            this.labelText = "Change your resume"
-            this.color = true;
-            this.allJobsbtn = true;
-            this.candidateObj.field = res.result.field;
-            this.candidateObj.presentationLetter = res.result.presentationLetter;
-            this.candidateObj.cv = res.result.cv;
-            this.candidateObj.dp = res.result.dp;
-            sessionStorage.setItem('dp', this.candidateObj.dp);
-            this.logoChangeObservable.next();
+    })
+    // if (this.userId != null) {
+    //   //get the status of user
 
-            this.candidateObj.imageContentType = res.result.imageContentType;
-            this.candidateObj.resumeContentType = res.result.resumeContentType;
-           
-            this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
-            this.setCandidateId.next(this.candidateId);
+    //   this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
 
-            
-           
+    //     if (res != null) {
+    //       //the profile is already present
 
-          }
-        }
+    //       this.candidateObj.name = sessionStorage.getItem('username');
+    //       this.candidateObj.email = sessionStorage.getItem('email');
+    //       if (res.result != null) {
+    //         this.candidateId = sessionStorage.setItem('candidateId', res.result.id)
 
-        else {
-          //the profile is not present
+    //         this.labelText = "Change your resume"
+    //         this.color = true;
+    //         this.allJobsbtn = true;
+    //         this.candidateObj.field = res.result.field;
+    //         this.candidateObj.presentationLetter = res.result.presentationLetter;
+    //         this.candidateObj.cv = res.result.cv;
+    //         this.candidateObj.dp = res.result.dp;
+    //         sessionStorage.setItem('dp', this.candidateObj.dp);
+    //         this.logoChangeObservable.next();
 
-          this.candidateObj = new Candidate();
-        }
-      })
+    //         this.candidateObj.imageContentType = res.result.imageContentType;
+    //         this.candidateObj.resumeContentType = res.result.resumeContentType;
 
-    }
+    //         this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"])
+    //         this.setCandidateId.next(this.candidateId);
+
+
+
+
+    //       }
+    //     }
+
+    //     else {
+    //       //the profile is not present
+
+    //       this.candidateObj = new Candidate();
+    //     }
+    //   })
+
+    // }
   }
 
 
@@ -378,7 +398,7 @@ export class CandidateProfileComponent implements OnInit {
       'application/vnd.openxmlformats-officedocument.presentationml.presentation': 'pptx',
       'docx': 'docx',
       'pdf': 'application/pdf',
-      "doc":"doc"
+      "doc": "doc"
     }
     console.log(MIMETypes[ext]);
     return MIMETypes[ext];
