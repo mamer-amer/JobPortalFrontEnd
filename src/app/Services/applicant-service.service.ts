@@ -137,8 +137,9 @@ export class ApplicantServiceService {
     return this.http.post(this.url + "api/companyprofile/"+userId, companyProfile)
   }
 
-  getCompanyProfile(companyId: any): Observable<any> {
-    return this.http.get(this.url + "api/companyprofile/" + companyId);
+  getCompanyProfile(userId: any): Observable<any> {
+    return this.http.get(this.url + "token/" + userId);
+    // return this.http.get(this.url + "api/companyprofile/" + companyId);
   }
 
   getJobsByEmployeeId(id: any): Observable<any> {

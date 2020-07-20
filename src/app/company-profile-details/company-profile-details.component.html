@@ -19,7 +19,7 @@
             nzIcon="user"
             [nzShape]="'square'"
             [nzSize]="100"
-            [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'">
+            [nzSrc]="companyProfile.dp!=null?'data:image/jpeg;base64,'+companyProfile.dp:'../../assets/user.png'">
           </nz-avatar>
 
           <div *ngIf="friendShipStatus!='same'"

@@ -64,9 +64,9 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.navbar.showNav();
     this.companyProfile.contactName = sessionStorage.getItem('username');
 
-    this.companyId = this.activatedRoute.snapshot.params.id;
+    this.userId = this.activatedRoute.snapshot.params.id;
     this.getFriendshipStatus(this.userId, this.companyId);
-    this.getCompanyProfileDetails(this.companyId);
+    this.getCompanyProfileDetails(this.userId);
 
   }
 
@@ -74,14 +74,14 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
       this.avgRating = res.avgRating;
-      this.companyProfile = res.companyProfile;
+      this.companyProfile = res.profile;
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      this.companyReviewRating = res.companyReviewRatingDTOList;
-      this.comments = this.companyReviewRating.length;
-      this.reviewBtn = res.alreadyCommented;
-      console.log(this.companyReviewRating);
+      // this.companyReviewRating = res.companyReviewRatingDTOList;
+      // this.comments = this.companyReviewRating.length;
+      // this.reviewBtn = res.alreadyCommented;
+      // console.log(this.companyReviewRating);
     })
 
   }

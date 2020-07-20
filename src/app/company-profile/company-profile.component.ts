@@ -333,7 +333,7 @@ export class CompanyProfileComponent implements OnInit {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
       this.loadingText = "Getting Profile.."
 
-      console.log(res);
+      console.log("Thisi s the response",res);
       
       if (res) {
         this.companyProfileObj = res.profile ? res.profile : new CompanyProfile();

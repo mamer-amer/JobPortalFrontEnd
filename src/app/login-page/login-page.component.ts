@@ -87,11 +87,12 @@ export class LoginPageComponent implements OnInit {
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
+          sessionStorage.setItem("userId", res.result.id);
           this.service.sendId.next(res.result.id);
           this.status = false;
 
           setTimeout(() => {
-            sessionStorage.setItem("userId", res.result.id);
+            
 
             if (res.result.userType === "ADMIN") {
               this.router.navigate(["/adduser"]);
