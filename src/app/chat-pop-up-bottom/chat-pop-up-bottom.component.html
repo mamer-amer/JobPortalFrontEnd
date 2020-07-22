@@ -32,11 +32,17 @@ bottom:0%;">
           </div>
 
         </div>
-      </div>
+      </div> 
+      <div *ngIf="chatrooms.length<1">
+        <p style="text-align: center;color:white">No chatrooms available</p>
+      </div>    
     </div>
 
   </div>
+  
 </div>
+
+
 
 
 

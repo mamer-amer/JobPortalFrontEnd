@@ -91,7 +91,7 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/job/myJobs/"+this.userId+"?page="+ page);
   }
   getJobsByCompanyPrivate(page: any,id): Observable<any> {
-    return this.http.get(this.url + "api/recruiter/get/job/" + id + "?page=" + page);
+    return this.http.get(this.url + "api/recruiter/get/job/"+`${this.userId}`+"?page=" + page);
   }
 
   getPaginatedJobsByCategory(category, page): Observable<any> {

@@ -19,7 +19,7 @@ export class JobService {
     return this.http.post(environment.baseUrl + "api/job/"+this.userId, obj)
   }
   public postRecruiterJob(obj: Object): Observable<any> {
-    return this.http.post(environment.baseUrl + "api/recruiter/post/job", obj)
+    return this.http.post(environment.baseUrl + 'api/recruiter/post/job/'+this.userId, obj)
   }
   public referJob(obj: Object): Observable<any> {
     return this.http.post(environment.baseUrl + "api/recruiter/referJobToCandidate", obj)
