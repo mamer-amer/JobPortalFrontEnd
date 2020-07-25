@@ -13,7 +13,7 @@
             <h3 style="font-weight: 600;margin-bottom:3px;">Company Bio
 
             </h3>
-            <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj.user.profile.name}}</p>
             <nz-rate [(ngModel)]="rating2"
               nzAllowHalf
               [disabled]="alreadyCommented"
@@ -93,7 +93,7 @@
                 (click)="getJobById(job.id)"
                 style="cursor: pointer;border-radius: 0px;height:120px;">
                 <h4 style="margin-bottom: 0px;font-weight:500;">
-                  {{job.companyProfile.name}} - {{job.title}}
+                  {{job.user.profile.name}} - {{job.title}}
                 </h4>
                 <p>{{job.city}}-{{job.country}}</p>
                 <p style="font-size:12px;color: rgb(160, 158, 158);margin-bottom: 8px;">{{job.date | myPipe}}</p>
@@ -103,7 +103,7 @@
               <mat-card style="border-left:5px solid #343A40;
               background-color: rgb(209, 207, 207);">
                 <h4 style="margin-bottom: 0px;font-weight:500;">
-                  {{job.companyProfile.name}} - {{job.title}}
+                  {{job?.user?.profile?.name}} - {{job.title}}
                 </h4>
                 <p>{{job.city}}-{{job.country}}</p>
                 <p style="font-size:12px;color: rgb(160, 158, 158);margin-bottom: 8px;">{{job.date | myPipe}}</p>
@@ -124,7 +124,7 @@
           <div style="display:flex;padding:20px 20px 0px 20px;">
             <img style="width: 12%;
                 border-radius: 40px;"
-              [src]="jobObj?.companyProfile?.logo?'data:image/jpeg;base64,'+jobObj.companyProfile.logo:'../../assets/user.png'"
+              [src]="jobObj?'data:image/jpeg;base64,'+jobObj.user.profile.dp:'../../assets/user.png'"
               alt="Avatar"
               class="avatar" />
 
@@ -132,7 +132,7 @@
               <h3 style="font-weight:500;margin:8px 0px 0px 10px">{{jobObj.title}}</h3>
               <span style="display:inline-flex">
 
-                <p style="margin:4px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.companyProfile.name | titlecase }}</p>
+                <p style="margin:4px 0px 0px 10px;color:rgb(129, 126, 126);">{{jobObj.user.profile.name | titlecase }}</p>
                 &nbsp;&nbsp;
                    <nz-rate [ngModel]="rating"
                      [nzAllowHalf]="true"
@@ -219,7 +219,7 @@
           </nz-rate>
 
 
-          <p style="color:rgb(129, 126, 126);">{{jobObj.companyProfile.name}}</p>
+          <p style="color:rgb(129, 126, 126);">{{jobObj.user.profile.name}}</p>
           <p style="font-weight: 600;margin-bottom:3px;">City</p>
           <p style="color:rgb(129, 126, 126);">{{jobObj.city}}</p>
           <hr style="margin-top:5px;" /> -->
@@ -229,7 +229,7 @@
 
           <p style="font-weight:600;margin-bottom:3px;">Address - <span
               style="color:rgb(107, 105, 105);font-size: 12px;font-weight:normal;">
-              {{jobObj.companyProfile.corporateAddress}} , {{jobObj.city}}</span> </p>
+              {{jobObj.user.profile.corporateAddress}} , {{jobObj.city}}</span> </p>
           <p style="font-weight: 600;margin-bottom:3px;">Posted - <span
               style="color:rgb(99, 98, 98);font-size: 12px;font-weight:normal;"> {{ jobObj.date | myPipe}}</span> </p>
 

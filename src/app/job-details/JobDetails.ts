@@ -8,10 +8,13 @@ export  class JobDetails {
     category: String;
     type: String;
     date:any;
-    companyProfile = {
-        name : "",
-        corporateAddress: "",
-        logo: "",
-        logoContentType: ""
+    user={
+        profile: {
+            name : "",
+            corporateAddress: "",
+            dp: "",
+            dpContentType: ""
+        }
     }
+    
 }

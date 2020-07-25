@@ -77,7 +77,7 @@ export class JobDetailsComponent implements OnInit {
       // console.log(this.jobObj)
       this.jobId = res.result.id;
       this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
-      this.getCompanyRating(this.companyId);
+      // this.getCompanyRating(this.companyId);
       // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
       this.postRatingAndReview(undefined);
      if(this.userType!="candidate"){
@@ -93,7 +93,7 @@ export class JobDetailsComponent implements OnInit {
   }
 
   getOtherCompanyJobs(id): void {
-    this.service.getJobCompany(id).subscribe((e) => {
+    this.service.getJobCompany().subscribe((e) => {
       console.log(e)
       this.otherJobsArray = e;
     });
@@ -127,7 +127,7 @@ export class JobDetailsComponent implements OnInit {
       if(res.status==200){
       this.toastService.info('Successful', 'Successfully applied to the job!')
         this.companyId = res.result?res.result.companyProfile.id:0;
-        this.getCompanyRating(this.companyId);
+        // this.getCompanyRating(this.companyId);
         this.alreadyCommented = true;
       }
       else if(res.status==500){
@@ -157,16 +157,16 @@ export class JobDetailsComponent implements OnInit {
 
 
 
-  getCompanyRating(id: any): void {
-    console.log(id)
-    this.service.getReviewsById(id).subscribe(res => {
+  // getCompanyRating(id: any): void {
+  //   console.log(id)
+  //   this.service.getReviewsById(id).subscribe(res => {
       
-      this.rating = res.result;
+  //     this.rating = res.result;
      
      
-      this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
-    },error=> this.toastService.error('Error','Something went wrong'));
-  }
+  //     this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
+  //   },error=> this.toastService.error('Error','Something went wrong'));
+  // }
 
 
   alreadyAppliedJobsAgainstUser(canId, jobId) {

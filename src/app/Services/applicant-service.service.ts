@@ -96,7 +96,7 @@ export class ApplicantServiceService {
 
   getPaginatedJobsByCategory(category, page): Observable<any> {
     category = category.replace(/&/g, '_and_');
-    return this.http.get(this.url + "api/job/jobsbycategory?category=" + category + "&page=" + page);
+    return this.http.get(this.url + "api/job/jobsbycategory/"+`${this.userId}`+"?category=" + category + "&page=" + page);
   }
   getPaginatedJobsByCategoryPrivate(category, page): Observable<any> {
     category = category.replace(/&/g, '_and_');
@@ -123,8 +123,8 @@ export class ApplicantServiceService {
     }
   }
 
-  getJobCompany(id): Observable<any> {
-    return this.http.get(this.url + "api/job/company?id=" + id);
+  getJobCompany(): Observable<any> {
+    return this.http.get(this.url + "api/job/company?id=" + this.userId);
   }
 
 
@@ -225,7 +225,7 @@ export class ApplicantServiceService {
   }
 
   updateJob(id: any, jobObj: any): Observable<any> {
-    return this.http.put(this.url + "api/job/update/" + id, jobObj);
+    return this.http.put(this.url + "api/job/update/"+`${this.userId}`+"/"+id, jobObj);
   }
 
   //recruiter
