@@ -23,7 +23,7 @@ export class JobDetailsComponent implements OnInit {
   candidateId: any=0;
   jobId: any;
   isSpinning = true;
-
+  userId = sessionStorage.getItem('userId');
   // rating , review
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
@@ -76,10 +76,10 @@ export class JobDetailsComponent implements OnInit {
       this.jobObj = res.result;
       // console.log(this.jobObj)
       this.jobId = res.result.id;
-      this.companyId = res.result.companyProfile ? res.result.companyProfile.id : null;
-      // this.getCompanyRating(this.companyId);
-      // this.alreadyAppliedJobsAgainstUser(this.candidateId, this.jobId);
-      this.postRatingAndReview(undefined);
+      this.companyId = res.result.user.profile ? res.result.user.profile.id : null;
+     
+      this.alreadyAppliedJobsAgainstUser(this.userId, this.jobId);
+      // this.postRatingAndReview(undefined);
      if(this.userType!="candidate"){
        this.displayCount(id);
      } 
@@ -112,7 +112,7 @@ export class JobDetailsComponent implements OnInit {
 
   apply_for_job(): void {
     let obj = {
-      "candidateId": this.candidateId,
+      "candidateId": this.userId,
       "jobId": this.jobId,
       "review": this.review,
       "rating": this.rating,
@@ -125,30 +125,20 @@ export class JobDetailsComponent implements OnInit {
       console.log(res);
       
       if(res.status==200){
-      this.toastService.info('Successful', 'Successfully applied to the job!')
-        this.companyId = res.result?res.result.companyProfile.id:0;
-        // this.getCompanyRating(this.companyId);
+        this.toastService.info('Successful', 'Successfully applied to the job!')
+        this.btnApplied = true;
+        // this.getCompanyRating(this.companyId); // this.companyId = res.result?res.result.companyProfile.id:0;
         this.alreadyCommented = true;
       }
       else if(res.status==500){
         
         this.toastService.error('Error', 'Something went wrong!');
       }
-      else if(res.status==208){
-        // company or review phly hy de chuka hai user again nhy deskta
-        this.companyId = res.result ? res.result.companyProfile.id : 0;
-        this.btnApplied = true;
+      else if(res.status==400){
+          this.btnApplied = true;
+      }
+   
      
-
-        this.toastService.info('Sucessfull', 'Applied sucessfully');
-      }
-      else if(res.status==100){
-        this.btnApplied = true;
-        
-        this.companyId = res.result ? res.result.companyProfile.id : 0;
-        this.toastService.info('Sucessfull', 'Applied');
-
-      }
       
 
     },err=>  this.toastService.error('Error','Something went wrong!'));
@@ -169,9 +159,9 @@ export class JobDetailsComponent implements OnInit {
   // }
 
 
-  alreadyAppliedJobsAgainstUser(canId, jobId) {
+  alreadyAppliedJobsAgainstUser(userId, jobId) {
     if(this.userType=="candidate"){
-      this.service.isAlreadyApplied(canId, jobId).subscribe(res => {
+      this.service.isAlreadyApplied(userId, jobId).subscribe(res => {
         console.log("Btn applied disabled ? "+res.result)
         this.btnApplied = res.result;
       });

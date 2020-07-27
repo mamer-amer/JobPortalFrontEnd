@@ -41,6 +41,8 @@ export class NavbarComponent implements OnInit {
 
 
     this.notificationOpen = false;
+    this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem('dp') : null
+    
     this.companyProf.logoChangeObservable.subscribe(() =>
       this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null);
 

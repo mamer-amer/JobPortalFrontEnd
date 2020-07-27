@@ -306,10 +306,12 @@ export class CandidateProfileComponent implements OnInit {
         this.candidateObj.presentationLetter = res.profile.presentationLetter;
         this.candidateObj.resume = res.profile.resume;
         this.candidateObj.dp = res.profile.dp;
+        sessionStorage.setItem('dp', this.candidateObj.dp);
+        this.logoChangeObservable.next();
         this.candidateObj.dpContentType = res.profile.dpContentType;
         this.candidateObj.resumeContentType = res.profile.resumeContentType;
         this.resume = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"])
-        sessionStorage.setItem('dp', this.candidateObj.dp);
+       
       }
      
 

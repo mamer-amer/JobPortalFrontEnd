@@ -329,14 +329,15 @@ export class CompanyProfileComponent implements OnInit {
   }
 
 
-  getProfile() {
+getProfile() {
     this.service.getCurrentProfileUserStauts(this.userId).subscribe(res => {
       this.loadingText = "Getting Profile.."
 
       console.log("Thisi s the response",res);
       
       if (res) {
-        this.companyProfileObj = res.profile ? res.profile : new CompanyProfile();
+    this.companyProfileObj = res.profile ? res.profile : new CompanyProfile();
+      sessionStorage.setItem('dp', res?.profile?.dp)
         if(this.userType=='employer'){
           this.companyProfileObj.contactName = res.profile.contactName;
           sessionStorage.setItem('dp', this.companyProfileObj.dp);

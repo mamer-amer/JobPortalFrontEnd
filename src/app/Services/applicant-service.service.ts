@@ -144,7 +144,7 @@ export class ApplicantServiceService {
   }
 
   getJobsByEmployeeId(id: any): Observable<any> {
-    return this.http.get(this.url + "api/job/myJobs/" + id);
+    return this.http.get(this.url + "api/job/myJobs/" + this.userId);
 
   }
   applyJob(obj: any): Observable<any> {
@@ -176,8 +176,8 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/review/averageRating?companyId=" + id);
   }
 
-  isAlreadyApplied(canId, jobId): Observable<any> {
-    return this.http.get(this.url + "api/cp/alreadyappliedjob?candidateId=" + canId + "&jobId=" + jobId);
+  isAlreadyApplied(userId, jobId): Observable<any> {
+    return this.http.get(this.url + "api/cp/alreadyappliedjob?userId=" + userId + "&jobId=" + jobId);
   }
   getNotRefferdJobs(canId, companyId, pageNo): Observable<any> {
     return this.http.get(this.url + "api/recruiter/notReferedJobs?candId=" + canId + "&companyId=" + companyId + "&page=" + pageNo);
