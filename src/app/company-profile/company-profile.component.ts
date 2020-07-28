@@ -353,6 +353,7 @@ export class CompanyProfileComponent implements OnInit {
         
 
       
+        if(this.companyProfileObj.logo)
         sessionStorage.setItem('dp', this.companyProfileObj.logo);
         sessionStorage.setItem('companyName', this.companyProfileObj.name);
         this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
@@ -420,18 +421,7 @@ export class CompanyProfileComponent implements OnInit {
 
 
 
-  // handleOkCertificate(): void {
-  //   console.log('Button ok clicked!');
-  //   this.isVisible = false;
-  // }
-
-  // handleCancelCertificate(): void {
-  //   console.log('Button cancel clicked!');
-  //   this.isVisible = false;
-  // }
-
-
-
+  
 
 
 }

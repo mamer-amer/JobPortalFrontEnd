@@ -91,13 +91,13 @@
         <div class="mb-3">
           <img [src]="candidateObj.dp!=null?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'"
           
-            class="rounded-circle z-depth-1-half avatar-pic avatar" alt="example placeholder avatar">
+            class="rounded-circle z-depth-1-half avatar-pic avatar" (click)="inp.click()" style="cursor: pointer;" alt="example placeholder avatar">
         </div>
         <div class="d-flex justify-content-center">
-          <div style="background-color: black !important" class="btn btn-mdb-color btn-rounded float-left">
-            <span>Add photo</span>
-            <input type="file" (change)="onImageChange($event)">
-          </div>
+          <!-- <div style="background-color: black !important" class="btn btn-mdb-color btn-rounded float-left"> -->
+            <!-- <span>Add photo</span> -->
+            <input type="file" #inp style="display: none;" (change)="onImageChange($event)">
+          <!-- </div> -->
         </div>
       </div>
 

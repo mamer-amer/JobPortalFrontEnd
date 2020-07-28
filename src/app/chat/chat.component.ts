@@ -136,6 +136,7 @@ export class ChatComponent implements OnInit {
   gotoChatroom(id, friendProfile, searchBox) {
   
     this.friendProfile = friendProfile;
+    console.log(friendProfile,"============friend")
     this.onFocusOut(searchBox);
     this.service.initiateChat(this.userId, id)
       .subscribe((res) => {

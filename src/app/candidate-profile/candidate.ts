@@ -4,7 +4,7 @@ export class Candidate{
     field:String;
     presentationLetter:String;
     cv:any;
-    dp:any
+    dp:any=null;
     resumeContentType:any;
     imageContentType:any;
 }
