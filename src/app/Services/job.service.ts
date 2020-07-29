@@ -32,7 +32,7 @@ export class JobService {
     return this.http.get(environment.baseUrl + "api/recruiter/privateJobAllDetails/"+jobId)
   }
   public getJobDetailsForCandidate(jobId:any){
-    return this.http.get(environment.baseUrl + "api/recruiter/privateJobDetailForCandidate/"+jobId)
+    return this.http.get(environment.baseUrl + "api/recruiter/"+jobId)
   }
   public undoReferToCandidate(jobId,candId){
     return this.http.delete(environment.baseUrl + "api/recruiter/undoRefer/"+jobId+"/"+candId)

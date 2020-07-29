@@ -76,9 +76,10 @@ export class AllJobsComponent implements OnInit {
   showDeleteConfirm(jobId: any, index: any, page: any): void {
     this.modalService.confirm({
       nzTitle: 'Are you sure you want to delete?',
-      nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
+    nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
       nzOkText: 'Yes',
       nzOkType: 'danger',
+      nzMask:false,
       nzOnOk: () => {
         this.deleteJob(jobId, index, page)
       },

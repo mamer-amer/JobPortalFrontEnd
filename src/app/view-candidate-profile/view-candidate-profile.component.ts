@@ -32,7 +32,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   itemsPerPage: any;
   allJobs: any = [];
   empty: boolean;
-  companyId = sessionStorage.getItem('companyId');
+  companyId :any;
   referJobDto: { "companyId": any; "jobId": any; "candidateId": any; };
   previous: boolean = false;
   next: boolean = false;
@@ -64,7 +64,9 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.userType = sessionStorage.getItem('userType');
-
+    if(this.userType!="candidate"){
+      this.companyId = sessionStorage.getItem('userId')
+    }
 
 
     this.nav.showNav();
@@ -97,12 +99,14 @@ export class ViewCandidateProfileComponent implements OnInit {
       .subscribe((res) => {
         this.candidateObj.name = res.name;
         this.candidateObj.email = res.email;
+        this.candidateId = this.userId;
         if (res.profile) {
           this.candidateObj.field = res.profile.field;
           this.candidateObj.presentationLetter = res.profile.presentationLetter;
           this.candidateObj.dp = res.profile.dp;
           this.candidateObj.dpContentType = res.profile.dpContentType;
           this.candidateObj.resume = res.profile.resume;
+        
           this.candidateObj.resumeContentType = res.profile.resumeContentType;
           this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"]);
         }

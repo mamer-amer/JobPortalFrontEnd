@@ -42,17 +42,10 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
       console.log(res);
       res.result.map(d => {
         this.candidatesArrays.push({
-          candId: d.id,
-          userId: d.user.id,
-          name: d.user.name,
-          email: d.user.email,
-          field: d.field,
-          profileActive: d.user.profileActive == true ? "Active" : "Inactive",
-          presentationLetter: d.presentationLetter,
-          cv: d.cv,
-          dp: d.dp,
-          imageContentType: d.imageContentType,
-          resumeContentType: d.resumeContentType,
+          userId: d.id,
+          name: d.name,
+          email: d.email,
+          profileActive: d.profileActive == true ? "Active" : "Inactive",
 
         });
       });
@@ -84,8 +77,7 @@ export class AppliedCandidatesProfilesComponent implements OnInit {
 
     this.service.passObject(this.candidatesArrays[id]);
     let userId = this.candidatesArrays[id]['userId']
-    let candId = this.candidatesArrays[id]['candId'];
-    this.router.navigate(['/viewprofile'], { queryParams: { "candId": candId, "userId": userId } })
+    this.router.navigate(['/viewprofile/'+userId])
   }
 
 }

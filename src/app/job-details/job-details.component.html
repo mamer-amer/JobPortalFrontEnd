@@ -13,7 +13,7 @@
             <h3 style="font-weight: 600;margin-bottom:3px;">Company Bio
 
             </h3>
-            <p style="color:rgb(129, 126, 126);">{{jobObj.user.profile.name}}</p>
+            <p style="color:rgb(129, 126, 126);">{{jobObj?.user?.profile?.name}}</p>
             <nz-rate [(ngModel)]="rating2"
               nzAllowHalf
               [disabled]="alreadyCommented"
@@ -71,7 +71,7 @@
     <div class="row">
       <div class="col-lg-4 col-md-6 col-sm-12">
 
-        <h4 style="font-weight: bold;padding-top:14px;">{{otherJobsArray.length-1}} other jobs</h4>
+        <h4 style="font-weight: bold;padding-top:14px;">{{otherJobsArray?.length-1}} other jobs</h4>
       </div>
 
 

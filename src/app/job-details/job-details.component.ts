@@ -77,12 +77,13 @@ export class JobDetailsComponent implements OnInit {
       // console.log(this.jobObj)
       this.jobId = res.result.id;
       this.companyId = res.result.user.profile ? res.result.user.profile.id : null;
+      this.numOfCandidates = res?.result?.appliedFor?.length;
      
       this.alreadyAppliedJobsAgainstUser(this.userId, this.jobId);
       // this.postRatingAndReview(undefined);
-     if(this.userType!="candidate"){
-       this.displayCount(id);
-     } 
+    //  if(this.userType!="candidate"){
+    //    this.displayCount(id);
+    //  } 
      
 
 

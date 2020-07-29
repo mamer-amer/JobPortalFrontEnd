@@ -146,9 +146,9 @@
             <button type="button"
               (click)="applyOnJob()"
               [disabled]="applied"
-              [ngClass]="applied ==true ?'applied-class':'not-applied-class'"
+              [ngClass]="applied==true?'applied-class':'not-applied-class'"
               style="border-radius:30px;font-size: 12px;"
-              class="btn">{{applied!=true?'Apply' : 'Applied'}}
+              class="btn">{{applied==true?'Applied':'Apply'}}
             </button>
           </div>
         </mat-card-actions>
@@ -178,20 +178,20 @@
           <div class="col-lg-2">
 
             <img style="width: 100%;border-radius: 50%"
-              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'../../assets/user.png'">
+              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile?.candidateProfile?.profile.dp:'../../assets/user.png'">
 
 
           </div>
 
           <div class="col-lg-10">
-            <a [routerLink]="['/viewprofile']"
-              [queryParams]="{'userId':candidateProfile.user_id,'candId':candidateProfile.candidate_id}">
+            <a [routerLink]="['/viewprofile',candidateProfile?.candidateProfile?.id]"
+              >
               <h5>
-                {{candidateProfile.name}}</h5>
+                {{candidateProfile?.candidateProfile?.name}}</h5>
             </a>
-            <p style="margin-bottom: 0px">{{candidateProfile.presentationLetter.length>100?
-            candidateProfile.presentationLetter.slice(0,100)+'...'
-            :candidateProfile.presentationLetter
+            <p style="margin-bottom: 0px">{{candidateProfile?.candidateProfile?.profile?.presentationLetter?.length>100?
+              candidateProfile?.candidateProfile?.profile?.presentationLetter.slice(0,100)+'...'
+            :candidateProfile?.candidateProfile?.profile?.presentationLetter
           }}
             </p>
             <!-- <mat-checkbox [ngModel]="candidateProfile.referedDate?true:false"
@@ -201,57 +201,22 @@
             </mat-checkbox> -->
             <i class="fa fa-undo"
               style="cursor: pointer"
-              (click)="undoRefer(candidateProfile.candidate_id)"
+              (click)="undoRefer(candidateProfile.candidateProfile.id)"
               aria-hidden="true"> &nbsp;Undo refer</i>
           </div>
 
         </div>
 
-        <div  *ngIf="!allCandidatesReferedOrNotList">
-            <h6>No refered candidates</h6>
-        </div>
+       
       </mat-card>
       <br>
     </div>
   </div>
 
 
-  <!--<div *ngIf="!allCandidatesReferedOrNotList.length">
-    <div *ngFor="let candidateProfile of candidateProfiles;let i=index;">
-      <mat-card class="candidateProfile-card">
-        <div class="row">
-          <div class="col-lg-2">
-
-            <img style="width: 100%;border-radius: 50%"
-              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'../../assets/user.png'">
-
-
-          </div>
-
-          <div class="col-lg-10">
-            <a [routerLink]="['/viewprofile']"
-              [queryParams]="{'userId':candidateProfile.user.id,'candId':candidateProfile.id}">
-              <h5>
-                {{candidateProfile.user.name}}</h5>
-            </a>
-            <small>{{candidateProfile.user.email}}</small>
-            <p>{{candidateProfile.presentationLetter.length>100?
-            candidateProfile.presentationLetter.slice(0,100)+'...'
-            :candidateProfile.presentationLetter
-          }}
-            </p>
-            <mat-checkbox (click)="referCandidatesList(candidateProfile.id)">
-              <b>Refer</b>
-            </mat-checkbox>
-          </div>
-
-        </div>
-      </mat-card>
-      <br>
-    </div>
-  </div>-->
-
-
+  <div  *ngIf="allCandidatesReferedOrNotList.length<1">
+    <h6>No refered candidates</h6>
+</div>
 
 
 </nz-modal>

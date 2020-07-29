@@ -80,6 +80,8 @@ export class ApplicantServiceService {
   }
 
   getCandidateProfileForView(userId: any, candId: any): Observable<any> {
+    this.userId = sessionStorage.getItem('userId');
+
     return this.http.get(this.url + "api/cp/complete?userId=" + userId + "&candidateId=" + candId);
   }
 
@@ -88,9 +90,13 @@ export class ApplicantServiceService {
   }
 
   getJobsByCompany(page): Observable<any> {
+    this.userId = sessionStorage.getItem('userId');
+
     return this.http.get(this.url + "api/job/myJobs/"+this.userId+"?page="+ page);
   }
   getJobsByCompanyPrivate(page: any,id): Observable<any> {
+    
+    this.userId = sessionStorage.getItem('userId');
     return this.http.get(this.url + "api/recruiter/get/job/"+`${this.userId}`+"?page=" + page);
   }
 
@@ -208,13 +214,13 @@ export class ApplicantServiceService {
   }
 
 
-  deleteJob(id: any, page: any, type: any): Observable<any> {
+  deleteJob(jobId: any, page: any, type: any): Observable<any> {
 
     if (type == false) {
-      return this.http.delete(this.url + "api/job/delete/" + id + "/page?page=" + parseInt(page));
+      return this.http.delete(this.url + "api/job/delete/"+jobId+"/"+`${this.userId}`+ "/page?page=" + parseInt(page));
     }
 
-    return this.http.delete(this.url + "api/recruiter/delete/" + id + "/page?page=" + parseInt(page));
+    return this.http.delete(this.url + "api/recruiter/delete/" + jobId +`${this.userId}`+ "/page?page=" + parseInt(page));
 
 
 

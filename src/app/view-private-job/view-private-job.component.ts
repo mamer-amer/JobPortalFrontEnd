@@ -19,7 +19,7 @@ export class ViewPrivateJobComponent implements OnInit {
   userType = sessionStorage.getItem('userType');
   jobId:any;
   allCandidatesReferedOrNotList : Array<any> = [];
-  recruiterJobs:Job;
+  recruiterJobs:any;
   companyProfile:CompanyProfile;
   applied  = false;
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
@@ -43,55 +43,30 @@ export class ViewPrivateJobComponent implements OnInit {
   }
 
 
-  showToCandidateJobDetails(id){
+  showJobDetails(id){
     this.jobService.getJobDetailsForCandidate(id).subscribe(res => {
-        if(res!=null){
-          this.allCandidatesReferedOrNotList = res['result']['allCandidatesReferedOrNotList'];
-          this.recruiterJobs = res['result']['recruiterJobs'];
-          this.companyProfile = res['result']['recruiterJobs']['companyProfile']
-          this.publishFrom = this.transform(this.recruiterJobs.publishFrom);
-          let date = new Date(this.recruiterJobs.publishTo);
-          this.publishTo = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
-          this.applied = res['already'] == null ? false : res['already'];
-          this.referJobDto = {
-            "companyId":this.companyProfile.id,
-            "jobId": this.recruiterJobs['id'],
-            "candidateId":this.candidateId
-          }
-         
 
-        }  
+      console.log(res);
+        if(res!=null){
+          this.recruiterJobs = res;
+            this.companyProfile = res['user']['profile']
+            this.publishFrom = this.transform(this.recruiterJobs.publishFrom);
+            let date = new Date(this.recruiterJobs.publishTo);
+            this.publishTo = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
+            this.allCandidatesReferedOrNotList = res['appliedForRecruiterJobs'];
+            if(this.userType=="candidate"){
+              // search 
+              const present = this.allCandidatesReferedOrNotList.find(profile=>{
+                return profile.candidateProfile.id==sessionStorage.getItem('userId')
+                   
+              })
+              this.applied = present!=undefined?present.applied:false;
+            }
+        }
+        
     })
   }
-  showToRecruiterJobDetails(id){
-      this.jobService.getJobDetailsForRecruiter(id).subscribe(res=>{
-        if (res != null) {
-          // this.candidateProfiles = null;
-          this.allCandidatesReferedOrNotList = res['result']['allCandidatesReferedOrNotList'];
-          // if(this.allCandidatesReferedOrNotList.length<=0){
-          //   this.candidateProfiles = res['result']['candidateProfiles'];
-          //   console.log(this.candidateProfiles);
-          // }
-          this.recruiterJobs = res['result']['recruiterJobs'];
-          this.companyProfile = res['result']['recruiterJobs']['companyProfile']
-          this.applied = res['already'] == null ? false : res['already'];
-          this.publishFrom = this.transform(this.recruiterJobs.publishFrom);
-          let date = new Date(this.recruiterJobs.publishTo);
-          this.publishTo = date.getDate()+'-'+date.getMonth()+'-'+date.getFullYear();
-          this.referJobDto = {
-            "companyId": this.companyProfile.id,
-            "jobId": this.recruiterJobs['id'],
-            "candidateId": this.candidateId
-          }
-          
-        
-        
-
-        } 
-      });
-  }
-
-
+  
   catchParams(){
     return new Promise((resolve,reject)=>{
       this.activatedRoute.params.subscribe(id => this.jobId = id.id);
@@ -102,12 +77,9 @@ export class ViewPrivateJobComponent implements OnInit {
 
 
   callWithRespectToUser(id){
-    if(this.userType=="candidate"){
-        this.showToCandidateJobDetails(id)
-    }
-    else{
-        this.showToRecruiterJobDetails(id);
-    }
+  
+    this.showJobDetails(id)
+  
   }
 
 
@@ -176,6 +148,13 @@ export class ViewPrivateJobComponent implements OnInit {
   }
 
   applyOnJob(){
+
+    
+    this.referJobDto = {
+      "companyId": this.companyProfile.id,
+      "jobId": this.recruiterJobs['id'],
+      "candidateId": sessionStorage.getItem('userId')
+    }
     this.jobService.applyOnPrivateJob(this.referJobDto).subscribe(res=>{
       if(res.status==200){
         this.applied = true;
@@ -191,7 +170,12 @@ export class ViewPrivateJobComponent implements OnInit {
       "candidateId": candId
     }
     this.jobService.undoReferToCandidate(this.referJobDto['jobId'],candId).subscribe(res=>{
-      this.allCandidatesReferedOrNotList = res['result']['allCandidatesReferedOrNotList'];
+        if(res['status']=200){
+          this.callWithRespectToUser(this.referJobDto['jobId'])
+        }
+        else{
+          this.toastService.warning('Something went wrong',"Try again")
+        }
       
     })
   }
