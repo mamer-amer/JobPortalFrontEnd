@@ -169,11 +169,22 @@ const formData=new FormData();
     })
   }
 
-  updateReview(id){
-    let obj={
-      review:this.review,
-      rating:this.rating
-    }
+  updateReview(id,type){
+    let obj;
+    if(type=='text')
+    {
+      obj=new FormData();
+      obj.append("rating",this.rating);
+      obj.append("type",type);
+      obj.append("review",this.review);
+  }
+  else {
+    obj=new FormData();
+  obj.append("rating",this.rating);
+  obj.append("type",type);
+  obj.append("video",this.videoReviewFile);
+  }
+    
     this.service.updateReview(id,obj)
     .subscribe(()=>{
       this.getCompanyProfileDetails(this.companyId);

@@ -275,7 +275,7 @@
                       margin-left: 6%;" class="form-control md-textarea pt-0" id="exampleFormControlTextarea1"
                         [(ngModel)]="review" rows="3" placeholder="Write something here..."></textarea>
                         <div style="margin-left:6%;margin-top: 5px;">
-                        <button style="  background-color: black;color: white;  margin-right: 5px;" (click)="updateReview(candidate.id)">update</button>
+                        <button style="  background-color: black;color: white;  margin-right: 5px;" (click)="updateReview(candidate.id,'text')">update</button>
                         <button style="background-color: black;color: white;" (click)="isReviewEdit=false">cancel</button>
                       </div>
                     </div>
@@ -303,7 +303,7 @@
                     right: 20px;
                     margin-top: 15px;">
                   <button class="btn btn-default btn-rounded btn-md"
-                    style="background-color: black !important;padding:10px;width: 78px;">edit</button>
+                    style="background-color: black !important;padding:10px;width: 78px;" (click)="isReviewEdit=true">edit</button>
                   <button class="btn btn-default btn-rounded btn-md"
                     style="background-color: black !important;padding:10px;width:78px"
                     (click)="deleteReview(candidate.id)">delete</button>
@@ -312,13 +312,25 @@
                 <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
                   {{candidate.name}}
                   <br>
-                  <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true"
+                  <nz-rate  *ngIf="!isReviewEdit || candidate.userId!=userId" style="vertical-align: bottom;margin-left: -10px;" [disabled]="true"
                     [ngModel]="candidate.rating" [nzTooltips]="tooltips"></nz-rate>
                 </p>
-                <video style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
+                <video  *ngIf="!isReviewEdit || candidate.userId!=userId" style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
                 left: 55px;" width="300" controls>
                   <source [src]="candidate.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
                 </video>
+                   <!-- //edit options -->
+              <div *ngIf="isReviewEdit && candidate.userId==userId">
+                <nz-rate style="vertical-align: bottom" [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
+                <br>
+                <input style="margin-left: 6%;" (change)="videoReviewChanged($event)" type="file" accept="video/*">
+              <div style="margin-left:6%;margin-top: 10px;">
+                  <button style="  background-color: black;color: white;  margin-right: 5px;"
+                    (click)="updateReview(candidate.id,'video')">update</button>
+                  <button style="background-color: black;color: white;" (click)="isReviewEdit=false">cancel</button>
+                </div>
+              </div>
+              <!-- //// -->
               </div>
             </div>
           </div>
