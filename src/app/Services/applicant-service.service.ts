@@ -125,7 +125,7 @@ export class ApplicantServiceService {
       return this.http.get(this.url + "api/job/?id=" + id);
     }
     else {
-      return this.http.get(this.url + "api/recruiter/get/" + id)
+      return this.http.get(this.url + "api/recruiter/" + id)
     }
   }
 
@@ -227,11 +227,15 @@ export class ApplicantServiceService {
   }
 
   postReviewAgainstCandidate(obj: any): Observable<any> {
-    return this.http.post(this.url + "api/review/reivewAgainstCandidate", obj)
+    return this.http.post(this.url + "api/review/save/"+`${this.userId}`, obj)
   }
 
-  updateJob(id: any, jobObj: any): Observable<any> {
-    return this.http.put(this.url + "api/job/update/"+`${this.userId}`+"/"+id, jobObj);
+  updateJob(jobId: any, jobObj: any,type:any): Observable<any> {
+    if(this.userType=="employer" && type=="public"){
+      return this.http.put(this.url + "api/job/update/"+`${this.userId}`+"/"+jobId, jobObj);
+
+    }
+    return this.http.put(this.url+"api/recruiter/update/job/"+this.userId+"/"+jobId,jobObj)
   }
 
   //recruiter

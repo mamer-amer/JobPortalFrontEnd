@@ -22,7 +22,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   cv: any;
   candidateId: any;
   isVisible: boolean = false;
-  reviewBtn: any;
+  reviewBtn: any=false;
   companyDetailsWithReviews: Array<any> = [];
   rating: any = 0;
   userType: any;
@@ -99,6 +99,7 @@ export class ViewCandidateProfileComponent implements OnInit {
       .subscribe((res) => {
         this.candidateObj.name = res.name;
         this.candidateObj.email = res.email;
+        this.candidateObj.id = this.userId;
         this.candidateId = this.userId;
         if (res.profile) {
           this.candidateObj.field = res.profile.field;
@@ -204,6 +205,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     const formData = new FormData();
     formData.append("candidateId", this.candidateId)
     formData.append("review", review)
+    formData.append("companyId",this.companyId)
     formData.append("rating", this.rating)
     formData.append("ratedBy", sessionStorage.getItem('userType'))
     formData.append("type", "text")
@@ -246,6 +248,8 @@ export class ViewCandidateProfileComponent implements OnInit {
       const formData = new FormData();
       formData.append("candidateId", this.candidateId)
       formData.append("video", this.videoReviewFile)
+      formData.append("companyId",this.companyId)
+
       formData.append("rating", this.rating)
       formData.append("type", "video");
       formData.append("ratedBy", sessionStorage.getItem("userType"))
@@ -315,6 +319,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   getRecruiterJobs(p) {
 
+    this.empty = true;
     this.service.getJobsByCompanyPrivate(p, this.companyId).subscribe(response => {
 
       console.log(response, "======jobs by company")
@@ -339,6 +344,7 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
   getRecruiterJobThatAreNotReffered(p) {
+    this.empty = true;
     this.service.getNotRefferdJobs(this.candidateId, this.companyId, p).subscribe(response => {
 
       if (response.result != null) {
@@ -354,7 +360,7 @@ export class ViewCandidateProfileComponent implements OnInit {
         // this.total = response.totalElements;
         this.empty = true;
         setTimeout(function () {
-          this.empty = true;
+          this.empty = false;
         }, 1000)
       }
     })
@@ -382,7 +388,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     this.referJobDto = {
       "companyId": this.companyId,
       "jobId": jobId,
-      "candidateId": candId
+      "candidateId": this.candidateId
     }
 
     console.log(this.referJobDto)
@@ -425,7 +431,7 @@ export class ViewCandidateProfileComponent implements OnInit {
       nzOkText: 'Yes',
       nzOkType: 'primary',
       nzOnOk: () => {
-        this.save(jobId, candId)
+        this.save(jobId, this.candidateId)
 
       },
       nzCancelText: 'No',

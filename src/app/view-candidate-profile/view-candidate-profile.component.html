@@ -330,7 +330,7 @@
   <nz-modal [(nzVisible)]="show" nzTitle="All JOBS" style="width:100%" (nzOnCancel)="cancel()" (nzOnOk)="cancel()"
     [nzOkLoading]="isOkLoading">
 
-    <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
+    <nz-skeleton  [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
 
       <div style="overflow-y: scroll" style="margin-bottom: 10px"
         *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"

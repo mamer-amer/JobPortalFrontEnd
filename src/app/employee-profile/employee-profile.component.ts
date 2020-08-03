@@ -88,7 +88,10 @@ export class EmployeeProfileComponent implements OnInit {
     this.getCountries();
     this.activatedRoute.queryParamMap.subscribe(value=>{
       this.type = value.get('type');
+      console.log(this.type);
     })
+    console.log(this.type);
+
 
 
 
@@ -217,10 +220,12 @@ export class EmployeeProfileComponent implements OnInit {
 
     if (this.catchParams() != undefined) {
 
-      this.service.updateJob(this.jobId, this.jobObj).subscribe(res => {
+      this.service.updateJob(this.jobId, this.jobObj,this.type).subscribe(res => {
         if (res.status == 200) {
 
           this.toastService.info('Successfull', 'Job Updated Successfully');
+          setTimeout(() => this.router.navigate(['allJobs']), 1000)
+          this.toastService.info('Successfull', 'Job Posted Successfully');
         }
         else {
           this.toastService.error('Unsucessfull', 'Job can not be updated');
@@ -369,7 +374,7 @@ export class EmployeeProfileComponent implements OnInit {
     
     
     this.service.getJobByIdInGeneral(id,this.type).subscribe((res) => {
-      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
       let countryObj = this.countries.find(c => c["name"] == country);
       let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);
@@ -377,7 +382,7 @@ export class EmployeeProfileComponent implements OnInit {
       this.provinces = csc.getStatesOfCountry(countryObj["id"]);
       this.cities = csc.getCitiesOfState(stateObj.id);
       this.jobObj.latitude = latitude;
-      this.jobObj.longitude = longitude;
+      this.jobObj.longitude = longitude;  
       this.contactForm.control.get("country").setValue(countryObj);
       this.contactForm.control.get("province").setValue(stateObj);
       this.contactForm.control.get("city").setValue(cityObj);
