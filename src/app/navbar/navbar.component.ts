@@ -80,7 +80,6 @@ export class NavbarComponent implements OnInit {
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
-    console.log(this.userImage, "========")
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
 
@@ -203,7 +202,6 @@ export class NavbarComponent implements OnInit {
       .subscribe((res) => {
 
         this.requests = res;
-        console.log(res)
         this.spinner.hide("navSpinner");
         this.isLoader=false;
         
@@ -226,7 +224,6 @@ export class NavbarComponent implements OnInit {
   deleteRequest(id) {
     this.service.cancelFriendRequest(this.userId, id, "user")
       .subscribe((res) => {
-        console.log(res)
         this.getRequests(this.userId);
       })
   }

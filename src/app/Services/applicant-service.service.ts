@@ -190,7 +190,10 @@ export class ApplicantServiceService {
   }
 
   isAlreadyCommentedOnCompanyProfile(obj: any): Observable<any> {
-    return this.http.post(this.url + "api/review/comment", obj);
+    return this.http.post(this.url + "api/review/alreadyCommented", obj);
+  }
+  isAlreadyCommented(userId,visitedUserId): Observable<any> {
+    return this.http.get(this.url + "api/review/alreadyCommented/"+userId+"/"+visitedUserId);
   }
 
   getAllJobsByCityName(city, page): Observable<any> {

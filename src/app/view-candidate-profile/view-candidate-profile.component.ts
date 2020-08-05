@@ -63,29 +63,22 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
   ngOnInit(): void {
 
+    this.nav.showNav();
+    this.userId = this.activatedRoute.snapshot.params.id;
     this.userType = sessionStorage.getItem('userType');
     if(this.userType!="candidate"){
       this.companyId = sessionStorage.getItem('userId')
+      this.service.isAlreadyCommented(this.companyId,this.userId).subscribe(res=>{
+          if(res.status==208){
+            this.reviewBtn = false;
+          }
+          else {
+            this.reviewBtn = true;
+          }
+      })
     }
-
-
-    this.nav.showNav();
-    // this.getParams();
-    // this.catchParams().then((result) => {
-    //   if (result) {
-    //     console.log(result,"========candidae")
-    //     this.getCandidateProfile(this.userId, this.candidateId);
-
-    //   }
-    // }, (error) => {
-    //   console.log(error);
-    // })
-
-
-    this.userId = this.activatedRoute.snapshot.params.id;
     if (this.userId)
       this.getUser(this.userId)
-
 
   }
 
@@ -107,45 +100,23 @@ export class ViewCandidateProfileComponent implements OnInit {
           this.candidateObj.dp = res.profile.dp;
           this.candidateObj.dpContentType = res.profile.dpContentType;
           this.candidateObj.resume = res.profile.resume;
-        
+          this.candidateObj.rating = res.profile.avgRating;
           this.candidateObj.resumeContentType = res.profile.resumeContentType;
           this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"]);
+          this.companyDetailsWithReviews = res.profile.reviewAndRatingsForCandidate;
         }
 
       })
   }
-  // getCandidateProfile(userId, candidateId) {
-  //   this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
-
-  //     if (d.message =="profilenotcompleted"){
-  //       this.candidateObj = d.result;
-  //       console.log(d,"=======")
-  //       this.candidateId=this.candidateObj.id;
-  //       this.getFriendshipStatus(this.id, this.candidateId);
-
-  //     }
-  //     else if (d.message =="Successfull"){
-  //       const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
-  //       const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
-  //       this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
-  //       this.reviewBtn = alreadyGivenReview;
-  //       this.companyDetailsWithReviews = companiesWithReviewDTOList
-  //       console.log(this.candidateObj, "==========")
-  //       this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
-  //       this.candidateId=d.result.candidateProfile.id;
-  //       console.log(d)
-  //       this.getFriendshipStatus(this.id, this.candidateId);
-  //     }
-
-  //   });
-  // }
-
+  
 
   goToReviewSection() {
     document.getElementById("review").scrollIntoView();
   }
 
-
+  checkStatusAlreadyCommentedOrNot(){
+    
+  }
 
   catchParams(): Promise<any> {
     return new Promise(function (resolve, reject) {
@@ -153,13 +124,6 @@ export class ViewCandidateProfileComponent implements OnInit {
     });
   }
 
-
-  // getParams() {
-  //   this.activatedRoute.queryParamMap.subscribe((params) => {
-  //     this.userId = params.get('userId') != null ? params.get('userId') : 0;
-  //     this.candidateId = params.get('candId') != null ? params.get('candId') : 0;
-  //   });
-  // }
 
 
 
@@ -211,22 +175,11 @@ export class ViewCandidateProfileComponent implements OnInit {
     formData.append("type", "text")
 
 
-
-    // let obj = {
-    //   review: review,
-    //   rating: this.rating,
-    //   candidateId: this.candidateId,
-    //   jobId: 0,
-    //   ratedBy: sessionStorage.getItem('userType')
-
-    // }
     this.service.postReviewAgainstCandidate(formData).subscribe(res => {
-      console.log("tHIS IS THE RESPONSE", res);
       if (res.status == 200) {
-        this.candidateObj.rating = 0;
-        this.companyDetailsWithReviews = res.result ? res.result : '';
-        this.candidateObj.rating = res.rating ? res.rating : 0;
+        this.candidateObj.rating = res.result;
         this.reviewBtn = true;
+        this.getUser(this.userId)
       }
 
     })
@@ -254,12 +207,12 @@ export class ViewCandidateProfileComponent implements OnInit {
       formData.append("type", "video");
       formData.append("ratedBy", sessionStorage.getItem("userType"))
       this.service.postReviewAgainstCandidate(formData).subscribe(res => {
-        console.log("tHIS IS THE RESPONSE", res);
         if (res.status == 200) {
-          this.candidateObj.rating = 0;
-          this.companyDetailsWithReviews = res.result ? res.result : '';
-          this.candidateObj.rating = res.rating ? res.rating : 0;
+          this.candidateObj.rating = res.result
           this.reviewBtn = true;
+          this.getUser(this.userId)
+
+
         }
 
       })
@@ -282,17 +235,6 @@ export class ViewCandidateProfileComponent implements OnInit {
 
 
 
-  // pageChange(p): void {
-  //   this.allJobs = []
-  //   this.total = 0;
-  //   this.itemsPerPage = 0;
-  //   this.page = 0;
-
-
-  //     this.getRecruiterJobs(p-1);
-
-
-  // }
 
   pageChange(value: string): void {
     this.allJobs = []
