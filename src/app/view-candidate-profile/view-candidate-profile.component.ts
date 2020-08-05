@@ -69,7 +69,7 @@ export class ViewCandidateProfileComponent implements OnInit {
     if(this.userType!="candidate"){
       this.companyId = sessionStorage.getItem('userId')
       this.service.isAlreadyCommented(this.companyId,this.userId).subscribe(res=>{
-          if(res.status==208){
+          if(res=="Already_reported"){
             this.reviewBtn = false;
           }
           else {
