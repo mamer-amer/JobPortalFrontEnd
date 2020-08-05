@@ -12,7 +12,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 })
 export class CompanyProfileDetailsComponent implements OnInit {
 
-  reviewBtn: any;
+  reviewBtn: any = false;
   companyId: any;
   companyReviewRating: Array<any> = [];
   companyDetails: Object;
@@ -21,7 +21,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   comments: any = 0;
   rating: any = 0;
   userType = sessionStorage.getItem('userType');
-  userId = sessionStorage.getItem('userId');
+  userId:any;
   textReviewTab = true;
   videoReviewFile: any;
 
@@ -41,6 +41,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   friendRequestsObservable = new Subject<string>();
   mySubscription;
+  candidateId: string;
   constructor(private sanitizer: DomSanitizer,private router: Router, private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
     this.companyProfile = new CompanyProfile();
 
@@ -69,19 +70,32 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.userId = this.activatedRoute.snapshot.params.id;
     this.getFriendshipStatus(this.userId, this.companyId);
     this.getCompanyProfileDetails(this.userId);
+    if(this.userType=="candidate"){
+      this.candidateId = sessionStorage.getItem('userId')
+      this.service.isAlreadyCommented(this.candidateId,this.userId).subscribe(res=>{
+          if(res.status==208)
+          {
+            this.reviewBtn = true;
+          }
+          else 
+          {
+            this.reviewBtn = false;
+          }
+      })
+    }
 
   }
 
   getCompanyProfileDetails(id): void {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
-      this.avgRating = res.avgRating;
+      this.avgRating = res.profile.avgRating;
       this.companyProfile = res.profile;
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      // this.companyReviewRating = res.companyReviewRatingDTOList;
-      // this.comments = this.companyReviewRating.length;
+      this.companyReviewRating = res.profile.reviewAndRatings;
+      this.comments = this.companyReviewRating.length;
       // this.reviewBtn = res.alreadyCommented;
       // console.log(this.companyReviewRating);
     })
@@ -112,22 +126,23 @@ export class CompanyProfileDetailsComponent implements OnInit {
   postReview(review: string) {
   
 const formData=new FormData();
-    formData.append("candidateId",this.userId)
     formData.append("review",review)
     formData.append("rating",this.rating)
-    formData.append("companyId",this.companyId)
-    formData.append("candidateId",this.userId)
+    formData.append("companyId",this.userId)
+    formData.append("candidateId",this.candidateId)
     formData.append("type","text")
+    formData.append("ratedBy", sessionStorage.getItem('userType'))
+
 
     // console.table(obj)
 
-    this.service.isAlreadyCommentedOnCompanyProfile(formData).subscribe((res) => {
+    this.service.postReviewAgainstCompany(formData).subscribe((res) => {
       // this.avgRating = res.result?res.result
       if (res.status == 200) {
-        this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
-        this.avgRating = res.result ? res.rating : this.avgRating;
-        this.comments = this.companyReviewRating.length;
+        this.avgRating = res.result ? res.result : this.avgRating;
         this.reviewBtn = true;
+        this.getCompanyProfileDetails(this.userId);
+
         console.log(res);
       }
 
@@ -162,19 +177,19 @@ const formData=new FormData();
     if(this.videoReviewFile)
     {
       const formData=new FormData();
-      formData.append("candidateId",this.userId)
       formData.append("video",this.videoReviewFile)
       formData.append("rating",this.rating)
-      formData.append("companyId",this.companyId)
-      formData.append("candidateId",this.userId)
+      formData.append("companyId",this.userId)
+      formData.append("candidateId",this.candidateId)
       formData.append("type","video")
-      this.service.isAlreadyCommentedOnCompanyProfile(formData).subscribe((res) => {
+      formData.append("ratedBy", sessionStorage.getItem('userType'))
+
+      this.service.postReviewAgainstCompany(formData).subscribe((res) => {
         // this.avgRating = res.result?res.result
         if (res.status == 200) {
-          this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
-          this.avgRating = res.result ? res.rating : this.avgRating;
-          this.comments = this.companyReviewRating.length;
+          this.avgRating = res.result ? res.result : this.avgRating;
           this.reviewBtn = true;
+          this.getCompanyProfileDetails(this.userId);
           console.log(res);
         }
   

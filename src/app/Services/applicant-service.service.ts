@@ -232,6 +232,9 @@ export class ApplicantServiceService {
   postReviewAgainstCandidate(obj: any): Observable<any> {
     return this.http.post(this.url + "api/review/save/"+`${this.userId}`, obj)
   }
+  postReviewAgainstCompany(obj: any): Observable<any> {
+    return this.http.post(this.url + "api/review/save/"+`${this.userId}`, obj)
+  }
 
   updateJob(jobId: any, jobObj: any,type:any): Observable<any> {
     if(this.userType=="employer" && type=="public"){
