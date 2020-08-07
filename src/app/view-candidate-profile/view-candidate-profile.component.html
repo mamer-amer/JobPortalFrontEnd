@@ -208,7 +208,7 @@
                 <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
                   <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                      [routerLink]="['/companyProfileDetails/',company.companyProfile.id]" class="text-default mr-3"><i
+                      [routerLink]="['/companyProfileDetails/',company?.companyProfile?.id]" class="text-default mr-3"><i
                         class="fa fa-user mr-1"></i>See
                       profile</a></li>
 
@@ -218,7 +218,7 @@
               <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
                 [nzSrc]="company.companyProfile!=null?'data:image/jpeg;base64,'+company.companyProfile.dp:'../../assets/user.png'"></nz-avatar>
               <h5 style="vertical-align:bottom;font-weight: 600;">
-                {{company?.companyProfile?.name}}
+                {{company?.companyProfile?.profile?.name}}
                 <br>
                 <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="company.rating"
                   [nzTooltips]="tooltips"></nz-rate>
@@ -236,10 +236,10 @@
             <div *ngIf="!textReviewTab  && company.type=='video'" style="margin-top: 30px;">
               <div class="col-lg-12">
                 <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
-                  [nzSrc]="company.companyProfile?'data:image/jpeg;base64,'+company.companyProfile.dp:'../../assets/user.png'">
+                  [nzSrc]="company.companyProfile?'data:image/jpeg;base64,'+company.companyProfile.profile.dp:'../../assets/user.png'">
                 </nz-avatar>
                 <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                  {{company?.companyProfile?.name}}
+                  {{company?.companyProfile?.profile?.name}}
                   <br>
                   <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true"
                     [ngModel]="company.rating" [nzTooltips]="tooltips"></nz-rate>

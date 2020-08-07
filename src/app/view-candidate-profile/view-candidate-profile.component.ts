@@ -70,10 +70,10 @@ export class ViewCandidateProfileComponent implements OnInit {
       this.companyId = sessionStorage.getItem('userId')
       this.service.isAlreadyCommented(this.companyId,this.userId).subscribe(res=>{
           if(res=="Already_reported"){
-            this.reviewBtn = false;
+            this.reviewBtn = true;
           }
           else {
-            this.reviewBtn = true;
+            this.reviewBtn = false;
           }
       })
     }
@@ -103,7 +103,7 @@ export class ViewCandidateProfileComponent implements OnInit {
           this.candidateObj.rating = res.profile.avgRating;
           this.candidateObj.resumeContentType = res.profile.resumeContentType;
           this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"]);
-          this.companyDetailsWithReviews = res.profile.reviewAndRatingsForCandidate;
+          this.companyDetailsWithReviews = res.reviewAndRatingsForCandidate;
         }
 
       })

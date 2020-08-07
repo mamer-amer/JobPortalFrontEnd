@@ -100,7 +100,7 @@
             <div class="col-lg-4">
               <span style="display:inline">
                 <nz-rate [disabled]="true" [ngModel]="avgRating" [nzTooltips]="tooltips"></nz-rate>
-                <small style="color:lightgray"> Rating ({{avgRating | number:'1.0-1'}}/5)</small>
+                <small style="color:lightgray"> Rating ({{companyProfile.avgRating | number:'1.0-1'}}/5)</small>
               </span>
             </div>
 
@@ -201,7 +201,7 @@
                   <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
                     <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                        [routerLink]="['/viewprofile/',candidate.candidateProfile.id]"
+                        [routerLink]="['/viewprofile/',candidate.userId]"
                         class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
                         profile</a></li>
 
@@ -212,16 +212,16 @@
                 <div class="row" style="margin-top:6px !important">
                   <div class="col-lg-12">
                     <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
-                      [nzSrc]="candidate.candidateProfile!=null?'data:image/jpeg;base64,'+candidate.candidateProfile.dp:'../../assets/user.png'">
+                      [nzSrc]="candidate!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'">
                     </nz-avatar>
                     <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                      {{candidate.candidateProfile.name}}
+                      {{candidate?.name}}
                       <br>
-                      <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating"
+                      <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating?candidate.rating:0"
                         [nzTooltips]="tooltips"></nz-rate>
                     </p>
                     <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
-                      {{candidate.review}}
+                      {{candidate.review?candidate.review:'No review was given'}}
                     </p>
                     <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
                       {{candidate.date | myPipe}}</p>
@@ -237,10 +237,10 @@
             <div *ngIf="!textReviewTab  && candidate.type=='video'" style="margin-top: 30px;">
               <div class="col-lg-12">
                 <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
-                  [nzSrc]="candidate.candidateProfile!=null?'data:image/jpeg;base64,'+candidate.candidateProfile.dp:'../../assets/user.png'">
+                  [nzSrc]="candidate!=null?'data:image/jpeg;base64,'+candidate?.dp:'../../assets/user.png'">
                 </nz-avatar>
                 <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                  {{candidate.candidateProfile.name}}
+                  {{candidate?.name}}
                   <br>
                   <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="candidate.rating"
                     [nzTooltips]="tooltips"></nz-rate>

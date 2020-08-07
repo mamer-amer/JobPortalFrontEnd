@@ -94,7 +94,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      this.companyReviewRating = res.profile.reviewAndRatings;
+      this.companyReviewRating = res.reviewAndRatings;
       this.comments = this.companyReviewRating.length;
       // this.reviewBtn = res.alreadyCommented;
       // console.log(this.companyReviewRating);
