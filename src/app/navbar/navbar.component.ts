@@ -19,7 +19,7 @@ export class NavbarComponent implements OnInit {
 
   userType: any;
   userName: any;
-  userImage: any;
+  userImage=null;
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
   companyId: any = sessionStorage.getItem('companyId');
@@ -42,7 +42,10 @@ export class NavbarComponent implements OnInit {
 
     this.notificationOpen = false;
     this.companyProf.logoChangeObservable.subscribe(() =>
-      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null);
+    {
+      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null;
+      console.log(this.userImage)
+    });
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
@@ -77,7 +80,7 @@ export class NavbarComponent implements OnInit {
     this.companyId = sessionStorage.getItem('companyId');
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
-    this.userImage = sessionStorage.getItem('dp');
+    this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem("dp"):null;
     console.log(this.userImage, "========")
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);

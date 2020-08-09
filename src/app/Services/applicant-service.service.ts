@@ -42,7 +42,14 @@ export class ApplicantServiceService {
 
 
 
+deleteReview(id):Observable<any>{
+  return this.http.delete(this.url+"api/review/"+id);
 
+}
+
+updateReview(id,obj):Observable<any>{
+  return this.http.put(this.url+"api/review/"+id,obj);
+}
   getUserByEmail(email): Observable<any> {
     let userId = sessionStorage.getItem("userId");
     return this.http.get(this.url + "token/user/" + userId);
@@ -337,5 +344,14 @@ export class ApplicantServiceService {
 
   getChatCount(userId):Observable<any>{
     return this.http.get(this.url+"api/get-chat-count/"+userId)
+  }
+
+
+
+
+  //USER
+
+  getUser(userId):Observable<any>{
+    return this.http.get(this.url+"token/"+userId)
   }
 }

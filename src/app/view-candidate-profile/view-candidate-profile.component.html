@@ -14,7 +14,6 @@
           <div style="display:flex">
             <div style="flex:1;flex-direction:row;justify-content:center;display: flex">
               <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
-
                 [src]="candidateObj.dp!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
             </div>
 
@@ -25,45 +24,36 @@
 
           <div class="row">
             <div class="col-lg-11 offset-lg-2 col-md-11 offset-md-1 col-sm-8 offset-sm-4">
-              <nz-rate [disabled]="true"
-                [(ngModel)]="candidateObj?candidateObj.rating:rating"
-                [nzTooltips]="tooltips">
+              <nz-rate [disabled]="true" [(ngModel)]="candidateObj?candidateObj.rating:rating" [nzTooltips]="tooltips">
               </nz-rate>
               <p style="margin-left:14px !important;color:lightgray">
                 &nbsp;&nbsp;<b>Rating ({{candidateObj?candidateObj.rating:rating}}/5)</b>
               </p>
             </div>
-          
-          </div>
-          <div class="row"
-            *ngIf="friendShipStatus!='same'">
 
-            <div [ngSwitch]="friendShipStatus"
-              style="width: 100%;">
-              <button *ngSwitchCase="'notFriends'"
-                (click)="addFriend()"
-                style="
+          </div>
+          <div class="row" *ngIf="friendShipStatus!='same'">
+
+            <div [ngSwitch]="friendShipStatus" style="width: 100%;">
+              <button *ngSwitchCase="'notFriends'" (click)="addFriend()" style="
                width: 70%;
               margin-left: 15%;
               background-color: black;
               color: white;
                 height: 29px;">Add Friend</button>
 
-              <button *ngSwitchCase="'pending'"
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="pending"
-                [nzPlacement]="'bottomCenter'"
-                style="
+              <button *ngSwitchCase="'pending'" nz-button nz-dropdown [nzDropdownMenu]="pending"
+                [nzPlacement]="'bottomCenter'" style="
                   width: 70%;
               margin-left: 15%;
                 height: 31px;
                 background-color: black;
               color: white; ">Pending Request</button>
 
-              <nz-dropdown-menu  #pending="nzDropdownMenu">
+              <nz-dropdown-menu #pending="nzDropdownMenu">
                 <ul style="background-color: black;" nz-menu>
-                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel
+                    Request</li>
                 </ul>
               </nz-dropdown-menu>
 
@@ -76,34 +66,26 @@
               color: white;
                 ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
               </button>
-              <nz-dropdown-menu  #friends="nzDropdownMenu">
-                <ul style="background-color: black;"  nz-menu>
+              <nz-dropdown-menu #friends="nzDropdownMenu">
+                <ul style="background-color: black;" nz-menu>
                   <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Unfriend</li>
                 </ul>
               </nz-dropdown-menu>
 
-              <button *ngSwitchCase="'approval'"
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="approval"
-                [nzPlacement]="'bottomCenter'"
-                (click)="acceptRequest()"
-                [disabled]="true"
-                style="
+              <button *ngSwitchCase="'approval'" nz-button nz-dropdown [nzDropdownMenu]="approval"
+                [nzPlacement]="'bottomCenter'" (click)="acceptRequest()" [disabled]="true" style="
                 width: 70%;
             margin-left: 15%;
                 height: 29px;
                 background-color: black;
               color: white;
               "><i style="    vertical-align: unset;
-               font-size: 17px;"
-                  nz-icon
-                  nzType="user-add"
-                  nzTheme="outline"></i>Accept Request
+               font-size: 17px;" nz-icon nzType="user-add" nzTheme="outline"></i>Accept Request
               </button>
               <nz-dropdown-menu #approval="nzDropdownMenu">
                 <ul style="background-color: black;" nz-menu>
-                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
+                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel
+                    Request</li>
                 </ul>
               </nz-dropdown-menu>
 
@@ -113,15 +95,10 @@
 
 
           <!-- Social ioncs -->
-          <div class="row"
-            *ngIf="userType=='recruiter'">
+          <div class="row" *ngIf="userType=='recruiter'">
             <div class="col-lg-12 col-md-12 col-sm-12">
-              <a><button style="width:92%"
-                  class="btn"
-                  (click)="referJob()"
-                  mdbWavesEffect>Refer
-                  <i class="fa fa-reply"
-                    aria-hidden="true"></i>
+              <a><button style="width:92%" class="btn" (click)="referJob()" mdbWavesEffect>Refer
+                  <i class="fa fa-reply" aria-hidden="true"></i>
                 </button>
               </a>
             </div>
@@ -174,10 +151,7 @@
               <h5>Presentation Letter : </h5>
               <div class="form-group">
 
-                <textarea class="form-control"
-                  name="presenationLetter"
-                  rows="3"
-                  [readOnly]="true">
+                <textarea class="form-control" name="presenationLetter" rows="3" [readOnly]="true">
 
                   {{candidateObj?candidateObj.presentationLetter:"No  presentation letter found"}}
                 </textarea>
@@ -186,8 +160,7 @@
           </div>
           <hr>
 
-          <div class="downloadBox"
-            (click)="showModal()">
+          <div class="downloadBox" (click)="showModal()">
             <a>
               <button class="btn"><i class="fa fa-download"></i> Preview Resume</button>
               <!-- <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :'Profile not completed'}}</span> -->
@@ -213,105 +186,175 @@
 
         <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
 
-          <h3 class="text-center font-weight-bold">Reviews <span
-              class="badge pink">{{companyDetailsWithReviews.length}}</span>
+          <h3 class="text-center font-weight-bold">Reviews
           </h3>
-
-          <div *ngFor="let company of companyDetailsWithReviews">
-
-            <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-
-              <ul style="margin-left: auto"
-                class="list-unstyled list-inline mb-0">
-
-                <li class="list-inline-item"><a href=""
-                    style="color:#1890ff !important"
-                    [routerLink]="['/companyProfileDetails/',company.id]"
-                    class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
-                    profile</a></li>
-
-              </ul>
+          <div class="row">
+            <div class="col-lg-6">
+              <button style="    width: 80%;
+              margin-left: 10%;background-color: black;color: white;" (click)="textReviewTab=true">
+                Reviews</button>
             </div>
 
-            <nz-avatar style="float: left"
-              nzIcon="user"
-              [nzSize]="64"
-              [nzSrc]="company.logo!=null?'data:image/jpeg;base64,'+company.logo:'../../assets/user.png'"></nz-avatar>
-            <h5 style="vertical-align:bottom;font-weight: 600;">
-              {{company.name}}
-              <br>
-              <nz-rate style="vertical-align: bottom"
-                [disabled]="true"
-                [ngModel]="company.rating"
-                [nzTooltips]="tooltips"></nz-rate>
-            </h5>
-            <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
-              {{company.review}}
-            </p>
-            <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
-              {{company.date | myPipe}}</p>
-            <hr />
+            <div class="col-lg-6">
+              <button style="    width: 80%;
+              margin-left: 10%;background-color: black;color: white;" (click)="textReviewTab=false">Video
+                Reviews</button>
+            </div>
           </div>
-
-        </mat-card>
-      </div>
-    </div>
-
-    <br />
-    <!-- write your review here as an employee or recuiter -->
-    <div class="row"
-      *ngIf="!reviewBtn && userType!='candidate'">
+          <!-- write your review here as an employee or recuiter -->
+    <div class="row" *ngIf="!reviewBtn && userType!='candidate'"  style="margin-top: 20px;">
       <div class="col-lg-12">
-        <div id="review"
-          class="card-header reviewHeader border-0 font-weight-bold">Leave a review
-          <span style="float:right;text-align: center"
-            class="ratingSectionSpan">
+        <div id="review" class="card-header reviewHeader border-0 font-weight-bold">Leave a review
+          <span style="float:right;text-align: center" class="ratingSectionSpan">
 
             <p style="display: inline-block">Rate {{candidateObj?candidateObj.name:"example"}}</p>
             &nbsp;
-            <nz-rate [(ngModel)]="rating"
-              [nzTooltips]="tooltips"></nz-rate>
+            <nz-rate [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
 
 
           </span>
         </div>
 
 
-        <div class="d-md-flex flex-md-fill px-1"
-          style="width: 100%">
-          <div class="md-form w-100">
-            <textarea class="form-control md-textarea pt-0"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              #review
-              placeholder="Write something here..."></textarea>
+        <div *ngIf="textReviewTab">
+          <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
+            <div class="md-form w-100">
+              <textarea class="form-control md-textarea pt-0" id="exampleFormControlTextarea1" rows="3" #review
+                placeholder="Write something here..."></textarea>
+            </div>
+          </div>
+          <div class="text-center">
+            <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md"
+              style="background-color: black !important">Submit</button>
           </div>
         </div>
-        <div class="text-center">
-          <button (click)="postReview(review.value)"
-            class="btn btn-default btn-rounded btn-md"
-            style="background-color: black !important">Submit</button>
+        <div *ngIf="!textReviewTab" style="margin-top: 20px;">
+          <input (change)="videoReviewChanged($event)" type="file" accept="video/*">
+          <div class="text-center">
+            <button [disabled]="!videoReviewFile" (click)="postVideoReview()" class="btn btn-default btn-rounded btn-md"
+              style="background-color: black !important">Submit video review</button>
+          </div>
         </div>
       </div>
     </div>
 
+          <div *ngFor="let company of companyDetailsWithReviews">
+            <div *ngIf="textReviewTab && company.type=='text'" style="margin-top: 40px;">
+              <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
+
+                <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
+
+                  <li class="list-inline-item"><a href="" style="color:#1890ff !important"
+                      [routerLink]="['/companyProfileDetails/',company.id]" class="text-default mr-3"><i
+                        class="fa fa-user mr-1"></i>See
+                      profile</a></li>
+
+                </ul>
+              </div>
+
+              <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
+                [nzSrc]="company.logo!=null?'data:image/jpeg;base64,'+company.logo:'../../assets/user.png'"></nz-avatar>
+              <!-- //edit and delete review and rating -->
+              <div *ngIf="!isReviewEdit && company.userId==id" style="position: absolute;
+                    right: 20px;
+                    margin-top: 15px;">
+                <button class="btn btn-default btn-rounded btn-md"
+                  style="background-color: black !important;padding:10px;width: 78px;"
+                  (click)="isReviewEdit=true">edit</button>
+                <button class="btn btn-default btn-rounded btn-md"
+                  style="background-color: black !important;padding:10px;width:78px"
+                  (click)="deleteReview(company.id)">delete</button>
+              </div>
+              <!-- /// -->
+              <h5 style="vertical-align:bottom;font-weight: 600;">
+                {{company.name}}
+                <br>
+                <nz-rate *ngIf="!isReviewEdit || company.userId!=id" style="vertical-align: bottom" [disabled]="true"
+                  [ngModel]="company.rating" [nzTooltips]="tooltips"></nz-rate>
+              </h5>
+              <p *ngIf="!isReviewEdit || company.userId!=id"
+                style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
+                {{company.review}}
+              </p>
+              <!-- //edit options -->
+              <div *ngIf="isReviewEdit && company.userId==id">
+                <nz-rate style="vertical-align: bottom" [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
+                <textarea style="    width: 78%;
+                margin-left: 6%;" class="form-control md-textarea pt-0" id="exampleFormControlTextarea1"
+                  [(ngModel)]="review" rows="3" placeholder="Write something here..."></textarea>
+                <div style="margin-left:8%;margin-top: 5px;">
+                  <button style="  background-color: black;color: white;  margin-right: 5px;"
+                    (click)="updateReview(company.id,'text')">update</button>
+                  <button style="background-color: black;color: white;" (click)="isReviewEdit=false">cancel</button>
+                </div>
+              </div>
+              <!-- //// -->
+              <p *ngIf="!isReviewEdit || company.userId!=id"
+                style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
+                {{company.date | myPipe}}</p>
+              <hr />
+            </div>
+
+            <!-- //video reviews -->
+
+            <div *ngIf="!textReviewTab  && company.type=='video'" style="margin-top: 30px;">
+              <div class="col-lg-12">
+                <nz-avatar  style="float: left;" nzIcon="user" [nzSize]="48"
+                  [nzSrc]="company.logo?'data:image/jpeg;base64,'+company.logo:'../../assets/user.png'">
+                </nz-avatar>
+                <!-- //edit and delete review and rating -->
+                <div *ngIf="!isReviewEdit && company.userId==id" style="position: absolute;
+                    right: 20px;
+                    margin-top: 15px;">
+                  <button class="btn btn-default btn-rounded btn-md"
+                    style="background-color: black !important;padding:10px;width: 78px;"
+                    (click)="isReviewEdit=true">edit</button>
+                  <button class="btn btn-default btn-rounded btn-md"
+                    style="background-color: black !important;padding:10px;width:78px"
+                    (click)="deleteReview(company.id)">delete</button>
+                </div>
+                <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
+                  {{company.name}}
+                  <br>
+                  <nz-rate *ngIf="!isReviewEdit || company.userId!=id"
+                    style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="company.rating"
+                    [nzTooltips]="tooltips"></nz-rate>
+                </p>
+                <video *ngIf="!isReviewEdit || company.userId!=id" style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
+                left: 55px;" width="300" controls>
+                  <source [src]="company.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
+                </video>
+                   <!-- //edit options -->
+              <div *ngIf="isReviewEdit && company.userId==id">
+                <nz-rate style="vertical-align: bottom" [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
+                <br>
+                <input style="margin-left: 6%;" (change)="videoReviewChanged($event)" type="file" accept="video/*">
+              <div style="margin-left:6%;margin-top: 10px;">
+                  <button style="  background-color: black;color: white;  margin-right: 5px;"
+                    (click)="updateReview(company.id,'video')">update</button>
+                  <button style="background-color: black;color: white;" (click)="isReviewEdit=false">cancel</button>
+                </div>
+              </div>
+              <!-- //// -->
+              </div>
+            </div>
+
+          </div>
+        </mat-card>
+      </div>
+    </div>
+
+    <br />
+    
   </div>
 </section>
 <br>
 <!-- //MODAL -->
-<nz-modal nzWidth="60%"
-  [nzStyle]="{ top: '20px' }"
-  [nzBodyStyle]="{'height':'95vh'}"
-  style="overflow:hidden"
-  [(nzVisible)]="isVisible"
-  [nzFooter]="null"
-  [nzClosable]="false"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()">
+<nz-modal nzWidth="60%" [nzStyle]="{ top: '20px' }" [nzBodyStyle]="{'height':'95vh'}" style="overflow:hidden"
+  [(nzVisible)]="isVisible" [nzFooter]="null" [nzClosable]="false" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
 
 
-  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'"
-    [url]="cv"
+  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="cv"
     [viewer]="candidateObj.resumeContentType=='pdf' ? 'pdf' : 'mammoth'"
     [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
   </ngx-doc-viewer>
@@ -323,15 +366,11 @@
   </div>
 
 
-  <button (click)="downloadFile()"
-    class="btn"
-    style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
+  <button (click)="downloadFile()" class="btn" style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
     Download</button>
 
 
-  <button (click)="handleCancel()"
-    class="btn"
-    style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
+  <button (click)="handleCancel()" class="btn" style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
 </nz-modal>
 
 
@@ -339,22 +378,13 @@
 
 
 
-<div class="row col-lg-7"
-  style="width:100%;">
-  <nz-modal [(nzVisible)]="show"
-    nzTitle="All JOBS"
-    style="width:100%"
-    (nzOnCancel)="cancel()"
-    (nzOnOk)="cancel()"
+<div class="row col-lg-7" style="width:100%;">
+  <nz-modal [(nzVisible)]="show" nzTitle="All JOBS" style="width:100%" (nzOnCancel)="cancel()" (nzOnOk)="cancel()"
     [nzOkLoading]="isOkLoading">
 
-    <nz-skeleton *ngIf="!empty"
-      [nzActive]="true"
-      [nzParagraph]="{ rows: 6 }"
-      [nzLoading]="!allJobs.length">
+    <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
 
-      <div style="overflow-y: scroll"
-        style="margin-bottom: 10px"
+      <div style="overflow-y: scroll" style="margin-bottom: 10px"
         *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
         class="col-lg-12">
 
@@ -385,8 +415,7 @@
             <!-- <mat-checkbox (click)="save(job.id,candidateObj.id)">
               <b>Refer this job</b>
             </mat-checkbox> -->
-            <mat-checkbox [ngModel]="refer==true?true:false"
-              (click)="showReferConfirm(job.id,candidateObj.id)">
+            <mat-checkbox [ngModel]="refer==true?true:false" (click)="showReferConfirm(job.id,candidateObj.id)">
               <b>Refer this job</b>
             </mat-checkbox>
 
@@ -413,15 +442,11 @@
 
       <div class="has-text-centered row">
 
-        <div class="col-lg-3 offset-lg-3"
-          [ngClass]="previous==true?'previous':'none'">
-          <a (click)="pageChange('previous')"
-            class="previous round pagination"><b>Previous</b></a>
+        <div class="col-lg-3 offset-lg-3" [ngClass]="previous==true?'previous':'none'">
+          <a (click)="pageChange('previous')" class="previous round pagination"><b>Previous</b></a>
         </div>
-        <div class="col-lg-3"
-          [ngClass]="previous==true?'next':'none'">
-          <a (click)="pageChange('next')"
-            class="previous round pagination"><b>Next</b></a>
+        <div class="col-lg-3" [ngClass]="previous==true?'next':'none'">
+          <a (click)="pageChange('next')" class="previous round pagination"><b>Next</b></a>
         </div>
 
 
@@ -449,19 +474,14 @@
 
 
 
-<ngx-spinner bdOpacity=1
-  bdColor="rgba(200, 216, 215, 0.25)"
-  size="medium"
-  color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+  type="ball-clip-rotate-pulse" [fullScreen]="true">
   <p style="color: white">Loading..</p>
 </ngx-spinner>
 
 <br><br>
 
-<div class="footer"
-  style="  height: 50px;
+<div class="footer" style="  height: 50px;
   margin-top: -50px;">
   <app-footer>
 

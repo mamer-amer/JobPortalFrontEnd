@@ -38,11 +38,13 @@ export class ViewCandidateProfileComponent implements OnInit {
   next: boolean = false;
   friendShipStatus;
   id = sessionStorage.getItem("userId");
-
+  textReviewTab = true;
   friendRequestsObservable = new Subject<string>();
   mySubscription;
-
-  public constructor(private router: Router ,public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
+  videoReviewFile;
+  isReviewEdit: boolean = false;
+  review;
+  public constructor(private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
     this.candidateObj = new CadnidateWithReview();
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -71,8 +73,9 @@ export class ViewCandidateProfileComponent implements OnInit {
     this.getParams();
     this.catchParams().then((result) => {
       if (result) {
+        console.log(result, "========candidae")
         this.getCandidateProfile(this.userId, this.candidateId);
-        this.getFriendshipStatus(this.id, this.candidateId);
+
       }
     }, (error) => {
       console.log(error);
@@ -88,21 +91,35 @@ export class ViewCandidateProfileComponent implements OnInit {
   getCandidateProfile(userId, candidateId) {
     this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
 
-      if (d.message =="profilenotcompleted"){
+      console.log(d, "=======")
+      if (d.message == "profilenotcompleted") {
         this.candidateObj = d.result;
+        console.log(d, "=======")
+        this.candidateId = this.candidateObj.id;
+        this.getFriendshipStatus(this.id, this.candidateId);
 
       }
-      else if (d.message =="Successfull"){
+      else if (d.message == "Successfull") {
         const { result: { candidateProfile, companiesWithReviewDTOList, alreadyGivenReview, rating } } = d;
         const { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, user: { id: userId, name, email } } = candidateProfile;
         this.candidateObj = { id, field, imageContentType, resumeContentType, presentationLetter, dp, cv, userId, name, email, rating }
         this.reviewBtn = alreadyGivenReview;
-        this.companyDetailsWithReviews = companiesWithReviewDTOList
+        this.companyDetailsWithReviews = companiesWithReviewDTOList;
+      companiesWithReviewDTOList.map((c) => {
+          if (c.userId == this.id) {
+            this.rating = c.rating,
+              this.review = c.review
+          }
+        })
+        console.log(companiesWithReviewDTOList,"===rating")
+        console.log(this.review,"----treviee")
         console.log(this.candidateObj, "==========")
         this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["cv"]);
-        console.log(this.cv)
+        this.candidateId = d.result.candidateProfile.id;
+        console.log(d)
+        this.getFriendshipStatus(this.id, this.candidateId);
       }
-     
+
     });
   }
 
@@ -166,16 +183,26 @@ export class ViewCandidateProfileComponent implements OnInit {
 
   }
 
-  postReview(review: String) {
-    let obj = {
-      review: review,
-      rating: this.rating,
-      candidateId: this.candidateId,
-      jobId: 0,
-      ratedBy: sessionStorage.getItem('userType')
+  postReview(review) {
 
-    }
-    this.service.postReviewAgainstCandidate(obj).subscribe(res => {
+    const formData = new FormData();
+    formData.append("candidateId", this.candidateId)
+    formData.append("review", review)
+    formData.append("rating", this.rating)
+    formData.append("ratedBy", sessionStorage.getItem('userType'))
+    formData.append("type", "text")
+
+
+
+    // let obj = {
+    //   review: review,
+    //   rating: this.rating,
+    //   candidateId: this.candidateId,
+    //   jobId: 0,
+    //   ratedBy: sessionStorage.getItem('userType')
+
+    // }
+    this.service.postReviewAgainstCandidate(formData).subscribe(res => {
       console.log("tHIS IS THE RESPONSE", res);
       if (res.status == 200) {
         this.candidateObj.rating = 0;
@@ -187,7 +214,73 @@ export class ViewCandidateProfileComponent implements OnInit {
     })
 
   }
+  moveArrayElementToFirst(arr, index) {
 
+    let obj = arr[index];
+    let tempArray = arr;
+    tempArray.splice(index, 1);
+    tempArray.splice(0, 0, obj);
+    return tempArray;
+  }
+  deleteReview(id) {
+    this.service.deleteReview(id)
+      .subscribe(() => {
+        this.getCandidateProfile(this.userId, this.candidateId);
+      })
+  }
+
+  updateReview(id, type) {
+    let obj;
+    if (type == 'text') {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("review", this.review);
+    }
+    else {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("video", this.videoReviewFile);
+
+    }
+    this.service.updateReview(id, obj)
+      .subscribe(() => {
+        this.getCandidateProfile(this.userId, this.candidateId);
+        this.isReviewEdit = false;
+      })
+  }
+
+  videoReviewChanged(input) {
+    console.log(input)
+    if (input.target.files[0]) {
+      let file = input.target.files[0];
+      this.videoReviewFile = file;
+      console.log(file)
+    }
+  }
+
+  postVideoReview() {
+
+    if (this.videoReviewFile) {
+      const formData = new FormData();
+      formData.append("candidateId", this.candidateId)
+      formData.append("video", this.videoReviewFile)
+      formData.append("rating", this.rating)
+      formData.append("type", "video");
+      formData.append("ratedBy", sessionStorage.getItem("userType"))
+      this.service.postReviewAgainstCandidate(formData).subscribe(res => {
+        console.log("tHIS IS THE RESPONSE", res);
+        if (res.status == 200) {
+          this.candidateObj.rating = 0;
+          this.companyDetailsWithReviews = res.result ? res.result : '';
+          this.candidateObj.rating = res.rating ? res.rating : 0;
+          this.reviewBtn = true;
+        }
+
+      })
+    }
+  }
 
   showModal(): void {
     this.isVisible = true;

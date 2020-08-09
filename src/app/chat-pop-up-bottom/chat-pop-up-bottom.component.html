@@ -8,7 +8,7 @@ bottom:0%;">
     </span>
 
   </div>
-  <hr />
+  <hr style="background-color: white;"/>
 
 
 
@@ -16,25 +16,64 @@ bottom:0%;">
 
   <div class="chat_content" data-simplebar>
 
-    <div class="scroll">
-      <div *ngFor="let chatroom of chatrooms" class="user" style="display: flex;margin-bottom: 10px;position: relative;"
-        (click)="newChatBox(chatroom)">
+    <!-- //serach box -->
+    <div class="search-box" style="background: transparent;">
 
-        <img [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'" class="user_icon"
-          style="width: 36px;flex:1" />
-        <div style="flex:6;">
-          <div style="display:flex; flex-direction:column;margin-left: 10px;">
-            <h3 class="username">{{chatroom.name}}</h3>
-            <p style="color: white;font-size: 12px;">{{chatroom.message}}</p>
-          </div>
-          <div *ngIf="(chatroom.sender!=id && !chatroom.seen)" style="position: absolute;right: 0px;top: 12px;">
-            <nz-badge nzStatus="processing"></nz-badge>
-          </div>
+      <i class="material-icons" style="    position: absolute;
+      margin-top: 5px;
+      margin-left: 5px;">search</i>
+      <input (focus)="onFocus()" style="    width: 100%;
+        text-indent: 30px;
+        height: 34px;
+        border-radius: 15px; outline: none;" (input)="inputBoxChange($event.target.value)"
+         (input)="inputBoxChange($event.target.value)" #search placeholder="Search friends"
+        type="text">
+        <i class="material-icons" style="    position: absolute;
+        right: 32px;
+        margin-top: 7px;
+        font-size: 20px;cursor: pointer;" (click)="onFocusOut(search)" *ngIf="showFriends">clear</i>
+    </div>
+    <hr style="    background-color: white;
+    margin-top: 16px;
+    width: 70%;
+    margin-left: 15%;"/>
+    <div (click)="onFocusOut(search)">
+    
+      <div class="scroll"  style="margin-top:10px;margin-left: 10px;"  *ngIf="!showFriends">
+        <div *ngFor="let chatroom of chatrooms" class="user"
+          style="display: flex;margin-bottom: 10px;position: relative;" (click)="newChatBox(chatroom)">
 
+          <img [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'" class="user_icon"
+            style="width: 36px;flex:1" />
+          <div style="flex:6;">
+            <div style="display:flex; flex-direction:column;margin-left: 10px;">
+              <h3 class="username">{{chatroom.name}}</h3>
+              <p style="color: white;font-size: 12px;">{{chatroom.message}}</p>
+            </div>
+            <div *ngIf="(chatroom.sender!=id && !chatroom.seen)" style="position: absolute;right: 0px;top: 12px;">
+              <nz-badge nzStatus="processing"></nz-badge>
+            </div>
+
+          </div>
         </div>
       </div>
-    </div>
 
+
+      <div class="scroll" style="margin-top:10px;margin-left: 10px;" *ngIf="showFriends">
+        <div *ngFor="let friend of friends" class="user"
+          style="display: flex;margin-bottom: 10px;position: relative;" (click)="gotoChatroom(friend,search)">
+
+          <img [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'../../assets/user.png'" class="user_icon"
+            style="width: 36px;flex:1" />
+          <div style="flex:6;">
+            <div style="display:flex; flex-direction:column;margin-left: 10px;">
+              <h3 class="username">{{friend.name}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
 
@@ -47,7 +86,9 @@ bottom:0%;">
       <img [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
         class="user_icon" />
       <h3 class="username">{{messageBox.user.name}}</h3>
-      <div *ngIf="(messageBox.chats[messageBox.chats.length-1].sender!=id && !messageBox.chats[messageBox.chats.length-1].seen)" style="position: absolute;right: 38px;top: 8px;">
+      <div
+        *ngIf="messageBox.chats[messageBox.chats.length-1] && (messageBox.chats[messageBox.chats.length-1].sender!=id && !messageBox.chats[messageBox.chats.length-1].seen)"
+        style="position: absolute;right: 38px;top: 8px;">
         <nz-badge nzStatus="processing"></nz-badge>
       </div>
       <i class="fa fa-times close" (click)="removeMessageBox(i,messageBox.chatroomId)"></i>
@@ -56,8 +97,8 @@ bottom:0%;">
     <!-- Message box -->
 
     <div [class]="'message_content ' + 'mc'+i">
-      <div [class]="'messages'" [id]="'chat'+messageBox.chatroomId" >
-        <div *ngFor="let chat of messageBox.chats" [ngClass]="chat.sender!=id?'p1':'p2'" >
+      <div [class]="'messages'" [id]="'chat'+messageBox.chatroomId">
+        <div *ngFor="let chat of messageBox.chats" [ngClass]="chat.sender!=id?'p1':'p2'">
           <img *ngIf="chat.sender!=id"
             [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
             class="user_icon_small" />
