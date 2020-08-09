@@ -31,6 +31,7 @@ export class InvitationComponent implements OnInit {
   }
 
   getAllInvitations($event){
+    console.log($event)
     this.allInvitations = []
     console.log(this.selectedInviation);
     this.service.getMeetingInvitations(this.selectedInviation,this.userId).subscribe(res=>{
@@ -61,9 +62,9 @@ export class InvitationComponent implements OnInit {
     })
   }
 
-  goToGoogleMap(){
+  goToGoogleMap(meetingId){
     if(this.selectedInviation=="accepted" && this.allInvitations){
-      this.router.navigate(['/meetingMap'])
+      this.router.navigate(['/meetingMap/'+meetingId])
     }
   }
 }

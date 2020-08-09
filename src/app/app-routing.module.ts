@@ -74,7 +74,7 @@ const routes: Routes = [
   { path: "chat", component: ChatComponent },
   { path: "popup", component: ChatPopUpBottomComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
   { path: "invitation", component: InvitationComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
-  { path: "meetingMap", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  { path: "meetingMap/:meetingId", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
 
 
   { path: '**', component: ErrorPageComponent }
