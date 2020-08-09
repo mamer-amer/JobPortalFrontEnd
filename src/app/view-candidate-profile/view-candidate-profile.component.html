@@ -1,444 +1,383 @@
-<app-navbar></app-navbar>
-<br>
+  <app-navbar></app-navbar>
+  <br>
 
-<div class="container">
+  <div class="container">
 
-  <div class="row">
-    <!-- Image Card -->
-    <div class="col-lg-3 col-md-4 col-sm-12 col-xsm-12">
-      <mdb-card>
-        <mdb-card-header></mdb-card-header>
-        <mdb-card-body>
+    <div class="row">
+      <!-- Image Card -->
+      <div class="col-lg-3 col-md-4 col-sm-12 col-xsm-12">
+        <mdb-card>
+          <mdb-card-header></mdb-card-header>
+          <mdb-card-body>
 
 
-          <div style="display:flex">
-            <div style="flex:1;flex-direction:row;justify-content:center;display: flex">
-              <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
+            <div style="display:flex">
+              <div style="flex:1;flex-direction:row;justify-content:center;display: flex">
+                <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
+                  [src]="candidateObj.dp!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
+              </div>
 
-                [src]="candidateObj.dp!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
             </div>
 
-          </div>
 
 
 
+            <div class="row">
+              <div class="col-lg-11 offset-lg-2 col-md-11 offset-md-1 col-sm-8 offset-sm-4">
+                <nz-rate [disabled]="true" [(ngModel)]="candidateObj?candidateObj.rating:rating" [nzTooltips]="tooltips">
+                </nz-rate>
+                <p style="margin-left:14px !important;color:lightgray">
+                  &nbsp;&nbsp;<b>Rating ({{candidateObj?candidateObj.rating:rating}}/5)</b>
+                </p>
+              </div>
 
-          <div class="row">
-            <div class="col-lg-11 offset-lg-2 col-md-11 offset-md-1 col-sm-8 offset-sm-4">
-              <nz-rate [disabled]="true"
-                [(ngModel)]="candidateObj?candidateObj.rating:rating"
-                [nzTooltips]="tooltips">
-              </nz-rate>
-              <p style="margin-left:14px !important;color:lightgray">
-                &nbsp;&nbsp;<b>Rating ({{candidateObj?candidateObj.rating:rating}}/5)</b>
-              </p>
             </div>
-          
-          </div>
-          <div class="row"
-            *ngIf="friendShipStatus!='same'">
+            <div class="row" *ngIf="friendShipStatus!='same'">
 
-            <div [ngSwitch]="friendShipStatus"
-              style="width: 100%;">
-              <button *ngSwitchCase="'notFriends'"
-                (click)="addFriend()"
-                style="
-               width: 70%;
-              margin-left: 15%;
-              background-color: black;
-              color: white;
-                height: 29px;">Add Friend</button>
-
-              <button *ngSwitchCase="'pending'"
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="pending"
-                [nzPlacement]="'bottomCenter'"
-                style="
-                  width: 70%;
-              margin-left: 15%;
-                height: 31px;
+              <div [ngSwitch]="friendShipStatus" style="width: 100%;">
+                <button *ngSwitchCase="'notFriends'" (click)="addFriend()" style="
+                width: 70%;
+                margin-left: 15%;
                 background-color: black;
-              color: white; ">Pending Request</button>
+                color: white;
+                  height: 29px;">Add Friend</button>
 
-              <nz-dropdown-menu  #pending="nzDropdownMenu">
-                <ul style="background-color: black;" nz-menu>
-                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
-                </ul>
-              </nz-dropdown-menu>
+                <button *ngSwitchCase="'pending'" nz-button nz-dropdown [nzDropdownMenu]="pending"
+                  [nzPlacement]="'bottomCenter'" style="
+                    width: 70%;
+                margin-left: 15%;
+                  height: 31px;
+                  background-color: black;
+                color: white; ">Pending Request</button>
 
-              <button *ngSwitchCase="'accepted'" nz-button nz-dropdown [nzDropdownMenu]="friends"
-                [nzPlacement]="'bottomCenter'" [disabled]="true" style="
+                <nz-dropdown-menu #pending="nzDropdownMenu">
+                  <ul style="background-color: black;" nz-menu>
+                    <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel
+                      Request</li>
+                  </ul>
+                </nz-dropdown-menu>
+
+                <button *ngSwitchCase="'accepted'" nz-button nz-dropdown [nzDropdownMenu]="friends"
+                  [nzPlacement]="'bottomCenter'" [disabled]="true" style="
+                    width: 70%;
+                margin-left: 15%;
+                    height: 29px;
+                    background-color: black;
+                color: white;
+                  ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
+                </button>
+                <nz-dropdown-menu #friends="nzDropdownMenu">
+                  <ul style="background-color: black;" nz-menu>
+                    <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Unfriend</li>
+                  </ul>
+                </nz-dropdown-menu>
+
+                <button *ngSwitchCase="'approval'" nz-button nz-dropdown [nzDropdownMenu]="approval"
+                  [nzPlacement]="'bottomCenter'" (click)="acceptRequest()" [disabled]="true" style="
                   width: 70%;
               margin-left: 15%;
                   height: 29px;
                   background-color: black;
-              color: white;
-                ">Friends <i nz-icon nzType="check" style="    vertical-align: text-top" nzTheme="outline"></i>
-              </button>
-              <nz-dropdown-menu  #friends="nzDropdownMenu">
-                <ul style="background-color: black;"  nz-menu>
-                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Unfriend</li>
-                </ul>
-              </nz-dropdown-menu>
-
-              <button *ngSwitchCase="'approval'"
-                nz-button
-                nz-dropdown
-                [nzDropdownMenu]="approval"
-                [nzPlacement]="'bottomCenter'"
-                (click)="acceptRequest()"
-                [disabled]="true"
-                style="
-                width: 70%;
-            margin-left: 15%;
-                height: 29px;
-                background-color: black;
-              color: white;
-              "><i style="    vertical-align: unset;
-               font-size: 17px;"
-                  nz-icon
-                  nzType="user-add"
-                  nzTheme="outline"></i>Accept Request
-              </button>
-              <nz-dropdown-menu #approval="nzDropdownMenu">
-                <ul style="background-color: black;" nz-menu>
-                  <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
-                </ul>
-              </nz-dropdown-menu>
-
-            </div>
-          </div>
-
-
-
-          <!-- Social ioncs -->
-          <div class="row"
-            *ngIf="userType=='recruiter'">
-            <div class="col-lg-12 col-md-12 col-sm-12">
-              <a><button style="width:92%"
-                  class="btn"
-                  (click)="referJob()"
-                  mdbWavesEffect>Refer
-                  <i class="fa fa-reply"
-                    aria-hidden="true"></i>
+                color: white;
+                "><i style="    vertical-align: unset;
+                font-size: 17px;" nz-icon nzType="user-add" nzTheme="outline"></i>Accept Request
                 </button>
+                <nz-dropdown-menu #approval="nzDropdownMenu">
+                  <ul style="background-color: black;" nz-menu>
+                    <li style="color: white;background-color: black;" (click)="cancelRequest()" nz-menu-item>Cancel
+                      Request</li>
+                  </ul>
+                </nz-dropdown-menu>
+
+              </div>
+            </div>
+
+            <div class="row" *ngIf="userType!='candidate'">
+              <button class="btn" style="width: 70%;
+              margin-left: 15%;font-size:11px" (click)="sendInvite()"><i class="fa fa-handshake-o"></i> Send
+                Invitation</button>
+            </div>
+
+
+
+            <!-- Social ioncs -->
+            <div class="row" *ngIf="userType=='recruiter'">
+              <div class="col-lg-12 col-md-12 col-sm-12">
+                <a><button style="width: 80%;
+                  margin-left: 10%;font-size:11px" class="btn" (click)="referJob()" mdbWavesEffect>Refer
+                    <i class="fa fa-reply" aria-hidden="true"></i>
+                  </button>
+                </a>
+              </div>
+            </div>
+            <br>
+            <!--<div class="row">
+              <div class="col-lg-3 offset-lg-2 col-md-3 col-sm-4 offset-sm-3 col-xsm-6">
+                <a href="#"
+                  class="fa fa-facebook icons"></a>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-5 col-xsm-6">
+                <a href="#"
+                  class="fa fa-twitter icons"></a>
+              </div>
+            </div>-->
+            <br>
+
+            <!-- Refer buttons -->
+
+          </mdb-card-body>
+        </mdb-card>
+      </div>
+      <!-- Details Card -->
+      <div class="col-lg-9 col-md-8 col-sm-12 col-xsm-12">
+        <mdb-card>
+          <mdb-card-header></mdb-card-header>
+          <mdb-card-body>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <h5>Name :<span class="details">{{candidateObj?candidateObj.name:'Profile not completed'}}</span> </h5>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-lg-12">
+                <h5>Email : <span class="details">{{candidateObj?candidateObj.email:'Profile not completed'}}</span> </h5>
+              </div>
+            </div>
+            <hr>
+            <div class="row">
+              <div class="col-lg-12">
+                <h5>Field : <span class="details">{{candidateObj?candidateObj.field:'Profile not completed'}}</span> </h5>
+              </div>
+            </div>
+            <hr>
+
+            <div class="row">
+              <div class="col-lg-12">
+                <h5>Presentation Letter : </h5>
+                <div class="form-group">
+
+                  <textarea class="form-control" name="presenationLetter" rows="3" [readOnly]="true">
+
+                    {{candidateObj?candidateObj.presentationLetter:"No  presentation letter found"}}
+                  </textarea>
+                </div>
+              </div>
+            </div>
+            <hr>
+
+            <div class="downloadBox" (click)="showModal()">
+              <a>
+                <button class="btn"><i class="fa fa-download"></i> Preview Resume</button>
+                <!-- <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :'Profile not completed'}}</span> -->
               </a>
             </div>
-          </div>
-          <br>
-          <!--<div class="row">
-            <div class="col-lg-3 offset-lg-2 col-md-3 col-sm-4 offset-sm-3 col-xsm-6">
-              <a href="#"
-                class="fa fa-facebook icons"></a>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-5 col-xsm-6">
-              <a href="#"
-                class="fa fa-twitter icons"></a>
-            </div>
-          </div>-->
-          <br>
-
-          <!-- Refer buttons -->
-
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-    <!-- Details Card -->
-    <div class="col-lg-9 col-md-8 col-sm-12 col-xsm-12">
-      <mdb-card>
-        <mdb-card-header></mdb-card-header>
-        <mdb-card-body>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <h5>Name :<span class="details">{{candidateObj?candidateObj.name:'Profile not completed'}}</span> </h5>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-lg-12">
-              <h5>Email : <span class="details">{{candidateObj?candidateObj.email:'Profile not completed'}}</span> </h5>
-            </div>
-          </div>
-          <hr>
-          <div class="row">
-            <div class="col-lg-12">
-              <h5>Field : <span class="details">{{candidateObj?candidateObj.field:'Profile not completed'}}</span> </h5>
-            </div>
-          </div>
-          <hr>
-
-          <div class="row">
-            <div class="col-lg-12">
-              <h5>Presentation Letter : </h5>
-              <div class="form-group">
-
-                <textarea class="form-control"
-                  name="presenationLetter"
-                  rows="3"
-                  [readOnly]="true">
-
-                  {{candidateObj?candidateObj.presentationLetter:"No  presentation letter found"}}
-                </textarea>
-              </div>
-            </div>
-          </div>
-          <hr>
-
-          <div class="downloadBox"
-            (click)="showModal()">
-            <a>
-              <button class="btn"><i class="fa fa-download"></i> Preview Resume</button>
-              <!-- <span>{{candidateObj?candidateObj.name +"."+candidateObj.resumeContentType :'Profile not completed'}}</span> -->
-            </a>
-          </div>
-        </mdb-card-body>
-      </mdb-card>
-    </div>
-  </div>
-
-
-
-</div>
-<br>
-
-<!-- Commnets section -->
-<hr>
-<section>
-  <div class="container">
-    <div class="row">
-
-      <div class="col-lg-12">
-
-        <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
-
-          <h3 class="text-center font-weight-bold">Reviews <span
-              class="badge pink">{{companyDetailsWithReviews.length}}</span>
-          </h3>
-
-          <div *ngFor="let company of companyDetailsWithReviews">
-
-            <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
-
-              <ul style="margin-left: auto"
-                class="list-unstyled list-inline mb-0">
-
-                <li class="list-inline-item"><a href=""
-                    style="color:#1890ff !important"
-                    [routerLink]="['/companyProfileDetails/',company.id]"
-                    class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
-                    profile</a></li>
-
-              </ul>
-            </div>
-
-            <nz-avatar style="float: left"
-              nzIcon="user"
-              [nzSize]="64"
-              [nzSrc]="company.logo!=null?'data:image/jpeg;base64,'+company.logo:'../../assets/user.png'"></nz-avatar>
-            <h5 style="vertical-align:bottom;font-weight: 600;">
-              {{company.name}}
-              <br>
-              <nz-rate style="vertical-align: bottom"
-                [disabled]="true"
-                [ngModel]="company.rating"
-                [nzTooltips]="tooltips"></nz-rate>
-            </h5>
-            <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
-              {{company.review}}
-            </p>
-            <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
-              {{company.date | myPipe}}</p>
-            <hr />
-          </div>
-
-        </mat-card>
+          </mdb-card-body>
+        </mdb-card>
       </div>
     </div>
 
-    <br />
-    <!-- write your review here as an employee or recuiter -->
-    <div class="row"
-      *ngIf="!reviewBtn && userType!='candidate'">
-      <div class="col-lg-12">
-        <div id="review"
-          class="card-header reviewHeader border-0 font-weight-bold">Leave a review
-          <span style="float:right;text-align: center"
-            class="ratingSectionSpan">
 
-            <p style="display: inline-block">Rate {{candidateObj?candidateObj.name:"example"}}</p>
-            &nbsp;
-            <nz-rate [(ngModel)]="rating"
-              [nzTooltips]="tooltips"></nz-rate>
-
-
-          </span>
-        </div>
-
-
-        <div class="d-md-flex flex-md-fill px-1"
-          style="width: 100%">
-          <div class="md-form w-100">
-            <textarea class="form-control md-textarea pt-0"
-              id="exampleFormControlTextarea1"
-              rows="3"
-              #review
-              placeholder="Write something here..."></textarea>
-          </div>
-        </div>
-        <div class="text-center">
-          <button (click)="postReview(review.value)"
-            class="btn btn-default btn-rounded btn-md"
-            style="background-color: black !important">Submit</button>
-        </div>
-      </div>
-    </div>
 
   </div>
-</section>
-<br>
-<!-- //MODAL -->
-<nz-modal nzWidth="60%"
-  [nzStyle]="{ top: '20px' }"
-  [nzBodyStyle]="{'height':'95vh'}"
-  style="overflow:hidden"
-  [(nzVisible)]="isVisible"
-  [nzFooter]="null"
-  [nzClosable]="false"
-  (nzOnCancel)="handleCancel()"
-  (nzOnOk)="handleOk()">
+  <br>
 
+  <!-- Commnets section -->
+  <hr>
+  <section>
+    <div class="container">
+      <div class="row">
 
-  <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'"
-    [url]="cv"
-    [viewer]="candidateObj.resumeContentType=='pdf' ? 'pdf' : 'mammoth'"
-    [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
-  </ngx-doc-viewer>
+        <div class="col-lg-12">
 
+          <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
 
-  <div *ngIf="candidateObj.resumeContentType=='doc'"
-    style="height:200px;display: flex;justify-content: center;align-items: center;">
-    <p>Preview not available</p>
-  </div>
+            <h3 class="text-center font-weight-bold">Reviews <span
+                class="badge pink">{{companyDetailsWithReviews.length}}</span>
+            </h3>
 
+            <div *ngFor="let company of companyDetailsWithReviews">
 
-  <button (click)="downloadFile()"
-    class="btn"
-    style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
-    Download</button>
+              <div class="card-header border-0 font-weight-bold d-flex justify-content-between">
 
+                <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
-  <button (click)="handleCancel()"
-    class="btn"
-    style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
-</nz-modal>
+                  <li class="list-inline-item"><a href="" style="color:#1890ff !important"
+                      [routerLink]="['/companyProfileDetails/',company.id]" class="text-default mr-3"><i
+                        class="fa fa-user mr-1"></i>See
+                      profile</a></li>
 
-
-
-
-
-
-<div class="row col-lg-7"
-  style="width:100%;">
-  <nz-modal [(nzVisible)]="show"
-    nzTitle="All JOBS"
-    style="width:100%"
-    (nzOnCancel)="cancel()"
-    (nzOnOk)="cancel()"
-    [nzOkLoading]="isOkLoading">
-
-    <nz-skeleton *ngIf="!empty"
-      [nzActive]="true"
-      [nzParagraph]="{ rows: 6 }"
-      [nzLoading]="!allJobs.length">
-
-      <div style="overflow-y: scroll"
-        style="margin-bottom: 10px"
-        *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
-        class="col-lg-12">
-
-
-        <mat-card
-          style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
-
-          <div style="flex:4;">
-            <div style="display: flex;">
-              <div style="flex:9;">
-                <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
-                  <span style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span>
-                </h3>
-
-
-                <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{job.category}} - <span
-                    style="color:rgb(129, 126, 126);">
-                    {{job.city}}</span>
-                </h6>
-
-
-                <p style="color: rgb(146, 144, 144);margin-left: 0px !important">{{job.date | myPipe}}</p>
-
+                </ul>
               </div>
 
+              <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
+                [nzSrc]="company.logo!=null?'data:image/jpeg;base64,'+company.logo:'../../assets/user.png'"></nz-avatar>
+              <h5 style="vertical-align:bottom;font-weight: 600;">
+                {{company.name}}
+                <br>
+                <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="company.rating"
+                  [nzTooltips]="tooltips"></nz-rate>
+              </h5>
+              <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
+                {{company.review}}
+              </p>
+              <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
+                {{company.date | myPipe}}</p>
+              <hr />
             </div>
 
-            <!-- <mat-checkbox (click)="save(job.id,candidateObj.id)">
-              <b>Refer this job</b>
-            </mat-checkbox> -->
-            <mat-checkbox [ngModel]="refer==true?true:false"
-              (click)="showReferConfirm(job.id,candidateObj.id)">
-              <b>Refer this job</b>
-            </mat-checkbox>
+          </mat-card>
+        </div>
+      </div>
+
+      <br />
+      <!-- write your review here as an employee or recuiter -->
+      <div class="row" *ngIf="!reviewBtn && userType!='candidate'">
+        <div class="col-lg-12">
+          <div id="review" class="card-header reviewHeader border-0 font-weight-bold">Leave a review
+            <span style="float:right;text-align: center" class="ratingSectionSpan">
+
+              <p style="display: inline-block">Rate {{candidateObj?candidateObj.name:"example"}}</p>
+              &nbsp;
+              <nz-rate [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
 
 
+            </span>
           </div>
-          <br />
 
 
-
-          <!-- if no jobs found  -->
-
-
-
-        </mat-card>
+          <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
+            <div class="md-form w-100">
+              <textarea class="form-control md-textarea pt-0" id="exampleFormControlTextarea1" rows="3" #review
+                placeholder="Write something here..."></textarea>
+            </div>
+          </div>
+          <div class="text-center">
+            <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md"
+              style="background-color: black !important">Submit</button>
+          </div>
+        </div>
       </div>
-    </nz-skeleton>
 
-    <div *ngIf="!allJobs.length">
-      <p><b style="color:red">No confidentional job available</b></p>
+    </div>
+  </section>
+  <br>
+  <!-- //MODAL -->
+  <nz-modal nzWidth="60%" [nzStyle]="{ top: '20px' }" [nzBodyStyle]="{'height':'95vh'}" style="overflow:hidden"
+    [(nzVisible)]="isVisible" [nzFooter]="null" [nzClosable]="false" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+
+
+    <ngx-doc-viewer *ngIf="candidateObj.resumeContentType!='doc'" [url]="cv"
+      [viewer]="candidateObj.resumeContentType=='pdf' ? 'pdf' : 'mammoth'"
+      [ngStyle]="candidateObj.resumeContentType!='pdf'?{'width':'100%','height':'80vh','overflow':'scroll'}:{'width':'100%','height':'80vh'}">
+    </ngx-doc-viewer>
+
+
+    <div *ngIf="candidateObj.resumeContentType=='doc'"
+      style="height:200px;display: flex;justify-content: center;align-items: center;">
+      <p>Preview not available</p>
     </div>
 
 
-    <div class="col-lg-12">
-
-      <div class="has-text-centered row">
-
-        <div class="col-lg-3 offset-lg-3"
-          [ngClass]="previous==true?'previous':'none'">
-          <a (click)="pageChange('previous')"
-            class="previous round pagination"><b>Previous</b></a>
-        </div>
-        <div class="col-lg-3"
-          [ngClass]="previous==true?'next':'none'">
-          <a (click)="pageChange('next')"
-            class="previous round pagination"><b>Next</b></a>
-        </div>
+    <button (click)="downloadFile()" class="btn" style="width:45%;margin-left:5%;"><i class="fa fa-download"></i>
+      Download</button>
 
 
-        <!-- <pagination-controls (pageChange)="pageChange($event)"
-          directionLinks="true"
-          responsive="true"
-          previousLabel="Previous"
-          nextLabel="Next"
-          screenReaderCurrentLabel="You're on page">
-        </pagination-controls> -->
-
-      </div>
-    </div>
-
+    <button (click)="handleCancel()" class="btn" style="width:45%;"><i class="fa fa-times"></i> Cancel</button>
   </nz-modal>
 
-</div>
+
+
+
+
+
+  <div class="row col-lg-7" style="width:100%;">
+    <nz-modal [(nzVisible)]="show" nzTitle="All JOBS" style="width:100%" (nzOnCancel)="cancel()" (nzOnOk)="cancel()"
+      [nzOkLoading]="isOkLoading">
+
+      <nz-skeleton *ngIf="!empty" [nzActive]="true" [nzParagraph]="{ rows: 6 }" [nzLoading]="!allJobs.length">
+
+        <div style="overflow-y: scroll" style="margin-bottom: 10px"
+          *ngFor="let job of allJobs | paginate: { itemsPerPage: itemsPerPage,currentPage: page,totalItems: total };let i=index"
+          class="col-lg-12">
+
+
+          <mat-card
+            style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+
+            <div style="flex:4;">
+              <div style="display: flex;">
+                <div style="flex:9;">
+                  <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
+                    <span style="font-weight:500;font-size:18px;cursor: pointer;"> {{job.title | titlecase }}</span>
+                  </h3>
+
+
+                  <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{job.category}} - <span
+                      style="color:rgb(129, 126, 126);">
+                      {{job.city}}</span>
+                  </h6>
+
+
+                  <p style="color: rgb(146, 144, 144);margin-left: 0px !important">{{job.date | myPipe}}</p>
+
+                </div>
+
+              </div>
+
+              <!-- <mat-checkbox (click)="save(job.id,candidateObj.id)">
+                <b>Refer this job</b>
+              </mat-checkbox> -->
+              <mat-checkbox [ngModel]="refer==true?true:false" (click)="showReferConfirm(job.id,candidateObj.id)">
+                <b>Refer this job</b>
+              </mat-checkbox>
+
+
+            </div>
+            <br />
+
+
+
+            <!-- if no jobs found  -->
+
+
+
+          </mat-card>
+        </div>
+      </nz-skeleton>
+
+      <div *ngIf="!allJobs.length">
+        <p><b style="color:red">No confidentional job available</b></p>
+      </div>
+
+
+      <div class="col-lg-12">
+
+        <div class="has-text-centered row">
+
+          <div class="col-lg-3 offset-lg-3" [ngClass]="previous==true?'previous':'none'">
+            <a (click)="pageChange('previous')" class="previous round pagination"><b>Previous</b></a>
+          </div>
+          <div class="col-lg-3" [ngClass]="previous==true?'next':'none'">
+            <a (click)="pageChange('next')" class="previous round pagination"><b>Next</b></a>
+          </div>
+
+
+          <!-- <pagination-controls (pageChange)="pageChange($event)"
+            directionLinks="true"
+            responsive="true"
+            previousLabel="Previous"
+            nextLabel="Next"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls> -->
+
+        </div>
+      </div>
+
+    </nz-modal>
+
+  </div>
 
 
 
@@ -449,21 +388,16 @@
 
 
 
-<ngx-spinner bdOpacity=1
-  bdColor="rgba(200, 216, 215, 0.25)"
-  size="medium"
-  color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
-  <p style="color: white">Loading..</p>
-</ngx-spinner>
+  <ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)"
+    type="ball-clip-rotate-pulse" [fullScreen]="true">
+    <p style="color: white">Loading..</p>
+  </ngx-spinner>
 
-<br><br>
+  <br><br>
 
-<div class="footer"
-  style="  height: 50px;
-  margin-top: -50px;">
-  <app-footer>
+  <div class="footer" style="  height: 50px;
+    margin-top: -50px;">
+    <app-footer>
 
-  </app-footer>
-</div>
+    </app-footer>
+  </div>

@@ -89,6 +89,8 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +114,9 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     SearchForCandidatesComponent,
     GlobalSearchComponent,
     ChatComponent,
-    ChatPopUpBottomComponent
+    ChatPopUpBottomComponent,
+    InvitationComponent,
+    GoogleMapForMeetingComponent
 
 
   ],

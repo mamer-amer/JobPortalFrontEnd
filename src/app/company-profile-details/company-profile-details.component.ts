@@ -1,3 +1,4 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
@@ -39,7 +40,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   friendRequestsObservable = new Subject<string>();
   mySubscription;
-  constructor(private router:Router,private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
+  constructor(private router:Router,private service: ApplicantServiceService,
+     private activatedRoute: ActivatedRoute, private navbar: NavbarService,private toastService:ToastrService) {
     this.companyProfile = new CompanyProfile();
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -218,6 +220,22 @@ export class CompanyProfileDetailsComponent implements OnInit {
         this.friendRequestsObservable.next()
         this.getFriendshipStatus(this.userId, this.companyProfile.id)
       })
+  }
+
+  sendInvite(){
+    let userId = this.userId;
+    let friendId = this.companyId;
+    this.service.sendMeetingInvite(userId,friendId).subscribe(res=>{
+        if(res){
+          this.toastService.info('Invitation sent successfully')
+        }
+        else{
+          this.toastService.error('failed to send invitation')
+        }
+    }),error=>{
+      this.toastService.error('failed')
+
+    }
   }
 
 }

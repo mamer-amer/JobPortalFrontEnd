@@ -1,3 +1,4 @@
+import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -17,6 +18,7 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
+import { InvitationComponent } from './invitation/invitation.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -71,6 +73,8 @@ const routes: Routes = [
   { path: "allcandidates", component: SearchForCandidatesComponent },
   { path: "chat", component: ChatComponent },
   { path: "popup", component: ChatPopUpBottomComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  { path: "invitation", component: InvitationComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  { path: "meetingMap", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
 
 
   { path: '**', component: ErrorPageComponent }

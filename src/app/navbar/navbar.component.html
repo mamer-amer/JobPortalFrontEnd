@@ -55,6 +55,19 @@
 
     <ul class="navbar-nav ml-auto nav-flex-icons">
 
+      <a 
+      [routerLink]="['/invitation']"
+      nzTrigger="click">
+      <div>
+        <nz-badge
+          [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
+          [nzCount]="invitationCount">
+          <a class="head-example">
+              <img [ngClass]="'invitation-close-class'" src="https://img.icons8.com/ios-filled/23/000000/invite.png"/>
+          </a>
+        </nz-badge>
+      </div>
+    </a>
       <a style="width: 45px;" (nzVisibleChange)="requestOpened($event)" nz-dropdown [nzBackdrop]="false"
         nzTrigger="click" [nzDropdownMenu]="request">
         <div>
@@ -136,6 +149,8 @@
 
       </nz-dropdown-menu>
 
+
+     
 
       <a 
         [routerLink]="['/chat']"

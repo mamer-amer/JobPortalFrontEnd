@@ -338,4 +338,21 @@ export class ApplicantServiceService {
   getChatCount(userId):Observable<any>{
     return this.http.get(this.url+"api/get-chat-count/"+userId)
   }
+
+
+  sendMeetingInvite(userId,friendId):Observable<any>{
+    return this.http.get(this.url+"api/meeting/invite?userId="+`${userId}`+"&friendId="+`${friendId}`)
+  }
+
+  getMeetingInvitations(filter:string,userId:any){
+    return this.http.get(this.url+"api/meeting/filter/"+`${userId}`+"?filter="+`${filter}`)
+  }
+  acceptInvitation(meetingId){
+    return this.http.get(this.url+"api/meeting/accept-invite?meetingId="+`${meetingId}`)
+
+  }
+  declineInvitation(meetingId){
+    return this.http.get(this.url+"api/meeting/cancel-invite?meetingId="+`${meetingId}`)
+
+  }
 }

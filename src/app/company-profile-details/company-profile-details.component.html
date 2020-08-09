@@ -98,10 +98,16 @@
                   color: white" (click)="cancelRequest()" nz-menu-item>Cancel Request</li>
                 </ul>
               </nz-dropdown-menu>
+              
 
 
             </div>
           </div>
+        </div>
+        <div class="row"*ngIf="userType=='candidate'">
+          <!-- <div class="col-lg-10 offset-lg-2 col-sm-12 col-md-10 offset-lg-2 col-12"></div> -->
+          <button class="btn" style="width: 70%;
+          margin-left: 15%;font-size:11px" (click)="sendInvite()"><i class="fa fa-handshake-o"></i> Send Invitation</button>
         </div>
         <hr />
         <div class="row"

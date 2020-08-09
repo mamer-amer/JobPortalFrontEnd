@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit {
 
   userType: any;
   userName: any;
+  invitationCount:any=0;
   userImage: any;
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
@@ -78,7 +79,7 @@ export class NavbarComponent implements OnInit {
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
-    console.log(this.userImage, "========")
+    // console.log(this.userImage, "========")
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
 
