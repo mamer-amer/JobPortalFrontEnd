@@ -20,6 +20,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   name: any;
   userId: any;
   cv: any;
+  comments = 0;
   candidateId: any;
   isVisible: boolean = false;
   reviewBtn: any=false;
@@ -79,13 +80,25 @@ export class ViewCandidateProfileComponent implements OnInit {
     }
     if (this.userId)
       this.getUser(this.userId)
-
+      this.getReviews(this.userId)
   }
 
 
   ngAfterViewInit() {
 
   }
+
+  getReviews(userId){
+    this.companyDetailsWithReviews = []
+    this.service.getReviewsDetails(userId).subscribe(res=>{
+        if(res.status=200){
+          this.companyDetailsWithReviews = res.result;
+          this.comments = res.result.length
+        }
+    })
+  }
+
+
   getUser(id) {
 
     this.service.getUser(id)
@@ -103,7 +116,7 @@ export class ViewCandidateProfileComponent implements OnInit {
           this.candidateObj.rating = res.profile.avgRating;
           this.candidateObj.resumeContentType = res.profile.resumeContentType;
           this.cv = "data:" + this.getMIMEtype(this.candidateObj['resumeContentType']) + ";base64," + encodeURI(this.candidateObj["resume"]);
-          this.companyDetailsWithReviews = res.reviewAndRatingsForCandidate;
+          // this.companyDetailsWithReviews = res.reviewAndRatingsForCandidate;
         }
 
       })
@@ -179,7 +192,7 @@ export class ViewCandidateProfileComponent implements OnInit {
       if (res.status == 200) {
         this.candidateObj.rating = res.result;
         this.reviewBtn = true;
-        this.getUser(this.userId)
+        this.getReviews(this.userId)
       }
 
     })
@@ -210,7 +223,7 @@ export class ViewCandidateProfileComponent implements OnInit {
         if (res.status == 200) {
           this.candidateObj.rating = res.result
           this.reviewBtn = true;
-          this.getUser(this.userId)
+          this.getReviews(this.userId)
 
 
         }

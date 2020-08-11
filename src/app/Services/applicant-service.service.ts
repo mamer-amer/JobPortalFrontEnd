@@ -178,9 +178,7 @@ export class ApplicantServiceService {
     this.toastService.warning(message, title);
   }
 
-  getReviewsById(id): Observable<any> {
-    return this.http.get(this.url + "api/review/averageRating?companyId=" + id);
-  }
+ 
 
   isAlreadyApplied(userId, jobId): Observable<any> {
     return this.http.get(this.url + "api/cp/alreadyappliedjob?userId=" + userId + "&jobId=" + jobId);
@@ -362,5 +360,9 @@ export class ApplicantServiceService {
 
   getUser(userId):Observable<any>{
     return this.http.get(this.url+"token/"+userId)
+  }
+
+  getReviewsDetails(userId):Observable<any>{
+    return this.http.get(this.url+"api/review/allreviews/"+`${userId}`)
   }
 }

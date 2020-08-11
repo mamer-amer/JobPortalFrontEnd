@@ -192,16 +192,16 @@
           </div>
 
 
-          <div *ngFor="let candidate of companyReviewRating">
-            <div *ngIf="textReviewTab && candidate.type=='text'" style="margin-top: 40px;">
-              <div *ngIf="candidate.type=='text'">
+          <div *ngFor="let reviewer of reviews">
+            <div *ngIf="textReviewTab && reviewer.type=='text'" style="margin-top: 40px;">
+              <div *ngIf="reviewer.type=='text'">
                 <div *ngIf="userType!='candidate'"
                   class="card-header border-0 font-weight-bold d-flex justify-content-between">
 
                   <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
                     <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                        [routerLink]="['/viewprofile/',candidate.userId]"
+                        [routerLink]="['/viewprofile/',reviewer.userId]"
                         class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
                         profile</a></li>
 
@@ -212,19 +212,19 @@
                 <div class="row" style="margin-top:6px !important">
                   <div class="col-lg-12">
                     <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
-                      [nzSrc]="candidate!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'">
+                      [nzSrc]="reviewer!=null?'data:image/jpeg;base64,'+reviewer.dp:'../../assets/user.png'">
                     </nz-avatar>
                     <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                      {{candidate?.name}}
+                      {{reviewer?.name}}
                       <br>
-                      <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="candidate.rating?candidate.rating:0"
+                      <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="reviewer.rating?reviewer.rating:0"
                         [nzTooltips]="tooltips"></nz-rate>
                     </p>
                     <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
-                      {{candidate.review?candidate.review:'No review was given'}}
+                      {{reviewer.review?reviewer.review:'No review was given'}}
                     </p>
                     <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
-                      {{candidate.date | myPipe}}</p>
+                      {{reviewer.date | myPipe}}</p>
                     <hr />
                   </div>
                 </div>
@@ -234,20 +234,20 @@
             </div>
             <!-- //video reviews -->
 
-            <div *ngIf="!textReviewTab  && candidate.type=='video'" style="margin-top: 30px;">
+            <div *ngIf="!textReviewTab  && reviewer.type=='video'" style="margin-top: 30px;">
               <div class="col-lg-12">
                 <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
-                  [nzSrc]="candidate!=null?'data:image/jpeg;base64,'+candidate?.dp:'../../assets/user.png'">
+                  [nzSrc]="reviewer!=null?'data:image/jpeg;base64,'+reviewer?.dp:'../../assets/user.png'">
                 </nz-avatar>
                 <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                  {{candidate?.name}}
+                  {{reviewer?.name}}
                   <br>
-                  <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="candidate.rating"
+                  <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="reviewer.rating"
                     [nzTooltips]="tooltips"></nz-rate>
                 </p>
                 <video style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
                 left: 55px;" width="300" controls>
-                  <source [src]="candidate.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
+                  <source [src]="reviewer.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
                 </video>
               </div>
             </div>

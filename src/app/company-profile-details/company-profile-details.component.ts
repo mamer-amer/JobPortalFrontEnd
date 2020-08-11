@@ -14,7 +14,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   reviewBtn: any = false;
   companyId: any;
-  companyReviewRating: Array<any> = [];
+  reviews: Array<any> = [];
   companyDetails: Object;
   companyProfile: CompanyProfile;
   avgRating: number = 0;
@@ -70,6 +70,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.userId = this.activatedRoute.snapshot.params.id;
     this.getFriendshipStatus(this.userId, this.companyId);
     this.getCompanyProfileDetails(this.userId);
+    this.getReviews(this.userId)
     if(this.userType=="candidate"){
       this.candidateId = sessionStorage.getItem('userId')
       this.service.isAlreadyCommented(this.candidateId,this.userId).subscribe(res=>{
@@ -84,6 +85,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
       })
     }
 
+    
+
   }
 
   getCompanyProfileDetails(id): void {
@@ -94,10 +97,10 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      this.companyReviewRating = res.reviewAndRatings;
-      this.comments = this.companyReviewRating.length;
+      // this.reviews = res.reviewAndRatings;
+      // this.comments = this.reviews.length;
       // this.reviewBtn = res.alreadyCommented;
-      // console.log(this.companyReviewRating);
+      // console.log(this.reviews);
     })
 
   }
@@ -130,6 +133,7 @@ const formData=new FormData();
     formData.append("rating",this.rating)
     formData.append("companyId",this.userId)
     formData.append("candidateId",this.candidateId)
+   
     formData.append("type","text")
     formData.append("ratedBy", sessionStorage.getItem('userType'))
 
@@ -141,7 +145,7 @@ const formData=new FormData();
       if (res.status == 200) {
         this.avgRating = res.result ? res.result : this.avgRating;
         this.reviewBtn = true;
-        this.getCompanyProfileDetails(this.userId);
+        this.getReviews(this.userId);
 
         console.log(res);
       }
@@ -149,6 +153,17 @@ const formData=new FormData();
     });
   }
 
+  
+
+  getReviews(userId){
+    this.reviews = []
+    this.service.getReviewsDetails(userId).subscribe(res=>{
+        if(res.status=200){
+          this.reviews = res.result;
+          this.comments = res.result.length
+        }
+    })
+  }
 
 
   downloadFile() {
@@ -189,7 +204,7 @@ const formData=new FormData();
         if (res.status == 200) {
           this.avgRating = res.result ? res.result : this.avgRating;
           this.reviewBtn = true;
-          this.getCompanyProfileDetails(this.userId);
+          this.getReviews(this.userId);
           console.log(res);
         }
   
