@@ -27,34 +27,23 @@
     <div class="row" *ngFor="let invitation of allInvitations">
       <!--one inviation one row -->
       <div class="col-lg-12">
-        <mat-card (click)="goToGoogleMap(invitation.meetingId)" style="background-color:#F2F2F2;
+        <mat-card  style="background-color:#F2F2F2;
                 border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;margin-bottom: 10px;">
 
           <div style="flex:4;">
-            <div style="display: flex;">
+            <div style="display: flex;" >
+
+              
               <div style="flex:9;">
                 <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
                   <span style="font-weight:500;font-size:18px;cursor: pointer;">
                     {{invitation.friend.name | titlecase }}</span>
                 </h3>
-                <!-- <span class="options"
-                        *ngIf="userType!='candidate'"
-                        style="margin-left: 5px;">
-  
-                        <i class='fa fa-trash edit_delete'
-                          nz-tooltip
-                          nzTooltipTitle="Delete Job"
-                          alt="Delete Job"
-                          style='font-size:20px;cursor: pointer;'>
-  
-                        </i>
-  
-                      </span> -->
+             
 
                 <h6 style="font-weight:400;margin:0px 0px 5px 0px">
                   Meeting id : {{invitation.meetingId}}
-                  <!-- - <span  style="color:rgb(129, 126, 126);"> -->
-                  <!-- {{job.city}}</span> -->
+               
                 </h6>
 
 
@@ -64,33 +53,55 @@
               <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
 
                 <div style="flex: 1;" *ngIf="invitation.status=='accepted'">
-                  <button class="btn btn-success btn-sm" style="font-size: 15px;
+                  <button (click)="goToGoogleMap(invitation.meetingId)" class="btn btn-success btn-sm" style="font-size: 15px;
                         margin-top: 30px;
-                        cursor:none;
+                        cursor: pointer;
                         box-shadow: none;
-                        font-weight: 400;">Accepted</button>
+                        font-weight: 400;">Go To Meeting</button>
                 </div>
 
-                <div style="flex: 1;" *ngIf="invitation.status=='pending' && !invitation.self">
+                <div style="flex: 1;" *ngIf="invitation.status=='pending'">
                   <div class="row" style="flex-wrap: inherit !important">
                     <button class="btn btn-info btn-sm" style="font-size: 15px;
                             margin-top: 30px;
                             
-                            font-weight: 400;" (click)="accept(invitation.meetingId)">Accept</button>
+                            font-weight: 400;" (click)="accept(invitation.meetingId,invitation.friend.id)">Accept</button>
                     <button class="btn btn-danger btn-sm" style="font-size: 15px;
                             margin-top: 30px;
-                            font-weight: 400;" (click)="decline(invitation.meetingId)">Decline</button>
+                            font-weight: 400;" (click)="decline(invitation.meetingId,invitation.friend.id)">Decline</button>
                   </div>
 
                 </div>
 
-                <div style="flex: 1;" *ngIf="invitation.status=='pending' && invitation.self">
+                <div style="flex: 1;" *ngIf="invitation.status=='approval'">
                   <div class="row">
                     <button class="btn btn-dark btn-sm" style="font-size: 12px;
                             margin-top: 30px;
-                            cursor:none;
+                         
                             box-shadow: none;
                             font-weight: 400;">Waiting for approval</button>
+
+                  </div>
+
+                </div>
+                <div style="flex: 1;" *ngIf="invitation.status=='cancelled'">
+                  <div class="row">
+                    <button class="btn btn-danger btn-sm" style="font-size: 12px;
+                            margin-top: 30px;
+                           
+                            box-shadow: none;
+                            font-weight: 400;">Cancelled</button>
+
+                  </div>
+
+                </div>
+                <div style="flex: 1;" *ngIf="invitation.status=='completed'">
+                  <div class="row">
+                    <button class="btn btn-info btn-sm" style="font-size: 12px;
+                            margin-top: 30px;
+                         
+                            box-shadow: none;
+                            font-weight: 400;">Completed</button>
 
                   </div>
 

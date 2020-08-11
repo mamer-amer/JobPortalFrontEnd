@@ -92,6 +92,8 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
 import { InvitationComponent } from './invitation/invitation.component';
 import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 
+
+import { AgmOverlays } from "agm-overlays"
 @NgModule({
   declarations: [
     AppComponent,
@@ -191,7 +193,9 @@ import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-ma
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
       libraries: ['places']
-    })
+    }),
+  
+    AgmOverlays
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },

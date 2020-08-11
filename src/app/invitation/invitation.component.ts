@@ -13,15 +13,18 @@ export class InvitationComponent implements OnInit {
   selectedInviation:any="all";
   userId = sessionStorage.getItem('userId')
   allInvitations :any=[]
-  projectOption :any
+  projectOption :any;
+
   constructor(private nav:NavbarService,private service:ApplicantServiceService,private router:Router) { }
 
   ngOnInit(): void {
     this.projectOption = [
       {id:'all',Name:'All'},
       {id:'accepted',Name:'Accepted'},
+      {id:'completed',Name:'Completed'},
       {id:'pending',Name:'Pending'},
-      {id:'pendingforapproval',Name:'Pending for approval'},
+      {id:'approval',Name:'Pending for approval'},
+      {id:'cancelled',Name:'Cancelled'},
   
     ]
     this.nav.showNav();
@@ -34,6 +37,7 @@ export class InvitationComponent implements OnInit {
     console.log($event)
     this.allInvitations = []
     console.log(this.selectedInviation);
+  
     this.service.getMeetingInvitations(this.selectedInviation,this.userId).subscribe(res=>{
       console.log(res);
       this.allInvitations = res;
@@ -46,16 +50,16 @@ export class InvitationComponent implements OnInit {
       this.allInvitations = res;
   }) 
   }
-  accept(meetingID){
-      this.service.acceptInvitation(meetingID).subscribe(res=>{
+  accept(meetingID,userId2){
+      this.service.acceptInvitation(this.userId,userId2,meetingID).subscribe(res=>{
         if(res){
           this.getAllInvitations(undefined);
         }
       })
   }
 
-  decline(meetingID){
-    this.service.declineInvitation(meetingID).subscribe(res=>{
+  decline(meetingID,userId2){
+    this.service.declineInvitation(this.userId,userId2,meetingID).subscribe(res=>{
       if(res){
         this.getAllInvitations(undefined);
       }
@@ -63,8 +67,8 @@ export class InvitationComponent implements OnInit {
   }
 
   goToGoogleMap(meetingId){
-    if(this.selectedInviation=="accepted" && this.allInvitations){
+  
       this.router.navigate(['/meetingMap/'+meetingId])
-    }
+    
   }
 }

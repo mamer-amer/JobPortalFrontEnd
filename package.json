@@ -12,6 +12,7 @@
   "private": true,
   "dependencies": {
     "@agm/core": "^1.1.0",
+    "@agm/snazzy-info-window": "^3.0.0-beta.0",
     "@angular/animations": "^9.1.9",
     "@angular/cdk": "^9.2.4",
     "@angular/common": "~9.1.9",
@@ -26,6 +27,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@ng-bootstrap/ng-bootstrap": "^6.1.0",
     "@types/socket.io": "^2.1.8",
+    "agm-overlays": "^2.0.0",
     "angular-bootstrap-md": "^9.3.1",
     "angular-images-resizer": "^2.0.3",
     "angular-star-rating": "^4.0.0-beta.3",
@@ -56,6 +58,7 @@
     "safe-pipe": "^1.0.3",
     "save": "^2.4.0",
     "simple-scrollbar": "^0.4.0",
+    "snazzy-info-window": "^1.1.1",
     "stompjs": "^2.3.3",
     "time-ago-pipe": "^1.3.2",
     "tslib": "^2.0.0",

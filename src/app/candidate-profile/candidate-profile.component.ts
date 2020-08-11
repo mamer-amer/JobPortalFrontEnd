@@ -107,7 +107,7 @@ export class CandidateProfileComponent implements OnInit {
 
 
   formValidation() {
-    if (this.candidateObj.name && this.candidateObj.email && this.candidateObj.field && this.candidateObj.cv && this.candidateObj.presentationLetter && this.candidateObj.dp) {
+    if (this.candidateObj.name && this.candidateObj.email && this.candidateObj.field && this.candidateObj.cv && this.candidateObj.presentationLetter) {
       return false;
     }
     else {
@@ -218,8 +218,8 @@ export class CandidateProfileComponent implements OnInit {
     //console.log(btoa(binaryString));
     this.candidateObj.dp = base64textString;
     sessionStorage.removeItem('dp');
-    sessionStorage.setItem('dp', this.candidateObj.dp);
-    this.logoChangeObservable.next();
+    // sessionStorage.setItem('dp', this.candidateObj.dp);
+    // this.logoChangeObservable.next();
 
 
   }
@@ -314,8 +314,11 @@ export class CandidateProfileComponent implements OnInit {
             this.candidateObj.presentationLetter = res.result.presentationLetter;
             this.candidateObj.cv = res.result.cv;
             this.candidateObj.dp = res.result.dp;
-            sessionStorage.setItem('dp', this.candidateObj.dp);
+            console.log(this.candidateObj,"=============")
+          if(this.candidateObj.dp) { sessionStorage.setItem('dp', this.candidateObj.dp);
             this.logoChangeObservable.next();
+          }
+       
 
             this.candidateObj.imageContentType = res.result.imageContentType;
             this.candidateObj.resumeContentType = res.result.resumeContentType;

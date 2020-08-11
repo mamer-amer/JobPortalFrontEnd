@@ -171,3 +171,8 @@ mat-card-title{
    background: lightseagreen;
    cursor: pointer;
  }
+
+
+ ::ng-deep .source-image{
+   height: 100% !important;
+ }

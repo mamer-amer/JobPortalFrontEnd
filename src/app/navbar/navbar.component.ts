@@ -34,7 +34,7 @@ export class NavbarComponent implements OnInit {
   totalElements = 1;
   legalCompanyName: any = "";
   requests = [];
-  
+ 
 
 
 
@@ -43,7 +43,10 @@ export class NavbarComponent implements OnInit {
 
     this.notificationOpen = false;
     this.companyProf.logoChangeObservable.subscribe(() =>
-      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null);
+    {
+      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null;
+      console.log(this.userImage)
+    });
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
@@ -78,10 +81,12 @@ export class NavbarComponent implements OnInit {
     this.companyId = sessionStorage.getItem('companyId');
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
-    this.userImage = sessionStorage.getItem('dp');
+    this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem("dp"):null;
     // console.log(this.userImage, "========")
+    this.getInvitationCount()
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
+      
 
     }
     else if (this.candidateId && this.userType == "candidate") {
@@ -250,6 +255,14 @@ export class NavbarComponent implements OnInit {
         console.log(res)
         this.messagesCount=res;
       })
+  }
+
+  getInvitationCount(){
+    this.service.getInvitationCount(this.userId)
+    .subscribe((res)=>{
+      console.log(res,"=======count")
+      this.invitationCount=res;
+    })
   }
 
 }
