@@ -54,6 +54,12 @@ nz-badge {
     font-size: 25px;
     margin:7px 10px 0px 6px;
 }
+.invitation-close-class{
+    color: rgb(12, 12, 12) !important;
+   
+    font-size: 25px;
+    margin:7px 10px 0px 6px;
+}
 
 .notification-open-class{
   

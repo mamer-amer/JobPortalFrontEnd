@@ -1,10 +1,11 @@
+import { ToastrService } from 'ngx-toastr';
 import { Component, OnInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service'
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router'
 import { CompanyProfile } from '../company-profile/companyProfile'
 import { NavbarService } from '../navbar.service';
 import { Subject } from 'rxjs';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 @Component({
   selector: 'app-company-profile-details',
   templateUrl: './company-profile-details.component.html',
@@ -22,9 +23,10 @@ export class CompanyProfileDetailsComponent implements OnInit {
   rating: any = 0;
   userType = sessionStorage.getItem('userType');
   userId = sessionStorage.getItem('userId');
+  id;
   textReviewTab = true;
   videoReviewFile: any;
-  isReviewEdit:boolean=false;
+  isReviewEdit: boolean = false;
   review;
   // rating;
 
@@ -44,7 +46,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   friendRequestsObservable = new Subject<string>();
   mySubscription;
-  constructor(private sanitizer: DomSanitizer,private router: Router, private service: ApplicantServiceService, private activatedRoute: ActivatedRoute, private navbar: NavbarService) {
+  constructor(private router: Router, private service: ApplicantServiceService,
+    private activatedRoute: ActivatedRoute, private navbar: NavbarService, private toastService: ToastrService) {
     this.companyProfile = new CompanyProfile();
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
@@ -83,19 +86,20 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      let index=res.companyReviewRatingDTOList.findIndex(r=>r.userId==this.userId);
-      
-      
-      if(index!=-1)
-      {
-        this.review=res.companyReviewRatingDTOList[index].review;
-        this.rating= res.companyReviewRatingDTOList[index].rating? res.companyReviewRatingDTOList[index].rating:0;
-        this.companyReviewRating=this.moveArrayElementToFirst(res.companyReviewRatingDTOList,index);
-      
+      let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
+
+      this.id=res.userId;
+      console.log(res,"========ress")
+
+      if (index != -1) {
+        this.review = res.companyReviewRatingDTOList[index].review;
+        this.rating = res.companyReviewRatingDTOList[index].rating ? res.companyReviewRatingDTOList[index].rating : 0;
+        this.companyReviewRating = this.moveArrayElementToFirst(res.companyReviewRatingDTOList, index);
+
       }
       else
-      this.companyReviewRating = res.companyReviewRatingDTOList;
-    
+        this.companyReviewRating = res.companyReviewRatingDTOList;
+
       this.comments = this.companyReviewRating.length;
       this.reviewBtn = res.alreadyCommented;
       console.log(this.companyReviewRating);
@@ -125,14 +129,14 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
 
   postReview(review: string) {
-  
-const formData=new FormData();
-    formData.append("candidateId",this.userId)
-    formData.append("review",review)
-    formData.append("rating",this.rating)
-    formData.append("companyId",this.companyId)
-    formData.append("candidateId",this.userId)
-    formData.append("type","text")
+
+    const formData = new FormData();
+    formData.append("candidateId", this.userId)
+    formData.append("review", review)
+    formData.append("rating", this.rating)
+    formData.append("companyId", this.companyId)
+    formData.append("candidateId", this.userId)
+    formData.append("type", "text")
 
     // console.table(obj)
 
@@ -140,18 +144,17 @@ const formData=new FormData();
       // this.avgRating = res.result?res.result
       console.log(res)
       if (res.status == 200) {
-      
-          let index=res.result.findIndex(r=>r.userId==this.userId);
-      
-      
-          if(index!=-1)
-          {
-            this.review=res.result[index].review;
-            this.rating= res.result[index].rating? res.result[index].rating:0;
-            this.companyReviewRating=this.moveArrayElementToFirst(res.result,index);
-          
-          }
-          else
+
+        let index = res.result.findIndex(r => r.userId == this.userId);
+
+
+        if (index != -1) {
+          this.review = res.result[index].review;
+          this.rating = res.result[index].rating ? res.result[index].rating : 0;
+          this.companyReviewRating = this.moveArrayElementToFirst(res.result, index);
+
+        }
+        else
           this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
 
         this.avgRating = res.result ? res.rating : this.avgRating;
@@ -162,34 +165,33 @@ const formData=new FormData();
 
     });
   }
-  deleteReview(id){
+  deleteReview(id) {
     this.service.deleteReview(id)
-    .subscribe(()=>{
-      this.getCompanyProfileDetails(this.companyId);
-    })
+      .subscribe(() => {
+        this.getCompanyProfileDetails(this.companyId);
+      })
   }
 
-  updateReview(id,type){
+  updateReview(id, type) {
     let obj;
-    if(type=='text')
-    {
-      obj=new FormData();
-      obj.append("rating",this.rating);
-      obj.append("type",type);
-      obj.append("review",this.review);
-  }
-  else {
-    obj=new FormData();
-  obj.append("rating",this.rating);
-  obj.append("type",type);
-  obj.append("video",this.videoReviewFile);
-  }
-    
-    this.service.updateReview(id,obj)
-    .subscribe(()=>{
-      this.getCompanyProfileDetails(this.companyId);
-      this.isReviewEdit=false;
-    })
+    if (type == 'text') {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("review", this.review);
+    }
+    else {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("video", this.videoReviewFile);
+    }
+
+    this.service.updateReview(id, obj)
+      .subscribe(() => {
+        this.getCompanyProfileDetails(this.companyId);
+        this.isReviewEdit = false;
+      })
   }
 
   downloadFile() {
@@ -215,48 +217,43 @@ const formData=new FormData();
   }
   postVideoReview() {
 
-    if(this.videoReviewFile)
-    {
-      let formData=new FormData();
-      formData.append("candidateId",this.userId)
-      formData.append("video",this.videoReviewFile)
-      console.log(this.rating,"==========rating")
-      formData.append("rating",this.rating)
-      formData.append("companyId",this.companyId)
-      formData.append("candidateId",this.userId)
-      formData.append("type","video")
+    if (this.videoReviewFile) {
+      let formData = new FormData();
+      formData.append("candidateId", this.userId)
+      formData.append("video", this.videoReviewFile)
+      console.log(this.rating, "==========rating")
+      formData.append("rating", this.rating)
+      formData.append("companyId", this.companyId)
+      formData.append("candidateId", this.userId)
+      formData.append("type", "video")
       this.service.isAlreadyCommentedOnCompanyProfile(formData).subscribe((res) => {
         // this.avgRating = res.result?res.result
         if (res.status == 200) {
-          let index=res.result.findIndex(r=>r.userId==this.userId);
-      
-      
-          if(index!=-1)
-          {
-           
-            console.log(   res.result[index].rating,"============")
-            this.review= res.result[index].review;
-            this.rating= res.result[index].rating? res.result[index].rating:0;
-            console.log(  this.rating,"============")
-            this.companyReviewRating=this.moveArrayElementToFirst(res.result,index);
-          
+          let index = res.result.findIndex(r => r.userId == this.userId);
+
+
+          if (index != -1) {
+
+            console.log(res.result[index].rating, "============")
+            this.review = res.result[index].review;
+            this.rating = res.result[index].rating ? res.result[index].rating : 0;
+            console.log(this.rating, "============")
+            this.companyReviewRating = this.moveArrayElementToFirst(res.result, index);
+
           }
           else
-          this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
+            this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
 
           this.avgRating = res.result ? res.rating : this.avgRating;
           this.comments = this.companyReviewRating.length;
           this.reviewBtn = true;
           console.log(res);
         }
-  
+
       });
     }
   }
 
-sanitizeUrl(url){
-  return this.sanitizer.bypassSecurityTrustResourceUrl(url)
-}
 
   //modalWork
 
@@ -292,12 +289,12 @@ sanitizeUrl(url){
   }
 
 
-  moveArrayElementToFirst(arr,index){
+  moveArrayElementToFirst(arr, index) {
 
-    let obj=arr[index];
-    let tempArray=arr;
-    tempArray.splice(index,1);
-    tempArray.splice(0,0,obj);
+    let obj = arr[index];
+    let tempArray = arr;
+    tempArray.splice(index, 1);
+    tempArray.splice(0, 0, obj);
     return tempArray;
   }
 
@@ -336,6 +333,22 @@ sanitizeUrl(url){
         this.friendRequestsObservable.next()
         this.getFriendshipStatus(this.userId, this.companyProfile.id)
       })
+  }
+
+  sendInvite() {
+    let userId = this.userId;
+    let friendId = this.id;
+    this.service.sendMeetingInvite(userId, friendId).subscribe(res => {
+      if (res) {
+        this.toastService.info('Invitation sent successfully')
+      }
+      else {
+        this.toastService.error('failed to send invitation')
+      }
+    }), error => {
+      this.toastService.error('failed')
+
+    }
   }
 
 }

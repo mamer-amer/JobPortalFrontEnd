@@ -490,6 +490,25 @@ export class ViewCandidateProfileComponent implements OnInit {
         this.getFriendshipStatus(this.id, this.candidateId)
       })
   }
+
+
+  sendInvite(){
+    // userId
+    let userId = this.id;
+    // VISISTED PROFILE IF (friend id)
+    let friendId = this.userId;
+    this.service.sendMeetingInvite(userId,friendId).subscribe(res=>{
+        if(res){
+          this.toastService.info('Invitation sent successfully')
+        }
+        else{
+          this.toastService.error('failed to send invitation')
+        }
+    }),error=>{
+      this.toastService.error('failed')
+
+    }
+  }
 }
 class CadnidateWithReview {
   id?: any;

@@ -19,7 +19,8 @@ export class NavbarComponent implements OnInit {
 
   userType: any;
   userName: any;
-  userImage=null;
+  invitationCount:any=0;
+  userImage: any;
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
   companyId: any = sessionStorage.getItem('companyId');
@@ -33,7 +34,7 @@ export class NavbarComponent implements OnInit {
   totalElements = 1;
   legalCompanyName: any = "";
   requests = [];
-  
+ 
 
 
 
@@ -81,9 +82,11 @@ export class NavbarComponent implements OnInit {
     this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem("dp"):null;
-    console.log(this.userImage, "========")
+    // console.log(this.userImage, "========")
+    this.getInvitationCount()
     if (this.companyId && this.userType != "candidate") {
       this.getNotificationsCount(this.companyId);
+      
 
     }
     else if (this.candidateId && this.userType == "candidate") {
@@ -252,6 +255,14 @@ export class NavbarComponent implements OnInit {
         console.log(res)
         this.messagesCount=res;
       })
+  }
+
+  getInvitationCount(){
+    this.service.getInvitationCount(this.userId)
+    .subscribe((res)=>{
+      console.log(res,"=======count")
+      this.invitationCount=res;
+    })
   }
 
 }

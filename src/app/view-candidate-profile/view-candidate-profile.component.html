@@ -13,7 +13,8 @@
 
           <div style="display:flex">
             <div style="flex:1;flex-direction:row;justify-content:center;display: flex">
-              <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
+              <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'" 
+              style="height: 100%;"
                 [src]="candidateObj.dp!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
             </div>
 
@@ -92,7 +93,11 @@
             </div>
           </div>
 
-
+          <div class="row" *ngIf="id!=userId">
+            <button class="btn" style="width: 70%;
+              margin-left: 15%;font-size:11px" (click)="sendInvite()"><i class="fa fa-handshake-o"></i> Send
+              Invitation</button>
+          </div>
 
           <!-- Social ioncs -->
           <div class="row" *ngIf="userType=='recruiter'">

@@ -89,7 +89,11 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 
+
+import { AgmOverlays } from "agm-overlays"
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,7 +116,9 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     SearchForCandidatesComponent,
     GlobalSearchComponent,
     ChatComponent,
-    ChatPopUpBottomComponent
+    ChatPopUpBottomComponent,
+    InvitationComponent,
+    GoogleMapForMeetingComponent
 
 
   ],
@@ -187,7 +193,9 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
       libraries: ['places']
-    })
+    }),
+  
+    AgmOverlays
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
