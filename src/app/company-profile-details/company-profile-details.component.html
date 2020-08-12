@@ -193,6 +193,7 @@
 
 
           <div *ngFor="let reviewer of reviews">
+            
             <div *ngIf="textReviewTab && reviewer.type=='text'" style="margin-top: 40px;">
               <div *ngIf="reviewer.type=='text'">
                 <div *ngIf="userType!='candidate'"
@@ -207,7 +208,7 @@
 
                   </ul>
                 </div>
-
+                
 
                 <div class="row" style="margin-top:6px !important">
                   <div class="col-lg-12">
@@ -235,6 +236,18 @@
             <!-- //video reviews -->
 
             <div *ngIf="!textReviewTab  && reviewer.type=='video'" style="margin-top: 30px;">
+              <div *ngIf="userType!='candidate'"
+                  class="card-header border-0 font-weight-bold d-flex justify-content-between">
+
+                  <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
+
+                    <li class="list-inline-item"><a href="" style="color:#1890ff !important"
+                        [routerLink]="['/viewprofile/',reviewer.userId]"
+                        class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
+                        profile</a></li>
+
+                  </ul>
+                </div>
               <div class="col-lg-12">
                 <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
                   [nzSrc]="reviewer!=null?'data:image/jpeg;base64,'+reviewer?.dp:'../../assets/user.png'">
