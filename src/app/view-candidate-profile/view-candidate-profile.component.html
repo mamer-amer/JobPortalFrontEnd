@@ -13,8 +13,8 @@
 
           <div style="display:flex">
             <div style="flex:1;flex-direction:row;justify-content:center;display: flex">
-              <img [ngClass]="candidateObj.dp!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
-                [src]="candidateObj.dp!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
+              <img [ngClass]="candidateObj!=null && candidateObj.dp!=undefined?'userImage':'avatar-image'"
+                [src]="candidateObj!=null && candidateObj.dp!=undefined?'data:image/jpeg;base64,'+candidateObj.dp:'../../assets/user.png'" />
             </div>
 
           </div>

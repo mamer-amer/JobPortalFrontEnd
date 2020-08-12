@@ -92,7 +92,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   getCompanyProfileDetails(id): void {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
-      this.avgRating = res.profile.avgRating;
+      // this.avgRating = res.profile.avgRating;
       this.companyProfile = res.profile;
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
@@ -143,7 +143,7 @@ const formData=new FormData();
     this.service.postReviewAgainstCompany(formData).subscribe((res) => {
       // this.avgRating = res.result?res.result
       if (res.status == 200) {
-        this.avgRating = res.result ? res.result : this.avgRating;
+        this.companyProfile.avgRating = res.result ? res.result : this.companyProfile.avgRating;
         this.reviewBtn = true;
         this.getReviews(this.userId);
 
@@ -202,7 +202,7 @@ const formData=new FormData();
       this.service.postReviewAgainstCompany(formData).subscribe((res) => {
         // this.avgRating = res.result?res.result
         if (res.status == 200) {
-          this.avgRating = res.result ? res.result : this.avgRating;
+          this.companyProfile.avgRating = res.result ? res.result : this.companyProfile.avgRating;
           this.reviewBtn = true;
           this.getReviews(this.userId);
           console.log(res);
