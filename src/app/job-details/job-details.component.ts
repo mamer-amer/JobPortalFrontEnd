@@ -76,7 +76,7 @@ export class JobDetailsComponent implements OnInit {
       this.jobObj = res.result;
       // console.log(this.jobObj)
       this.jobId = res.result.id;
-      this.companyId = res.result.user.profile ? res.result.user.profile.id : null;
+      this.companyId = res.result.user ? res.result.user.id : null;
       this.numOfCandidates = res?.result?.appliedFor?.length;
      
       this.alreadyAppliedJobsAgainstUser(this.userId, this.jobId);

@@ -193,22 +193,22 @@
             [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
 
             <div *ngFor="let notification of notifications" class="notificationItem"
-              [style.background-color]="notification.notified?'white':'#E5EAF2'"
+              [style.background-color]="notification.seenOrNot?'white':'#E5EAF2'"
               (click)="readNotification(notification.jobId)"
               style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
               nz-menu-item>
               <span style="flex: 1;">
-                <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.candidateDp?'data:image/jpeg;base64,'+notification.candidateDp:
+                <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.userDp?'data:image/jpeg;base64,'+notification.userDp:
                   '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
                 </nz-avatar>
               </span>
               <div style="flex: 7;">
                 <div style="display:flex;flex-direction: column;">
                   <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                    <span *ngIf="userType!='candidate'" style="font-weight: bold;">{{notification.candidate}} <span
+                    <span *ngIf="userType!='candidate'" style="font-weight: bold;">{{notification.username}} <span
                         style="font-weight: normal !important">applied for your</span> </span>
 
-                    <span *ngIf="userType=='candidate'" style="font-weight: bold;">{{notification.candidate}} <span
+                    <span *ngIf="userType=='candidate'" style="font-weight: bold;">{{notification.username}} <span
                         style="font-weight: normal !important">invited
                         you for</span> </span>
 

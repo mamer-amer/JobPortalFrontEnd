@@ -22,8 +22,6 @@ export class NavbarComponent implements OnInit {
   userImage: any;
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
-  companyId: any = sessionStorage.getItem('companyId');
-  candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
   messagesCount = 0;
   notificationOpen: any;
@@ -50,15 +48,15 @@ export class NavbarComponent implements OnInit {
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
 
 
-    this.logingSerivce.loggedInUserId.subscribe(value => {
-      this.companyId = value ? value : sessionStorage.getItem('companyId');
-      this.getNotificationsCount(this.companyId);
-    });
+    // this.logingSerivce.loggedInUserId.subscribe(value => {
+    //   this.companyId = value ? value : sessionStorage.getItem('companyId');
+    //   this.getNotificationsCount(this.companyId);
+    // });
 
-    this.candP.getCandidateId.subscribe(value => {
-      this.candidateId = value ? value : sessionStorage.getItem('candidateId');
-      this.getNotificationsCount(this.candidateId);
-    });
+    // this.candP.getCandidateId.subscribe(value => {
+    //   this.candidateId = value ? value : sessionStorage.getItem('candidateId');
+    //   this.getNotificationsCount(this.candidateId);
+    // });
 
 
 
@@ -76,17 +74,9 @@ export class NavbarComponent implements OnInit {
 
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
-    this.companyId = sessionStorage.getItem('companyId');
-    this.candidateId = sessionStorage.getItem('candidateId');
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
-    if (this.companyId && this.userType != "candidate") {
-      this.getNotificationsCount(this.companyId);
-
-    }
-    else if (this.candidateId && this.userType == "candidate") {
-      this.getNotificationsCount(this.candidateId);
-    }
+    this.getNotificationsCount(this.userId);
     this.getAllMessagesCount();
 
   }
@@ -109,36 +99,36 @@ export class NavbarComponent implements OnInit {
   readNotification(jobId) {
 
 
-    if (jobId && this.companyId && this.userType != "candidate")
-      this.service.markAnotificationAsRead(this.companyId, jobId).subscribe(() => {
+    if (jobId && this.userId && this.userType != "candidate")
+      this.service.markAnotificationAsRead(this.userId, jobId,this.pageNo).subscribe(() => {
         this.router.navigate(['appliedcandidates/' + jobId])
       })
     else {
-      this.service.markAnotificationAsRead(this.candidateId, jobId).subscribe(() => {
+      this.service.markAnotificationAsRead(this.userId, jobId,this.pageNo).subscribe(() => {
         this.router.navigate(['privatejob/' + jobId])
       })
     }
   }
   readAllNotications() {
-    if (this.companyId && this.userType != "candidate") {
+    if (this.userId && this.userType != "candidate") {
 
-      this.service.markAllNoticationsAsRead(this.companyId).subscribe((res) => {
+      this.service.markAllNoticationsAsRead(this.userId).subscribe((res) => {
 
         if (res?.result) {
           this.pageNo = 0;
           this.notifications = res.result.content
-          this.getNotificationsCount(this.companyId);
+          this.getNotificationsCount(this.userId);
         }
       })
     }
 
     else {
-      this.service.markAllNoticationsAsRead(this.candidateId).subscribe((res) => {
+      this.service.markAllNoticationsAsRead(this.userId).subscribe((res) => {
 
         if (res?.result) {
           this.pageNo = 0;
           this.notifications = res.result.content
-          this.getNotificationsCount(this.candidateId);
+          this.getNotificationsCount(this.userId);
         }
       })
     }
@@ -149,23 +139,23 @@ export class NavbarComponent implements OnInit {
     if (this.totalElements > this.notifications.length) {
       this.isLoader = true;
       this.spinner.show("navSpinner");
-      this.getNotifications(this.companyId, ++this.pageNo);
+      this.getNotifications(this.userId, ++this.pageNo);
     }
   }
   getNotificationsCount(id) {
-    this.service.getCompanyNotificationsCount(id).subscribe((count) => {
+    this.service.numberOfNotifications(id).subscribe((count) => {
       this.notificationsCount = count;
     })
-  }
+  } 
 
   getNotifications(id, page) {
 
-    this.service.getCompanyNotifications(id, page).subscribe((res) => {
+    this.service.getNotifications(id, page).subscribe((res) => {
       this.isLoader = false;
       this.spinner.hide("navSpinner")
-      this.notifications = this.notifications.concat(res.content)
-      this.totalElements = res.totalElements;
-      console.log(res)
+      console.log(res);
+      this.notifications = this.notifications.concat(res.result.content)
+      this.totalElements = res.result.totalElements;
     }, err => {
       this.spinner.hide("navSpinner")
       this.isLoader = false;
@@ -180,18 +170,12 @@ export class NavbarComponent implements OnInit {
     this.pageNo = 0;
     this.notificationOpen = !this.notificationOpen;
     this.notifications = [];
-    if (this.companyId && this.userType != "candidate") {
-      this.getNotificationsCount(this.companyId);
+      this.getNotificationsCount(this.userId);
       if (this.notificationOpen) {
-        this.getNotifications(this.companyId, this.pageNo)
+        this.getNotifications(this.userId, this.pageNo)
       }
-    }
-    else {
-      this.getNotificationsCount(this.candidateId);
-      if (this.notificationOpen) {
-        this.getNotifications(this.candidateId, this.pageNo)
-      }
-    }
+    
+   
   }
 
 
