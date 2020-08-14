@@ -266,6 +266,13 @@ export class ApplicantServiceService {
     return this.http.get(this.url + "api/notifications/notification_marked?userId="+id+"&jobId="+jobId+"&page="+page)
   }
 
+  checkAlreadyAppliedOnPrivateJob(userId,jobId):Observable<any>{
+    return this.http.get(this.url+"api/recruiter/alreadyApplied/"+userId+"/"+jobId)
+  }
+
+  getRefferedCandidates(jobId):Observable<any>{
+    return this.http.get(this.url+"api/recruiter/getRefferedCandidates/"+`${jobId}`)
+  }
   //requests
 
   getFriendshipStatus(userId, friendId, type): Observable<any> {

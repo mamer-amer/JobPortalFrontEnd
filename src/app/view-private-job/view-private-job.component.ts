@@ -25,6 +25,7 @@ export class ViewPrivateJobComponent implements OnInit {
   tooltips = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
   publishFrom: string;
   publishTo: string;
+  userId = sessionStorage.getItem('userId');
   referJobDto:any;
   candidateProfiles: any[] = [];
  candidateId =sessionStorage.getItem('candidateId');
@@ -50,18 +51,17 @@ export class ViewPrivateJobComponent implements OnInit {
         if(res!=null){
           this.recruiterJobs = res;
             this.companyProfile = res['user']['profile']
+            this.companyProfile.id = res['user'].id;
             this.publishFrom = this.transform(this.recruiterJobs.publishFrom);
             let date = new Date(this.recruiterJobs.publishTo);
             this.publishTo = date.getDate() + '-' + date.getMonth() + '-' + date.getFullYear();
             this.allCandidatesReferedOrNotList = res['appliedForRecruiterJobs'];
             if(this.userType=="candidate"){
               // search 
-              const present = this.allCandidatesReferedOrNotList.find(profile=>{
-                return profile.candidateProfile.id==sessionStorage.getItem('userId')
-                   
-              })
-              this.applied = present!=undefined?present.applied:false;
+              this.alreadyApplied(this.userId,id)
+
             }
+           
         }
         
     })
@@ -75,13 +75,17 @@ export class ViewPrivateJobComponent implements OnInit {
     })
   }
 
-
-  callWithRespectToUser(id){
-  
-    this.showJobDetails(id)
-  
+  alreadyApplied(userId,jobId){
+    this.service.checkAlreadyAppliedOnPrivateJob(userId,jobId).subscribe(res=>{
+      this.applied = res;
+    })
   }
 
+  callWithRespectToUser(id){
+    this.showJobDetails(id)
+  }
+
+ 
 
   print(value:any){
     console.log(value);
