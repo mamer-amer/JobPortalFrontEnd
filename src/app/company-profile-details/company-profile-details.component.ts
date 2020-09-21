@@ -297,6 +297,9 @@ export class CompanyProfileDetailsComponent implements OnInit {
     tempArray.splice(0, 0, obj);
     return tempArray;
   }
+  gotoaddtender(){
+this.router.navigate(['addtender/'+this.companyId]);
+  }
 
 
   //FRIEND REQUEST
