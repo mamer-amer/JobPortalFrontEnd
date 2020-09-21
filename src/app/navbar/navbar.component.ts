@@ -10,6 +10,7 @@ import { LoginService } from '../login-page/login.service';
 import { Router } from '@angular/router'
 import { NgxSpinnerService } from "ngx-spinner";
 import * as moment from 'moment';
+import { TenderService } from '../Services/tender.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -17,6 +18,7 @@ import * as moment from 'moment';
 })
 export class NavbarComponent implements OnInit {
 
+  
   userType: any;
   userName: any;
   invitationCount:any=0;
@@ -27,18 +29,19 @@ export class NavbarComponent implements OnInit {
   candidateId: any = sessionStorage.getItem('candidateId');
   notificationsCount = 0;
   messagesCount = 0;
-  notificationOpen: any;
+  notificationOpen: any;  
   requestOpen = false;
   pageNo = 0;
   isLoader = false;
   totalElements = 1;
   legalCompanyName: any = "";
   requests = [];
+  tendernotifications:any[]=[];
  
 
 
 
-  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService,private tenderservice:TenderService) {
 
 
     this.notificationOpen = false;
@@ -78,8 +81,10 @@ export class NavbarComponent implements OnInit {
 
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
+    console.log("========",this.userType);
     this.companyId = sessionStorage.getItem('companyId');
     this.candidateId = sessionStorage.getItem('candidateId');
+   
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem("dp"):null;
     // console.log(this.userImage, "========")
@@ -263,6 +268,17 @@ export class NavbarComponent implements OnInit {
       console.log(res,"=======count")
       this.invitationCount=res;
     })
+  }
+  getAllTenderNotification(){
+    this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
+      this.tendernotifications=res;
+      console.log(this.tendernotifications);
+    })
+    
+  }
+  readTenderNotifications(tenderid:any){
+    this.router.navigate(['tender-details/'+tenderid]);
+
   }
 
 }
