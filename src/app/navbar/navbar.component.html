@@ -267,17 +267,23 @@
                 style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
                 nz-menu-item>
                 <span style="flex: 1;">
-                  <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.employer.companyProfile.logo?'data:image/jpeg;base64,'+notification.employer.companyProfile.logo:
+                  <nz-avatar  *ngIf="userType=='employer'" [nzSize]="48" nzIcon="user" [nzSrc]="notification.employer.companyProfile.logo?'data:image/jpeg;base64,'+notification.employer.companyProfile.logo:
+                    '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+                  </nz-avatar>
+                  <nz-avatar  *ngIf="userType=='recruiter'" [nzSize]="48" nzIcon="user" [nzSrc]="notification.recruiter.companyProfile.logo?'data:image/jpeg;base64,'+notification.employer.companyProfile.logo:
                     '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
                   </nz-avatar>
                 </span>
                 <div style="flex: 7;">
                   <div style="display:flex;flex-direction: column;">
                     <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                      <span  style="font-weight: bold;">{{notification.employer.name}} <span
-                          style="font-weight: normal !important">has sent you this contract </span> </span>
-  
-  
+                      <span  style="font-weight: bold;">{{userType=='employer'?notification.recruiter.name:notification.employer.name}} 
+                        <span
+                          style="font-weight: normal !important" *ngIf="userType=='recruiter'">has sent you this contract </span> 
+                        <span
+                          style="font-weight: normal !important" *ngIf="userType=='employer'">accepted your contract</span> 
+                        </span>
+
                       
                     </div>
   

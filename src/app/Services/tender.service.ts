@@ -18,4 +18,12 @@ export class TenderService {
   public getAlltenderNotifications(recruiterId:any):Observable<any>{
     return this.http.get(environment.baseUrl+"api/tendernotification/recruiter/"+recruiterId);
   }
+  public getAlltenderNotificationsForEmployer(employerUserId:any):Observable<any>{
+    return this.http.get(environment.baseUrl+"api/tendernotification/employer/"+employerUserId);
+  }
+
+  public acceptOrDeclineTender(object:any,isApplied:Boolean):Observable<any>{
+    return this.http.post(environment.baseUrl+"api/tender/accept_decline/"+`${isApplied}`,object);
+}
+
 }

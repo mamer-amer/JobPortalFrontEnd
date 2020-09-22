@@ -270,10 +270,20 @@ export class NavbarComponent implements OnInit {
     })
   }
   getAllTenderNotification(){
-    this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
-      this.tendernotifications=res;
-      console.log(this.tendernotifications);
-    })
+    if(this.userType=="recruiter"){
+      this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
+        this.tendernotifications=res;
+        console.log(this.tendernotifications);
+      })
+    }
+    else{
+      
+      this.tenderservice.getAlltenderNotificationsForEmployer(this.userId).subscribe(res=>{
+        this.tendernotifications=res;
+        console.log(this.tendernotifications);
+      })
+    }
+   
     
   }
   readTenderNotifications(tenderid:any){
