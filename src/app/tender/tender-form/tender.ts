@@ -16,4 +16,6 @@ export class Tender{
     interviewStartTiming:string;
     interviewEndTiming:string;
     isActive:boolean;
+
+    // privateEnable: boolean;
 }

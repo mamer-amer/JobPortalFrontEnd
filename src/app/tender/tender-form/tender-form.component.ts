@@ -12,6 +12,7 @@ import { NavbarService } from '../../navbar.service';
   styleUrls: ['./tender-form.component.css']
 })
 export class TenderFormComponent implements OnInit {
+  privateEnable = false;
 
   recruiterId: any;
   interviewStartDate:Date;
