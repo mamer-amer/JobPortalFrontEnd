@@ -24,6 +24,10 @@ export class TenderService {
 
   public acceptOrDeclineTender(object:any,isApplied:Boolean):Observable<any>{
     return this.http.post(environment.baseUrl+"api/tender/accept_decline/"+`${isApplied}`,object);
-}
+  }
+
+  public getAllPublicTenders():Observable<any>{
+    return this.http.get(environment.baseUrl+"api/tender/all/public");
+  }
 
 }

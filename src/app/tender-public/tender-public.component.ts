@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../navbar.service';
 import { ToastrService } from 'ngx-toastr';
+import { TenderService } from '../Services/tender.service';
+import { Tender } from '../tender/tender-form/tender';
 
 @Component({
   selector: 'app-tender-public',
@@ -17,12 +19,31 @@ export class TenderPublicComponent implements OnInit {
   public total: any;
   itemsPerPage: any;
   
-    constructor(private navbar : NavbarService) {
+    constructor(private tenderservice:TenderService ,private navbar : NavbarService) {
+     
 
      }
   
     ngOnInit() {
       this.navbar.showNav();
+      this.gettender();
+    }
+
+    lstTender =[];
+    gettender():void{
+
+
+        console.log("geting all tneder = ");
+        // this.tenderservice.getAllPublicTenders().subscribe(res=>{
+        //   // debugger;
+
+        //     console.log("Respone tender " +res);
+        // },error=>{
+
+        // });
+
+
+
     }
   
   }

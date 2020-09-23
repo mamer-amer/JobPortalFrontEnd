@@ -12,8 +12,7 @@ import { NavbarService } from '../../navbar.service';
   styleUrls: ['./tender-form.component.css']
 })
 export class TenderFormComponent implements OnInit {
-  privateEnable = false;
-
+ 
   recruiterId: any;
   interviewStartDate:Date;
   interviewEndDate:Date;
@@ -118,6 +117,9 @@ export class TenderFormComponent implements OnInit {
     }
   }
   submittender(myform){
+
+
+
     this.tenderobj.employerUserId=this.userId;
     this.tenderobj.interviewStartDate=this.changedatetostring(this.interviewStartDate);
     this.tenderobj.interviewEndDate=this.changedatetostring(this.interviewEndDate);
@@ -127,6 +129,8 @@ export class TenderFormComponent implements OnInit {
     this.tenderobj.province=myform.province.name;
     this.tenderobj.country=myform.country.name;
     this.tenderobj.recruiterUserId=this.recruiterId;
+    this.tenderobj.tenderType = myform.tenderType;
+    
     console.log("tenderrrrrrrrrrrr",this.tenderobj);
     this.tenderservice.postTender(this.tenderobj).subscribe(res=>{
       console.log(res);

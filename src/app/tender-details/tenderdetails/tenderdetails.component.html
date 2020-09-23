@@ -67,13 +67,13 @@
                         
                         <div class="row">
                             <div class="col-xl-4 col-lg-4 col-md-3 col-sm-6">
-                                    <p class="text-muted mb-2 font-13"><strong>Role :</strong> <span class="ml-2">{{tenderobj.role}}</span></p>
+                                    <p class="text-muted mb-2 font-13"><strong>Role :</strong> <span class="ml-2">{{tenderobj.role? tenderobj.role:'N/A'}}</span></p>
                                 </div>
                                 <div class="col-lg-4 col-xl-4 col-md-3 col-sm-6">
-                                        <p class="text-muted mb-2 font-13"><strong>Description :</strong> <span class="ml-2">{{tenderobj.description}}</span></p>
+                                        <p class="text-muted mb-2 font-13"><strong>Description :</strong> <span class="ml-2">{{tenderobj.description? tenderobj.description:'N/A'}}</span></p>
                                     </div>
                                     <div class="col-lg-4 col-xl-4 col-md-3 col-sm-6">
-                                            <p class="text-muted mb-2 font-13"><strong>Salary :</strong> <span class="ml-2">{{tenderobj.salary}}</span></p>
+                                            <p class="text-muted mb-2 font-13"><strong>Salary :</strong> <span class="ml-2">{{tenderobj.salary?tenderobj.salary:'N/A'}}</span></p>
                                         </div>
                                         
                             </div>
@@ -82,29 +82,29 @@
                                             <p class="text-muted mb-2 font-13"><strong>Interview start date :</strong> <span class="ml-2">{{tenderobj.interviewStartDate?tenderobj.interviewStartDate:'N/A'}}</span></p>
                                         </div>
                                         <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                <p class="text-muted mb-2 font-13"><strong>Interview end date :</strong> <span class="ml-2">{{tenderobj.interviewEndDate}}</span></p>
+                                                <p class="text-muted mb-2 font-13"><strong>Interview end date :</strong> <span class="ml-2">{{tenderobj.interviewEndDate?tenderobj.interviewEndDate:'N/A'}}</span></p>
                                             </div>
                                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                    <p class="text-muted mb-2 font-13"><strong>Country :</strong> <span class="ml-2">{{tenderobj.country}}</span></p>
+                                                    <p class="text-muted mb-2 font-13"><strong>Country :</strong> <span class="ml-2">{{tenderobj.country? tenderobj.country:'N/A'}}</span></p>
                                                 </div>
                                 </div>
                                 <div class="row">
                                         <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                <p class="text-muted mb-2 font-13"><strong>City :</strong> <span class="ml-2">{{tenderobj.city}}</span></p>
+                                                <p class="text-muted mb-2 font-13"><strong>City :</strong> <span class="ml-2">{{tenderobj.city? tenderobj.city:'N/A'}}</span></p>
                                             </div>
                                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                    <p class="text-muted mb-2 font-13"><strong>Province :</strong> <span class="ml-2">{{tenderobj.province}}</span></p>
+                                                    <p class="text-muted mb-2 font-13"><strong>Province :</strong> <span class="ml-2">{{tenderobj.province? tenderobj.province:'N/A'}}</span></p>
                                                 </div>
                                                 <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                        <p class="text-muted mb-2 font-13"><strong>Category:</strong> <span class="ml-2">{{tenderobj.category}}</span></p>
+                                                        <p class="text-muted mb-2 font-13"><strong>Category:</strong> <span class="ml-2">{{tenderobj.category? tenderobj.category:'N/A'}}</span></p>
                                                     </div>
                                     </div>
                                     <div class="row">
                                             <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                    <p class="text-muted mb-2 font-13"><strong>Type :</strong> <span class="ml-2">{{tenderobj.type}}</span></p>
+                                                    <p class="text-muted mb-2 font-13"><strong>Type :</strong> <span class="ml-2">{{tenderobj.type? tenderobj.type:'N/A'}}</span></p>
                                                 </div>
                                                 <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                        <p class="text-muted mb-2 font-13"><strong>Address :</strong> <span class="ml-2">{{tenderobj.address}}</span></p>
+                                                        <p class="text-muted mb-2 font-13"><strong>Address :</strong> <span class="ml-2">{{tenderobj.address? tenderobj.address:'N/A'}}</span></p>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
                                                             <p class="text-muted mb-2 font-13"><strong>Is active:</strong> <span class="ml-2"> Active</span></p>
@@ -115,10 +115,10 @@
                                             <!-- <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
                                                 </div> -->
                                                 <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                        <p class="text-muted mb-2 font-13"><strong>Interview start timing :</strong> <span class="ml-2">{{tenderobj.interviewStartTiming}}</span></p>
+                                                        <p class="text-muted mb-2 font-13"><strong>Interview start timing :</strong> <span class="ml-2">{{tenderobj.interviewStartTiming? tenderobj.interviewStartTiming:'N/A'}}</span></p>
                                                     </div>
                                                     <div class="col-lg-4 col-xl-4 col-md-4 col-sm-12">
-                                                            <p class="text-muted mb-2 font-13"><strong>Interview end timing :</strong> <span class="ml-2">{{tenderobj.interviewEndTiming}}</span></p>
+                                                            <p class="text-muted mb-2 font-13"><strong>Interview end timing :</strong> <span class="ml-2">{{tenderobj.interviewEndTiming? tenderobj.interviewEndTiming:'N/A'}}</span></p>
                                                         </div>
                                                         <!-- <div class="col-lg-1 col-xl-1 col-md-1 col-sm-1">
                                                             </div> -->
