@@ -53,6 +53,10 @@ export class TenderPublicComponent implements OnInit {
 
     routeToTenderDetail =(tenderid) => this.router.navigate(['tender-details/'+tenderid]);
 
+    addtender(){
+      this.router.navigate(['addtender']);
+    }
+
   
   }
   

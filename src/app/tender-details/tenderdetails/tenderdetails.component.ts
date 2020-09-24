@@ -54,6 +54,7 @@ export class TenderdetailsComponent implements OnInit {
      const tenderDto = new Tender();
      tenderDto.recruiterUserId = this.userId;
      tenderDto.employerUserId = this.employerId;
+     tenderDto.tenderType = this.tenderobj.tenderType;
      tenderDto.id = this.tenderobj.id;
      console.log("TENDER DTO ",tenderDto)
      this.tenderservice.acceptOrDeclineTender(tenderDto,isApplied).subscribe(res=>{
