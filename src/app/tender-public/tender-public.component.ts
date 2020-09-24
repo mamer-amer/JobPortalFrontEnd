@@ -14,12 +14,15 @@ import { Tender } from '../tender/tender-form/tender';
 export class TenderPublicComponent implements OnInit {
   heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado','4'];
   empty = false;
+  userType = sessionStorage.getItem('userType');
   
   page = 1;
   public total: any;
   itemsPerPage: any;
   
-    constructor(private tenderservice:TenderService ,private navbar : NavbarService) {
+
+  tenders = [];
+    constructor(private tenderservice:TenderService ,private navbar : NavbarService,private router: Router) {
      
 
      }
@@ -37,14 +40,19 @@ export class TenderPublicComponent implements OnInit {
         this.tenderservice.getAllPublicTenders().subscribe(res=>{
           // debugger;
 
+          this.tenders = res
             console.log("Respone tender " ,res);
+            
         },error=>{
 
         });
 
-
-
     }
+
+    routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
+
+    routeToTenderDetail =(tenderid) => this.router.navigate(['tender-details/'+tenderid]);
+
   
   }
   
