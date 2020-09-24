@@ -34,13 +34,13 @@ export class TenderPublicComponent implements OnInit {
 
 
         console.log("geting all tneder = ");
-        // this.tenderservice.getAllPublicTenders().subscribe(res=>{
-        //   // debugger;
+        this.tenderservice.getAllPublicTenders().subscribe(res=>{
+          // debugger;
 
-        //     console.log("Respone tender " +res);
-        // },error=>{
+            console.log("Respone tender " ,res);
+        },error=>{
 
-        // });
+        });
 
 
 
