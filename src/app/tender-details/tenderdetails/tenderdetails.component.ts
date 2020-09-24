@@ -50,12 +50,13 @@ export class TenderdetailsComponent implements OnInit {
   }
 
 
-  acceptOrDeclineTender(isApplied:Boolean){
+  acceptOrDeclineTender(isApplied:boolean){
      const tenderDto = new Tender();
      tenderDto.recruiterUserId = this.userId;
      tenderDto.employerUserId = this.employerId;
      tenderDto.id = this.tenderobj.id;
-     this.tenderservice.acceptOrDeclineTender(tenderDto,isApplied).pipe().subscribe(res=>{
+     console.log("TENDER DTO ",tenderDto)
+     this.tenderservice.acceptOrDeclineTender(tenderDto,isApplied).subscribe(res=>{
        this.btnApplied = true;   
        isApplied==true?this.toastService.success("Tender successfully accepted"):this.toastService.warning("Tender decline");
        

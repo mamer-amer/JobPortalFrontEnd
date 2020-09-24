@@ -20,7 +20,8 @@ body{
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fff;
-    background-color: #1abc9c;
+    /* background-color: #1abc9c; */
+    background-color: black;
 }
 .nav-pills .nav-link {
     border-radius: .25rem;

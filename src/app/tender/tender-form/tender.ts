@@ -16,4 +16,5 @@ export class Tender{
     interviewStartTiming:string;
     interviewEndTiming:string;
     isActive:boolean;
+    tenderType: string;
 }

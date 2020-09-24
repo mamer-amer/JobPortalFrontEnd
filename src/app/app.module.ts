@@ -96,7 +96,8 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 import { AgmOverlays } from "agm-overlays";
 import { TenderFormComponent } from './tender/tender-form/tender-form.component';
-import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component'
+import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
+import { TenderPublicComponent } from './tender-public/tender-public.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -123,7 +124,8 @@ import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdet
     InvitationComponent,
     GoogleMapForMeetingComponent,
     TenderFormComponent,
-    TenderdetailsComponent
+    TenderdetailsComponent,
+    TenderPublicComponent
 
 
   ],
