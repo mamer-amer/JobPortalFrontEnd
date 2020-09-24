@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { AnyARecord } from 'dns';
 
 @Injectable({
   providedIn: 'root'
@@ -22,8 +23,9 @@ export class TenderService {
     return this.http.get(environment.baseUrl+"api/tendernotification/employer/"+employerUserId);
   }
 
-  public acceptOrDeclineTender(object:any,isApplied:Boolean):Observable<any>{
-    return this.http.post(environment.baseUrl+"api/tender/accept_decline/"+`${isApplied}`,object);
+  public acceptOrDeclineTender(object:any,isApplied:boolean):Observable<any>{
+    console.log("this is my object",object)
+    return this.http.post(environment.baseUrl+"api/tender/accept_decline/"+isApplied,object);
   }
 
   public getAllPublicTenders():Observable<any>{
