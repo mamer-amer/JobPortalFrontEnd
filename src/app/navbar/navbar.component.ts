@@ -18,7 +18,8 @@ import { TenderService } from '../Services/tender.service';
 })
 export class NavbarComponent implements OnInit {
 
-  
+  acceptstatus:any='has accepted your offer';
+  declinestatus:any='has rejected your offer';
   userType: any;
   userName: any;
   invitationCount:any=0;

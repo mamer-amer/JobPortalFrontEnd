@@ -281,7 +281,7 @@
                         <span
                           style="font-weight: normal !important" *ngIf="userType=='recruiter'">has sent you this contract </span> 
                         <span
-                          style="font-weight: normal !important" *ngIf="userType=='employer'">accepted your contract</span> 
+                          style="font-weight: normal !important" *ngIf="userType=='employer'">{{notification.applied==false?declinestatus:acceptstatus}}</span> 
                         </span>
 
                       
