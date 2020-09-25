@@ -143,6 +143,7 @@ export class TenderFormComponent implements OnInit {
       console.log(res);
       this.toastService.info('Successfull', 'Tender Posted Successfully');
 
+      
       this.router.navigate(['/publictender']);
 
     },error=>{

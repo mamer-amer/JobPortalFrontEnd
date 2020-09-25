@@ -136,6 +136,11 @@
     text-decoration: underline;
     color: blue;
    }
+
+   .btnEffect:hover{
+     background: black;
+     color: white;
+   }
   
    p{
      font-size: 12px;

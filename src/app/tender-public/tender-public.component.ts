@@ -61,7 +61,8 @@ export class TenderPublicComponent implements OnInit {
 
     showDeleteConfirm(tenderId: any): void {
       this.modalService.confirm({
-        nzTitle: 'Are you sure you want to delete?',
+        nzTitle: 'work in progress...',
+        // nzTitle: 'Are you sure you want to delete?',
         nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
         nzOkText: 'Yes',
         nzOkType: 'danger',
