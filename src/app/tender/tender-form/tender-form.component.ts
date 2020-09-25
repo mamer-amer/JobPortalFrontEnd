@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Tender } from './tender';
 import csc from 'country-state-city'
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute,Router } from '@angular/router';
 import { TenderService } from '../../Services/tender.service';
 import { ToastrService } from 'ngx-toastr';
 import { NavbarService } from '../../navbar.service';
@@ -25,7 +25,7 @@ export class TenderFormComponent implements OnInit {
   label:string="Add Tender";
   userType = sessionStorage.getItem('userType');
   userId = sessionStorage.getItem('userId');
-  constructor(private navbar: NavbarService,private activatedRoute: ActivatedRoute,private tenderservice:TenderService,private toastService: ToastrService ) { }
+  constructor(private navbar: NavbarService,private activatedRoute: ActivatedRoute,private tenderservice:TenderService,private toastService: ToastrService,private router: Router ) { }
   salaryRange: Array<string> = [
     "10,000$ - 20,000$",
     "20,000$ - 30,000$",
@@ -56,6 +56,7 @@ export class TenderFormComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.recruiterId = this.activatedRoute.snapshot.params['id'];
+    if(this.recruiterId==null){this.label = "Add Public Tender"}
     this.navbar.showNav();
     this.getCountries();
 
@@ -118,8 +119,14 @@ export class TenderFormComponent implements OnInit {
   }
   submittender(myform){
 
-
-
+    if(this.recruiterId == null){
+      this.tenderobj.tenderType="public";
+      this.recruiterId = null;
+      console.log("rrrrrr",this.recruiterId);
+    }
+    else{
+      this.tenderobj.tenderType="private";
+    }
     this.tenderobj.employerUserId=this.userId;
     this.tenderobj.interviewStartDate=this.changedatetostring(this.interviewStartDate);
     this.tenderobj.interviewEndDate=this.changedatetostring(this.interviewEndDate);
@@ -129,12 +136,14 @@ export class TenderFormComponent implements OnInit {
     this.tenderobj.province=myform.province.name;
     this.tenderobj.country=myform.country.name;
     this.tenderobj.recruiterUserId=this.recruiterId;
-    this.tenderobj.tenderType = myform.tenderType;
+    // this.tenderobj.tenderType = myform.tenderType;
     
     console.log("tenderrrrrrrrrrrr",this.tenderobj);
     this.tenderservice.postTender(this.tenderobj).subscribe(res=>{
       console.log(res);
       this.toastService.info('Successfull', 'Tender Posted Successfully');
+
+      this.router.navigate(['/publictender']);
 
     },error=>{
       this.toastService.error('Unsucessfull', 'Tender can not be posted');

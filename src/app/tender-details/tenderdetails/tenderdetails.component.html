@@ -45,7 +45,8 @@
             <ul class="nav nav-pills navtab-bg" *ngIf="userType=='recruiter' && !btnApplied">
                 <li class="nav-item" >
                     <a (click)="acceptOrDeclineTender(true)"   aria-expanded="true" class="nav-link ml-0 active">
-                        <i class="mdi mdi-face-profile mr-1"></i>Accept 
+                        <i class="mdi mdi-face-profile mr-1"></i><span *ngIf="tenderobj.tenderType=='private'">Accept</span> 
+                        <span *ngIf="tenderobj.tenderType=='public'">Apply</span> 
                     </a>
                 </li>
                 <li class="nav-item">
