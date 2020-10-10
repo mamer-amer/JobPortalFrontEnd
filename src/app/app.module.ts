@@ -93,7 +93,8 @@ import { InvitationComponent } from './invitation/invitation.component';
 import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 
 
-import { AgmOverlays } from "agm-overlays"
+import { AgmOverlays } from "agm-overlays";
+import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,7 +119,8 @@ import { AgmOverlays } from "agm-overlays"
     ChatComponent,
     ChatPopUpBottomComponent,
     InvitationComponent,
-    GoogleMapForMeetingComponent
+    GoogleMapForMeetingComponent,
+    MeetingInviteComponent
 
 
   ],

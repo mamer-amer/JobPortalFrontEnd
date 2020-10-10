@@ -8,7 +8,7 @@ bottom:0%;">
     </span>
 
   </div>
-  <hr style="background-color: white;"/>
+  <hr style="background-color: white;" />
 
 
 
@@ -26,9 +26,8 @@ bottom:0%;">
         text-indent: 30px;
         height: 34px;
         border-radius: 15px; outline: none;" (input)="inputBoxChange($event.target.value)"
-         (input)="inputBoxChange($event.target.value)" #search placeholder="Search friends"
-        type="text">
-        <i class="material-icons" style="    position: absolute;
+        (input)="inputBoxChange($event.target.value)" #search placeholder="Search friends" type="text">
+      <i class="material-icons" style="    position: absolute;
         right: 32px;
         margin-top: 7px;
         font-size: 20px;cursor: pointer;" (click)="onFocusOut(search)" *ngIf="showFriends">clear</i>
@@ -36,10 +35,10 @@ bottom:0%;">
     <hr style="    background-color: white;
     margin-top: 16px;
     width: 70%;
-    margin-left: 15%;"/>
+    margin-left: 15%;" />
     <div (click)="onFocusOut(search)">
-    
-      <div class="scroll"  style="margin-top:10px;margin-left: 10px;"  *ngIf="!showFriends">
+
+      <div class="scroll" style="margin-top:10px;margin-left: 10px;" *ngIf="!showFriends">
         <div *ngFor="let chatroom of chatrooms" class="user"
           style="display: flex;margin-bottom: 10px;position: relative;" (click)="newChatBox(chatroom)">
 
@@ -60,8 +59,8 @@ bottom:0%;">
 
 
       <div class="scroll" style="margin-top:10px;margin-left: 10px;" *ngIf="showFriends">
-        <div *ngFor="let friend of friends" class="user"
-          style="display: flex;margin-bottom: 10px;position: relative;" (click)="gotoChatroom(friend,search)">
+        <div *ngFor="let friend of friends" class="user" style="display: flex;margin-bottom: 10px;position: relative;"
+          (click)="gotoChatroom(friend,search)">
 
           <img [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'../../assets/user.png'" class="user_icon"
             style="width: 36px;flex:1" />
