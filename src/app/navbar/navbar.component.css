@@ -28,6 +28,9 @@ sub{
     padding-right: 16px;
 }
 
+.ant-tabs-content{
+  margin-left: -102% !important;
+}
 
 
 

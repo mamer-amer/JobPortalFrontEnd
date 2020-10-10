@@ -21,6 +21,14 @@
       </li>
 
       <li class="nav-item">
+        <a class="nav-link waves-light" [routerLink]="['/publictender']" mdbWavesEffect>Tenders</a>
+      </li>
+
+      <!-- <li  *ngIf="userType=='employer'" class="nav-item">
+        <a class="nav-link waves-light"  [routerLink]="['/addtender']" mdbWavesEffect>Add Tender</a>
+      </li> -->
+
+      <li class="nav-item">
         <app-global-search></app-global-search>
       </li>
 
@@ -195,6 +203,7 @@
         <ul style="padding: 0px;width: 500px;" nz-menu>
           <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
             <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Notifications</p>
+            
             <p (click)="readAllNotications()" class="underLine"
               style="margin:5px 0px 0px 0px ;color: rgb(39, 39, 226);">Mark All As Read</p>
           </div>
@@ -202,6 +211,8 @@
 
 
           <!-- INFINITE SCROLL -->
+          <nz-tabset style="margin:0px 0px 0px 15px">
+              <nz-tab  nzTitle="All">
 
           <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results"
             [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1"
@@ -249,6 +260,59 @@
               </div>
             </div>
           </div>
+          </nz-tab>
+          <nz-tab *ngIf="userType=='employer' || userType=='recruiter'" (nzClick)="getAllTenderNotification()" nzTitle="Tender Requests">
+              <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results"
+              [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1"
+              [infiniteScrollThrottle]="100" >
+  
+              <div *ngFor="let notification of tendernotifications" class="notificationItem"
+                [style.background-color]="notification.seen?'white':'#E5EAF2'"
+                (click)="readTenderNotifications(notification.tender.id)"
+                style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+                nz-menu-item>
+                <span style="flex: 1;">
+                  <nz-avatar  *ngIf="userType=='employer'" [nzSize]="48" nzIcon="user" [nzSrc]="notification.employer.companyProfile.logo?'data:image/jpeg;base64,'+notification.employer.companyProfile.logo:
+                    '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+                  </nz-avatar>
+                  <nz-avatar  *ngIf="userType=='recruiter'" [nzSize]="48" nzIcon="user" [nzSrc]="notification.recruiter.companyProfile.logo?'data:image/jpeg;base64,'+notification.employer.companyProfile.logo:
+                    '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+                  </nz-avatar>
+                </span>
+                <div style="flex: 7;">
+                  <div style="display:flex;flex-direction: column;">
+                    <div style="flex:1;white-space:pre-line;margin-top: 10px;">
+                      <span  style="font-weight: bold;">{{userType=='employer'?notification.recruiter.name:notification.employer.name}} 
+                        <span
+                          style="font-weight: normal !important" *ngIf="userType=='recruiter'">has sent you this contract </span> 
+                        <span
+                          style="font-weight: normal !important" *ngIf="userType=='employer'">{{notification.applied==false?declinestatus:acceptstatus}}</span> 
+                        </span>
+
+                      
+                    </div>
+  
+                    
+                  </div>
+                </div>
+  
+  
+  
+              </div>
+              <div class="row" *ngIf="isLoader">
+  
+                <div class="col-lg-12" style="height: 20px;
+                margin-bottom: 10px;">
+  
+                  <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader"
+                    [fullScreen]="false">
+  
+                  </ngx-spinner>
+                </div>
+              </div>
+            </div>
+            </nz-tab>
+          </nz-tabset>
 
 
           <div style="height: 30px;text-align: center;line-height: 30px;">

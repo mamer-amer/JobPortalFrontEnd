@@ -20,6 +20,9 @@ import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
 import { InvitationComponent } from './invitation/invitation.component';
 import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component';
+import { TenderFormComponent } from './tender/tender-form/tender-form.component';
+import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
+import { TenderPublicComponent } from './tender-public/tender-public.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -77,6 +80,11 @@ const routes: Routes = [
   { path: "invitation", component: InvitationComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
   { path: "meetingMap/:meetingId", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
   {path:"meeting-invite/:id",component:MeetingInviteComponent},
+  {path:"addtender",component:TenderFormComponent},
+  {path:"addtender/:id",component:TenderFormComponent},
+  {path:"tender-details/:id",component:TenderdetailsComponent},
+  {path:"publictender",component:TenderPublicComponent},
+
 
   { path: '**', component: ErrorPageComponent }
 ];

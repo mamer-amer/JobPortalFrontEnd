@@ -38,7 +38,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import en from '@angular/common/locales/en';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
 registerLocaleData(en);
 import { MatRadioModule } from '@angular/material/radio';
@@ -91,10 +91,14 @@ import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
 import { InvitationComponent } from './invitation/invitation.component';
 import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 
 import { AgmOverlays } from "agm-overlays";
 import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component'
+import { TenderFormComponent } from './tender/tender-form/tender-form.component';
+import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
+import { TenderPublicComponent } from './tender-public/tender-public.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -120,13 +124,17 @@ import { MeetingInviteComponent } from './meeting-invite/meeting-invite.componen
     ChatPopUpBottomComponent,
     InvitationComponent,
     GoogleMapForMeetingComponent,
-    MeetingInviteComponent
+    MeetingInviteComponent,
+    TenderFormComponent,
+    TenderdetailsComponent,
+    TenderPublicComponent
 
 
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
     ConfirmDialogModule,
+    NzTimePickerModule,
     ImageCropperModule,
     ReactiveFormsModule,
     ToastrModule,
