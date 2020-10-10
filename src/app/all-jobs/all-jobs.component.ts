@@ -53,6 +53,7 @@ export class AllJobsComponent implements OnInit {
 
   @ViewChild('search')
   public searchElementRef: ElementRef;
+  
   privateJobs = false;
 
 

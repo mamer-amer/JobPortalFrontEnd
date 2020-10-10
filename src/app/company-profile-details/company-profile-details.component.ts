@@ -338,20 +338,8 @@ this.router.navigate(['addtender/'+this.companyId]);
       })
   }
 
-  sendInvite() {
-    let userId = this.userId;
-    let friendId = this.id;
-    this.service.sendMeetingInvite(userId, friendId).subscribe(res => {
-      if (res) {
-        this.toastService.info('Invitation sent successfully')
-      }
-      else {
-        this.toastService.error('failed to send invitation')
-      }
-    }), error => {
-      this.toastService.error('failed')
-
-    }
-  }
+sendInvite(){
+  this.router.navigate(['meeting-invite/'+this.id])
+}
 
 }
