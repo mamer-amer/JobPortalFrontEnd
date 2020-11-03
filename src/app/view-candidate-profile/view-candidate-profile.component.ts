@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
@@ -7,7 +7,9 @@ import { JobService } from '../Services/job.service';
 import { ToastrService } from 'ngx-toastr';
 import { NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
-
+import { FormControl } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
+import $ from 'jquery'
 @Component({
   selector: 'app-view-candidate-profile',
   templateUrl: './view-candidate-profile.component.html',
@@ -43,9 +45,20 @@ export class ViewCandidateProfileComponent implements OnInit {
   mySubscription;
   videoReviewFile;
   isReviewEdit: boolean = false;
+  invitationIsVisible=true;
   review;
-  public constructor(private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
+
+
+
+  public constructor( private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
     this.candidateObj = new CadnidateWithReview();
+
+    //modal
+    let that=this;
+    $('#myModal').on('shown.bs.modal', function () {
+      // that.loadMap()
+      $('#myInput').trigger('focus')
+    })
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -66,7 +79,8 @@ export class ViewCandidateProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.userType = sessionStorage.getItem('userType');
-
+ 
+   
 
 
     this.nav.showNav();
@@ -85,9 +99,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
 
-  ngAfterViewInit() {
-
-  }
+ 
   getCandidateProfile(userId, candidateId) {
     this.service.getCandidateProfileForView(userId, candidateId).subscribe(d => {
 
@@ -492,23 +504,12 @@ export class ViewCandidateProfileComponent implements OnInit {
   }
 
 
-  sendInvite(){
-    // userId
-    let userId = this.id;
-    // VISISTED PROFILE IF (friend id)
-    let friendId = this.userId;
-    this.service.sendMeetingInvite(userId,friendId).subscribe(res=>{
-        if(res){
-          this.toastService.info('Invitation sent successfully')
-        }
-        else{
-          this.toastService.error('failed to send invitation')
-        }
-    }),error=>{
-      this.toastService.error('failed')
+gotoMeetingInvite(){
+  this.router.navigate(['meeting-invite/'+this.userId])
+}
 
-    }
-  }
+
+
 }
 class CadnidateWithReview {
   id?: any;

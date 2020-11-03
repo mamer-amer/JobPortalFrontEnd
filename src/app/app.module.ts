@@ -95,6 +95,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
 
 import { AgmOverlays } from "agm-overlays";
+import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component'
 import { TenderFormComponent } from './tender/tender-form/tender-form.component';
 import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
 import { TenderPublicComponent } from './tender-public/tender-public.component'
@@ -123,6 +124,7 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
     ChatPopUpBottomComponent,
     InvitationComponent,
     GoogleMapForMeetingComponent,
+    MeetingInviteComponent,
     TenderFormComponent,
     TenderdetailsComponent,
     TenderPublicComponent

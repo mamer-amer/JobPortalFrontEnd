@@ -1,12 +1,15 @@
 <app-navbar></app-navbar>
 
-<agm-map style="height:450px;" [zoom]="zoom" [latitude]="latitude" [longitude]="longitude">
+<agm-map style="height:450px;" [zoom]="zoom" [latitude]="latitude" [longitude]="longitude" [usePanning]="true"
+[mapDraggable]="true" (mapReady)="mapReady($event)" [fitBounds]="true">
 
-  <agm-overlay *ngFor="let user of users;let i=index" [latitude]="user.location.latitude"
+  <div *ngFor="let user of users;let i=index">
+  <agm-overlay *ngIf="user.location"   [latitude]="user.location.latitude"
     [longitude]="user.location.longitude">
     <!-- blue html square -->
     <!-- <div style="height: 40px;width: 40px;border-radius:20px;"> -->
     <img [src]="user.id!=userId?'../../assets/blueIcon.png':'../../assets/redIcon.png'"
+    (click)="gotoUserLocation(user.location.longitude,user.location.latitude)"
       (mouseover)="onMouseOver(infoWindow, $event)" (mouseout)="onMouseOut(infoWindow, $event)" alt="" [ngStyle]="user.id!=userId?{height: '40px',width:'40px',border: '4px solid blue',borderRadius:'20px'}:
       {height: '50px',width:'50px',border: '4px solid red',borderRadius:'25px'}">
 
@@ -18,39 +21,65 @@
     </agm-info-window>
   </agm-overlay>
 
+</div>
+<agm-marker 
+[latitude]="meetingLatitude"
+[longitude]="meetingLongitude"
 
+(markerClick)="gotoUserLocation(meetingLongitude,meetingLatitude)">
+
+</agm-marker>
 </agm-map>
 
 
 
 <div class="container-fluid" style="padding: 0px;">
   <mat-card style="width: 100%;">
-    <div class="row" style="width: 100%;padding: 10px;">
-      <div class="col-lg-6" style="display: flex;">
-
-        <div *ngFor="let user of users;let i=index" style="flex:1;">
-
-          <div *ngIf="user.id==userId">
-            <img src="/assets/redIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid red" alt="">
-            <span style="vertical-align: sub;
-            font-size: 15px;
-            margin-left: 6px;">{{user.name}}</span>
+    <div class="row">
+      <div class="col-lg-6">
+        <mat-card class="row" [class.mat-elevation-z2]="true" style="margin-left:10px;">
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">Address Line 1 : </label> {{meetingObj.address1}}</div>
+         <div *ngIf="meetingObj.address2" class="col-lg-12"> <label style="color: black;font-weight: 400;">Address Line 2 : </label> {{meetingObj.address2}}</div>
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">City / Town : </label> {{meetingObj.city}}</div>
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">State / Province / Region : </label> {{meetingObj.province}}</div>
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">Zip / Postal Code : </label> {{meetingObj.postalCode}}</div>
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">Country : </label> {{meetingObj.country}}</div>
+         <div class="col-lg-12"> <label style="color: black;font-weight: 400;">Comment : </label> {{meetingObj.comment}}</div>
+          </mat-card>
+       
+      </div>
+      <div class="col-lg-6">
+        <div class="row" style="width: 100%;padding: 10px;margin-top: 10px;">
+          <div class="col-lg-6"></div>
+          <div class="col-lg-6" style="margin-top: 10px;">
+            <button (click)="completeMeeting()" style="background-color: black;color: white;width: 100%;text-align: center;height: 30px;">End Meeting</button>
           </div>
-          <div style="flex:1;" *ngIf="user.id!=userId">
-            <img src="/assets/blueIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid blue" alt="">
-            <span style="vertical-align: sub;
-            font-size: 15px;
-            margin-left: 6px;">{{user.name}}</span>
+          <!-- <div class="col-lg-6" style="margin-top: 10px;">
+            <button (click)="cancelMeeting()" style="background-color: black;color: white;width: 100%;text-align: center;height: 30px;">Cancel Meeting</button>
+          </div> -->
+          <div class="col-lg-12" style="display: flex;margin-top: 10px;">
+    
+            <div *ngFor="let user of users;let i=index" style="flex:1;">
+    
+              <div *ngIf="user.id==userId">
+                <img src="/assets/redIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid red" alt="">
+                <span style="vertical-align: sub;
+                font-size: 15px;
+                margin-left: 6px;">{{user.name}}</span>
+              </div>
+              <div style="flex:1;" *ngIf="user.id!=userId">
+                <img src="/assets/blueIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid blue" alt="">
+                <span style="vertical-align: sub;
+                font-size: 15px;
+                margin-left: 6px;">{{user.name}}</span>
+              </div>
+            </div>
+    
           </div>
+        
         </div>
-
-      </div>
-      <div class="col-lg-3" style="margin-top: 10px;">
-        <button (click)="completeMeeting()" style="background-color: black;color: white;width: 100%;text-align: center;height: 30px;">Complete Meeting</button>
-      </div>
-      <div class="col-lg-3" style="margin-top: 10px;">
-        <button (click)="cancelMeeting()" style="background-color: black;color: white;width: 100%;text-align: center;height: 30px;">Cancel Meeting</button>
       </div>
     </div>
+  
   </mat-card>
 </div>
