@@ -43,7 +43,7 @@ bottom:0%;">
         <div *ngFor="let chatroom of chatrooms" class="user"
           style="display: flex;margin-bottom: 10px;position: relative;" (click)="newChatBox(chatroom)">
 
-          <img [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'../../assets/user.png'" class="user_icon"
+          <img [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'/assets/user.png'" class="user_icon"
             style="width: 36px;flex:1" />
           <div style="flex:6;">
             <div style="display:flex; flex-direction:column;margin-left: 10px;">
@@ -63,7 +63,7 @@ bottom:0%;">
         <div *ngFor="let friend of friends" class="user"
           style="display: flex;margin-bottom: 10px;position: relative;" (click)="gotoChatroom(friend,search)">
 
-          <img [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'../../assets/user.png'" class="user_icon"
+          <img [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'/assets/user.png'" class="user_icon"
             style="width: 36px;flex:1" />
           <div style="flex:6;">
             <div style="display:flex; flex-direction:column;margin-left: 10px;">
@@ -83,7 +83,7 @@ bottom:0%;">
   <div class="message_box">
 
     <div [ngClass]="{'message_header':true}" (click)="toggle(i,messageBox.user,messageBox.chatroomId)">
-      <img [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
+      <img [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'/assets/user.png'"
         class="user_icon" />
       <h3 class="username">{{messageBox.user.name}}</h3>
       <div
@@ -100,7 +100,7 @@ bottom:0%;">
       <div [class]="'messages'" [id]="'chat'+messageBox.chatroomId">
         <div *ngFor="let chat of messageBox.chats" [ngClass]="chat.sender!=id?'p1':'p2'">
           <img *ngIf="chat.sender!=id"
-            [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'../../assets/user.png'"
+            [src]="messageBox.user.dp?'data:image/jpeg;base64,'+messageBox.user.dp:'/assets/user.png'"
             class="user_icon_small" />
           <p style="word-break: break-all;">{{chat.message}}</p>
         </div>

@@ -14,7 +14,7 @@
           <div class="row">
             <nz-avatar [class.mat-elevation-z2]="true" style="margin:20px 20px 0px 20px" nzIcon="user"
               [nzShape]="'square'" [nzSize]="100"
-              [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'../../assets/user.png'">
+              [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'/assets/user.png'">
             </nz-avatar>
             <div *ngIf="userType =='employer'"  class="col" style="margin-left:66%">
                 <button  (click)="gotoaddtender()" style="position: absolute;
@@ -256,7 +256,7 @@
                 <div class="row" style="margin-top:6px !important">
                   <div class="col-lg-12">
                     <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
-                      [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'">
+                      [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'/assets/user.png'">
                     </nz-avatar>
                     <!-- //edit and delete review and rating -->
                     <div *ngIf=" !isReviewEdit && candidate.userId==userId" style="position: absolute;
@@ -314,7 +314,7 @@
             <div *ngIf="!textReviewTab  && candidate.type=='video'" style="margin-top: 30px;">
               <div class="col-lg-12">
                 <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
-                  [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'../../assets/user.png'">
+                  [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'/assets/user.png'">
                 </nz-avatar>
                 <!-- //edit and delete review and rating -->
                 <div *ngIf="candidate.userId==userId" style="position: absolute;
