@@ -337,7 +337,7 @@
       <li class="nav-item avatar dropdown" *ngIf="userType!='candidate'" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
 
-          <img [src]="userImage?'data:image/jpeg;base64,'+userImage:'/assets/user.png'" 
+          <img [src]="userImage?'data:image/jpeg;base64,'+userImage:'assets/user.png'" 
             style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0 "
             >
 
@@ -357,7 +357,7 @@
 
       <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'" dropdown>
         <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'/assets/user.png'" 
+          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'assets/user.png'" 
             style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"
             
             ></a>

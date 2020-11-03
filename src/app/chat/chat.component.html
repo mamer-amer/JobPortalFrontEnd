@@ -13,7 +13,7 @@
         style="height: 65px;"
         (click)="onFocusOut(search)">
         <img class="profile-image"
-          [src]="dp?'data:image/jpeg;base64,' + dp :'/assets/user.png'"
+          [src]="dp?'data:image/jpeg;base64,' + dp :'assets/user.png'"
           alt="Profile img">
         <span (click)="refreshChatrooms()"
           class="settings-tray--right">
@@ -44,7 +44,7 @@
             class="friend-drawer friend-drawer--onhover">
             <img class="profile-image"
               style="height: 40px;width:40px;border-radius:30px;"
-              [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'/assets/user.png'"
+              [src]="friend.dp?'data:image/jpeg;base64,'+friend.dp:'assets/user.png'"
               alt="">
             <div class="text">
               <p style="margin-top:10px;font-weight: bold;">{{friend.name}}</p>
@@ -61,7 +61,7 @@
             (click)="gotoChatroom(chatroom.userId,chatroom,search)">
 
             <img class="profile-image"
-              [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'/assets/user.png'"
+              [src]="chatroom.dp?'data:image/jpeg;base64,'+chatroom.dp:'assets/user.png'"
               alt="">
             <div class="text">
               <h6>{{chatroom.name}}</h6>
@@ -89,7 +89,7 @@
         <div class="settings-tray">
           <div class="friend-drawer no-gutters friend-drawer--grey">
             <img class="profile-image"
-              [src]="friendProfile.dp?'data:image/jpeg;base64,'+friendProfile.dp:'/assets/user.png'"
+              [src]="friendProfile.dp?'data:image/jpeg;base64,'+friendProfile.dp:'assets/user.png'"
               alt="">
             <div style="padding-top: 10px;"
               class="text">

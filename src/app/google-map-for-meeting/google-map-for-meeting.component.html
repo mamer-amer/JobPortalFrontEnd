@@ -62,13 +62,13 @@
             <div *ngFor="let user of users;let i=index" style="flex:1;">
     
               <div *ngIf="user.id==userId">
-                <img src="/assets/redIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid red" alt="">
+                <img src="assets/redIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid red" alt="">
                 <span style="vertical-align: sub;
                 font-size: 15px;
                 margin-left: 6px;">{{user.name}}</span>
               </div>
               <div style="flex:1;" *ngIf="user.id!=userId">
-                <img src="/assets/blueIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid blue" alt="">
+                <img src="assets/blueIcon.png" style="height: 50px;width: 50px;border-radius:25px;border:3px solid blue" alt="">
                 <span style="vertical-align: sub;
                 font-size: 15px;
                 margin-left: 6px;">{{user.name}}</span>
