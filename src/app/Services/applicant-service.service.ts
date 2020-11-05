@@ -349,8 +349,8 @@ updateReview(id,obj):Observable<any>{
 
   //meeeting calls
 
-  sendMeetingInvite(userId,friendId):Observable<any>{
-    return this.http.get(this.url+"api/meeting/invite?userId="+`${userId}`+"&friendId="+`${friendId}`)
+  sendMeetingInvite(obj):Observable<any>{
+    return this.http.post(this.url+"api/meeting/invite",obj)
   }
 
   getMeetingInvitations(filter:string,userId:any):Observable<any>{
