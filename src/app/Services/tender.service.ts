@@ -10,7 +10,7 @@ import { AnyARecord } from 'dns';
 export class TenderService {
 
   constructor(private http:HttpClient) { }
-  public postTender(obj: Object): Observable<any> {
+  public postTender(obj: any): Observable<any> {
     return this.http.post(environment.baseUrl + "api/tender", obj)
   }
   public gettenderbyid(tenderid:any):Observable<any>{

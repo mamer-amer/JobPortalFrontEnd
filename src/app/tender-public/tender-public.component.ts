@@ -6,15 +6,16 @@ import { ToastrService } from 'ngx-toastr';
 import { TenderService } from '../Services/tender.service';
 import { Tender } from '../tender/tender-form/tender';
 
+import { NzModalService } from 'ng-zorro-antd';
 @Component({
   selector: 'app-tender-public',
   templateUrl: './tender-public.component.html',
   styleUrls: ['./tender-public.component.css']
 })
 export class TenderPublicComponent implements OnInit {
-  heroes = ['Windstorm', 'Bombasto', 'Magneta', 'Tornado','4'];
   empty = false;
   userType = sessionStorage.getItem('userType');
+  companyId : any;
   
   page = 1;
   public total: any;
@@ -22,7 +23,7 @@ export class TenderPublicComponent implements OnInit {
   
 
   tenders = [];
-    constructor(private tenderservice:TenderService ,private navbar : NavbarService,private router: Router) {
+    constructor(private tenderservice:TenderService ,private navbar : NavbarService,private router: Router,private modalService: NzModalService) {
      
 
      }
@@ -30,6 +31,7 @@ export class TenderPublicComponent implements OnInit {
     ngOnInit() {
       this.navbar.showNav();
       this.gettender();
+      // this.companyId = this.activatedRoute.snapshot.params.id;
     }
 
     lstTender =[];
@@ -52,6 +54,42 @@ export class TenderPublicComponent implements OnInit {
     routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
 
     routeToTenderDetail =(tenderid) => this.router.navigate(['tender-details/'+tenderid]);
+
+    addtender(){
+      this.router.navigate(['addtender/']);
+    }
+
+    showDeleteConfirm(tenderId: any): void {
+      this.modalService.confirm({
+        nzTitle: 'work in progress...',
+        // nzTitle: 'Are you sure you want to delete?',
+        nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
+        nzOkText: 'Yes',
+        nzOkType: 'danger',
+        nzOnOk: () => {
+          this.deleteJob(tenderId)
+        },
+        nzCancelText: 'No',
+        nzOnCancel: () => {
+          // window.history.go(-1);
+        }
+      });
+    }
+
+    deleteJob(tenderId: any) {
+      console.log("delete id",tenderId)
+
+      // this.service.deleteJob(id, page - 1,this.privateJobs).subscribe(res => {
+      //   if (res.status == 200) {
+      //     this.toastService.info('Deleted')
+      //     //  this.allJobs.slice(index,1);
+         
+      //   }
+  
+      // }), error => {
+      //   this.toastService.error('Failed')
+      // }
+    }
 
   
   }

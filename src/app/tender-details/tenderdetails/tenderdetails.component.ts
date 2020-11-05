@@ -36,6 +36,8 @@ export class TenderdetailsComponent implements OnInit {
     this.navbar.showNav();
     this.getAllTender(this.tenderId);
 
+    console.log(this.tenderobj);
+
   }
   getAllTender(tenderId: any) {
     this.tenderservice.gettenderbyid(this.tenderId).subscribe(res => {
@@ -54,11 +56,12 @@ export class TenderdetailsComponent implements OnInit {
      const tenderDto = new Tender();
      tenderDto.recruiterUserId = this.userId;
      tenderDto.employerUserId = this.employerId;
+     tenderDto.tenderType = this.tenderobj.tenderType;
      tenderDto.id = this.tenderobj.id;
      console.log("TENDER DTO ",tenderDto)
      this.tenderservice.acceptOrDeclineTender(tenderDto,isApplied).subscribe(res=>{
        this.btnApplied = true;   
-       isApplied==true?this.toastService.success("Tender successfully accepted"):this.toastService.warning("Tender decline");
+       isApplied==true?this.toastService.info("Tender successfully accepted"):this.toastService.warning("Tender decline");
        
           
      }),error=>{

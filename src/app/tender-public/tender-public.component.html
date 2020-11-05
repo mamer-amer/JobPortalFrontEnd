@@ -2,7 +2,27 @@
   <br>
 
   <div class="container">
-          <div class="row">
+
+    <div *ngIf="tenders.length==0">
+      <mat-card
+      style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+      <span>No tenders found</span>
+      <a *ngIf="userType=='employer'" (click)="addtender();"  aria-expanded="true" class="nav-link ml-0 active ">
+        <i class="mdi mdi-plus mr-1"></i>Add tender 
+    </a>
+      </mat-card>
+    </div>
+          <div class="row" *ngIf="tenders.length>0">
+            <div class="col-lg-12 " *ngIf="userType=='employer'"  >
+              <a (click)="addtender();"  aria-expanded="true" class="nav-link ml-0 active "
+               style="float: right;background: black; color: white;">
+                  <i class="mdi mdi-plus mr-1"></i>Add tender 
+              </a>
+
+              <br>
+            <br><br>
+            </div>
+            
               
           <div *ngFor="let tender of tenders"
               class="col-lg-12"
@@ -24,7 +44,7 @@
       
                             <i class='fa fa-pencil edit_delete'
                               nz-tooltip
-                              nzTooltipTitle="Edit Job"
+                              nzTooltipTitle="Edit Tender"
                               
                             
                               alt="Edit Job"
@@ -34,8 +54,9 @@
       
                             <i class='fa fa-trash edit_delete'
                               nz-tooltip
-                              nzTooltipTitle="Delete Job"
+                              nzTooltipTitle="Delete Tender"
                               alt="Delete Job"
+                              (click)="showDeleteConfirm(tender.id)"
                               style='font-size:20px;cursor: pointer;'>
       
                             </i>
