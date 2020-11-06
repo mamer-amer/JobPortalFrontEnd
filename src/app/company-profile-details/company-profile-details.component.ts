@@ -88,8 +88,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
 
-      this.id=res.userId;
-      console.log(res,"========ress")
+      this.id = res.userId;
+      console.log(res, "========ress")
 
       if (index != -1) {
         this.review = res.companyReviewRatingDTOList[index].review;
@@ -297,8 +297,8 @@ export class CompanyProfileDetailsComponent implements OnInit {
     tempArray.splice(0, 0, obj);
     return tempArray;
   }
-  gotoaddtender(){
-this.router.navigate(['addtender/'+this.companyId]);
+  gotoaddtender() {
+    this.router.navigate(['addtender/' + this.companyId + '/' + this.id]);
   }
 
 
@@ -338,8 +338,8 @@ this.router.navigate(['addtender/'+this.companyId]);
       })
   }
 
-sendInvite(){
-  this.router.navigate(['meeting-invite/'+this.id])
-}
+  sendInvite() {
+    this.router.navigate(['meeting-invite/' + this.id])
+  }
 
 }

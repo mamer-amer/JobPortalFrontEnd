@@ -18,7 +18,7 @@ import { TenderService } from '../Services/tender.service';
 })
 export class NavbarComponent implements OnInit {
 
-  acceptstatus:any='has accepted your offer';
+  acceptstatus:any='jas applied/accepted your offer';
   declinestatus:any='has rejected your offer';
   userType: any;
   userName: any;
@@ -274,12 +274,24 @@ export class NavbarComponent implements OnInit {
     if(this.userType=="recruiter"){
       this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
         this.tendernotifications=res;
+        // if(res?.tender?.tenderType=='public'){
+        //     this.acceptstatus = 'has applied to your tender';
+        // }
+        // else{
+        //   this.acceptstatus = 'has accepted your offer';
+        // }
         console.log(this.tendernotifications);
       })
     }
     else{
       
       this.tenderservice.getAlltenderNotificationsForEmployer(this.userId).subscribe(res=>{
+      //   if(res?.tender?.tenderType=='public'){
+      //     this.acceptstatus = 'has applied to your tender';
+      // }
+      // else{
+      //   this.acceptstatus = 'has accepted/a your offer';
+      // }
         this.tendernotifications=res;
         console.log(this.tendernotifications);
       })

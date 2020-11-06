@@ -17,8 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { CommonModule, registerLocaleData, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+// import { ConfirmDialogModule } from 'primeng/confirmdialog';
+// import { ConfirmationService } from 'primeng/api';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -30,7 +30,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import { MatDividerModule } from '@angular/material/divider';
 import { StarRatingModule } from 'angular-star-rating';
-import { DropdownModule } from 'primeng/dropdown';
+// import { DropdownModule } from 'primeng/dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -59,7 +59,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { MatIconModule } from '@angular/material/icon'
-import { DialogModule } from 'primeng/dialog';
+// import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
@@ -133,7 +133,7 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
-    ConfirmDialogModule,
+    
     NzTimePickerModule,
     ImageCropperModule,
     ReactiveFormsModule,
@@ -163,8 +163,6 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
     MatCardModule,
     MatTableModule,
     MatRadioModule,
-    DropdownModule,
-    DialogModule,
     MatDialogModule,
     NgxPaginationModule,
     MatDividerModule,
@@ -217,7 +215,7 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
       multi: true
     },
     { provide: NZ_I18N, useValue: en_US },
-    ConfirmationService,
+    
     CandidateProfileComponent,
     NavbarComponent,
     CompanyProfileComponent,

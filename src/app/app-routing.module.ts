@@ -81,7 +81,7 @@ const routes: Routes = [
   { path: "meetingMap/:meetingId", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
   {path:"meeting-invite/:id",component:MeetingInviteComponent},
   {path:"addtender",component:TenderFormComponent},
-  {path:"addtender/:id",component:TenderFormComponent},
+  {path:"addtender/:id/:userId",component:TenderFormComponent},
   {path:"tender-details/:id",component:TenderdetailsComponent},
   {path:"publictender",component:TenderPublicComponent},
 
