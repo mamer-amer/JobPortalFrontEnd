@@ -43,7 +43,14 @@ export class ApplicantServiceService {
 
 
 
+deleteReview(id):Observable<any>{
+  return this.http.delete(this.url+"api/review/"+id);
 
+}
+
+updateReview(id,obj):Observable<any>{
+  return this.http.put(this.url+"api/review/"+id,obj);
+}
   getUserByEmail(email): Observable<any> {
     let userId = sessionStorage.getItem("userId");
     return this.http.get(this.url + "token/user/" + userId);
@@ -351,4 +358,41 @@ export class ApplicantServiceService {
   getReviewsDetails(userId): Observable<any> {
     return this.http.get(this.url + "api/review/allreviews/" + `${userId}`)
   }
+
+
+  //meeeting calls
+
+  sendMeetingInvite(obj):Observable<any>{
+    return this.http.post(this.url+"api/meeting/invite",obj)
+  }
+
+  getMeetingInvitations(filter:string,userId:any):Observable<any>{
+    return this.http.get(this.url+"api/meeting/filter/"+`${userId}`+"?filter="+`${filter}`)
+  }
+  acceptInvitation(userId1,userId2,meetingId):Observable<any>{
+    return this.http.get(this.url+`api/meeting/accept-invite?userId1=${userId1}&userId2=${userId2}&meetingId=${meetingId}`)
+
+  }
+  declineInvitation(userId1,userId2,meetingId):Observable<any>{
+    return this.http.get(this.url+`api/meeting/cancel-invite?userId1=${userId1}&userId2=${userId2}&meetingId=${meetingId}`)
+
+  }
+
+ completeInvitation(userId1,userId2,meetingId):Observable<any>{
+    return this.http.get(this.url+`api/meeting/complete-invite?userId1=${userId1}&userId2=${userId2}&meetingId=${meetingId}`)
+
+  }
+
+  getMeetingRoom(meetingId:any,userId:any):Observable<any>{
+    return this.http.get(this.url+`api/meeting/room?meetingId=${meetingId}&userId=${userId}`);
+  }
+
+  getInvitationCount(userId:any):Observable<any>{
+    return this.http.get(this.url+`api/meeting/notifications/${userId}`);
+  }
+
+  
+  //USER
+
+ 
 }

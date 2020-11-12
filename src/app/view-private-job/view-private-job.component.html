@@ -11,7 +11,7 @@
 
         <div class="row">
           <div class="col-sm-3 col-12"><img class="company-img"
-              [src]="companyProfile!=null?'data:image/jpeg;base64,'+companyProfile.dp:'../../assets/user.png'">
+              [src]="companyProfile!=null?'data:image/jpeg;base64,'+companyProfile.logo:'assets/user.png'">
           </div>
           <div class="col-sm-9 col-12">
             
@@ -178,7 +178,7 @@
           <div class="col-lg-2">
 
             <img style="width: 100%;border-radius: 50%"
-              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile?.candidateProfile?.profile.dp:'../../assets/user.png'">
+              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'assets/user.png'">
 
 
           </div>
@@ -214,9 +214,42 @@
   </div>
 
 
-  <div  *ngIf="allCandidatesReferedOrNotList.length<1">
-    <h6>No refered candidates</h6>
-</div>
+  <!--<div *ngIf="!allCandidatesReferedOrNotList.length">
+    <div *ngFor="let candidateProfile of candidateProfiles;let i=index;">
+      <mat-card class="candidateProfile-card">
+        <div class="row">
+          <div class="col-lg-2">
+
+            <img style="width: 100%;border-radius: 50%"
+              [src]="candidateProfile!=null?'data:image/jpeg;base64,'+candidateProfile.dp:'assets/user.png'">
+
+
+          </div>
+
+          <div class="col-lg-10">
+            <a [routerLink]="['/viewprofile']"
+              [queryParams]="{'userId':candidateProfile.user.id,'candId':candidateProfile.id}">
+              <h5>
+                {{candidateProfile.user.name}}</h5>
+            </a>
+            <small>{{candidateProfile.user.email}}</small>
+            <p>{{candidateProfile.presentationLetter.length>100?
+            candidateProfile.presentationLetter.slice(0,100)+'...'
+            :candidateProfile.presentationLetter
+          }}
+            </p>
+            <mat-checkbox (click)="referCandidatesList(candidateProfile.id)">
+              <b>Refer</b>
+            </mat-checkbox>
+          </div>
+
+        </div>
+      </mat-card>
+      <br>
+    </div>
+  </div>-->
+
+
 
 
 </nz-modal>

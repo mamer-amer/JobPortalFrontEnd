@@ -28,6 +28,9 @@ sub{
     padding-right: 16px;
 }
 
+.ant-tabs-content{
+  margin-left: -102% !important;
+}
 
 
 
@@ -49,6 +52,12 @@ nz-badge {
   }
 
 .notification-close-class{
+    color: rgb(12, 12, 12) !important;
+   
+    font-size: 25px;
+    margin:7px 10px 0px 6px;
+}
+.invitation-close-class{
     color: rgb(12, 12, 12) !important;
    
     font-size: 25px;

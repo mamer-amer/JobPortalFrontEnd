@@ -6,7 +6,7 @@ import { JobService } from '../Services/job.service'
 import { ToastrService } from 'ngx-toastr';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import csc from 'country-state-city'
-import { MessageService } from 'primeng/api/public_api';
+// import { MessageService } from 'primeng/api/public_api';
 import { NzMessageService } from 'ng-zorro-antd';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavbarService } from '../navbar.service';

@@ -17,8 +17,8 @@ import { MatCardModule } from '@angular/material/card';
 import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 import { CommonModule, registerLocaleData, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { MatTableModule } from '@angular/material/table';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
+// import { ConfirmDialogModule } from 'primeng/confirmdialog';
+// import { ConfirmationService } from 'primeng/api';
 import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -30,7 +30,7 @@ import { NzSpinModule } from 'ng-zorro-antd/spin';
 
 import { MatDividerModule } from '@angular/material/divider';
 import { StarRatingModule } from 'angular-star-rating';
-import { DropdownModule } from 'primeng/dropdown';
+// import { DropdownModule } from 'primeng/dropdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -38,7 +38,7 @@ import { ExportAsModule } from 'ngx-export-as';
 import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
 import en from '@angular/common/locales/en';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
-import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+
 import { NzButtonModule } from 'ng-zorro-antd/button';
 registerLocaleData(en);
 import { MatRadioModule } from '@angular/material/radio';
@@ -59,7 +59,7 @@ import { JobDetailsComponent } from './job-details/job-details.component';
 import { ToastrModule } from 'ngx-toastr';
 import { ReactiveFormsModule } from '@angular/forms';
 // import { MatIconModule } from '@angular/material/icon'
-import { DialogModule } from 'primeng/dialog';
+// import { DialogModule } from 'primeng/dialog';
 import { FooterComponent } from './footer/footer.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { NgxSpinnerModule, NgxSpinnerService } from "ngx-spinner";
@@ -89,7 +89,16 @@ import { GlobalSearchComponent } from './global-search/global-search.component';
 import { NzAutocompleteModule } from 'ng-zorro-antd/auto-complete';
 import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
+import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 
+
+import { AgmOverlays } from "agm-overlays";
+import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component'
+import { TenderFormComponent } from './tender/tender-form/tender-form.component';
+import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
+import { TenderPublicComponent } from './tender-public/tender-public.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -112,13 +121,20 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     SearchForCandidatesComponent,
     GlobalSearchComponent,
     ChatComponent,
-    ChatPopUpBottomComponent
+    ChatPopUpBottomComponent,
+    InvitationComponent,
+    GoogleMapForMeetingComponent,
+    MeetingInviteComponent,
+    TenderFormComponent,
+    TenderdetailsComponent,
+    TenderPublicComponent
 
 
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
-    ConfirmDialogModule,
+    
+    NzTimePickerModule,
     ImageCropperModule,
     ReactiveFormsModule,
     ToastrModule,
@@ -147,8 +163,6 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     MatCardModule,
     MatTableModule,
     MatRadioModule,
-    DropdownModule,
-    DialogModule,
     MatDialogModule,
     NgxPaginationModule,
     MatDividerModule,
@@ -187,7 +201,9 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
       libraries: ['places']
-    })
+    }),
+  
+    AgmOverlays
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -199,7 +215,7 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
       multi: true
     },
     { provide: NZ_I18N, useValue: en_US },
-    ConfirmationService,
+    
     CandidateProfileComponent,
     NavbarComponent,
     CompanyProfileComponent,

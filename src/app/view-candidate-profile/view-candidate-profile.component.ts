@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef, NgZone } from '@angular/core';
 import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
@@ -7,7 +7,9 @@ import { JobService } from '../Services/job.service';
 import { ToastrService } from 'ngx-toastr';
 import { NzModalService } from 'ng-zorro-antd';
 import { Subject } from 'rxjs';
-
+import { FormControl } from '@angular/forms';
+import { MapsAPILoader } from '@agm/core';
+import $ from 'jquery'
 @Component({
   selector: 'app-view-candidate-profile',
   templateUrl: './view-candidate-profile.component.html',
@@ -42,9 +44,18 @@ export class ViewCandidateProfileComponent implements OnInit {
   textReviewTab = true;
   friendRequestsObservable = new Subject<string>();
   mySubscription;
+  isReviewEdit: boolean = false;
   videoReviewFile;
+  review;
   public constructor(private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
     this.candidateObj = new CadnidateWithReview();
+
+    //modal
+    let that=this;
+    $('#myModal').on('shown.bs.modal', function () {
+      // that.loadMap()
+      $('#myInput').trigger('focus')
+    })
 
     this.router.routeReuseStrategy.shouldReuseRoute = function () {
       return false;
@@ -197,6 +208,42 @@ export class ViewCandidateProfileComponent implements OnInit {
 
     })
 
+  }
+  moveArrayElementToFirst(arr, index) {
+
+    let obj = arr[index];
+    let tempArray = arr;
+    tempArray.splice(index, 1);
+    tempArray.splice(0, 0, obj);
+    return tempArray;
+  }
+  deleteReview(id) {
+    this.service.deleteReview(id)
+      .subscribe(() => {
+        this.getUser(this.userId);
+      })
+  }
+
+  updateReview(id, type) {
+    let obj;
+    if (type == 'text') {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("review", this.review);
+    }
+    else {
+      obj = new FormData();
+      obj.append("rating", this.rating);
+      obj.append("type", type);
+      obj.append("video", this.videoReviewFile);
+
+    }
+    this.service.updateReview(id, obj)
+      .subscribe(() => {
+        this.getUser(this.userId);
+        this.isReviewEdit = false;
+      })
   }
 
   videoReviewChanged(input) {
@@ -431,6 +478,14 @@ export class ViewCandidateProfileComponent implements OnInit {
         this.getFriendshipStatus(this.id, this.candidateId)
       })
   }
+
+
+gotoMeetingInvite(){
+  this.router.navigate(['meeting-invite/'+this.userId])
+}
+
+
+
 }
 class CadnidateWithReview {
   id?: any;

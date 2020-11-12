@@ -15,8 +15,11 @@ export class ChatPopUpBottomComponent implements OnInit {
   chatrooms: Array<any> = [];
   messageBoxes: Array<any> = [];
   chats = [];
+  friends: Array<any> = [];
+  friendsTempArray: Array<any> = [];
+  showFriends=false;
   private stompClient;
-  // @ViewChild('scrollMe') private myScrollContainer: ElementRef;
+
   scrollTop: number = null;
   styleArray = [
     { position: 'fixed', bottom: '0%', right: '0px' },
@@ -34,7 +37,10 @@ export class ChatPopUpBottomComponent implements OnInit {
     $(".chat_header").click(function () {
       $(".chat_content").slideToggle("slow");
       that.getChantrooms();
+      that.getAllFriends(that.id);
     });
+
+    this.getAllFriends(this.id)
 
   }
 
@@ -58,13 +64,13 @@ export class ChatPopUpBottomComponent implements OnInit {
 
       let chats = messageBox.chats;
       // chats.push(chat);
-      messageBox.chats.push(chat) 
+      messageBox.chats.push(chat)
       this.replaceArray(messageBox)
 
-      setTimeout(()=>this.scrollToBottom(chat.chatroomId),100)
+      setTimeout(() => this.scrollToBottom(chat.chatroomId), 100)
 
 
-    },{id:chatroomId});
+    }, { id: chatroomId });
   }
 
   sendMessage(messageInput, friendId, chatroomId) {
@@ -72,7 +78,7 @@ export class ChatPopUpBottomComponent implements OnInit {
 
       this.stompClient.send(`/app/chat/${friendId}/${chatroomId}`, {}, JSON.stringify({ message: messageInput.value, userId: this.id }));
       messageInput.value = "";
-     
+
       // this.messageSend = true;
     }
 
@@ -87,7 +93,7 @@ export class ChatPopUpBottomComponent implements OnInit {
 
     }
   }
-  removeMessageBox(id,chatroomId) {
+  removeMessageBox(id, chatroomId) {
     this.stompClient.unsubscribe(chatroomId);
     this.messageBoxes.splice(id, 1)
   }
@@ -98,14 +104,14 @@ export class ChatPopUpBottomComponent implements OnInit {
         console.log(res)
       })
   }
-  toggle(i, friend,chatroomId) {
+  toggle(i, friend, chatroomId) {
     console.log(friend)
     // this.initiateChat(friend);
-    this.resetAllChats(chatroomId,friend.userId);
+    this.resetAllChats(chatroomId, friend.userId);
     $(`.mc${i}`).slideToggle("slow");
   }
 
- 
+
   initiateChat(user) {
     this.service.initiateChat(this.id, user.userId)
       .subscribe((chatroomId) => {
@@ -113,7 +119,7 @@ export class ChatPopUpBottomComponent implements OnInit {
       })
   }
   getAllChats(chatroomId, user) {
-    this.service.getAllChatroomChats(chatroomId,user.userId)
+    this.service.getAllChatroomChats(chatroomId, user.userId)
       .subscribe((res) => {
         console.log(res)
         this.chats = res
@@ -125,46 +131,44 @@ export class ChatPopUpBottomComponent implements OnInit {
           chatroomId
         })
 
-        setTimeout(()=>{
+        setTimeout(() => {
           this.scrollToBottom(chatroomId)
-        },100)
-   
-      
+        }, 100)
+
+
 
       })
   }
 
-  resetAllChats(chatroomId,friendId){
-    this.service.getAllChatroomChats(chatroomId,friendId)
-    .subscribe((res) => {
-      console.log(res)
-      this.chats = res
+  resetAllChats(chatroomId, friendId) {
+    this.service.getAllChatroomChats(chatroomId, friendId)
+      .subscribe((res) => {
+        console.log(res)
+        this.chats = res
 
-      this.openGlobalSocket(chatroomId)
-     
+        this.openGlobalSocket(chatroomId)
 
-     this.messageBoxes=this.messageBoxes.map((mb)=>{
-      if(mb.chatroomId==chatroomId)
-      {
-        mb.chats=res;
-        return mb;
-      }
-      else return mb;
-     })
- 
 
-    })
+        this.messageBoxes = this.messageBoxes.map((mb) => {
+          if (mb.chatroomId == chatroomId) {
+            mb.chats = res;
+            return mb;
+          }
+          else return mb;
+        })
+
+
+      })
   }
 
-  
-  ngOnDestroy(){
-    if(this.stompClient)
-    {
+
+  ngOnDestroy() {
+    if (this.stompClient) {
       console.log("unsubscribeddddd")
-   this.stompClient.unsubscribe()
+      this.stompClient.unsubscribe()
     }
   }
- 
+
   contains(id) {
     return this.messageBoxes.find((mb) => mb.user.userId == id);
   }
@@ -183,13 +187,67 @@ export class ChatPopUpBottomComponent implements OnInit {
     })
   }
 
-  scrollToBottom(chatroomId){
-   
-   let messages = document.getElementById(`chat${chatroomId}`);
-   messages.scrollTop = messages.scrollHeight;
-   
+  scrollToBottom(chatroomId) {
+
+    let messages = document.getElementById(`chat${chatroomId}`);
+    messages.scrollTop = messages.scrollHeight;
+
   }
+
+
+  //getting al friends
+
+  getAllFriends(id) {
+    this.friends = [];
+    this.service.getAllFriends(id)
+      .subscribe((response) => {
+        console.log(response)
+        // if (response) {
+
+        response.forEach(element => {
+          this.friends.push(element)
+        });
+        this.friendsTempArray = this.friends;
+        console.log(this.friends, "=====")
+      })
+
+
+  }
+  gotoChatroom(friend, searchBox) {
   
+    // this.friendProfile = friendProfile;
+    this.onFocusOut(searchBox);
+  
+    this.initiateChat(friend)
+
+
+  }
+  inputBoxChange(value) {
+    console.log(value)
+
+    if (value) {
+      this.friends = this.friendsTempArray;
+      this.friends = this.friends.filter((f) => {
+        return f.name.toLowerCase().startsWith(value.toLowerCase())
+      })
+    }
+    else {
+      this.friends = this.friendsTempArray;
+    }
+  }
+  onFocus() {
+    console.log("onFocus")
+   
+    this.showFriends = true;
+  }
+  onFocusOut(search) {
+    console.log("onFocusOut")
+    search.value = ""
+    this.friends = this.friendsTempArray
+    this.showFriends = false;
+  }
+
+
 }
 
 

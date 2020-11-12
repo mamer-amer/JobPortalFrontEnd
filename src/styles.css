@@ -326,3 +326,8 @@ nz-badge {
 .navbar {
   height: 65px !important;
 }
+
+.si-frame {
+  width: fit-content !important;
+}
+

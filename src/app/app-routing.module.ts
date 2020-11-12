@@ -1,3 +1,4 @@
+import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginPageComponent } from './login-page/login-page.component';
@@ -17,6 +18,11 @@ import { SearchForCandidatesComponent } from './search-for-candidates/search-for
 import { GlobalSearchComponent } from './global-search/global-search.component';
 import { ChatComponent } from './chat/chat.component';
 import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-bottom.component';
+import { InvitationComponent } from './invitation/invitation.component';
+import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component';
+import { TenderFormComponent } from './tender/tender-form/tender-form.component';
+import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
+import { TenderPublicComponent } from './tender-public/tender-public.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -71,6 +77,13 @@ const routes: Routes = [
   { path: "allcandidates", component: SearchForCandidatesComponent },
   { path: "chat", component: ChatComponent },
   { path: "popup", component: ChatPopUpBottomComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  { path: "invitation", component: InvitationComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  { path: "meetingMap/:meetingId", component: GoogleMapForMeetingComponent , data: { "candidate": true, "employer": true, "recruiter": true }},
+  {path:"meeting-invite/:id",component:MeetingInviteComponent},
+  {path:"addtender",component:TenderFormComponent},
+  {path:"addtender/:id/:userId",component:TenderFormComponent},
+  {path:"tender-details/:id",component:TenderdetailsComponent},
+  {path:"publictender",component:TenderPublicComponent},
 
 
   { path: '**', component: ErrorPageComponent }

@@ -3,10 +3,10 @@ import * as $ from 'jquery';
 import { NavbarService } from '../navbar.service';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavigationEnd, Router, Route, ActivatedRoute } from '@angular/router';
-import { environment } from '../../environments/environment'
 import * as Stomp from 'stompjs';
 import * as SockJS from 'sockjs-client';
 import * as moment from 'moment'
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
@@ -136,6 +136,7 @@ export class ChatComponent implements OnInit {
   gotoChatroom(id, friendProfile, searchBox) {
   
     this.friendProfile = friendProfile;
+    console.log(friendProfile,"============friend")
     this.onFocusOut(searchBox);
     this.service.initiateChat(this.userId, id)
       .subscribe((res) => {

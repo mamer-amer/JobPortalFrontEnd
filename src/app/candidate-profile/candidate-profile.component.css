@@ -140,3 +140,9 @@ label {
   cursor: pointer;
 }
 
+
+
+
+::ng-deep .source-image{
+  height: 100% !important;
+}

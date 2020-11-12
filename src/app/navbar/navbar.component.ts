@@ -1,3 +1,4 @@
+import { TenderService } from './../Services/tender.service';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { ApplicantServiceService } from '../Services/applicant-service.service';
 import { NavbarService } from '../navbar.service';
@@ -17,32 +18,39 @@ import * as moment from 'moment';
 })
 export class NavbarComponent implements OnInit {
 
+  acceptstatus:any='jas applied/accepted your offer';
+  declinestatus:any='has rejected your offer';
   userType: any;
   userName: any;
+  invitationCount:any=0;
   userImage: any;
   userId = sessionStorage.getItem('userId');
   notifications: Array<any> = [];
   notificationsCount = 0;
   messagesCount = 0;
-  notificationOpen: any;
+  notificationOpen: any;  
   requestOpen = false;
   pageNo = 0;
   isLoader = false;
   totalElements = 1;
   legalCompanyName: any = "";
   requests = [];
-  
+  tendernotifications:any[]=[];
+ 
 
 
 
-  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService) {
+  constructor(private spinner: NgxSpinnerService, private router: Router, private candP: CandidateProfileComponent, private companyProf: CompanyProfileComponent, private toastService: ToastrService, public service: ApplicantServiceService, public navbarService: NavbarService, private nzMessageService: NzMessageService, private logingSerivce: LoginService,private tenderservice:TenderService) {
 
 
     this.notificationOpen = false;
     this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem('dp') : null
     
     this.companyProf.logoChangeObservable.subscribe(() =>
-      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null);
+    {
+      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null;
+      console.log(this.userImage)
+    });
 
 
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
@@ -77,6 +85,7 @@ export class NavbarComponent implements OnInit {
     this.getRequests(this.userId);
     this.userImage = sessionStorage.getItem('dp');
     this.getNotificationsCount(this.userId);
+    this.getInvitationCount()
     this.getAllMessagesCount();
 
   }
@@ -242,4 +251,45 @@ export class NavbarComponent implements OnInit {
   routeToMyCompanyProfile(){
     this.router.navigate(['companyProfileDetails/',this.userId])
   }
+  getInvitationCount(){
+    this.service.getInvitationCount(this.userId)
+    .subscribe((res)=>{
+      console.log(res,"=======count")
+      this.invitationCount=res;
+    })
+  }
+  getAllTenderNotification(){
+    if(this.userType=="recruiter"){
+      this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
+        this.tendernotifications=res;
+        // if(res?.tender?.tenderType=='public'){
+        //     this.acceptstatus = 'has applied to your tender';
+        // }
+        // else{
+        //   this.acceptstatus = 'has accepted your offer';
+        // }
+        console.log(this.tendernotifications);
+      })
+    }
+    else{
+      
+      this.tenderservice.getAlltenderNotificationsForEmployer(this.userId).subscribe(res=>{
+      //   if(res?.tender?.tenderType=='public'){
+      //     this.acceptstatus = 'has applied to your tender';
+      // }
+      // else{
+      //   this.acceptstatus = 'has accepted/a your offer';
+      // }
+        this.tendernotifications=res;
+        console.log(this.tendernotifications);
+      })
+    }
+   
+    
+  }
+  readTenderNotifications(tenderid:any){
+    this.router.navigate(['tender-details/'+tenderid]);
+
+  }
+
 }

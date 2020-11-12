@@ -25,12 +25,12 @@
             <div style="height:350px;" class="modal-body">
 
               <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true"
-                [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1/1" [resizeToWidth]="100"
+                [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1/1" 
                 backgroundColor="lightgray" [resizeToHeight]="100" [cropperMinWidth]="100" [roundCropper]="true"
                 [canvasRotation]="canvasRotation" [transform]="transform" [alignImage]="'center'"
                 [style.display]="showCropper ? null : 'none'" [imageQuality]="100" (imageCropped)="imageCropped($event)"
                 (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady($event)"
-                (loadImageFailed)="loadImageFailed()">
+                (loadImageFailed)="loadImageFailed()" style="height: 100%;">
               </image-cropper>
 
               <div class="row">
@@ -103,16 +103,12 @@
           <div class="row">
             <div class="col-lg-6 offset-lg-4 col-md-6 offset-md-3 col-sm-6 offset-4">
               <img class="companyLogo"
-                [src]="companyProfileObj.dp!=null?'data:image/jpeg;base64,'+companyProfileObj.dp:'../../assets/user.png'"
-                alt="Avatar" class="avatar" />
+                [src]="companyProfileObj.dp!=null?'data:image/jpeg;base64,'+companyProfileObj.dp:'assets/user.png'"
+                alt="Avatar" class="avatar" (click)="inp.click()" />
               <br>
-              <label style="cursor:pointer">
-                <span *ngIf="userType=='recruiter';else employer">Select picture</span>
-                <ng-template #employer>
-                  <span>Company logo</span>
-                </ng-template>
-                <input type="file" id="imgFile" name="filename" (change)="onImageChange($event)" />
-              </label>
+          
+                <input type="file" id="imgFile" name="filename" style="display: none;" #inp  (change)="onImageChange($event)" />
+              <!-- </label> -->
             </div>
           </div>
 
@@ -176,7 +172,7 @@
           </div>
           <div class="recruiter" *ngIf="userType=='recruiter'">
             <div class="row">
-              <div class="col-md-8 col-lg-8 col-sm-8">
+              <div class="col-md-8 col-lg-8 col-sm-8" style="z-index: 0;">
                 <label>Upload resume</label>
                 <div class="custom-file mb-3">
                   <input type="file" class="custom-file-input" accept=".pdf,.docx,.doc" id="customFile"
@@ -195,26 +191,11 @@
 
             </div>
 
-            <!-- <div class="col-lg-12 col-md-12 col-sm-12">
-
-
-              <div *ngIf="companyProfileObj.resume">
-                <a>
-                  <button (click)="showModal()"
-                    class="btn"
-                    style="width:50%"> Preview
-                    Resume</button>
-                  <span>{{companyProfileObj?companyProfileObj.name +"."+contentType :''}}</span>
-                </a>
-
-
-              </div> -->
-
-            <!-- </div> -->
+         
 
             <br>
             <div class="row">
-              <div class="col-md-8 col-lg-8 col-sm-8">
+              <div class="col-md-8 col-lg-8 col-sm-8" style="z-index: 0;">
                 <label>Upload certificate</label>
                 <div class="custom-file mb-3">
                   <input type="file" class="custom-file-input" accept=".pdf,.docx,.doc" id="customFile"
@@ -229,23 +210,7 @@
                 </button>
               </div>
             </div>
-            <!-- 
-            <div class="col-lg-12 col-md-12 col-sm-12">
-
-
-              <div *ngIf="companyProfileObj.certificate">
-                <a>
-                  <button (click)="showModalCertificate()"
-                    class="btn"
-                    style="width:50%"> Preview
-                    Certificate</button>
-                  <span>{{companyProfileObj?companyProfileObj.name+"Certificate"+"."+companyProfileObj.certificateContentType :''}}</span>
-                </a>
-
-
-              </div>
-
-            </div> -->
+          
 
           </div>
           <div class="row">

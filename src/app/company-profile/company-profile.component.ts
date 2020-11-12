@@ -71,7 +71,7 @@
       console.log(this.companyProfileObj)
       this.service.postCompanyProfile(this.userId, this.companyProfileObj).subscribe(res => {
         if (res) {
-          sessionStorage.setItem('dp', this.companyProfileObj.dp);
+          sessionStorage.setItem('dp', this.companyProfileObj.resume);
           sessionStorage.setItem('companyId', res.result.id);
           sessionStorage.setItem('companyName', this.companyProfileObj.name);
 
@@ -268,9 +268,9 @@
 
 
     updateCroppedImage() {
-      this.companyProfileObj.dp = this.croppedImage;
+      this.companyProfileObj.resume = this.croppedImage;
       sessionStorage.removeItem('dp');
-      sessionStorage.setItem('dp', this.companyProfileObj.dp);
+      sessionStorage.setItem('dp', this.companyProfileObj.resume);
       this.logoChangeObservable.next();
       // console.log(event, base64ToFile(event.base64));
       // base64 to blob file
@@ -284,9 +284,9 @@
       var binaryString = readerEvt.target.result;
       let base64textString = btoa(binaryString);
 
-      this.companyProfileObj.dp = base64textString;
+      this.companyProfileObj.resume = base64textString;
       sessionStorage.removeItem('dp');
-      sessionStorage.setItem('dp', this.companyProfileObj.dp);
+      sessionStorage.setItem('dp', this.companyProfileObj.resume);
       this.logoChangeObservable.next();
 
     }
@@ -298,7 +298,7 @@
         let file = event.target.files[0];
         // reader.onload = this._handleReaderImageLoaded.bind(this);
         this.fileChangeEvent(event);
-        this.companyProfileObj.dpContentType = file.type;
+        this.companyProfileObj.resumeContentType = file.type;
         reader.readAsBinaryString(file);
 
 
@@ -346,7 +346,7 @@
         sessionStorage.setItem('dp', res?.profile?.dp)
           if(this.userType=='employer'){
             this.companyProfileObj.contactName = res.profile.contactName;
-            sessionStorage.setItem('dp', this.companyProfileObj.dp);
+            sessionStorage.setItem('dp', this.companyProfileObj.resume);
             sessionStorage.setItem('companyName', this.companyProfileObj.name);
           }
           this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
