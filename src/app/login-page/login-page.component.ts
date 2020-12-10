@@ -88,6 +88,9 @@ export class LoginPageComponent implements OnInit {
           sessionStorage.setItem("email", res.result.email);
           sessionStorage.setItem("username", res.result.username);
           sessionStorage.setItem("userType", res.result.userType);
+          if(res.result.profile){
+            sessionStorage.setItem('dp',res.result.profile.dp);
+          }
           sessionStorage.setItem("userId", res.result.id);
           this.service.sendId.next(res.result.id);
           this.status = false;

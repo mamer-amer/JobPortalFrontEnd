@@ -71,7 +71,7 @@
       console.log(this.companyProfileObj)
       this.service.postCompanyProfile(this.userId, this.companyProfileObj).subscribe(res => {
         if (res) {
-          sessionStorage.setItem('dp', this.companyProfileObj.resume);
+          sessionStorage.setItem('dp', this.companyProfileObj.dp);
           sessionStorage.setItem('companyId', res.result.id);
           sessionStorage.setItem('companyName', this.companyProfileObj.name);
 
@@ -346,7 +346,7 @@
         sessionStorage.setItem('dp', res?.profile?.dp)
           if(this.userType=='employer'){
             this.companyProfileObj.contactName = res.profile.contactName;
-            sessionStorage.setItem('dp', this.companyProfileObj.resume);
+            sessionStorage.setItem('dp', this.companyProfileObj.dp);
             sessionStorage.setItem('companyName', this.companyProfileObj.name);
           }
           this.certificate = "data:" + this.getMIMEtype(this.companyProfileObj['certificateContentType']) + ";base64," + encodeURI(this.companyProfileObj["certificate"])
