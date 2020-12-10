@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavbarService } from '../navbar.service';
 
 @Component({
   selector: 'app-cv-builder',
@@ -7,9 +9,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CvBuilderComponent implements OnInit {
 
-  constructor() { }
+  // isLinear = false;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  constructor(private navbar: NavbarService,private _formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+    this.navbar.showNav();
+   
   }
 
 }

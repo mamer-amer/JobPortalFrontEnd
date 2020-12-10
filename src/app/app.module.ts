@@ -23,7 +23,7 @@ import { NzEmptyModule } from 'ng-zorro-antd/empty';
 import { NoopInterceptor } from './request.intercept';
 import { MatDialogModule } from '@angular/material/dialog';
 import { NzTabsModule } from 'ng-zorro-antd/tabs';
-
+import {MatStepperModule} from '@angular/material/stepper';
 
 import { MatIconModule } from '@angular/material/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
@@ -129,7 +129,8 @@ import { CvBuilderComponent } from './cv-builder/cv-builder.component'
     TenderFormComponent,
     TenderdetailsComponent,
     TenderPublicComponent,
-    CvBuilderComponent
+    CvBuilderComponent,
+    
 
 
   ],
@@ -143,6 +144,7 @@ import { CvBuilderComponent } from './cv-builder/cv-builder.component'
     NzUploadModule,
     SafePipeModule,
     CommonModule,
+    MatStepperModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
