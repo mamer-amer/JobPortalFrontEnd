@@ -413,18 +413,4 @@
 
 
 
-    // handleOkCertificate(): void {
-    //   console.log('Button ok clicked!');
-    //   this.isVisible = false;
-    // }
-
-    // handleCancelCertificate(): void {
-    //   console.log('Button cancel clicked!');
-    //   this.isVisible = false;
-    // }
-
-
-
-
-
   }

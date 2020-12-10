@@ -195,7 +195,7 @@ updateReview(id,obj):Observable<any>{
   }
 
   isAlreadyCommentedOnCompanyProfile(obj: any): Observable<any> {
-    return this.http.post(this.url + "api/review/alreadyCommented", obj);
+    return this.http.post(this.url + "api/review/alreadyCommented",obj);
   }
   isAlreadyCommented(userId, visitedUserId): Observable<any> {
     return this.http.get(this.url + "api/review/alreadyCommented/" + userId + "/" + visitedUserId);

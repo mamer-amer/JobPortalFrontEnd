@@ -14,11 +14,9 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class CompanyProfileDetailsComponent implements OnInit {
 
   reviewBtn: any = false;
-  companyId: any;
   reviews: Array<any> = [];
 
   companyReviewRating: Array<any> = [];
-  candidateId: any;
   companyDetails: Object;
   companyProfile: CompanyProfile;
   avgRating: number = 0;
@@ -28,7 +26,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   userId: any;
   textReviewTab = true;
   videoReviewFile: any;
-  id;
+
   isReviewEdit: boolean = false;
   review;
   // rating;
@@ -47,6 +45,11 @@ export class CompanyProfileDetailsComponent implements OnInit {
   contentType: string;
   friendShipStatus: any;
   selfProfile = false;
+  visitedUserId:any;
+  visiterUserId:any;
+
+  //visited user id  is the person who's profile is open 
+  //visiter is the person who is currently logged in
 
   friendRequestsObservable = new Subject<string>();
   mySubscription;
@@ -73,17 +76,17 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
-    this.userId = this.activatedRoute.snapshot.params.id;
+    this.visitedUserId = this.activatedRoute.snapshot.params.id;
     this.navbar.showNav();
-    this.selfProfile = this.userId==sessionStorage.getItem('userId')?true:false;
+    this.selfProfile = this.visitedUserId==sessionStorage.getItem('userId')?true:false;
     this.companyProfile.contactName = sessionStorage.getItem('username');
-    this.companyId = sessionStorage.getItem('userId');
-    this.getFriendshipStatus(this.userId, this.companyId);
-    this.getCompanyProfileDetails(this.userId);
-    this.getReviews(this.userId)
+    this.visiterUserId = sessionStorage.getItem('userId');
+    this.getFriendshipStatus(this.visiterUserId,this.visitedUserId);
+    this.getCompanyProfileDetails(this.visiterUserId);
+    this.getReviews(this.visitedUserId)
     if (this.userType == "candidate") {
-      this.candidateId = sessionStorage.getItem('userId');
-      this.service.isAlreadyCommented(this.candidateId, this.userId).subscribe(res => {
+      this.visiterUserId = sessionStorage.getItem('userId');
+      this.service.isAlreadyCommented(this.visiterUserId, this.visitedUserId).subscribe(res => {
         if (res == "Already_reported") {
           this.reviewBtn = true;
         }
@@ -100,14 +103,14 @@ export class CompanyProfileDetailsComponent implements OnInit {
   getCompanyProfileDetails(id): void {
     this.service.getCompanyProfile(id).subscribe((res) => {
       console.log(res)
-      // this.avgRating = res.profile.avgRating;
+      
       this.companyProfile = res.profile;
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       // let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
 
-      this.id = res.userId;
+      this.visitedUserId = res.userId;
       // console.log(res, "========ress")
 
       // if (index != -1) {
@@ -150,10 +153,10 @@ export class CompanyProfileDetailsComponent implements OnInit {
   postReview(review: string) {
 
     const formData = new FormData();
-    formData.append("candidateId", this.userId)
+    formData.append("candidateId", this.visiterUserId)
     formData.append("review", review)
     formData.append("rating", this.rating)
-    formData.append("companyId", this.companyId)
+    formData.append("companyId", this.visitedUserId)
     formData.append("type", "text")
 
     // console.table(obj)
@@ -188,7 +191,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   deleteReview(id) {
     this.service.deleteReview(id)
       .subscribe(() => {
-        this.getCompanyProfileDetails(this.companyId);
+        this.getCompanyProfileDetails(this.visitedUserId);
       })
   }
 
@@ -209,7 +212,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
     this.service.updateReview(id, obj)
       .subscribe(() => {
-        this.getCompanyProfileDetails(this.companyId);
+        this.getCompanyProfileDetails(this.visitedUserId);
         this.isReviewEdit = false;
       })
   }
@@ -239,12 +242,11 @@ export class CompanyProfileDetailsComponent implements OnInit {
 
     if (this.videoReviewFile) {
       let formData = new FormData();
-      formData.append("candidateId", this.userId)
+      formData.append("candidateId", this.visiterUserId)
       formData.append("video", this.videoReviewFile)
       console.log(this.rating, "==========rating")
       formData.append("rating", this.rating)
-      formData.append("companyId", this.companyId)
-      formData.append("candidateId", this.userId)
+      formData.append("companyId", this.visitedUserId)
       formData.append("type", "video")
       this.service.isAlreadyCommentedOnCompanyProfile(formData).subscribe((res) => {
         // this.avgRating = res.result?res.result
@@ -319,7 +321,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
     return tempArray;
   }
   gotoaddtender() {
-    this.router.navigate(['addtender/' + this.companyId + '/' + this.userId]);
+    this.router.navigate(['addtender/' + this.visitedUserId + '/' + this.visiterUserId]);
   }
 
 
@@ -360,7 +362,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   }
 
   sendInvite() {
-    this.router.navigate(['meeting-invite/' + this.id])
+    this.router.navigate(['meeting-invite/' + this.visitedUserId])
   }
 
   getReviews(userId) {
