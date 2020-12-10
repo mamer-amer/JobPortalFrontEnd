@@ -75,14 +75,14 @@
                           <nz-avatar 
                             [nzSize]="64"
                             style="display: block;flex: 2;margin-bottom: 5px;"
-                            [nzSrc]="'data:image/jpeg;base64,'+tender?.tenderPoster?.companyProfile?.logo"
-                            (click)="routeToCompanyProfile(tender?.tenderPoster?.companyProfile.id)"
+                            [nzSrc]="'data:image/jpeg;base64,'+tender?.tenderPoster?.profile?.dp"
+                            (click)="routeToCompanyProfile(tender?.tenderPoster?.id)"
                             nzIcon="user">
                           </nz-avatar>
       
                           <nz-rate style="flex: 1;height: 5px;"
                             [nzAllowHalf]="true"
-                            [ngModel]="tender?.tenderPoster?.companyProfile?.rating"
+                            [ngModel]="tender?.tenderPoster?.profile?.avgRating"
                       
                             [nzDisabled]="true">
                           </nz-rate>
@@ -90,7 +90,7 @@
                             <!-- icons span starts here -->
                             <p style="font-size: 15px;
                             margin-bottom: 0px;
-                            font-weight: 400;">{{tender?.tenderPoster.companyProfile.name}}</p>
+                            font-weight: 400;">{{tender?.tenderPoster?.profile?.name}}</p>
                           </div>
                         </div>
                       </div>

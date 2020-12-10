@@ -46,6 +46,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
   resume: any;
   contentType: string;
   friendShipStatus: any;
+  selfProfile = false;
 
   friendRequestsObservable = new Subject<string>();
   mySubscription;
@@ -74,6 +75,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
     this.userType = sessionStorage.getItem('userType');
     this.userId = this.activatedRoute.snapshot.params.id;
     this.navbar.showNav();
+    this.selfProfile = this.userId==sessionStorage.getItem('userId')?true:false;
     this.companyProfile.contactName = sessionStorage.getItem('username');
     this.companyId = sessionStorage.getItem('userId');
     this.getFriendshipStatus(this.userId, this.companyId);
@@ -103,23 +105,23 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.companyProfile.contactName = sessionStorage.getItem('username');
       this.resume = "data:" + this.getMIMEtype(this.companyProfile['resumeContentType']) + ";base64," + encodeURI(this.companyProfile["resume"])
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
-      let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
+      // let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
 
       this.id = res.userId;
-      console.log(res, "========ress")
+      // console.log(res, "========ress")
 
-      if (index != -1) {
-        this.review = res.companyReviewRatingDTOList[index].review;
-        this.rating = res.companyReviewRatingDTOList[index].rating ? res.companyReviewRatingDTOList[index].rating : 0;
-        this.companyReviewRating = this.moveArrayElementToFirst(res.companyReviewRatingDTOList, index);
+      // if (index != -1) {
+      //   this.review = res.companyReviewRatingDTOList[index].review;
+      //   this.rating = res.companyReviewRatingDTOList[index].rating ? res.companyReviewRatingDTOList[index].rating : 0;
+      //   this.companyReviewRating = this.moveArrayElementToFirst(res.companyReviewRatingDTOList, index);
 
-      }
-      else
-        this.companyReviewRating = res.companyReviewRatingDTOList;
+      // }
+      // else
+      //   this.companyReviewRating = res.companyReviewRatingDTOList;
 
-      this.comments = this.companyReviewRating.length;
-      this.reviewBtn = res.alreadyCommented;
-      console.log(this.companyReviewRating);
+      // this.comments = this.companyReviewRating.length;
+      // this.reviewBtn = res.alreadyCommented;
+      // console.log(this.companyReviewRating);
     })
 
   }
@@ -152,7 +154,6 @@ export class CompanyProfileDetailsComponent implements OnInit {
     formData.append("review", review)
     formData.append("rating", this.rating)
     formData.append("companyId", this.companyId)
-    formData.append("candidateId", this.userId)
     formData.append("type", "text")
 
     // console.table(obj)
@@ -318,7 +319,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
     return tempArray;
   }
   gotoaddtender() {
-    this.router.navigate(['addtender/' + this.companyId + '/' + this.id]);
+    this.router.navigate(['addtender/' + this.companyId + '/' + this.userId]);
   }
 
 

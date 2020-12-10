@@ -18,7 +18,7 @@ import * as moment from 'moment';
 })
 export class NavbarComponent implements OnInit {
 
-  acceptstatus:any='jas applied/accepted your offer';
+  acceptstatus:any='has applied/accepted your offer';
   declinestatus:any='has rejected your offer';
   userType: any;
   userName: any;
@@ -56,15 +56,7 @@ export class NavbarComponent implements OnInit {
     this.candP.logoChangeObservable.subscribe(() => this.userImage = sessionStorage.getItem('dp'))
 
 
-    // this.logingSerivce.loggedInUserId.subscribe(value => {
-    //   this.companyId = value ? value : sessionStorage.getItem('companyId');
-    //   this.getNotificationsCount(this.companyId);
-    // });
-
-    // this.candP.getCandidateId.subscribe(value => {
-    //   this.candidateId = value ? value : sessionStorage.getItem('candidateId');
-    //   this.getNotificationsCount(this.candidateId);
-    // });
+    
 
 
 

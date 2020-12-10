@@ -374,7 +374,7 @@ export class EmployeeProfileComponent implements OnInit {
     
     
     this.service.getJobByIdInGeneral(id,this.type).subscribe((res) => {
-      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res;
+      const { title, description, address, salary, longitude, latitude, publishFrom, publishTo, country, city, province, category, type } = res.result;
       this.contactForm.control.patchValue({ title, description, salary, category, type, address })
       let countryObj = this.countries.find(c => c["name"] == country);
       let stateObj = csc.getStatesOfCountry(countryObj["id"]).find(s => s.name == province);

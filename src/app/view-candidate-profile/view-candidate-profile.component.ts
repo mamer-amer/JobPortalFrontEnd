@@ -47,6 +47,7 @@ export class ViewCandidateProfileComponent implements OnInit {
   isReviewEdit: boolean = false;
   videoReviewFile;
   review;
+  selfProfile = false;
   public constructor(private router: Router, public sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, private service: ApplicantServiceService, private toastService: ToastrService, public nav: NavbarService, private jobService: JobService, private modalService: NzModalService) {
     this.candidateObj = new CadnidateWithReview();
 
@@ -77,6 +78,9 @@ export class ViewCandidateProfileComponent implements OnInit {
 
     this.nav.showNav();
     this.userId = this.activatedRoute.snapshot.params.id;
+    if(this.userId==sessionStorage.getItem('userId')){
+      this.selfProfile = true;
+    }
     this.userType = sessionStorage.getItem('userType');
     if(this.userType!="candidate"){
       this.companyId = sessionStorage.getItem('userId')

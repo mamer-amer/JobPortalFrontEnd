@@ -4,7 +4,7 @@
 <br>
 
 
-<!--<div class="pagebody">
+<div class="pagebody">
   <div class="container">
     <div class="row">
 
@@ -14,9 +14,9 @@
           <div class="row">
             <nz-avatar [class.mat-elevation-z2]="true" style="margin:20px 20px 0px 20px" nzIcon="user"
               [nzShape]="'square'" [nzSize]="100"
-              [nzSrc]="companyProfile.logo!=null?'data:image/jpeg;base64,'+companyProfile.logo:'assets/user.png'">
+              [nzSrc]="companyProfile.dp!=null?'data:image/jpeg;base64,'+companyProfile.dp:'assets/user.png'">
             </nz-avatar>
-            <div *ngIf="userType =='employer'"  class="col" style="margin-left:66%">
+            <div *ngIf="userType =='employer' && !selfProfile"  class="col" style="margin-left:66%">
                 <button  (click)="gotoaddtender()" style="position: absolute;
                 bottom: 0px;
                right: 125px;
@@ -27,7 +27,7 @@
               </div>
 
             
-            <div *ngIf="friendShipStatus!='same'" style="position: relative;" class="col">
+            <div *ngIf="friendShipStatus!='same' && userType!='candidate'" style="position: relative;" class="col">
               
               <button  (click)="sendInvite()" style="position: absolute;
               bottom: 0px;
@@ -106,8 +106,8 @@
 
             <div class="col-lg-4">
               <span style="display:inline">
-                <nz-rate [disabled]="true" [ngModel]="companyProfile.avgRating" [nzTooltips]="tooltips"></nz-rate>
-                <small style="color:lightgray"> Rating ({{companyProfile.avgRating | number:'1.0-1'}}/5)</small>
+                <nz-rate [disabled]="true" [ngModel]="avgRating" [nzTooltips]="tooltips"></nz-rate>
+                <small style="color:lightgray"> Rating ({{avgRating | number:'1.0-1'}}/5)</small>
               </span>
             </div>
 
@@ -124,8 +124,8 @@
               <h4 style="flex: 1;color: rgb(0, 0, 0);">Name: <span style="color: gray;font-weight: normal;">
                   {{companyProfile.contactName}}</span></h4>
 
-               <h4 style="flex: 1;color: black">Contact Title: <span style="color: gray;font-weight: normal;">
-                {{companyProfile.contactTitle}} </span></h4> 
+              <!-- <h4 style="flex: 1;color: black">Contact Title: <span style="color: gray;font-weight: normal;">
+                {{companyProfile.contactTitle}} </span></h4> -->
 
             </div>
 
@@ -176,67 +176,11 @@
   </div>
   <div class="container">
     <div class="row">
-       <div class="col-lg-1">
-    </div> 
 
       <div class="col-lg-12">
         <mat-card style="border-radius:0px;padding:20px;margin:20px 0px 20px 0px;">
 
-          <h3 class="text-center font-weight-bold">Reviews <span class="badge pink">{{comments}}</span></h3>
-
-          <div class="row">
-            <div class="col-lg-6">
-              <button style="    width: 80%;
-              margin-left: 10%;background-color: black;color: white;" (click)="textReviewTab=true">
-                Reviews</button>
-            </div>
-
-            <div class="col-lg-6">
-              <button style="    width: 80%;
-              margin-left: 10%;background-color: black;color: white;" (click)="textReviewTab=false">Video
-                Reviews</button>
-            </div>
-          </div>
-
-
-          <div *ngFor="let reviewer of reviews">
-            
-            <div *ngIf="textReviewTab && reviewer.type=='text'" style="margin-top: 40px;">
-              <div *ngIf="reviewer.type=='text'">
-                <div *ngIf="userType!='candidate'"
-                  class="card-header border-0 font-weight-bold d-flex justify-content-between">
-
-                  <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
-
-                    <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                        [routerLink]="['/viewprofile/',reviewer.userId]"
-                        class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
-                        profile</a></li>
-
-                  </ul>
-                </div>
-                
-
-                <div class="row" style="margin-top:6px !important">
-                  <div class="col-lg-12">
-                    <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
-                      [nzSrc]="reviewer!=null?'data:image/jpeg;base64,'+reviewer.dp:'assets/user.png'">
-                    </nz-avatar>
-                    <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                      {{reviewer?.name}}
-                      <br>
-                      <nz-rate style="vertical-align: bottom" [disabled]="true" [ngModel]="reviewer.rating?reviewer.rating:0"
-                        [nzTooltips]="tooltips"></nz-rate>
-                    </p>
-                    <p style="margin-left: 60px;color: rgb(153, 152, 152);overflow-wrap: break-word;">
-                      {{reviewer.review?reviewer.review:'No review was given'}}
-                    </p>
-                    <p style="margin-left: 9%;opacity:0.7;font-size: 12px !important;">
-                      {{reviewer.date | myPipe}}</p>
-                    <hr />
-                  </div>
-                </div>
-              </div>
+          <h3 class="text-center font-weight-bold">Reviews</h3>
 
           <div class="row">
             <div class="col-lg-6">
@@ -245,36 +189,47 @@
                 Written Reviews</button>
             </div>
 
+            <div class="col-lg-6">
+              <button style="    width: 80%;
+              margin-left: 10%;background-color: black;color: white;" (click)="textReviewTab=false">Video
+                Reviews</button>
             </div>
-             //video reviews 
+          </div>
+          <!-- write your review here as an employee or recuiter -->
+          <div class="row" *ngIf="userType=='candidate'" style="margin-top: 20px;">
+            <div class="col-lg-12" *ngIf="!reviewBtn">
+              <div id="review" class="card-header border-0 font-weight-bold reviewHeader">Leave a review
+                <span style="float:right;text-align: center" class="ratingSectionSpan">
 
-            <div *ngIf="!textReviewTab  && reviewer.type=='video'" style="margin-top: 30px;">
-              <div *ngIf="userType!='candidate'"
-                  class="card-header border-0 font-weight-bold d-flex justify-content-between">
+                  <p style="display: inline-block">Rate {{companyProfile?companyProfile.name:''}}</p>
+                  &nbsp;
+                  <nz-rate [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
 
-                  <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
-                    <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                        [routerLink]="['/viewprofile/',reviewer.userId]"
-                        class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
-                        profile</a></li>
+                </span>
+              </div>
 
-                  </ul>
+
+              <div *ngIf="textReviewTab">
+                <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
+                  <div class="md-form w-100">
+                    <textarea class="form-control md-textarea pt-0" id="exampleFormControlTextarea1" rows="3" #review
+                      placeholder="Write something here..."></textarea>
+                  </div>
                 </div>
-              <div class="col-lg-12">
-                <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
-                  [nzSrc]="reviewer!=null?'data:image/jpeg;base64,'+reviewer?.dp:'../../assets/user.png'">
-                </nz-avatar>
-                <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
-                  {{reviewer?.name}}
-                  <br>
-                  <nz-rate style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="reviewer.rating"
-                    [nzTooltips]="tooltips"></nz-rate>
-                </p>
-                <video style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
-                left: 55px;" width="300" controls>
-                  <source [src]="reviewer.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
-                </video>
+                <div class="text-center">
+                  <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md"
+                    style="background-color: black !important">Submit</button>
+                </div>
+              </div>
+
+              <div *ngIf="!textReviewTab" style="margin-top: 20px;">
+                <input (change)="videoReviewChanged($event)" type="file" accept="video/*">
+                <div class="text-center">
+                  <button [disabled]="!videoReviewFile" (click)="postVideoReview()"
+                    class="btn btn-default btn-rounded btn-md" style="background-color: black !important">Submit video
+                    review</button>
+                </div>
               </div>
             </div>
           </div>
@@ -303,7 +258,7 @@
                     <nz-avatar style="float: left" nzIcon="user" [nzSize]="64"
                       [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'assets/user.png'">
                     </nz-avatar>
-                     //edit and delete review and rating 
+                    <!-- //edit and delete review and rating -->
                     <div *ngIf=" !isReviewEdit && candidate.userId==userId" style="position: absolute;
                     right: 20px;
                     margin-top: 15px;">
@@ -350,50 +305,71 @@
 
 
               </div>
+
+
+            </div>
+
+            <!-- //video reviews -->
+
+            <div *ngIf="!textReviewTab  && candidate.type=='video'" style="margin-top: 30px;">
+              <div class="col-lg-12">
+                <nz-avatar style="float: left;" nzIcon="user" [nzSize]="48"
+                  [nzSrc]="candidate.dp!=null?'data:image/jpeg;base64,'+candidate.dp:'assets/user.png'">
+                </nz-avatar>
+                <!-- //edit and delete review and rating -->
+                <div *ngIf="candidate.userId==userId" style="position: absolute;
+                    right: 20px;
+                    margin-top: 15px;">
+                  <button class="btn btn-default btn-rounded btn-md"
+                    style="background-color: black !important;padding:10px;width: 78px;"
+                    (click)="isReviewEdit=true">edit</button>
+                  <button class="btn btn-default btn-rounded btn-md"
+                    style="background-color: black !important;padding:10px;width:78px"
+                    (click)="deleteReview(candidate.id)">delete</button>
+                </div>
+
+                <p style="vertical-align:bottom;font-weight: 600;margin-top: 10px;">
+                  {{candidate.name}}
+                  <br>
+                  <nz-rate *ngIf="!isReviewEdit || candidate.userId!=userId"
+                    style="vertical-align: bottom;margin-left: -10px;" [disabled]="true" [ngModel]="candidate.rating"
+                    [nzTooltips]="tooltips"></nz-rate>
+                </p>
+                <video *ngIf="!isReviewEdit || candidate.userId!=userId" style="border-radius: 30px;border-width: 0px;outline: none;position: relative;
+                left: 55px;" width="300" controls>
+                  <source [src]="candidate.videoUrl" type="video/mp4">Your browser does not support HTML5 video.
+                </video>
+                <!-- //edit options -->
+                <div *ngIf="isReviewEdit && candidate.userId==userId">
+                  <nz-rate style="vertical-align: bottom" [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
+                  <br>
+                  <input style="margin-left: 6%;" (change)="videoReviewChanged($event)" type="file" accept="video/*">
+                  <div style="margin-left:6%;margin-top: 10px;">
+                    <button style="  background-color: black;color: white;  margin-right: 5px;"
+                      (click)="updateReview(candidate.id,'video')">update</button>
+                    <button style="background-color: black;color: white;" (click)="isReviewEdit=false">cancel</button>
+                  </div>
+                </div>
+                <!-- //// -->
+              </div>
+            </div>
+          </div>
+
+
+
+
+
         </mat-card>
       </div>
     </div>
 
-     write your review here as an employee or recuiter 
-    <div class="row" *ngIf="userType=='candidate'">
-      <div class="col-lg-12" *ngIf="!reviewBtn">
-        <div id="review" class="card-header border-0 font-weight-bold reviewHeader">Leave a review
-          <span style="float:right;text-align: center" class="ratingSectionSpan">
-            <p style="display: inline-block">Rate {{companyProfile?companyProfile.name:''}}</p>
-            &nbsp;
-            <nz-rate [(ngModel)]="rating" [nzTooltips]="tooltips"></nz-rate>
-          </span>
-        </div>
 
-
-        <div *ngIf="textReviewTab">
-          <div class="d-md-flex flex-md-fill px-1" style="width: 100%">
-            <div class="md-form w-100">
-              <textarea class="form-control md-textarea pt-0" id="exampleFormControlTextarea1" rows="3" #review
-                placeholder="Write something here..."></textarea>
-            </div>
-          </div>
-          <div class="text-center">
-            <button (click)="postReview(review.value)" class="btn btn-default btn-rounded btn-md"
-              style="background-color: black !important">Submit</button>
-          </div>
-        </div>
-
-        <div *ngIf="!textReviewTab" style="margin-top: 20px;">
-          <input (change)="videoReviewChanged($event)" type="file" accept="video/*">
-          <div class="text-center">
-            <button [disabled]="!videoReviewFile" (click)="postVideoReview()" class="btn btn-default btn-rounded btn-md"
-              style="background-color: black !important">Submit video review</button>
-          </div>
-        </div>
-      </div>
-    </div>
 
 
   </div>
-  <br>
 
-</div>-->
+
+</div>
 
 
 

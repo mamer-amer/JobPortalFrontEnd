@@ -31,5 +31,8 @@ export class TenderService {
   public getAllPublicTenders():Observable<any>{
     return this.http.get(environment.baseUrl+"api/tender/all/public");
   }
+  public getAllTendersByUser(id):Observable<any>{
+    return this.http.get(environment.baseUrl+"api/tender/all/"+id);
+  }
 
 }

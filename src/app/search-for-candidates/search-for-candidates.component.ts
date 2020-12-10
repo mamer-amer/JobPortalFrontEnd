@@ -57,8 +57,7 @@ export class SearchForCandidatesComponent implements OnInit {
 
     this.service.passObject(this.candidatesArrays[id]);
     let userId = this.candidatesArrays[id]['userId']
-    let candId = this.candidatesArrays[id]['candId'];
-    this.router.navigate(['/viewprofile'], { queryParams: { "candId": candId, "userId": userId } })
+    this.router.navigate(['/viewprofile/'+userId ]);
   }
 
 }

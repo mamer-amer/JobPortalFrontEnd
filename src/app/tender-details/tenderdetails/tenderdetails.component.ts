@@ -46,11 +46,10 @@ export class TenderdetailsComponent implements OnInit {
       this.employerId = res.userDto.id;
       this.employercompanyName = res.userDto.name;
       this.employercompanyemail = res.userDto.email;
-      this.employercompanyimage = res.userDto.companyProfile.logo;
+      this.employercompanyimage = res.userDto.profile.dp;
       //  this.employername=res.userDto.companyProfile.
     })
   }
-
 
   acceptOrDeclineTender(isApplied:boolean){
      const tenderDto = new Tender();

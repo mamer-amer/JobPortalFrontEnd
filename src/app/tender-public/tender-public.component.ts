@@ -15,82 +15,95 @@ import { NzModalService } from 'ng-zorro-antd';
 export class TenderPublicComponent implements OnInit {
   empty = false;
   userType = sessionStorage.getItem('userType');
-  companyId : any;
-  
+  companyId: any;
+
   page = 1;
   public total: any;
   itemsPerPage: any;
-  
-
+  userId = sessionStorage.getItem('userId')
   tenders = [];
-    constructor(private tenderservice:TenderService ,private navbar : NavbarService,private router: Router,private modalService: NzModalService) {
-     
-
-     }
-  
-    ngOnInit() {
-      this.navbar.showNav();
-      this.gettender();
-      // this.companyId = this.activatedRoute.snapshot.params.id;
-    }
-
-    lstTender =[];
-    gettender():void{
+  constructor(private tenderservice: TenderService, private navbar: NavbarService, private router: Router, private modalService: NzModalService) {
 
 
-        console.log("geting all tneder = ");
-        this.tenderservice.getAllPublicTenders().subscribe(res=>{
-          // debugger;
+  }
 
-          this.tenders = res
-            console.log("Respone tender " ,res);
-            
-        },error=>{
+  ngOnInit() {
+    this.navbar.showNav();
+    this.gettender();
+    // this.companyId = this.activatedRoute.snapshot.params.id;
+  }
 
-        });
+  lstTender = [];
+  gettender(): void {
 
-    }
 
-    routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
+    console.log("geting all tneder = ");
+    if (this.userType == "employer") {
+      this.tenderservice.getAllTendersByUser(this.userId).subscribe(res => {
+        // debugger;
 
-    routeToTenderDetail =(tenderid) => this.router.navigate(['tender-details/'+tenderid]);
+        this.tenders = res
+        console.log("Respone tender ", res);
 
-    addtender(){
-      this.router.navigate(['addtender/']);
-    }
+      }, error => {
 
-    showDeleteConfirm(tenderId: any): void {
-      this.modalService.confirm({
-        nzTitle: 'work in progress...',
-        // nzTitle: 'Are you sure you want to delete?',
-        nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
-        nzOkText: 'Yes',
-        nzOkType: 'danger',
-        nzOnOk: () => {
-          this.deleteJob(tenderId)
-        },
-        nzCancelText: 'No',
-        nzOnCancel: () => {
-          // window.history.go(-1);
-        }
       });
     }
 
-    deleteJob(tenderId: any) {
-      console.log("delete id",tenderId)
+    else {
+      this.tenderservice.getAllPublicTenders().subscribe(res => {
+        // debugger;
 
-      // this.service.deleteJob(id, page - 1,this.privateJobs).subscribe(res => {
-      //   if (res.status == 200) {
-      //     this.toastService.info('Deleted')
-      //     //  this.allJobs.slice(index,1);
-         
-      //   }
-  
-      // }), error => {
-      //   this.toastService.error('Failed')
-      // }
+        this.tenders = res
+        console.log("Respone tender ", res);
+
+      }, error => {
+
+      });
     }
 
-  
+
   }
-  
+
+  routeToCompanyProfile = (id) => this.router.navigate(['companyProfileDetails/' + id]);
+
+  routeToTenderDetail = (tenderid) => this.router.navigate(['tender-details/' + tenderid]);
+
+  addtender() {
+    this.router.navigate(['addtender/']);
+  }
+
+  showDeleteConfirm(tenderId: any): void {
+    this.modalService.confirm({
+      nzTitle: 'work in progress...',
+      // nzTitle: 'Are you sure you want to delete?',
+      nzContent: '<b style="color: red;">Press Ok to delete and cancel to reject</b>',
+      nzOkText: 'Yes',
+      nzOkType: 'danger',
+      nzOnOk: () => {
+        this.deleteJob(tenderId)
+      },
+      nzCancelText: 'No',
+      nzOnCancel: () => {
+        // window.history.go(-1);
+      }
+    });
+  }
+
+  deleteJob(tenderId: any) {
+    console.log("delete id", tenderId)
+
+    // this.service.deleteJob(id, page - 1,this.privateJobs).subscribe(res => {
+    //   if (res.status == 200) {
+    //     this.toastService.info('Deleted')
+    //     //  this.allJobs.slice(index,1);
+
+    //   }
+
+    // }), error => {
+    //   this.toastService.error('Failed')
+    // }
+  }
+
+
+}

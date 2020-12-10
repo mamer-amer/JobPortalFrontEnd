@@ -268,9 +268,9 @@
 
 
     updateCroppedImage() {
-      this.companyProfileObj.resume = this.croppedImage;
+      this.companyProfileObj.dp = this.croppedImage;
       sessionStorage.removeItem('dp');
-      sessionStorage.setItem('dp', this.companyProfileObj.resume);
+      sessionStorage.setItem('dp', this.companyProfileObj.dp);
       this.logoChangeObservable.next();
       // console.log(event, base64ToFile(event.base64));
       // base64 to blob file
