@@ -29,10 +29,10 @@ export class TenderService {
   }
 
   public getAllPublicTenders():Observable<any>{
-    return this.http.get(environment.baseUrl+"api/tender/all/public");
+    return this.http.get(environment.baseUrl+"api/tender/allByType/public");
   }
   public getAllTendersByUser(id):Observable<any>{
-    return this.http.get(environment.baseUrl+"api/tender/all/"+id);
+    return this.http.get(environment.baseUrl+"api/tender/allById/"+id);
   }
 
 }

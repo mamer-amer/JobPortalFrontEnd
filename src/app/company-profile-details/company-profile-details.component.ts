@@ -110,7 +110,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       // let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
 
-      this.visitedUserId = res.userId;
+      // this.visitedUserId = res.userId;
       // console.log(res, "========ress")
 
       // if (index != -1) {
@@ -336,28 +336,29 @@ export class CompanyProfileDetailsComponent implements OnInit {
   }
 
   addFriend() {
-    this.service.sendFriendRequest(this.userId, this.companyProfile.id, "employer")
+    console.log("visiterId==>"+this.visiterUserId+"==="+"visiteduserId==>"+this.visitedUserId);
+    this.service.sendFriendRequest(this.visiterUserId, this.visitedUserId, "employer")
       .subscribe((res) => {
         console.log(res)
         this.friendRequestsObservable.next()
-        this.getFriendshipStatus(this.userId, this.companyProfile.id)
+        this.getFriendshipStatus(this.visiterUserId, this.visitedUserId)
       })
   }
 
   acceptRequest() {
-    this.service.acceptRequest(this.userId, this.companyProfile.id, "employer")
+    this.service.acceptRequest(this.visiterUserId, this.visitedUserId, "employer")
       .subscribe(() => {
         this.friendRequestsObservable.next()
-        this.getFriendshipStatus(this.userId, this.companyProfile.id)
+        this.getFriendshipStatus(this.visiterUserId, this.visiterUserId)
       })
   }
 
   cancelRequest() {
-    this.service.cancelFriendRequest(this.userId, this.companyProfile.id, "employer")
+    this.service.cancelFriendRequest(this.visiterUserId, this.visitedUserId, "employer")
       .subscribe((res) => {
         console.log(res)
         this.friendRequestsObservable.next()
-        this.getFriendshipStatus(this.userId, this.companyProfile.id)
+        this.getFriendshipStatus(this.visiterUserId, this.visitedUserId)
       })
   }
 

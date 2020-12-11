@@ -198,6 +198,7 @@ export class NavbarComponent implements OnInit {
   }
 
   acceptRequest(id) {
+    console.log(id);
     this.service.acceptRequest(this.userId, id, "user")
       .subscribe((res) => {
 
