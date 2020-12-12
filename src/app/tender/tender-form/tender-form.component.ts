@@ -56,7 +56,6 @@ export class TenderFormComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.recruiterId = this.activatedRoute.snapshot.params['id'];
-    this.recruiterId = this.activatedRoute.snapshot.params['userId'];
     if(this.recruiterId==null){this.label = "Add Public Tender"}
     this.navbar.showNav();
     this.getCountries();
