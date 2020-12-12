@@ -41,6 +41,9 @@ export class ApplicantServiceService {
   }
 
 
+  saveReview(obj:any,visitedUserId){
+    return this.http.post(this.url+"api/review/save/"+visitedUserId,obj);
+  }
 
 
 deleteReview(id):Observable<any>{

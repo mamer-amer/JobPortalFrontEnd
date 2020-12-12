@@ -77,12 +77,13 @@ export class CompanyProfileDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.userType = sessionStorage.getItem('userType');
     this.visitedUserId = this.activatedRoute.snapshot.params.id;
+    console.log("This is visited user id",this.visitedUserId)
     this.navbar.showNav();
     this.selfProfile = this.visitedUserId==sessionStorage.getItem('userId')?true:false;
     this.companyProfile.contactName = sessionStorage.getItem('username');
     this.visiterUserId = sessionStorage.getItem('userId');
     this.getFriendshipStatus(this.visiterUserId,this.visitedUserId);
-    this.getCompanyProfileDetails(this.visiterUserId);
+    this.getCompanyProfileDetails(this.visitedUserId);
     this.getReviews(this.visitedUserId)
     if (this.userType == "candidate") {
       this.visiterUserId = sessionStorage.getItem('userId');
@@ -110,7 +111,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       this.certificate = "data:" + this.getMIMEtype(this.companyProfile['certificateContentType']) + ";base64," + encodeURI(this.companyProfile["certificate"])
       // let index = res.companyReviewRatingDTOList.findIndex(r => r.userId == this.userId);
 
-      this.visitedUserId = res.userId;
+     
       // console.log(res, "========ress")
 
       // if (index != -1) {
@@ -153,35 +154,36 @@ export class CompanyProfileDetailsComponent implements OnInit {
   postReview(review: string) {
 
     const formData = new FormData();
-    formData.append("candidateId", this.visiterUserId)
-    formData.append("review", review)
-    formData.append("rating", this.rating)
-    formData.append("companyId", this.visitedUserId)
-    formData.append("type", "text")
+    formData.append("candidateId", this.visiterUserId);
+    formData.append("review", review);
+    formData.append("rating", this.rating);
+    formData.append("companyId", this.visitedUserId);
+    formData.append("ratedBy",this.userType);
+    formData.append("type", "text");
 
-    // console.table(obj)
+    console.table(formData);
 
-    this.service.isAlreadyCommentedOnCompanyProfile(formData).subscribe((res) => {
+    this.service.saveReview(formData,this.visitedUserId).subscribe((res:any) => {
       // this.avgRating = res.result?res.result
       console.log(res)
-      if (res.status == 200) {
+      if (res['status'] == 200) {
 
-        let index = res.result.findIndex(r => r.userId == this.userId);
+        // let index = res.result.findIndex(r => r.userId == this.userId);
 
 
-        if (index != -1) {
-          this.review = res.result[index].review;
-          this.rating = res.result[index].rating ? res.result[index].rating : 0;
-          this.companyReviewRating = this.moveArrayElementToFirst(res.result, index);
+        // if (index != -1) {
+        //   this.review = res.result[index].review;
+        //   this.rating = res.result[index].rating ? res.result[index].rating : 0;
+        //   this.companyReviewRating = this.moveArrayElementToFirst(res.result, index);
 
-        }
-        else
-          this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
+        // }
+        // else
+        //   this.companyReviewRating = res.result ? res.result : this.companyReviewRating;
 
-        this.avgRating = res.result ? res.rating : this.avgRating;
-        this.comments = this.companyReviewRating.length;
+        // this.avgRating = res.result ? res.rating : this.avgRating;
+        // this.comments = this.companyReviewRating.length;
         this.reviewBtn = true;
-        this.getReviews(this.userId);
+        this.getReviews(this.visitedUserId);
 
         console.log(res);
       }
@@ -202,6 +204,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       obj.append("rating", this.rating);
       obj.append("type", type);
       obj.append("review", this.review);
+     
     }
     else {
       obj = new FormData();
@@ -209,6 +212,7 @@ export class CompanyProfileDetailsComponent implements OnInit {
       obj.append("type", type);
       obj.append("video", this.videoReviewFile);
     }
+    obj.append("ratedBy",this.userType);
 
     this.service.updateReview(id, obj)
       .subscribe(() => {

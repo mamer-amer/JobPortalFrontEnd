@@ -234,7 +234,7 @@
             </div>
           </div>
 
-          <div *ngFor="let candidate of companyReviewRating">
+          <div *ngFor="let candidate of reviews">
             <div *ngIf="textReviewTab && candidate.type=='text'" style="margin-top: 40px;">
               <div *ngIf="candidate.type=='text'">
                 <div *ngIf="userType!='candidate'"
@@ -243,8 +243,8 @@
                   <ul style="margin-left: auto" class="list-unstyled list-inline mb-0">
 
                     <li class="list-inline-item"><a href="" style="color:#1890ff !important"
-                        [routerLink]="['/viewprofile']"
-                        [queryParams]="{'candId':candidate.candidateId,'userId':candidate.userId}"
+                        [routerLink]="['/viewprofile',candidate.userId]"
+                        
                         class="text-default mr-3"><i class="fa fa-user mr-1"></i>See
                         profile</a></li>
 
