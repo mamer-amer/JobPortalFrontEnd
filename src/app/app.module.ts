@@ -27,6 +27,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 
 import { MatIconModule } from '@angular/material/icon';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 
 import { MatDividerModule } from '@angular/material/divider';
 import { StarRatingModule } from 'angular-star-rating';
@@ -138,6 +139,7 @@ import { CvBuilderComponent } from './cv-builder/cv-builder.component'
     MDBBootstrapModule.forRoot(),
     
     NzTimePickerModule,
+    NzDividerModule,
     ImageCropperModule,
     ReactiveFormsModule,
     ToastrModule,

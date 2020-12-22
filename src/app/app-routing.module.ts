@@ -86,7 +86,7 @@ const routes: Routes = [
   {path:"tender-details/:id",component:TenderdetailsComponent},
   {path:"publictender",component:TenderPublicComponent},
   {path:"cvbuilder",component:CvBuilderComponent},
-
+  
 
   { path: '**', component: ErrorPageComponent }
 ];
