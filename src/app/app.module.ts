@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { EditorModule } from '@tinymce/tinymce-angular';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -93,6 +94,7 @@ import { ChatPopUpBottomComponent } from './chat-pop-up-bottom/chat-pop-up-botto
 import { InvitationComponent } from './invitation/invitation.component';
 import { GoogleMapForMeetingComponent } from './google-map-for-meeting/google-map-for-meeting.component';
 import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
+import { NgxTinymceModule } from 'ngx-tinymce';
 
 
 import { AgmOverlays } from "agm-overlays";
@@ -137,6 +139,10 @@ import { CvBuilderComponent } from './cv-builder/cv-builder.component'
   ],
   imports: [
     MDBBootstrapModule.forRoot(),
+    EditorModule,
+  
+    
+    
     
     NzTimePickerModule,
     NzDividerModule,
@@ -205,13 +211,14 @@ import { CvBuilderComponent } from './cv-builder/cv-builder.component'
     InfiniteScrollModule,
     RecaptchaModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
+      apiKey: 'AIzaSyALCjeF10g7eOsE7zV9XT1R7k0iyMzWJWw',
       libraries: ['places']
     }),
   
     AgmOverlays
   ],
   providers: [
+    
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     NgxSpinnerService,
     MatDatepickerModule,
