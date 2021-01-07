@@ -134,4 +134,7 @@ export class LoginPageComponent implements OnInit {
   routeToRegister() {
     this.router.navigate(["register"]);
   }
+  gotoforgotpasswordscreen(){
+    this.router.navigate(['forgotpasswordscreen'])
+  }
 }

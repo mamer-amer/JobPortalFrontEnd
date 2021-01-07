@@ -23,6 +23,8 @@ import { MeetingInviteComponent } from './meeting-invite/meeting-invite.componen
 import { TenderFormComponent } from './tender/tender-form/tender-form.component';
 import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
 import { TenderPublicComponent } from './tender-public/tender-public.component';
+import { ResetpasswordscreenComponent } from './reset-password/resetpasswordscreen/resetpasswordscreen.component';
+import { ForgotpasswordscreenComponent } from './reset-password/forgotpasswordscreen/forgotpasswordscreen.component';
 const routes: Routes = [
   { path: '', component: LoginPageComponent },
   { path: "register", component: RegisterComponent },
@@ -84,6 +86,8 @@ const routes: Routes = [
   {path:"addtender/:id/:userId",component:TenderFormComponent},
   {path:"tender-details/:id",component:TenderdetailsComponent},
   {path:"publictender",component:TenderPublicComponent},
+  {path:"resetPassword",component:ResetpasswordscreenComponent},
+  {path:"forgotpasswordscreen",component:ForgotpasswordscreenComponent},
 
 
   { path: '**', component: ErrorPageComponent }

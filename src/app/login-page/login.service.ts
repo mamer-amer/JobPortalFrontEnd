@@ -24,6 +24,14 @@ export class LoginService {
     
   }
 
+  forgotPasswordEmail(email:any):Observable<any>{
+    return this.http.get(environment.baseUrl+"token/forgotPassword/"+email);
+
+  }
+  resetpassword(obj:any):Observable<any>{
+   return this.http.post(environment.baseUrl+"token/resetPassword",obj)
+  }
+
 
 }
 

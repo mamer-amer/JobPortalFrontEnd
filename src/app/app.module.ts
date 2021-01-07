@@ -98,7 +98,9 @@ import { AgmOverlays } from "agm-overlays";
 import { MeetingInviteComponent } from './meeting-invite/meeting-invite.component'
 import { TenderFormComponent } from './tender/tender-form/tender-form.component';
 import { TenderdetailsComponent } from './tender-details/tenderdetails/tenderdetails.component';
-import { TenderPublicComponent } from './tender-public/tender-public.component'
+import { TenderPublicComponent } from './tender-public/tender-public.component';
+import { ResetpasswordscreenComponent } from './reset-password/resetpasswordscreen/resetpasswordscreen.component';
+import { ForgotpasswordscreenComponent } from './reset-password/forgotpasswordscreen/forgotpasswordscreen.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +129,9 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
     MeetingInviteComponent,
     TenderFormComponent,
     TenderdetailsComponent,
-    TenderPublicComponent
+    TenderPublicComponent,
+    ResetpasswordscreenComponent,
+    ForgotpasswordscreenComponent
 
 
   ],
@@ -199,7 +203,7 @@ import { TenderPublicComponent } from './tender-public/tender-public.component'
     InfiniteScrollModule,
     RecaptchaModule,
     AgmCoreModule.forRoot({
-      apiKey: 'AIzaSyBlJXvfmTzROsErUkaOufPA5vg4K18X79E',
+      apiKey: 'AIzaSyALCjeF10g7eOsE7zV9XT1R7k0iyMzWJWw',
       libraries: ['places']
     }),
   
