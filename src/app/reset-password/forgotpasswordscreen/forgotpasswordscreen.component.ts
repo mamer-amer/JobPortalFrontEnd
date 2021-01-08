@@ -25,14 +25,14 @@ export class ForgotpasswordscreenComponent implements OnInit {
       console.log(data);
       if(data.status==200){
         this.status=false;
-        this.toastService.info("Success","A Link has been to your email! kindly check")
+        this.toastService.info("Success","A Link Has Been Sent To Your Email! kindly Check")
         setTimeout(() => {
       this.router.navigate([""])
         }, 4000);
     
       }else{
         this.status=false;
-        this.toastService.error("failed","Some error occured")
+        this.toastService.error("Failed","User Doesnot Exsist")
       }
 
     })

@@ -1,7 +1,7 @@
 <router-outlet></router-outlet>
 <div class="bg-img">
 
-    <form #myForm="ngForm" (ngSubmit)="check(email.value, password.value)" class="container" style="height: 540px;">
+    <form #myForm="ngForm" (ngSubmit)="check(email.value, password.value)" class="container" style="height: 545px;">
         <div class="row">
             <div class="col-lg-10 offset-lg-2" style="margin-top: 5px">
                 <img src="assets/1622452.png" height="43" width="170" style="padding:inherit" />
@@ -18,13 +18,15 @@
 
         <label for="psw"><b>Password</b></label>
         <input type="password" #password placeholder="Enter Password" name="psw" style="margin-bottom: 0px;" required>
-        <!-- <br>
-    <br> -->
-
+        <br>
+        <br>
+        <a (click)="gotoforgotpasswordscreen()" style="color: steelblue !important ;">Forgotten Password? </a>
         <!-- CAPTCHAAA -->
-        `
+        `<br>
+        <br>
         <re-captcha (resolved)="resolved($event)" [siteKey]="captchaKey"></re-captcha>
         <br>
+
 
         <!-- <button type="submit" class="btn">Login</button> -->
         <button type="submit" mat-stroked-button [disabled]="myForm.invalid ||  !isCaptcha" style="color: whitesmoke; background-color: black;font-weight: lighter;">
@@ -38,7 +40,7 @@
         <br>
         <br>
 
-        <a (click)="gotoforgotpasswordscreen()" style="color: black !important ;">Forgotten Password? </a>
+
 
     </form>
 </div>

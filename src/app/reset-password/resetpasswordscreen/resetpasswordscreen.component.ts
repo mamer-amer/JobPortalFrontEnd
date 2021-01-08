@@ -32,7 +32,7 @@ export class ResetpasswordscreenComponent implements OnInit {
     this.loginservice.resetpassword(resetPassword).subscribe(data=>{
       console.log(data);
       if(data.status==200){
-        this.toastService.info("success","password successfully updated")
+        this.toastService.info("success","Password Successfully Updated And Saved!")
         this.status=false;
         setTimeout(() => {
           this.router.navigate([""])
@@ -40,7 +40,7 @@ export class ResetpasswordscreenComponent implements OnInit {
         }, 4000);
 
       }else{
-        this.toastService.error("error","Something went wrong")
+        this.toastService.error("error","Cannot Update Password")
       }
 
     })
