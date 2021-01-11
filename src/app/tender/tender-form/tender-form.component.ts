@@ -22,7 +22,7 @@ export class TenderFormComponent implements OnInit {
   countries: Array<Object> = [];
   cities: Array<any> = [];
   provinces: Array<any> = [];
-  label:string="Add Tender";
+  label:string="Add Job Bid";
   userType = sessionStorage.getItem('userType');
   userId = sessionStorage.getItem('userId');
   constructor(private navbar: NavbarService,private activatedRoute: ActivatedRoute,private tenderservice:TenderService,private toastService: ToastrService,private router: Router ) { }
@@ -56,7 +56,7 @@ export class TenderFormComponent implements OnInit {
   ];
   ngOnInit(): void {
     this.recruiterId = this.activatedRoute.snapshot.params['id'];
-    if(this.recruiterId==null){this.label = "Add Public Tender"}
+    if(this.recruiterId==null){this.label = "Add Public Job Bid"}
     this.navbar.showNav();
     this.getCountries();
 

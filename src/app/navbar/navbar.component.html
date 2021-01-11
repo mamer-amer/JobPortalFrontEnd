@@ -1,277 +1,237 @@
-<mdb-navbar *ngIf="navbarService.display" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1"
-  [containerInside]="false">
+<mdb-navbar *ngIf="navbarService.display" SideClass="navbar navbar-expand-lg navbar-dark purple lighten-1" [containerInside]="false">
 
-  <!-- Navbar brand -->
-  <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
+    <!-- Navbar brand -->
+    <mdb-navbar-brand><a class="navbar-brand" [routerLink]="['/allJobs']">Job-Board</a></mdb-navbar-brand>
 
-  <!-- Collapsible content -->
-  <links>
+    <!-- Collapsible content -->
+    <links>
 
-    <!-- Links  Employer-->
-    <ul class="navbar-nav mr-auto" *ngIf="userType!='candidate'">
-      <!-- <li class="nav-item">
+        <!-- Links  Employer-->
+        <ul class="navbar-nav mr-auto" *ngIf="userType!='candidate'">
+            <!-- <li class="nav-item">
         <a class="nav-link waves-light" (click)="goBack()" mdbWavesEffect>Back</a>
       </li> -->
-      <li class="nav-item active">
-        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>My Jobs<span
+            <li class="nav-item active">
+                <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>My Jobs<span
             class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
-      </li>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" [routerLink]="['/employee/postjob']" mdbWavesEffect>Post Job</a>
+            </li>
 
-      <li class="nav-item">
-        <a class="nav-link waves-light" [routerLink]="['/publictender']" mdbWavesEffect>Tenders</a>
-      </li>
+            <li class="nav-item">
+                <a class="nav-link waves-light" [routerLink]="['/publictender']" mdbWavesEffect>Job Bids</a>
+            </li>
 
-      <!-- <li  *ngIf="userType=='employer'" class="nav-item">
+            <!-- <li  *ngIf="userType=='employer'" class="nav-item">
         <a class="nav-link waves-light"  [routerLink]="['/addtender']" mdbWavesEffect>Add Tender</a>
       </li> -->
 
-      <li class="nav-item">
-        <app-global-search></app-global-search>
-      </li>
+            <li class="nav-item">
+                <app-global-search></app-global-search>
+            </li>
 
 
 
 
-
-
-    </ul>
-
-
-    <!-- Candidate  -->
-    <!-- Links -->
-    <ul class="navbar-nav mr-auto" *ngIf="userType=='candidate'">
-
-
-
-      <li class="nav-item active">
-        <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>All Jobs<span
-            class="sr-only">(current)</span></a>
-      </li>
-
-      <li class="nav-item">
-        <app-global-search></app-global-search>
-      </li>
-
-    </ul>
-    <!-- Links -->
-
-
-
-
-    <ul class="navbar-nav ml-auto nav-flex-icons">
-
-      <a 
-      [routerLink]="['/invitation']"
-      nzTrigger="click">
-      <div>
-        <nz-badge
-          [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
-          [nzCount]="invitationCount">
-          <a class="head-example">
-              <img [ngClass]="'invitation-close-class'" src="https://img.icons8.com/ios-filled/23/000000/invite.png"/>
-          </a>
-        </nz-badge>
-      </div>
-    </a>
-      <a style="width: 45px;" (nzVisibleChange)="requestOpened($event)" nz-dropdown [nzBackdrop]="false"
-        nzTrigger="click" [nzDropdownMenu]="request">
-        <div>
-          <nz-badge
-            [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
-            [nzCount]="requests.length">
-            <a class="head-example">
-              <i nz-icon [ngClass]="requestOpen ? 'request-open-class' : 'request-close-class'" nzType="team"
-                nzTheme="outline"></i>
-            </a>
-          </nz-badge>
-
-
-        </div>
-      </a>
-
-
-      <nz-dropdown-menu #request="nzDropdownMenu">
-
-        <ul style="padding: 0px;width: 500px;" nz-menu>
-          <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
-            <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Requests</p>
-          </div>
-
-          <li nz-menu-divider></li>
-
-          <div *ngIf="!requests.length" style="height: 30px;text-align: center;">
-            <p  >No Requests</p>
-          </div>
-
-          <div *ngFor="let request of requests" class="notificationItem" [style.background-color]="'#E5EAF2'"
-            style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
-            nz-menu-item>
-            <span style="flex: 1;">
-              <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="request.dp?'data:image/jpeg;base64,'+request.dp:
-                '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
-              </nz-avatar>
-            </span>
-            <div style="flex: 7;">
-              <div style="display: flex;">
-
-
-                <span style="flex: 4;margin: auto;"> {{request.name}} </span>
-
-                <div style="flex: 2;">
-                  <button (click)="acceptRequest(request.userId)"
-                   style="margin-right: 5px;
-                  background: #365899;
-                  border-color: transparent;
-                  color: white;">Confirm</button>
-                 <button type="button"
-                   style="padding:0.5rem 0.6rem !important"
-                   class="btn btn-dark btn-sm"
-                   (click)="deleteRequest(request.userId)">Delete</button>
-                </div>
-              </div>
-
-
-            </div>
-          </div>
-          <div *ngIf="isLoader" class="row" >
-
-            <div class="col-lg-12" style="height: 20px;
-                     margin-bottom: 10px;">
-
-              <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader"
-                [fullScreen]="false">
-
-              </ngx-spinner>
-            </div>
-
-
-          </div>
-        
 
 
         </ul>
 
 
-      </nz-dropdown-menu>
+        <!-- Candidate  -->
+        <!-- Links -->
+        <ul class="navbar-nav mr-auto" *ngIf="userType=='candidate'">
 
 
-     
 
-      <a 
-        [routerLink]="['/chat']"
-        
-        nzTrigger="click">
-        <div>
-          <nz-badge
-            [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
-            [nzCount]="messagesCount">
-            <a class="head-example">
-              <i nz-icon
-                [ngClass]="'notification-close-class'"
-                nzType="message"
-                nzTheme="fill"></i>
+            <li class="nav-item active">
+                <a class="nav-link waves-light" [routerLink]="['/allJobs']" mdbWavesEffect>All Jobs<span
+            class="sr-only">(current)</span></a>
+            </li>
+
+            <li class="nav-item">
+                <app-global-search></app-global-search>
+            </li>
+
+        </ul>
+        <!-- Links -->
+
+
+
+
+        <ul class="navbar-nav ml-auto nav-flex-icons">
+
+            <a [routerLink]="['/invitation']" nzTrigger="click">
+                <div>
+                    <nz-badge [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }" [nzCount]="invitationCount">
+                        <a class="head-example">
+                            <img [ngClass]="'invitation-close-class'" src="https://img.icons8.com/ios-filled/23/000000/invite.png" />
+                        </a>
+                    </nz-badge>
+                </div>
             </a>
-          </nz-badge>
+            <a style="width: 45px;" (nzVisibleChange)="requestOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click" [nzDropdownMenu]="request">
+                <div>
+                    <nz-badge [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }" [nzCount]="requests.length">
+                        <a class="head-example">
+                            <i nz-icon [ngClass]="requestOpen ? 'request-open-class' : 'request-close-class'" nzType="team" nzTheme="outline"></i>
+                        </a>
+                    </nz-badge>
 
 
-        </div>
-      </a>
-
-
-      <!-- //notification -->
-
-      <a (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click"
-        [nzDropdownMenu]="notification">
-        <div>
-          <nz-badge
-            [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }"
-            [nzCount]="notificationsCount">
-            <a class="head-example">
-              <i nz-icon [ngClass]="notificationOpen ? 'notification-open-class' : 'notification-close-class'"
-                nzType="bell" nzTheme="fill"></i>
+                </div>
             </a>
-          </nz-badge>
 
 
-        </div>
-      </a>
-      <nz-dropdown-menu #notification="nzDropdownMenu">
+            <nz-dropdown-menu #request="nzDropdownMenu">
 
-        <ul style="padding: 0px;width: 500px;" nz-menu>
-          <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
-            <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Notifications</p>
-            
-            <p (click)="readAllNotications()" class="underLine"
-              style="margin:5px 0px 0px 0px ;color: rgb(39, 39, 226);">Mark All As Read</p>
-          </div>
-          <li nz-menu-divider></li>
+                <ul style="padding: 0px;width: 500px;" nz-menu>
+                    <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
+                        <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Requests</p>
+                    </div>
+
+                    <li nz-menu-divider></li>
+
+                    <div *ngIf="!requests.length" style="height: 30px;text-align: center;">
+                        <p>No Requests</p>
+                    </div>
+
+                    <div *ngFor="let request of requests" class="notificationItem" [style.background-color]="'#E5EAF2'" style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;" nz-menu-item>
+                        <span style="flex: 1;">
+              <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="request.dp?'data:image/jpeg;base64,'+request.dp:
+                '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
+              </nz-avatar>
+            </span>
+                        <div style="flex: 7;">
+                            <div style="display: flex;">
 
 
-          <!-- INFINITE SCROLL -->
-          <nz-tabset style="margin:0px 0px 0px 15px">
-              <nz-tab  nzTitle="All">
+                                <span style="flex: 4;margin: auto;"> {{request.name}} </span>
 
-          <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results"
-            [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1"
-            [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
+                                <div style="flex: 2;">
+                                    <button (click)="acceptRequest(request.userId)" style="margin-right: 5px;
+                  background: #365899;
+                  border-color: transparent;
+                  color: white;">Confirm</button>
+                                    <button type="button" style="padding:0.5rem 0.6rem !important" class="btn btn-dark btn-sm" (click)="deleteRequest(request.userId)">Delete</button>
+                                </div>
+                            </div>
 
-            <div *ngFor="let notification of notifications" class="notificationItem"
-              [style.background-color]="notification.seenOrNot?'white':'#E5EAF2'"
-              (click)="readNotification(notification.jobId)"
-              style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
-              nz-menu-item>
-              <span style="flex: 1;">
+
+                        </div>
+                    </div>
+                    <div *ngIf="isLoader" class="row">
+
+                        <div class="col-lg-12" style="height: 20px;
+                     margin-bottom: 10px;">
+
+                            <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader" [fullScreen]="false">
+
+                            </ngx-spinner>
+                        </div>
+
+
+                    </div>
+
+
+
+                </ul>
+
+
+            </nz-dropdown-menu>
+
+
+
+
+            <a [routerLink]="['/chat']" nzTrigger="click">
+                <div>
+                    <nz-badge [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }" [nzCount]="messagesCount">
+                        <a class="head-example">
+                            <i nz-icon [ngClass]="'notification-close-class'" nzType="message" nzTheme="fill"></i>
+                        </a>
+                    </nz-badge>
+
+
+                </div>
+            </a>
+
+
+            <!-- //notification -->
+
+            <a (nzVisibleChange)="notificationOpened($event)" nz-dropdown [nzBackdrop]="false" nzTrigger="click" [nzDropdownMenu]="notification">
+                <div>
+                    <nz-badge [nzStyle]="{ backgroundColor: '#48A7ED',marginTop:'2px', color: 'white', boxShadow: '0 0 0 1px #d9d9d9 inset' }" [nzCount]="notificationsCount">
+                        <a class="head-example">
+                            <i nz-icon [ngClass]="notificationOpen ? 'notification-open-class' : 'notification-close-class'" nzType="bell" nzTheme="fill"></i>
+                        </a>
+                    </nz-badge>
+
+
+                </div>
+            </a>
+            <nz-dropdown-menu #notification="nzDropdownMenu">
+
+                <ul style="padding: 0px;width: 500px;" nz-menu>
+                    <div style="display: flex;justify-content: space-between;align-items: center;width:90%;margin-left: 5%;">
+                        <p style="margin:5px 0px 0px 0px ;font-weight: bold;">Notifications</p>
+
+                        <p (click)="readAllNotications()" class="underLine" style="margin:5px 0px 0px 0px ;color: rgb(39, 39, 226);">Mark All As Read</p>
+                    </div>
+                    <li nz-menu-divider></li>
+
+
+                    <!-- INFINITE SCROLL -->
+                    <nz-tabset style="margin:0px 0px 0px 15px">
+                        <nz-tab nzTitle="All">
+
+                            <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results" [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1" [infiniteScrollThrottle]="100" (scrolled)="onScroll()">
+
+                                <div *ngFor="let notification of notifications" class="notificationItem" [style.background-color]="notification.seenOrNot?'white':'#E5EAF2'" (click)="readNotification(notification.jobId)" style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+                                    nz-menu-item>
+                                    <span style="flex: 1;">
                 <nz-avatar [nzSize]="48" nzIcon="user" [nzSrc]="notification.userDp?'data:image/jpeg;base64,'+notification.userDp:
                   '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
                 </nz-avatar>
               </span>
-              <div style="flex: 7;">
-                <div style="display:flex;flex-direction: column;">
-                  <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                    <span *ngIf="userType!='candidate'" style="font-weight: bold;">{{notification.username}} <span
+                                    <div style="flex: 7;">
+                                        <div style="display:flex;flex-direction: column;">
+                                            <div style="flex:1;white-space:pre-line;margin-top: 10px;">
+                                                <span *ngIf="userType!='candidate'" style="font-weight: bold;">{{notification.username}} <span
                         style="font-weight: normal !important">applied for your</span> </span>
 
-                    <span *ngIf="userType=='candidate'" style="font-weight: bold;">{{notification.username}} <span
+                                                <span *ngIf="userType=='candidate'" style="font-weight: bold;">{{notification.username}} <span
                         style="font-weight: normal !important">invited
                         you for</span> </span>
 
-                    <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
-                  </div>
+                                                <span style="font-weight: bold;"> {{notification.jobTitle}} </span> job
+                                            </div>
 
-                  <p style="flex:1;font-size: 10px;">{{notification.date | myPipe}}</p>
-                </div>
-              </div>
+                                            <p style="flex:1;font-size: 10px;">{{notification.date | myPipe}}</p>
+                                        </div>
+                                    </div>
 
 
 
-            </div>
-            <div class="row" *ngIf="isLoader">
+                                </div>
+                                <div class="row" *ngIf="isLoader">
 
-              <div class="col-lg-12" style="height: 20px;
+                                    <div class="col-lg-12" style="height: 20px;
               margin-bottom: 10px;">
 
-                <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader"
-                  [fullScreen]="false">
+                                        <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader" [fullScreen]="false">
 
-                </ngx-spinner>
-              </div>
-            </div>
-          </div>
-          </nz-tab>
-          <nz-tab *ngIf="userType=='employer' || userType=='recruiter'" (nzClick)="getAllTenderNotification()" nzTitle="Tender Requests">
-              <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results"
-              [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1"
-              [infiniteScrollThrottle]="100" >
-  
-              <div *ngFor="let notification of tendernotifications" class="notificationItem"
-                [style.background-color]="notification.seen?'white':'#E5EAF2'"
-                (click)="readTenderNotifications(notification.tender.id)"
-                style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
-                nz-menu-item>
-                <span style="flex: 1;">
+                                        </ngx-spinner>
+                                    </div>
+                                </div>
+                            </div>
+                        </nz-tab>
+                        <nz-tab *ngIf="userType=='employer' || userType=='recruiter'" (nzClick)="getAllTenderNotification()" nzTitle="Job Bid Requests">
+                            <div [ngStyle]="{'maxHeight': '300px','overflowY':'auto','overflowX':'hidden'}" class="search-results" [scrollWindow]="false" infiniteScroll [immediateCheck]="true" [infiniteScrollDistance]="1" [infiniteScrollThrottle]="100">
+
+                                <div *ngFor="let notification of tendernotifications" class="notificationItem" [style.background-color]="notification.seen?'white':'#E5EAF2'" (click)="readTenderNotifications(notification.tender.id)" style="cursor: pointer;border-bottom: 1px solid rgb(199, 199, 199);display:flex;align-items: center;"
+                                    nz-menu-item>
+                                    <span style="flex: 1;">
                   <nz-avatar  *ngIf="userType=='employer'" [nzSize]="48" nzIcon="user" [nzSrc]="notification.employer.profile.dp?'data:image/jpeg;base64,'+notification.employer.profile.dp:
                     '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
                   </nz-avatar>
@@ -279,106 +239,97 @@
                     '//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png'">
                   </nz-avatar>
                 </span>
-                <div style="flex: 7;">
-                  <div style="display:flex;flex-direction: column;">
-                    <div style="flex:1;white-space:pre-line;margin-top: 10px;">
-                      <span  style="font-weight: bold;">{{userType=='employer'?notification.recruiter.name:notification.employer.name}} 
+                                    <div style="flex: 7;">
+                                        <div style="display:flex;flex-direction: column;">
+                                            <div style="flex:1;white-space:pre-line;margin-top: 10px;">
+                                                <span style="font-weight: bold;">{{userType=='employer'?notification.recruiter.name:notification.employer.name}} 
                         <span
-                          style="font-weight: normal !important" *ngIf="userType=='recruiter'">has sent you this contract </span> 
-                        <span
-                          style="font-weight: normal !important" *ngIf="userType=='employer'">{{notification.applied==false?declinestatus:acceptstatus}}</span> 
-                        </span>
+                          style="font-weight: normal !important" *ngIf="userType=='recruiter'">has sent you this contract </span>
+                                                <span style="font-weight: normal !important" *ngIf="userType=='employer'">{{notification.applied==false?declinestatus:acceptstatus}}</span>
+                                                </span>
 
-                        <p style="flex:1;font-size: 10px;">{{notification.tender.tenderAssortments.notificationDate | myPipe}}</p>
-                      
-                    </div>
-  
-                    
-                  </div>
-                </div>
-  
-  
-  
-              </div>
-              <div class="row" *ngIf="isLoader">
-  
-                <div class="col-lg-12" style="height: 20px;
+                                                <p style="flex:1;font-size: 10px;">{{notification.tender.tenderAssortments.notificationDate | myPipe}}</p>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+
+
+                                </div>
+                                <div class="row" *ngIf="isLoader">
+
+                                    <div class="col-lg-12" style="height: 20px;
                 margin-bottom: 10px;">
-  
-                  <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader"
-                    [fullScreen]="false">
-  
-                  </ngx-spinner>
-                </div>
-              </div>
+
+                                        <ngx-spinner name="navSpinner" bdColor="" size="small" color="#000000" type="square-loader" [fullScreen]="false">
+
+                                        </ngx-spinner>
+                                    </div>
+                                </div>
+                            </div>
+                        </nz-tab>
+                    </nz-tabset>
+
+
+                    <div style="height: 30px;text-align: center;line-height: 30px;">
+                        <!-- <p class="underLine" style="color: rgb(41, 97, 209);">See All</p> -->
+                    </div>
+
+                </ul>
+
+
+            </nz-dropdown-menu>
+
+            <div class="userInfo" *ngIf="userType=='candidate'">
+                <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
             </div>
-            </nz-tab>
-          </nz-tabset>
+            <div class="userInfo" *ngIf="userType=='employer'">
+                <h6>{{legalCompanyName}}<br><sub>{{userType | titlecase }}</sub></h6>
+            </div>
+            <div class="userInfo" *ngIf="userType=='recruiter'">
+                <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
+            </div>
+
+            <li class="nav-item avatar dropdown" *ngIf="userType!='candidate'" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+
+                    <img [src]="userImage?'data:image/jpeg;base64,'+userImage:'assets/user.png'" style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0 ">
+
+                </a>
+                <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect (click)="routeToMyCompanyProfile()">View Profile</a>
+                    <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfile']" href="#">Edit
+            Profile</a>
 
 
-          <div style="height: 30px;text-align: center;line-height: 30px;">
-            <!-- <p class="underLine" style="color: rgb(41, 97, 209);">See All</p> -->
-          </div>
+                    <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
+                </div>
+            </li>
 
+
+            <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'" dropdown>
+                <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+                    <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'assets/user.png'" style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"></a>
+                <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+                    <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/viewprofile']" (click)="routeToMyCandidateProfile()" href="#">My Profile</a>
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/candidateProfile']" href="#">Edit
+            Profile</a>
+
+
+
+
+
+
+                    <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
+                </div>
+            </li>
         </ul>
-
-
-      </nz-dropdown-menu>
-
-      <div class="userInfo" *ngIf="userType=='candidate'">
-        <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
-      </div>
-      <div class="userInfo" *ngIf="userType=='employer'">
-        <h6>{{legalCompanyName}}<br><sub>{{userType | titlecase }}</sub></h6>
-      </div>
-      <div class="userInfo" *ngIf="userType=='recruiter'">
-        <h6>{{userName}}<br><sub>{{userType | titlecase }}</sub></h6>
-      </div>
-
-      <li class="nav-item avatar dropdown" *ngIf="userType!='candidate'" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-
-          <img [src]="userImage?'data:image/jpeg;base64,'+userImage:'assets/user.png'" 
-            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0 "
-            >
-
-        </a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-
-          <a class="dropdown-item waves-light" mdbWavesEffect
-          (click)="routeToMyCompanyProfile()">View Profile</a>
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/companyProfile']" href="#">Edit
-            Profile</a>
-
-
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="logout()">Log out</a>
-        </div>
-      </li>
-
-
-      <li class="nav-item avatar dropdown" *ngIf="userType=='candidate'" dropdown>
-        <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
-          <img [src]="userImage!=null?'data:image/jpeg;base64,'+userImage:'assets/user.png'" 
-            style="height:42px;width:40px" class="img-fluid rounded-circle z-depth-0"
-            
-            ></a>
-        <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/viewprofile']"
-          (click)="routeToMyCandidateProfile()" href="#">My Profile</a>
-
-          <a class="dropdown-item waves-light" mdbWavesEffect [routerLink]="['/candidateProfile']" href="#">Edit
-            Profile</a>
-
-
-
-
-
-
-          <a class="dropdown-item waves-light" mdbWavesEffect (click)="service.logout()">Log out</a>
-        </div>
-      </li>
-    </ul>
-  </links>
+    </links>
 
 
 </mdb-navbar>

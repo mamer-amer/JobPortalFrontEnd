@@ -1,45 +1,37 @@
-  <app-navbar></app-navbar>
-  <br>
+<app-navbar></app-navbar>
+<br>
 
-  <div class="container">
+<div class="container">
 
     <div *ngIf="tenders.length==0">
-      <mat-card
-      style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
-      <span>No tenders found</span>
-      <a *ngIf="userType=='employer'" (click)="addtender();"  aria-expanded="true" class="nav-link ml-0 active ">
-        <i class="mdi mdi-plus mr-1"></i>Add tender 
-    </a>
-      </mat-card>
+        <mat-card style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+            <span>No tenders found</span>
+            <a *ngIf="userType=='employer'" (click)="addtender();" aria-expanded="true" class="nav-link ml-0 active ">
+                <i class="mdi mdi-plus mr-1"></i>Add Job Bid
+            </a>
+        </mat-card>
     </div>
-          <div class="row" *ngIf="tenders.length>0">
-            <div class="col-lg-12 " *ngIf="userType=='employer'"  >
-              <a (click)="addtender();"  aria-expanded="true" class="nav-link ml-0 active "
-               style="float: right;background: black; color: white;">
-                  <i class="mdi mdi-plus mr-1"></i>Add tender 
-              </a>
+    <div class="row" *ngIf="tenders.length>0">
+        <div class="col-lg-12 " *ngIf="userType=='employer'">
+            <a (click)="addtender();" aria-expanded="true" class="nav-link ml-0 active " style="float: right;background: black; color: white;">
+                <i class="mdi mdi-plus mr-1"></i>Add tender
+            </a>
 
-              <br>
+            <br>
             <br><br>
-            </div>
-            
-              
-          <div *ngFor="let tender of tenders"
-              class="col-lg-12"
-              style="margin-bottom:10px;">
-              <mat-card
-              style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+        </div>
 
-              <div style="flex:4;">
-                      <div style="display: flex;">
+
+        <div *ngFor="let tender of tenders" class="col-lg-12" style="margin-bottom:10px;">
+            <mat-card style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
+
+                <div style="flex:4;">
+                    <div style="display: flex;">
                         <div style="flex:9;">
-                          <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
-                            <span (click)="routeToTenderDetail(tender.id)"
-                              style="font-weight:500;font-size:18px;cursor: pointer;"> {{tender?.role}} </span>
-                          </h3>
-                          <span class="options" *ngIf="userType=='employer'"
-                            
-                            style="margin-left: 5px;">
+                            <h3 style="margin:0px 0px 10px 0px; color: #489ceb;display: inline-block;">
+                                <span (click)="routeToTenderDetail(tender.id)" style="font-weight:500;font-size:18px;cursor: pointer;"> {{tender?.role}} </span>
+                            </h3>
+                            <span class="options" *ngIf="userType=='employer'" style="margin-left: 5px;">
       
       
                             <i class='fa fa-pencil edit_delete'
@@ -62,52 +54,42 @@
                             </i>
       
                           </span>
-      
-                          <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{tender?.category}}<span
-                              style="color:rgb(129, 126, 126);">
+
+                            <h6 style="font-weight:400;margin:0px 0px 5px 0px">{{tender?.category}}<span style="color:rgb(129, 126, 126);">
                               {{tender?.city}}</span>
-                          </h6>
-      
-                          <p style="color: rgb(146, 144, 144);;">{{tender?.date}}</p>
-      
+                            </h6>
+
+                            <p style="color: rgb(146, 144, 144);;">{{tender?.date}}</p>
+
                         </div>
                         <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                          <nz-avatar 
-                            [nzSize]="64"
-                            style="display: block;flex: 2;margin-bottom: 5px;"
-                            [nzSrc]="'data:image/jpeg;base64,'+tender?.tenderPoster?.profile?.dp"
-                            (click)="routeToCompanyProfile(tender?.tenderPoster?.id)"
-                            nzIcon="user">
-                          </nz-avatar>
-      
-                          <nz-rate style="flex: 1;height: 5px;"
-                            [nzAllowHalf]="true"
-                            [ngModel]="tender?.tenderPoster?.profile?.avgRating"
-                      
-                            [nzDisabled]="true">
-                          </nz-rate>
-                          <div style="flex: 1;">
-                            <!-- icons span starts here -->
-                            <p style="font-size: 15px;
+                            <nz-avatar [nzSize]="64" style="display: block;flex: 2;margin-bottom: 5px;" [nzSrc]="'data:image/jpeg;base64,'+tender?.tenderPoster?.profile?.dp" (click)="routeToCompanyProfile(tender?.tenderPoster?.id)" nzIcon="user">
+                            </nz-avatar>
+
+                            <nz-rate style="flex: 1;height: 5px;" [nzAllowHalf]="true" [ngModel]="tender?.tenderPoster?.profile?.avgRating" [nzDisabled]="true">
+                            </nz-rate>
+                            <div style="flex: 1;">
+                                <!-- icons span starts here -->
+                                <p style="font-size: 15px;
                             margin-bottom: 0px;
                             font-weight: 400;">{{tender?.tenderPoster?.profile?.name}}</p>
-                          </div>
+                            </div>
                         </div>
-                      </div>
-                  </div>    
-              </mat-card>
-      </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
 
-  </div>
-  </div>
+    </div>
+</div>
 
 
 
-  <br>
-  <br>
-  <br>
-  <!-- Fooorter -->
-  <!-- 
+<br>
+<br>
+<br>
+<!-- Fooorter -->
+<!-- 
   <div class="footer"
     style="  height: 50px;
     margin-top: -50px;">
