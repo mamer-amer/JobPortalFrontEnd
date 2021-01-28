@@ -7,6 +7,7 @@ import { TenderService } from '../Services/tender.service';
 import { Tender } from '../tender/tender-form/tender';
 
 import { NzModalService } from 'ng-zorro-antd';
+import { ApplicantServiceService } from '../Services/applicant-service.service';
 @Component({
   selector: 'app-tender-public',
   templateUrl: './tender-public.component.html',
@@ -16,13 +17,17 @@ export class TenderPublicComponent implements OnInit {
   empty = false;
   userType = sessionStorage.getItem('userType');
   companyId: any;
+  isVisible:any=false;
+  tenderIdforinvitation:any;
+  candidatesArrays = []
+  values = '';
 
   page = 1;
   public total: any;
   itemsPerPage: any;
   userId = sessionStorage.getItem('userId')
   tenders = [];
-  constructor(private tenderservice: TenderService, private navbar: NavbarService, private router: Router, private modalService: NzModalService) {
+  constructor(private toastService: ToastrService,private tenderservice: TenderService, private navbar: NavbarService, private router: Router, private modalService: NzModalService, private service: ApplicantServiceService) {
 
 
   }
@@ -55,7 +60,7 @@ export class TenderPublicComponent implements OnInit {
         // debugger;
 
         this.tenders = res
-        console.log("Respone tender ", res);
+        console.log("Response tender ", res);
 
       }, error => {
 
@@ -104,6 +109,82 @@ export class TenderPublicComponent implements OnInit {
     //   this.toastService.error('Failed')
     // }
   }
+  handleOk(): void {
+    console.log('Button ok clicked!');
+    this.isVisible = false;
+  }
 
+  handleCancel(): void {
+    console.log('Button cancel clicked!');
+    this.isVisible = false;
+  }
+  Invitetojobbid(tenderId:any){
+    this.isVisible=true;
+    this.tenderIdforinvitation=tenderId;
+    console.log(this.tenderIdforinvitation)
+  }
+
+  // search work
+
+  search(event: any) { // without type info
+    this.candidatesArrays = [];
+    this.values = event;
+    console.log(this.values);
+    if (this.values != null && this.values != "" && this.values.length>2)
+      this.getAllProfiles(this.values);
+  }
+
+  getAllProfiles(value) {
+    // this.candidatesArrays = [];
+    this.service.getSearchCandidatesProfile(value).subscribe(res => {
+      console.log(res);
+     
+      this.candidatesArrays = [];
+      res.result.map(d => {
+        this.candidatesArrays.push({
+          profileId: d.profileId?d.profileId:null,
+          userId: d.userId,
+          name: d.name,
+          dp: d.dp?d.dp:null,
+          userType: d.userType
+        });
+      });
+      // }
+
+    });
+
+    console.log(this.candidatesArrays)
+  }
+
+  InviteTojobBid(user,inp) {
+    inp.value="";
+    console.log(user,"==========")
+    console.log(user);
+    let obj:any={
+      recruiterUserId:user.profileId,
+      employerUserId:JSON.parse( this.userId),
+      tenderId:this.tenderIdforinvitation
+
+    }
+    console.log(obj)
+    this.tenderservice.inviteToRecruiterOnPublicTender(obj).subscribe(data=>{
+      if(data.status==200){
+        this.toastService.info("Success","Invitation Sent")
+        this.isVisible=false;
+
+      }else{
+        this.toastService.error("Error","Cannot Send Invitation")
+      }
+    })
+    // if (user.userType == "candidate") {    
+    //   this.router.navigate(['/viewprofile/'+user.userId]);
+    // }
+    // else {
+    //   this.router.navigate(['/companyProfileDetails/' + user.profileId])
+    // }
+  }
+  gotoProfile(a){
+    console.log(a)
+  }
 
 }

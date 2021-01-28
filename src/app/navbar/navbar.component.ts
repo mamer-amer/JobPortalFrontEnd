@@ -44,11 +44,11 @@ export class NavbarComponent implements OnInit {
 
 
     this.notificationOpen = false;
-    this.userImage = sessionStorage.getItem('dp')?sessionStorage.getItem('dp') : null
+    this.userImage = sessionStorage.getItem('dp') !='null' && sessionStorage.getItem('dp')?sessionStorage.getItem('dp') : null
     
     this.companyProf.logoChangeObservable.subscribe(() =>
     {
-      this.userImage = sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null;
+      this.userImage = sessionStorage.getItem('dp') !='null' && sessionStorage.getItem('dp') ? sessionStorage.getItem('dp') : null;
       console.log(this.userImage)
     });
 
@@ -75,7 +75,12 @@ export class NavbarComponent implements OnInit {
     this.userName = sessionStorage.getItem('username');
     this.userType = sessionStorage.getItem('userType');
     this.getRequests(this.userId);
-    this.userImage = sessionStorage.getItem('dp');
+    if(this.userType=="recruiter"){
+      this.userImage = sessionStorage.getItem('dp') !='undefined' ?sessionStorage.getItem('dp') : null;
+    }else{
+   
+    this.userImage = sessionStorage.getItem('dp') !='null' && sessionStorage.getItem('dp')?sessionStorage.getItem('dp') : null;
+    }
     this.getNotificationsCount(this.userId);
     this.getInvitationCount()
     this.getAllMessagesCount();
@@ -253,8 +258,12 @@ export class NavbarComponent implements OnInit {
   }
   getAllTenderNotification(){
     if(this.userType=="recruiter"){
+      this.isLoader = true;
+      this.spinner.show("navSpinner");
       this.tenderservice.getAlltenderNotifications(this.userId).subscribe(res=>{
         this.tendernotifications=res;
+        this.isLoader=false;
+        this.spinner.hide("navSpinner");
         // if(res?.tender?.tenderType=='public'){
         //     this.acceptstatus = 'has applied to your tender';
         // }
@@ -265,7 +274,8 @@ export class NavbarComponent implements OnInit {
       })
     }
     else{
-      
+      this.isLoader = true;
+      this.spinner.show("navSpinner");
       this.tenderservice.getAlltenderNotificationsForEmployer(this.userId).subscribe(res=>{
       //   if(res?.tender?.tenderType=='public'){
       //     this.acceptstatus = 'has applied to your tender';
@@ -274,7 +284,9 @@ export class NavbarComponent implements OnInit {
       //   this.acceptstatus = 'has accepted/a your offer';
       // }
         this.tendernotifications=res;
-        console.log(this.tendernotifications);
+        this.isLoader=false;
+        this.spinner.hide("navSpinner");
+        console.log("=============TENDERnotifications",this.tendernotifications);
       })
     }
    

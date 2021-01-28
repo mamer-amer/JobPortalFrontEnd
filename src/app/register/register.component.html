@@ -1,101 +1,57 @@
 <div class="bg-img">
-  <form class="container" style="height: auto;">
-    <div class="row">
-      <div class="col-lg-10 offset-lg-2"
-        style="margin-top: 5px">
-        <img src="assets/1622452.png"
-          height="43"
-          width="170"
-          style="padding:inherit" />
-      </div>
-    </div>
-    <br />
-    <div style="margin-left: 12%;">
-      Already have an account?
-      <a style="color: steelblue;"
-        (click)="routeToLogin()">Login now.</a>
-    </div>
-    <br />
+    <form class="container" style="height: auto;">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-2" style="margin-top: 5px">
+                <img src="assets/1622452.png" height="43" width="170" style="padding:inherit" />
+            </div>
+        </div>
+        <br />
+        <div style="margin-left: 12%;">
+            Already have an account?
+            <a style="color: steelblue;" (click)="routeToLogin()">Login now.</a>
+        </div>
+        <br />
 
-    <label for="name"><b>Name</b></label>
-    <input type="text"
-      #name
-      placeholder="Enter Your Full Name"
-      [(ngModel)]="registerObj.name"
-      name="name"
-      required />
+        <label for="name"><b>Name</b></label>
+        <input type="text" #name placeholder="Enter Your Full Name" [(ngModel)]="registerObj.name" name="name" required />
 
-    <label for="email"><b>Email</b></label>
-    <input type="text"
-      placeholder="Enter Email"
-      name="email"
-      [(ngModel)]="registerObj.email"
-      required
-      email
-      #email="ngModel"
-      [ngClass]="{ 'is-invalid':email.invalid }" />
-    <div *ngIf="email.invalid"
-      class="invalid-feedback">
+        <label for="email"><b>Email</b></label>
+        <input type="text" placeholder="Enter Email" name="email" [(ngModel)]="registerObj.email" required email #email="ngModel" [ngClass]="{ 'is-invalid':email.invalid }" />
+        <div *ngIf="email.invalid" class="invalid-feedback">
 
-      <div *ngIf="email.errors.email">Email must be a valid email address</div>
-    </div>
+            <div *ngIf="email.errors.email">Email must be a valid email address</div>
+        </div>
 
-    <label for="psw"><b>Password</b></label>
-    <input type="password"
-      #password
-      placeholder="Enter Password"
-      [(ngModel)]="registerObj.password"
-      name="psw"
-      required />
+        <label for="psw"><b>Password</b></label>
+        <input type="password" #password placeholder="Enter Password" [(ngModel)]="registerObj.password" name="psw" required />
 
-    <label for="userType"><b>User Type</b></label>
-    <br />
-    <nz-select nzShowSearch
-      nzAllowClear
-      style="font-weight: bold"
-      nzPlaceHolder="Select User type"
-      [(ngModel)]="registerObj.userType"
-      name="userType">
-      <nz-option nzLabel="Candidate"
-        nzValue="candidate"></nz-option>
-      <nz-option nzLabel="Employer"
-        nzValue="employer"></nz-option>
-      <nz-option nzLabel="Recruiter"
-        nzValue="recruiter"></nz-option>
-    </nz-select>
-    <br>
+        <label for="userType"><b>User Type</b></label>
+        <br />
+        <nz-select nzShowSearch nzAllowClear style="font-weight: bold" nzPlaceHolder="Select User type" [(ngModel)]="registerObj.userType" name="userType">
+            <nz-option nzLabel="Candidate" nzValue="candidate"></nz-option>
+            <nz-option nzLabel="Employer" nzValue="employer"></nz-option>
+            <nz-option nzLabel="Recruiter" nzValue="recruiter"></nz-option>
+        </nz-select>
+        <br>
 
 
-    <div *ngIf="registerObj.userType=='employer'">
-      <label for="legalCompanyName"><b>Legal Company Name</b></label>
-      <input type="text"
-        #legalCompanyName
-        placeholder="Enter legal Company Name"
-        [(ngModel)]="registerObj.legalCompanyName"
-        name="legalCompanyName"
-        required />
-      
-    </div>
-<br>
-    <button type="submit"
-      mat-stroked-button
-      style="color: whitesmoke; background-color: black;font-weight: lighter;width:100%"
-      (click)="registerUser()">
+        <div *ngIf="registerObj.userType=='employer'">
+            <label for="legalCompanyName"><b>Legal Company Name</b></label>
+            <input type="text" #legalCompanyName placeholder="Enter legal Company Name" [(ngModel)]="registerObj.legalCompanyName" name="legalCompanyName" required />
+
+        </div>
+        <br>
+        <button type="submit" mat-stroked-button style="color: whitesmoke; background-color: black;font-weight: lighter;width:100%" (click)="registerUser()">
       <span *ngIf="status"
         class="spinner-border spinner-border-sm"></span>
       Register
     </button>
 
-  </form>
+    </form>
 </div>
 
 
 
-<ngx-spinner bdOpacity=1
-  bdColor="rgba(200, 216, 215, 0.25)"
-  size="medium"
-  color="rgba(12,11,11,0.85)"
-  type="ball-clip-rotate-pulse"
-  [fullScreen]="true">
-  <p style="color: white">Loading..</p>
+<ngx-spinner bdOpacity=1 bdColor="rgba(200, 216, 215, 0.25)" size="medium" color="rgba(12,11,11,0.85)" type="ball-clip-rotate-pulse" [fullScreen]="true">
+    <p style="color: white">Loading..</p>
 </ngx-spinner>

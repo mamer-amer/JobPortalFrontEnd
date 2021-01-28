@@ -343,7 +343,9 @@
         
         if (res) {
       this.companyProfileObj = res.profile ? res.profile : new CompanyProfile();
+      if(res.profile.dp!=null){
         sessionStorage.setItem('dp', res?.profile?.dp)
+      }
           if(this.userType=='employer'){
             this.companyProfileObj.contactName = res.profile.contactName;
             sessionStorage.setItem('dp', this.companyProfileObj.dp);

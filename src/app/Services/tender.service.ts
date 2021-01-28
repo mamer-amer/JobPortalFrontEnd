@@ -34,5 +34,8 @@ export class TenderService {
   public getAllTendersByUser(id):Observable<any>{
     return this.http.get(environment.baseUrl+"api/tender/allById/"+id);
   }
+  public inviteToRecruiterOnPublicTender(obj: any): Observable<any> {
+    return this.http.post(environment.baseUrl + "api/publicTenderInvitation", obj)
+  }
 
 }

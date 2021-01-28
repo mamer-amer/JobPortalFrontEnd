@@ -5,7 +5,7 @@
 
     <div *ngIf="tenders.length==0">
         <mat-card style="background-color:#F2F2F2;border-radius: 0px;display: flex;justify-content: space-between;cursor: initial;">
-            <span>No tenders found</span>
+            <span>No Job Bid found</span>
             <a *ngIf="userType=='employer'" (click)="addtender();" aria-expanded="true" class="nav-link ml-0 active ">
                 <i class="mdi mdi-plus mr-1"></i>Add Job Bid
             </a>
@@ -14,7 +14,7 @@
     <div class="row" *ngIf="tenders.length>0">
         <div class="col-lg-12 " *ngIf="userType=='employer'">
             <a (click)="addtender();" aria-expanded="true" class="nav-link ml-0 active " style="float: right;background: black; color: white;">
-                <i class="mdi mdi-plus mr-1"></i>Add tender
+                <i class="mdi mdi-plus mr-1"></i>Add Job Bid
             </a>
 
             <br>
@@ -59,20 +59,21 @@
                               {{tender?.city}}</span>
                             </h6>
 
-                            <p style="color: rgb(146, 144, 144);;">{{tender?.date}}</p>
+                            <!-- <p style="color: rgb(146, 144, 144);;">{{tender?.date}}</p> -->
+                            <a *ngIf="userType=='employer'" (click)=" Invitetojobbid(tender.id); " aria-expanded="true " class="nav-link ml-0 active " style="background: black;margin-top: 1%;padding-left: 26px; color: white;width:16%; ">
+                               Invite  Job Bid
+                            </a>
 
                         </div>
-                        <div style="flex: 2;display: flex;flex-direction: column;align-items: center;">
-                            <nz-avatar [nzSize]="64" style="display: block;flex: 2;margin-bottom: 5px;" [nzSrc]="'data:image/jpeg;base64,'+tender?.tenderPoster?.profile?.dp" (click)="routeToCompanyProfile(tender?.tenderPoster?.id)" nzIcon="user">
+                        <div style="flex: 2;display: flex;flex-direction: column;align-items: center; ">
+                            <nz-avatar [nzSize]="64 " style="display: block;flex: 2;margin-bottom: 5px; " [nzSrc]=" 'data:image/jpeg;base64,'+tender?.tenderPoster?.profile?.dp " (click)="routeToCompanyProfile(tender?.tenderPoster?.id) " nzIcon="user ">
                             </nz-avatar>
 
-                            <nz-rate style="flex: 1;height: 5px;" [nzAllowHalf]="true" [ngModel]="tender?.tenderPoster?.profile?.avgRating" [nzDisabled]="true">
+                            <nz-rate style="flex: 1;height: 5px; " [nzAllowHalf]="true " [ngModel]="tender?.tenderPoster?.profile?.avgRating " [nzDisabled]="true ">
                             </nz-rate>
-                            <div style="flex: 1;">
+                            <div style="flex: 1; ">
                                 <!-- icons span starts here -->
-                                <p style="font-size: 15px;
-                            margin-bottom: 0px;
-                            font-weight: 400;">{{tender?.tenderPoster?.profile?.name}}</p>
+                                <p style="font-size: 15px; margin-bottom: 0px; font-weight: 400; ">{{tender?.tenderPoster?.profile?.name}}</p>
                             </div>
                         </div>
                     </div>
@@ -82,6 +83,27 @@
 
     </div>
 </div>
+<nz-modal [(nzVisible)]="isVisible " nzTitle="Invite To Job Bid " nzOkText="Ok " nzCancelText="Cancel " (nzOnOk)="handleOk() " (nzOnCancel)="handleCancel() ">
+
+    <h6>Search Recruiter To Invite: </h6>
+    <div class="example-input ">
+        <input placeholder="Search user " nz-input #inp (keyup)="search($event.target.value) " [nzAutocomplete]="auto " />
+        <nz-autocomplete #auto>
+            <nz-auto-option style="z-index: 10000; " *ngFor="let candidateObj of candidatesArrays " [nzValue]="candidatesArrays " (keyup.enter)="InviteTojobBid(candidateObj,inp) " (click)="InviteTojobBid(candidateObj,inp) ">
+
+                <div class="col-md-12 searchList " style="padding-right:5px; padding-left:5px; ">
+
+                    <img [src]="candidateObj.dp!=null? 'data:image/jpeg;base64,'+candidateObj.dp: 'assets/user.png' " class="img-thumbnail " width="48 " />
+                    <p style="display: inline-block;padding-left: 11px;font-weight: bold ">{{candidateObj.name}}</p>
+                </div>
+
+            </nz-auto-option>
+        </nz-autocomplete>
+    </div>
+
+    <br>
+
+</nz-modal>
 
 
 
@@ -90,9 +112,8 @@
 <br>
 <!-- Fooorter -->
 <!-- 
-  <div class="footer"
-    style="  height: 50px;
-    margin-top: -50px;">
+  <div class="footer "
+    style=" height: 50px; margin-top: -50px; ">
     <app-footer>
 
     </app-footer>

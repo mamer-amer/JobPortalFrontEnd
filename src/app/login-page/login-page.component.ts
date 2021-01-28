@@ -137,4 +137,7 @@ export class LoginPageComponent implements OnInit {
   gotoforgotpasswordscreen(){
     this.router.navigate(['forgotpasswordscreen'])
   }
+  gotogigsterdeliveries(){
+    location.href="https://workboard.ca/gigsterdeliveries/"
+  }
 }
