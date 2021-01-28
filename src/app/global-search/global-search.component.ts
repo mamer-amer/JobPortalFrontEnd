@@ -56,7 +56,7 @@ export class GlobalSearchComponent implements OnInit {
       this._router.navigate(['/viewprofile/'+user.userId]);
     }
     else {
-      this._router.navigate(['/companyProfileDetails/' + user.profileId])
+      this._router.navigate(['/companyProfileDetails/' + user.userId])
     }
   }
   gotoProfile(a){

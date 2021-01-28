@@ -161,7 +161,7 @@ export class TenderPublicComponent implements OnInit {
     console.log(user,"==========")
     console.log(user);
     let obj:any={
-      recruiterUserId:user.profileId,
+      recruiterUserId:user.userId,
       employerUserId:JSON.parse( this.userId),
       tenderId:this.tenderIdforinvitation
 
